@@ -1,7 +1,16 @@
 # AlterPlanning
+
+## Description 
+
 Projet MS2I
 
-# Techno
-Java Spring
-Angular 5
-MySql
+## Prérequis
+
+- Environnement Java
+- Environnement NodeJS
+
+## Techno
+
+- Java Spring
+- Angular 5
+- MySql
