@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {AuthService} from "./services/auth.service";
+import {AuthModel} from "./models/auth.model";
+import {JwtModel} from "./models/jwt.model";
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-root',
@@ -9,26 +11,42 @@ import {Observable} from "rxjs/Observable";
 })
 export class AppComponent implements OnInit {
 
-  title = 'app';
-  test = '';
+  private user = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getTest().subscribe(
-      data => {
-        this.test = data.data;
+
+    const user = new AuthModel("admin@admin.fr", "admin");
+
+    this.authService.auth(user).subscribe(
+      res => {
+        const token = res['data'];
+        const jwt = new JwtModel(token);
+
+        if (jwt.expireAt() < new Date()) {
+          this.user = "token expiré";
+          return;
+        }
+
+        AuthService.setToken(token);
+
+        this.userService.getMe().subscribe(
+          res => {
+            this.user = res;
+          },
+          err => {
+            console.error(err);
+            this.user = err;
+          }
+        );
       },
       // Errors will call this callback instead:
       err => {
-        console.log(err);
+        console.error(err);
+        this.user = err;
       }
     );
-  }
-
-  getTest(): Observable<any> {
-    return this.http
-      .get('/api/test');
   }
 
 }
