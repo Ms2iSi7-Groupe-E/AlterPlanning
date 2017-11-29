@@ -58,7 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 // allow anonymous resource requests
-                .antMatchers("/api/test/**").anonymous() // TODO: remove
                 .antMatchers("/api/auth/**").anonymous()
                 .antMatchers("/api/**").authenticated();
 

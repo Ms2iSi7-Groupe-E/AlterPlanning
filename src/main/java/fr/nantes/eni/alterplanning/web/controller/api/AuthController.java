@@ -11,10 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -33,7 +30,7 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/auth")
-    public ResponseEntity createAuthenticationToken(@Valid @ModelAttribute AuthenticationModel model, BindingResult result) {
+    public ResponseEntity createAuthenticationToken(@Valid @RequestBody AuthenticationModel model, BindingResult result) {
 
         if (result.hasErrors()) {
             return DataEnvelop.CreateEnvelop(HttpStatus.BAD_REQUEST, "Bad request", result);

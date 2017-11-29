@@ -4,19 +4,24 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
  * Created by ughostephan on 23/06/2017.
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"email"})
+})
+
 public class UserEntity {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "uid")
+    @Size(max = 32)
     private String uid;
 
     @Column(name = "firstname")

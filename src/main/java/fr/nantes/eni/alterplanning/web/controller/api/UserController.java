@@ -72,7 +72,7 @@ public class UserController {
 
     @PostMapping("/user")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-    public ResponseEntity addUser(@Valid @ModelAttribute AddUserModel model, BindingResult result) {
+    public ResponseEntity addUser(@Valid @RequestBody AddUserModel model, BindingResult result) {
 
         new UserValidator(userService).validate(model, result);
 
@@ -103,7 +103,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.PUT, RequestMethod.PATCH})
-    public ResponseEntity updateUser(@Valid @ModelAttribute UpdateUserModel model,
+    public ResponseEntity updateUser(@Valid @RequestBody UpdateUserModel model,
                                      BindingResult result,
                                      @PathVariable(name = "uid") String uid) {
 
@@ -160,7 +160,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/change-password/{uid}", method = {RequestMethod.PUT, RequestMethod.PATCH})
-    public ResponseEntity changePassword(@Valid @ModelAttribute ChangePasswordModel model,
+    public ResponseEntity changePassword(@Valid @RequestBody ChangePasswordModel model,
                                          BindingResult result,
                                          @PathVariable(name = "uid") String uid) {
 
