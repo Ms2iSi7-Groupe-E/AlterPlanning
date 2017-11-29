@@ -1,5 +1,7 @@
 package fr.nantes.eni.alterplanning.web.controller.api;
 
+import fr.nantes.eni.alterplanning.web.util.DataEnvelop;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +15,8 @@ public class TestController {
 
 
     @GetMapping("/test")
-    public String test() {
-
-        return "toto";
+    public ResponseEntity testReponse() {
+        return DataEnvelop.CreateEnvelop("toto");
     }
 
 
