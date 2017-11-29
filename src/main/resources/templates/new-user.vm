@@ -1,0 +1,18 @@
+<html>
+<head>
+
+</head>
+<body>
+    <h2>Welcome $user.Firstname $user.Lastname.toUpperCase()</h2>
+
+    <p>You're account have been created successfully</p>
+
+    <p>
+        Here you're password: <strong>$password</strong>
+        <br/>
+        Try to remind this password and delete this mail
+    </p>
+
+    <p>Thanks to register !</p>
+</body>
+</html>

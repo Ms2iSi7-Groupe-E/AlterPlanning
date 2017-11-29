@@ -6,8 +6,9 @@ Projet MS2I
 
 ## Prérequis
 
-- Environnement Java
-- Environnement NodeJS
+- Java JDK 1.8
+- Apache Tomcat 8.5
+- NodeJS
 
 ## Techno
 
