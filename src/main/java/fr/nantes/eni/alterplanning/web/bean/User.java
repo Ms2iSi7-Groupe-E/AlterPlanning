@@ -43,7 +43,6 @@ public class User implements UserDetails, Serializable {
 
     private Date created_at;
 
-    @JsonIgnore
     private List<String> roles;
 
     @JsonIgnore
