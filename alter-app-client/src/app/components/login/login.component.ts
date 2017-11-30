@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   error: String;
   model: AuthModel;
-  submitted: Boolean;
+  submitted: boolean;
 
   constructor(private authService: AuthService, private router: Router) { }
 
