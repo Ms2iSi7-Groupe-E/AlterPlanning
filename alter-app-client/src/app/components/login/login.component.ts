@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
 
   error: String;
+  errorList: String[];
   model: AuthModel;
   submitted: boolean;
 
@@ -18,13 +19,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.submitted = false;
-    this.model = new AuthModel("", "");
+    this.model = new AuthModel();
     this.error = "";
+    this.errorList = [];
   }
 
   onSubmit() {
     this.submitted = true;
     this.error = "";
+    this.errorList = [];
 
     this.authService.login(this.model).subscribe(
       res => {
@@ -36,6 +39,7 @@ export class LoginComponent implements OnInit {
         console.error(err);
         this.submitted = false;
         this.error = err['error']['message'];
+        this.errorList = err['error']['errorList'];
       }
     )
   }

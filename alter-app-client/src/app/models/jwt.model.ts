@@ -4,7 +4,7 @@ export class JwtModel {
 
   private parsedJwt: Object;
 
-  constructor(token: string) {
+  constructor(private token: string) {
     this.parsedJwt = JwtHelper.decodeToken(token);
   }
 

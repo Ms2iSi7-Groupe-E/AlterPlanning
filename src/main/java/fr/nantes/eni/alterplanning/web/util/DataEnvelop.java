@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +26,7 @@ public class DataEnvelop {
 
     private String error;
 
-    private List<String> errorList;
+    private Map<String, String> errorList;
 
     private static ResponseEntity makeResponseEntity(DataEnvelop envelop, HttpStatus status) {
         if (status == null) {
@@ -80,7 +83,7 @@ public class DataEnvelop {
         return makeResponseEntity(new DataEnvelop(status, error), status);
     }
 
-    private DataEnvelop(HttpStatus status, String error, List<String> errorList) {
+    private DataEnvelop(HttpStatus status, String error, Map<String, String> errorList) {
         this.error = error;
         this.status = status;
         this.errorList = errorList;
@@ -96,9 +99,8 @@ public class DataEnvelop {
      * @return the data envelop
      */
     public static ResponseEntity CreateEnvelop(HttpStatus status, String error, BindingResult result) {
-        final List<String> errorList = result.getFieldErrors().stream()
-                .map(e -> e.getField() + ": " + e.getDefaultMessage())
-                .collect(Collectors.toList());
+        final Map<String, String> errorList = new HashMap<>();
+        result.getFieldErrors().forEach(e -> errorList.put(e.getField(), e.getDefaultMessage()));
 
         return makeResponseEntity(new DataEnvelop(status, error, errorList), status);
     }
@@ -148,6 +150,7 @@ public class DataEnvelop {
         return error;
     }
 
+
     /**
      * Sets error.
      *
@@ -175,12 +178,13 @@ public class DataEnvelop {
         this.timestamp = timestamp;
     }
 
+
     /**
      * Gets error list.
      *
      * @return the error list
      */
-    public List<String> getErrorList() {
+    public Map<String, String> getErrorList() {
         return errorList;
     }
 
@@ -189,7 +193,7 @@ public class DataEnvelop {
      *
      * @param errorList the error list
      */
-    public void setErrorList(List<String> errorList) {
+    public void setErrorList(Map<String, String> errorList) {
         this.errorList = errorList;
     }
 }

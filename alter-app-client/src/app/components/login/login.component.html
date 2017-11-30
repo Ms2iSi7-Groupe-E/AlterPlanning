@@ -10,8 +10,8 @@
 
   <form #authForm="ngForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label for="email">Email address</label>
+    <div class="form-group" [class.has-error]="errorList['email']">
+      <label for="email" class="control-label">Email address</label>
       <input type="email"
              class="form-control"
              id="email"
@@ -19,10 +19,12 @@
              placeholder="Enter email"
              required
              [(ngModel)]="model.email">
+
+      <span *ngIf="errorList['email']" class="help-block">{{errorList['email']}}</span>
     </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
+    <div class="form-group" [class.has-error]="errorList['password']">
+      <label for="password" class="control-label">Password</label>
       <input type="password"
              class="form-control"
              id="password"
@@ -30,9 +32,13 @@
              placeholder="Password"
              required
              [(ngModel)]="model.password">
+
+      <span *ngIf="errorList['password']" class="help-block">{{errorList['password']}}</span>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!authForm.form.valid || submitted">Submit</button>
+    <!--<button type="submit" class="btn btn-primary" [disabled]="!authForm.form.valid || submitted">Submit</button>-->
+    <button type="submit" class="btn btn-primary">Submit</button>
+
 
   </form>
 </div>
