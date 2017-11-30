@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {AuthService} from "./auth.service";
+import {UserModel} from "../models/user.model";
+import {ChangePasswordModel} from "../models/change-password.model";
 
 @Injectable()
 export class UserService {
@@ -23,12 +25,12 @@ export class UserService {
       .get('/api/user', {headers: AuthService.getHeaders()});
   }
 
-  addUser(body): Observable<any> {
+  addUser(body: UserModel): Observable<any> {
     return this.http
       .post('/api/user', body, {headers: AuthService.getHeaders()});
   }
 
-  updateUser(uid: String, body): Observable<any> {
+  updateUser(uid: String, body: UserModel): Observable<any> {
     return this.http
       .put('/api/user/' + uid, body, {headers: AuthService.getHeaders()});
   }
@@ -38,7 +40,7 @@ export class UserService {
       .delete('/api/user/' + uid, {headers: AuthService.getHeaders()});
   }
 
-  changePassword(uid: String, body): Observable<any> {
+  changePassword(uid: String, body: ChangePasswordModel): Observable<any> {
     return this.http
       .put('/api/user/change-password/' + uid, body, {headers: AuthService.getHeaders()});
   }

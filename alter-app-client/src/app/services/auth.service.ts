@@ -12,9 +12,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(user: AuthModel): Observable<any> {
+  login(body: AuthModel): Observable<any> {
     return this.http
-      .post('/api/auth', user);
+      .post('/api/auth', body);
   }
 
   logout() {

@@ -10,7 +10,7 @@
 
   <form #authForm="ngForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group" [class.has-error]="errorList['email']">
+    <div class="form-group">
       <label for="email" class="control-label">Email address</label>
       <input type="email"
              class="form-control"
@@ -18,12 +18,13 @@
              name="email"
              placeholder="Enter email"
              required
+             [class.is-invalid]="errorList['email']"
              [(ngModel)]="model.email">
 
-      <span *ngIf="errorList['email']" class="help-block">{{errorList['email']}}</span>
+      <span *ngIf="errorList['email']" class="invalid-feedback">{{errorList['email']}}</span>
     </div>
 
-    <div class="form-group" [class.has-error]="errorList['password']">
+    <div class="form-group">
       <label for="password" class="control-label">Password</label>
       <input type="password"
              class="form-control"
@@ -31,14 +32,13 @@
              name="password"
              placeholder="Password"
              required
+             [class.is-invalid]="errorList['password']"
              [(ngModel)]="model.password">
 
-      <span *ngIf="errorList['password']" class="help-block">{{errorList['password']}}</span>
+      <span *ngIf="errorList['password']" class="invalid-feedback">{{errorList['password']}}</span>
     </div>
 
-    <!--<button type="submit" class="btn btn-primary" [disabled]="!authForm.form.valid || submitted">Submit</button>-->
-    <button type="submit" class="btn btn-primary">Submit</button>
-
+    <button type="submit" class="btn btn-primary" [disabled]="!authForm.form.valid || submitted">Submit</button>
 
   </form>
 </div>

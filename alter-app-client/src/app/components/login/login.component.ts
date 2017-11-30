@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         console.error(err);
         this.submitted = false;
         this.error = err['error']['message'];
-        this.errorList = err['error']['errorList'];
+        this.errorList = err['error']['errorList'] ? err['error']['errorList'] : [];
       }
     )
   }
