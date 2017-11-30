@@ -1,4 +1,33 @@
 <div class="container">
   <pre>{{user|json}}</pre>
   <button class="btn btn-danger" (click)="logout()">Logout</button>
+
+  <hr>
+
+  <div class="text-center">
+    <h2>Ajout event</h2>
+
+    <input type="text" title="name" name="name" [(ngModel)]="model.name">
+    <input type="date" title="begin_date" name="begin_date"  [(ngModel)]="model.begin_date">
+    <input type="date" title="end_date" name="end_date"  [(ngModel)]="model.end_date">
+
+    <button class="btn btn-default" (click)="addEvent()">Add event</button>
+  </div>
+  <div class="text-center">
+    <h2>{{calendarViewDate|date:'MMM-yyyy'}}</h2>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary" (click)="previousMonth()">Previous</button>
+      <button type="button" class="btn btn-primary" (click)="currentMonth()">Today</button>
+      <button type="button" class="btn btn-primary" (click)="nextMonth()">Next</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <mwl-calendar-month-view
+    [viewDate]="calendarViewDate"
+    [events]="calendarEvents"
+    [refresh]="refresh">
+  </mwl-calendar-month-view>
 </div>
