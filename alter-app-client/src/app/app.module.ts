@@ -7,16 +7,24 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
 import {AuthService} from "./services/auth.service";
 import {UserService} from "./services/user.service";
+import { HomeComponent } from './components/home/home.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {AppRoutingModule} from "./app-routing.module";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     AuthService,
