@@ -1,6 +1,6 @@
-package fr.nantes.eni.alterplanning.web.repository;
+package fr.nantes.eni.alterplanning.repository;
 
-import fr.nantes.eni.alterplanning.web.entity.UserEntity;
+import fr.nantes.eni.alterplanning.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.entity;
+package fr.nantes.eni.alterplanning.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

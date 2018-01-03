@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.util;
+package fr.nantes.eni.alterplanning.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
@@ -7,10 +7,7 @@ import org.springframework.validation.BindingResult;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Created by ughostephan on 23/06/2017.

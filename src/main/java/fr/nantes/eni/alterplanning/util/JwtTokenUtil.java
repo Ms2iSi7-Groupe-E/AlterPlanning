@@ -1,6 +1,6 @@
-package fr.nantes.eni.alterplanning.web.util;
+package fr.nantes.eni.alterplanning.util;
 
-import fr.nantes.eni.alterplanning.web.bean.User;
+import fr.nantes.eni.alterplanning.bean.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

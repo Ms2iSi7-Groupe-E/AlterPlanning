@@ -1,6 +1,6 @@
-package fr.nantes.eni.alterplanning.web.model;
+package fr.nantes.eni.alterplanning.model;
 
-import fr.nantes.eni.alterplanning.web.bean.User;
+import fr.nantes.eni.alterplanning.bean.User;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;

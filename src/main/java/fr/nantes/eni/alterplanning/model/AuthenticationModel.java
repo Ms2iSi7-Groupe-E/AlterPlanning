@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.model;
+package fr.nantes.eni.alterplanning.model;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;

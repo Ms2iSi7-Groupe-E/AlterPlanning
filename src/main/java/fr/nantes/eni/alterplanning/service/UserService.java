@@ -1,9 +1,9 @@
-package fr.nantes.eni.alterplanning.web.service;
+package fr.nantes.eni.alterplanning.service;
 
-import fr.nantes.eni.alterplanning.web.bean.User;
-import fr.nantes.eni.alterplanning.web.converter.UserConverter;
-import fr.nantes.eni.alterplanning.web.entity.UserEntity;
-import fr.nantes.eni.alterplanning.web.repository.IUserRepository;
+import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.converter.UserConverter;
+import fr.nantes.eni.alterplanning.entity.UserEntity;
+import fr.nantes.eni.alterplanning.repository.IUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.converter;
+package fr.nantes.eni.alterplanning.converter;
 
 import java.util.List;
 import java.util.stream.Collectors;

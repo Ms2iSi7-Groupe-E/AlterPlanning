@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.service;
+package fr.nantes.eni.alterplanning.service;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

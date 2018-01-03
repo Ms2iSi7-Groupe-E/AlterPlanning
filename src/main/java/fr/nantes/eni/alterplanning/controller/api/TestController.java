@@ -1,6 +1,6 @@
-package fr.nantes.eni.alterplanning.web.controller.api;
+package fr.nantes.eni.alterplanning.controller.api;
 
-import fr.nantes.eni.alterplanning.web.util.DataEnvelop;
+import fr.nantes.eni.alterplanning.util.DataEnvelop;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

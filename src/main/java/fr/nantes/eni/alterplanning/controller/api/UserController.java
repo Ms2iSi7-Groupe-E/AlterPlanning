@@ -1,15 +1,15 @@
-package fr.nantes.eni.alterplanning.web.controller.api;
+package fr.nantes.eni.alterplanning.controller.api;
 
-import fr.nantes.eni.alterplanning.web.bean.Role;
-import fr.nantes.eni.alterplanning.web.bean.User;
-import fr.nantes.eni.alterplanning.web.mailer.UserMailer;
-import fr.nantes.eni.alterplanning.web.model.AddUserModel;
-import fr.nantes.eni.alterplanning.web.model.ChangePasswordModel;
-import fr.nantes.eni.alterplanning.web.model.UpdateUserModel;
-import fr.nantes.eni.alterplanning.web.service.UserService;
-import fr.nantes.eni.alterplanning.web.util.DataEnvelop;
-import fr.nantes.eni.alterplanning.web.validator.ChangePasswordValidator;
-import fr.nantes.eni.alterplanning.web.validator.UserValidator;
+import fr.nantes.eni.alterplanning.bean.Role;
+import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.mailer.UserMailer;
+import fr.nantes.eni.alterplanning.model.AddUserModel;
+import fr.nantes.eni.alterplanning.model.ChangePasswordModel;
+import fr.nantes.eni.alterplanning.model.UpdateUserModel;
+import fr.nantes.eni.alterplanning.service.UserService;
+import fr.nantes.eni.alterplanning.util.DataEnvelop;
+import fr.nantes.eni.alterplanning.validator.ChangePasswordValidator;
+import fr.nantes.eni.alterplanning.validator.UserValidator;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -159,7 +159,7 @@ public class UserController {
         return DataEnvelop.CreateEnvelop("User successfully updated");
     }
 
-    @RequestMapping(value = "/user/change-password/{uid}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @RequestMapping(value = "/user/{uid}/change-password", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity changePassword(@Valid @RequestBody ChangePasswordModel model,
                                          BindingResult result,
                                          @PathVariable(name = "uid") String uid) {

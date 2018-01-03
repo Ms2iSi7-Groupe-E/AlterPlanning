@@ -1,8 +1,8 @@
-package fr.nantes.eni.alterplanning.web.filter;
+package fr.nantes.eni.alterplanning.filter;
 
-import fr.nantes.eni.alterplanning.web.util.JwtTokenUtil;
-import fr.nantes.eni.alterplanning.web.bean.User;
-import fr.nantes.eni.alterplanning.web.service.UserService;
+import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
+import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

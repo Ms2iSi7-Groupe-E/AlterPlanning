@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.bean;
+package fr.nantes.eni.alterplanning.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

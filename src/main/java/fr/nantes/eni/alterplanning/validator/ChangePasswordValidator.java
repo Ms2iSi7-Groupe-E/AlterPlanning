@@ -1,9 +1,9 @@
-package fr.nantes.eni.alterplanning.web.validator;
+package fr.nantes.eni.alterplanning.validator;
 
 
-import fr.nantes.eni.alterplanning.web.bean.User;
-import fr.nantes.eni.alterplanning.web.model.ChangePasswordModel;
-import fr.nantes.eni.alterplanning.web.service.UserService;
+import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.ChangePasswordModel;
+import fr.nantes.eni.alterplanning.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Errors;

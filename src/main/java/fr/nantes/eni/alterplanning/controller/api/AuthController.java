@@ -1,9 +1,10 @@
-package fr.nantes.eni.alterplanning.web.controller.api;
+package fr.nantes.eni.alterplanning.controller.api;
 
-import fr.nantes.eni.alterplanning.web.util.DataEnvelop;
-import fr.nantes.eni.alterplanning.web.util.JwtTokenUtil;
-import fr.nantes.eni.alterplanning.web.bean.User;
-import fr.nantes.eni.alterplanning.web.model.AuthenticationModel;
+import fr.nantes.eni.alterplanning.util.DataEnvelop;
+import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
+import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.AuthenticationModel;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

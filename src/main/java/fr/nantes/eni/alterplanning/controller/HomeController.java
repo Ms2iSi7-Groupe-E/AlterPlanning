@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.web.controller;
+package fr.nantes.eni.alterplanning.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
