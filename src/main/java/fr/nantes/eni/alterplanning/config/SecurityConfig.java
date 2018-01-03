@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // allow anonymous resource requests
                 .antMatchers("/api/auth/**").anonymous()
+                .antMatchers("/api/test").anonymous() //TODO: remove
                 .antMatchers("/api/**").authenticated();
 
         // Custom JWT based security filter
