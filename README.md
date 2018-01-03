@@ -15,7 +15,10 @@ Projet MS2I
 - Java Spring
 - Angular 5
 - MySql
+- Swagger
 
 ## Utilisateur en base
 
 Tout les utilisateurs présents dans le script ont le mot de passe "test"
+
+L'url de swagger est `/swagger-ui.html`
