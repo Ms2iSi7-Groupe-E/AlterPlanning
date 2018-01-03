@@ -15,3 +15,7 @@ Projet MS2I
 - Java Spring
 - Angular 5
 - MySql
+
+## Utilisateur en base
+
+Tout les utilisateurs présents dans le script ont le mot de passe "test"
