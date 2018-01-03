@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +18,6 @@ public class DataEnvelop {
 
     private HttpStatus status = HttpStatus.OK;
 
-    private Date timestamp = new Date();
-
     private String error;
 
     private Map<String, String> errorList;
@@ -30,7 +27,7 @@ public class DataEnvelop {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        return new ResponseEntity(envelop, status);
+        return new ResponseEntity<>(envelop, status);
     }
 
     private DataEnvelop(Object data) {
@@ -156,25 +153,6 @@ public class DataEnvelop {
     public void setError(String error) {
         this.error = error;
     }
-
-    /**
-     * Gets timestamp.
-     *
-     * @return the timestamp
-     */
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * Sets timestamp.
-     *
-     * @param timestamp the timestamp
-     */
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
 
     /**
      * Gets error list.

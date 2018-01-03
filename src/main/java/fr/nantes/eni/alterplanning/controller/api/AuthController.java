@@ -4,7 +4,6 @@ import fr.nantes.eni.alterplanning.util.DataEnvelop;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import fr.nantes.eni.alterplanning.bean.User;
 import fr.nantes.eni.alterplanning.model.AuthenticationModel;
-import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
