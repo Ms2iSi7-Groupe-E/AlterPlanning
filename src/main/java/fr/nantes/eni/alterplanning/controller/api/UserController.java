@@ -10,6 +10,7 @@ import fr.nantes.eni.alterplanning.service.UserService;
 import fr.nantes.eni.alterplanning.util.DataEnvelop;
 import fr.nantes.eni.alterplanning.validator.ChangePasswordValidator;
 import fr.nantes.eni.alterplanning.validator.UserValidator;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,8 @@ import java.util.Date;
  * Created by ughostephan on 23/06/2017.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
+@Api(value = "Users", description = "Endpoints for user management")
 public class UserController {
 
     @Resource
@@ -39,13 +41,13 @@ public class UserController {
     @Resource
     private UserMailer mailer;
 
-    @GetMapping("/users")
+    @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity getUsers() {
         return DataEnvelop.CreateEnvelop(userService.findAll());
     }
 
-    @GetMapping("/user/{uid}")
+    @GetMapping("/{uid}")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity getUserById(@PathVariable(name = "uid") String uid) {
         final User u = userService.findById(uid);
@@ -57,7 +59,7 @@ public class UserController {
         return DataEnvelop.CreateEnvelop(u);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/me")
     public ResponseEntity getCurrentUser() {
         final User userFromToken = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -70,7 +72,7 @@ public class UserController {
         return DataEnvelop.CreateEnvelop(userFromToken);
     }
 
-    @PostMapping("/user")
+    @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity addUser(@Valid @RequestBody AddUserModel model, BindingResult result) {
 
@@ -102,7 +104,7 @@ public class UserController {
         return DataEnvelop.CreateEnvelop(HttpStatus.CREATED, userAdded);
     }
 
-    @RequestMapping(value = "/user/{uid}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @PutMapping("/{uid}")
     public ResponseEntity updateUser(@Valid @RequestBody UpdateUserModel model,
                                      BindingResult result,
                                      @PathVariable(name = "uid") String uid) {
@@ -159,7 +161,7 @@ public class UserController {
         return DataEnvelop.CreateEnvelop("User successfully updated");
     }
 
-    @RequestMapping(value = "/user/{uid}/change-password", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    @PutMapping("/{uid}/change-password")
     public ResponseEntity changePassword(@Valid @RequestBody ChangePasswordModel model,
                                          BindingResult result,
                                          @PathVariable(name = "uid") String uid) {
@@ -197,7 +199,7 @@ public class UserController {
         return DataEnvelop.CreateEnvelop("Password successfully updated");
     }
 
-    @DeleteMapping("/user/{uid}")
+    @DeleteMapping("/{uid}")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity deleteUser(@PathVariable(name = "uid") String uid) {
 

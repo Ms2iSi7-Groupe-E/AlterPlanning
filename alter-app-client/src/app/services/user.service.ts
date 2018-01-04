@@ -17,31 +17,31 @@ export class UserService {
 
   getUser(uid: String): Observable<any> {
     return this.http
-      .get('/api/user/' + uid, {headers: AuthService.getHeaders()});
+      .get('/api/users/' + uid, {headers: AuthService.getHeaders()});
   }
 
   getMe(): Observable<any> {
     return this.http
-      .get('/api/user', {headers: AuthService.getHeaders()});
+      .get('/api/users/me', {headers: AuthService.getHeaders()});
   }
 
   addUser(body: UserModel): Observable<any> {
     return this.http
-      .post('/api/user', body, {headers: AuthService.getHeaders()});
+      .post('/api/users', body, {headers: AuthService.getHeaders()});
   }
 
   updateUser(uid: String, body: UserModel): Observable<any> {
     return this.http
-      .put('/api/user/' + uid, body, {headers: AuthService.getHeaders()});
+      .put('/api/users/' + uid, body, {headers: AuthService.getHeaders()});
   }
 
   deleteUser(uid: String): Observable<any> {
     return this.http
-      .delete('/api/user/' + uid, {headers: AuthService.getHeaders()});
+      .delete('/api/users/' + uid, {headers: AuthService.getHeaders()});
   }
 
   changePassword(uid: String, body: ChangePasswordModel): Observable<any> {
     return this.http
-      .put('/api/user/change-password/' + uid, body, {headers: AuthService.getHeaders()});
+      .put('/api/users/' + uid + '/change-password', body, {headers: AuthService.getHeaders()});
   }
 }
