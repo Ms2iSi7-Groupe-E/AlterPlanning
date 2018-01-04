@@ -13,6 +13,7 @@ import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
@@ -37,6 +38,16 @@ public class SwaggerConfig {
                 .build()
                 .securityContexts(securityContexts())
                 .securitySchemes(securitySchemes());
+    }
+
+    @Bean
+    public UiConfiguration uiConfig() {
+        final String DOC_EXPANSION = "list"; //list, none, full
+
+        return new UiConfiguration(
+                null, DOC_EXPANSION, "alpha", "schema",
+                UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS, false, true, null
+        );
     }
 
     private List<SecurityScheme> securitySchemes() {
