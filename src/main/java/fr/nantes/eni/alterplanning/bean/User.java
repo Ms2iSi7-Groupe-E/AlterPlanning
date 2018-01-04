@@ -21,6 +21,7 @@ public class User implements UserDetails, Serializable {
      * The constant BIRTHDAY_PATTERN.
      */
     public static final String BIRTHDAY_PATTERN = "yyyy-MM-dd";
+    public static final String CREATED_AT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     private String uid;
 
@@ -30,8 +31,7 @@ public class User implements UserDetails, Serializable {
 
     private String email;
 
-    @JsonFormat
-            (shape = JsonFormat.Shape.STRING, pattern = BIRTHDAY_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = BIRTHDAY_PATTERN)
     private Date birthday;
 
     private String city;
@@ -41,6 +41,7 @@ public class User implements UserDetails, Serializable {
     @JsonIgnore
     private String password;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = CREATED_AT_PATTERN)
     private Date created_at;
 
     private List<String> roles;
