@@ -7,6 +7,7 @@ import fr.nantes.eni.alterplanning.mailer.UserMailer;
 import fr.nantes.eni.alterplanning.model.AddUserModel;
 import fr.nantes.eni.alterplanning.model.ChangePasswordModel;
 import fr.nantes.eni.alterplanning.model.UpdateUserModel;
+import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.UserService;
 import fr.nantes.eni.alterplanning.validator.ChangePasswordValidator;
 import fr.nantes.eni.alterplanning.validator.UserValidator;
@@ -104,8 +105,8 @@ public class UserController {
     }
 
     @PutMapping("/{uid}")
-    public String updateUser(@Valid @RequestBody UpdateUserModel model, BindingResult result,
-                             @PathVariable(name = "uid") String uid) throws RestResponseException {
+    public StringResponse updateUser(@Valid @RequestBody UpdateUserModel model, BindingResult result,
+                                     @PathVariable(name = "uid") String uid) throws RestResponseException {
 
         // User from Token
         final User userFromToken = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -156,11 +157,11 @@ public class UserController {
         // Update user
         userService.update(userToUpdate);
 
-        return "ok";
+        return new StringResponse("User successfully updated");
     }
 
     @PutMapping("/{uid}/change-password")
-    public String changePassword(@Valid @RequestBody ChangePasswordModel model,
+    public StringResponse changePassword(@Valid @RequestBody ChangePasswordModel model,
                                  BindingResult result,
                                  @PathVariable(name = "uid") String uid) throws RestResponseException {
 
@@ -194,12 +195,12 @@ public class UserController {
         // Send Mail to notify password change
         mailer.notifyChangePassword(userToUpdate, model.getNew_password());
 
-        return "ok";
+        return new StringResponse("Password successfully updated");
     }
 
     @DeleteMapping("/{uid}")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-    public String deleteUser(@PathVariable(name = "uid") String uid) throws RestResponseException {
+    public StringResponse deleteUser(@PathVariable(name = "uid") String uid) throws RestResponseException {
 
         // User from Token
         final User userFromToken = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -218,6 +219,6 @@ public class UserController {
         // Delete User
         userService.delete(uid);
 
-        return "ok";
+        return new StringResponse("User successfully deleted");
     }
 }
