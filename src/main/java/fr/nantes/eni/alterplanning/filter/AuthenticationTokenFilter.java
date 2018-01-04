@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.filter;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import fr.nantes.eni.alterplanning.bean.User;
 import fr.nantes.eni.alterplanning.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,7 +34,15 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        final String authToken = request.getHeader(this.tokenHeader);
+        String authToken = request.getHeader(this.tokenHeader);
+        if (StringUtils.isNotEmpty(authToken)) {
+            try {
+                authToken = authToken.split(" ")[1];
+            } catch (Exception e) {
+                authToken = null;
+            }
+        }
+
         final String uid = jwtTokenUtil.getUidFromToken(authToken);
 
         if (uid != null && SecurityContextHolder.getContext().getAuthentication() == null) {

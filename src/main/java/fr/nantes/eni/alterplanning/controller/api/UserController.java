@@ -11,6 +11,7 @@ import fr.nantes.eni.alterplanning.util.DataEnvelop;
 import fr.nantes.eni.alterplanning.validator.ChangePasswordValidator;
 import fr.nantes.eni.alterplanning.validator.UserValidator;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.Authorization;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/api/users")
-@Api(value = "Users", description = "Endpoints for user management")
+@Api(tags = "Users", description = "Endpoints for user management")
 public class UserController {
 
     @Resource

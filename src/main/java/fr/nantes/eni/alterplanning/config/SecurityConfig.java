@@ -59,12 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // allow anonymous resource requests
                 .antMatchers("/api/auth/**").anonymous()
-                .antMatchers("/api/test").anonymous() //TODO: remove
-                .antMatchers("/api/**").authenticated();
+                .antMatchers("/api/**").authenticated().and().exceptionHandling();
 
         // Custom JWT based security filter
-        httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         // disable page caching
         httpSecurity.headers().cacheControl();
