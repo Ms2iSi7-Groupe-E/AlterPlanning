@@ -12,6 +12,7 @@ import fr.nantes.eni.alterplanning.service.UserService;
 import fr.nantes.eni.alterplanning.validator.ChangePasswordValidator;
 import fr.nantes.eni.alterplanning.validator.UserValidator;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/users")
-@Api(tags = "Users", description = "Endpoints for user management")
+@Api(tags = "Users", description = " ")
 public class UserController {
 
     @Resource
@@ -44,12 +45,14 @@ public class UserController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @ApiOperation(value = "Get all the users", notes = "You need to be an administrator to do that")
     public List<User> getUsers() {
         return userService.findAll();
     }
 
     @GetMapping("/{uid}")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @ApiOperation(value = "Get user by id", notes = "You need to be an administrator to do that")
     public User getUserById(@PathVariable(name = "uid") String uid) throws RestResponseException {
         final User u = userService.findById(uid);
 
@@ -61,6 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
+    @ApiOperation(value = "Get my informations")
     public User getCurrentUser() throws RestResponseException {
         final User userFromToken = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -74,6 +78,7 @@ public class UserController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @ApiOperation(value = "Create a user", notes = "You need to be an administrator to do that")
     public User addUser(@Valid @RequestBody AddUserModel model, BindingResult result) throws RestResponseException {
 
         new UserValidator(userService).validate(model, result);
@@ -105,6 +110,7 @@ public class UserController {
     }
 
     @PutMapping("/{uid}")
+    @ApiOperation(value = "Update a user", notes = "If you're not an administrator you can only update yourself, otherwise you can update everybody")
     public StringResponse updateUser(@Valid @RequestBody UpdateUserModel model, BindingResult result,
                                      @PathVariable(name = "uid") String uid) throws RestResponseException {
 
@@ -161,6 +167,7 @@ public class UserController {
     }
 
     @PutMapping("/{uid}/change-password")
+    @ApiOperation(value = "Change password of a user", notes = "You can only change your password, even administrators")
     public StringResponse changePassword(@Valid @RequestBody ChangePasswordModel model,
                                  BindingResult result,
                                  @PathVariable(name = "uid") String uid) throws RestResponseException {
@@ -200,6 +207,7 @@ public class UserController {
 
     @DeleteMapping("/{uid}")
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @ApiOperation(value = "Delete a user", notes = "You need to be an administrator to do that and you can't delete yourself")
     public StringResponse deleteUser(@PathVariable(name = "uid") String uid) throws RestResponseException {
 
         // User from Token

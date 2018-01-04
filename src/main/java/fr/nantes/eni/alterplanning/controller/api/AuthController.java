@@ -6,6 +6,7 @@ import fr.nantes.eni.alterplanning.model.AuthenticationModel;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,15 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Created by ughostephan on 23/06/2017.
  */
 @RestController
 @RequestMapping("/api")
-@Api(tags = "Authentication", description = "Endpoint for create JWT Token ")
+@Api(tags = "Authentication", description = " ")
 public class AuthController {
 
     @Resource
@@ -37,6 +36,7 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/auth")
+    @ApiOperation(value = "Create Authentication Token")
     public StringResponse createAuthenticationToken(@Valid @RequestBody AuthenticationModel model, BindingResult result)
             throws RestResponseException {
 
