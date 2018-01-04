@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-  error: String;
+  errorMessage: String;
   errorList: String[];
   model: AuthModel;
   submitted: boolean;
@@ -20,26 +20,26 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.submitted = false;
     this.model = new AuthModel();
-    this.error = "";
+    this.errorMessage = "";
     this.errorList = [];
   }
 
   onSubmit() {
     this.submitted = true;
-    this.error = "";
+    this.errorMessage = "";
     this.errorList = [];
 
     this.authService.login(this.model).subscribe(
       res => {
-        const token = res["data"];
-        AuthService.setToken(token);
+        AuthService.setToken(res.data);
         this.router.navigate(['/']);
       },
       err => {
         console.error(err);
+        const error = err.error;
         this.submitted = false;
-        this.error = err['error']['message'];
-        this.errorList = err['error']['errorList'] ? err['error']['errorList'] : [];
+        this.errorMessage = error.message;
+        this.errorList = error.errorList ? error.errorList : [];
       }
     )
   }

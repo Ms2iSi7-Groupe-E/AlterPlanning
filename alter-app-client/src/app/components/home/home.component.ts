@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
     this.userService.getMe().subscribe(
       res => {
-        this.user = res['data'];
+        this.user = res;
       },
       err => {
         console.error(err);

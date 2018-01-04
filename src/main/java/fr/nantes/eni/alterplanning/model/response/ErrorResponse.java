@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.bean;
+package fr.nantes.eni.alterplanning.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

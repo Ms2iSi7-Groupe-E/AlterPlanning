@@ -1,6 +1,6 @@
 package fr.nantes.eni.alterplanning.exception;
 
-import fr.nantes.eni.alterplanning.bean.ErrorResponse;
+import fr.nantes.eni.alterplanning.model.response.ErrorResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
