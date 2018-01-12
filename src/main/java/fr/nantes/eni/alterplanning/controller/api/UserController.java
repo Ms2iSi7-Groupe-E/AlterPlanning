@@ -2,6 +2,8 @@ package fr.nantes.eni.alterplanning.controller.api;
 
 import fr.nantes.eni.alterplanning.bean.Role;
 import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.config.cache.CacheControl;
+import fr.nantes.eni.alterplanning.config.cache.CachePolicy;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.mailer.UserMailer;
 import fr.nantes.eni.alterplanning.model.AddUserModel;
@@ -44,6 +46,7 @@ public class UserController {
     private UserMailer mailer;
 
     @GetMapping("")
+    @CacheControl(maxAge = 300)
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     @ApiOperation(value = "Get all the users", notes = "You need to be an administrator to do that")
     public List<User> getUsers() {
