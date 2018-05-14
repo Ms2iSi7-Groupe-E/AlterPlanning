@@ -1,14 +1,14 @@
-package fr.nantes.eni.alterplanning.model;
+package fr.nantes.eni.alterplanning.model.form;
 
-import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
  * Created by ughostephan on 23/06/2017.
  */
-public class ChangePasswordModel implements Serializable {
+public class ChangePasswordForm implements Serializable {
 
     @NotBlank
     private String old_password;
@@ -17,7 +17,7 @@ public class ChangePasswordModel implements Serializable {
     @Size(min = 8)
     private String new_password;
 
-    public ChangePasswordModel() {
+    public ChangePasswordForm() {
     }
 
     public String getOld_password() {

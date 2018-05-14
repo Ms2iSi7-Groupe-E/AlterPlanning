@@ -1,7 +1,7 @@
 package fr.nantes.eni.alterplanning.mailer;
 
 import fr.nantes.eni.alterplanning.service.MailService;
-import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.bean.User;
 import org.apache.velocity.VelocityContext;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
-package fr.nantes.eni.alterplanning.model;
+package fr.nantes.eni.alterplanning.model.form;
 
-import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.bean.User;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
@@ -11,7 +11,7 @@ import java.util.TimeZone;
 /**
  * Created by ughostephan on 24/06/2017.
  */
-public interface IUserModel {
+public interface IUserForm {
 
     String getBirthday();
 

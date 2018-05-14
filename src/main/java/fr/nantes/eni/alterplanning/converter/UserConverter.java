@@ -1,11 +1,8 @@
 package fr.nantes.eni.alterplanning.converter;
 
-import fr.nantes.eni.alterplanning.entity.UserEntity;
-import fr.nantes.eni.alterplanning.bean.User;
-import org.apache.tomcat.util.buf.StringUtils;
+import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.model.bean.User;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
 
 /**
  * Created by ughostephan on 23/06/2017.

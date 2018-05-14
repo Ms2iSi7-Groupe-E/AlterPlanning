@@ -1,7 +1,7 @@
-package fr.nantes.eni.alterplanning.filter;
+package fr.nantes.eni.alterplanning.config.filter;
 
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
-import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.bean.User;
 import fr.nantes.eni.alterplanning.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

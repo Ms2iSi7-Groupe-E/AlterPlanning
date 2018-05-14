@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.bean;
+package fr.nantes.eni.alterplanning.model.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,8 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by ughostephan on 23/06/2017.

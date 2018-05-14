@@ -1,8 +1,8 @@
 package fr.nantes.eni.alterplanning.service;
 
-import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.bean.User;
 import fr.nantes.eni.alterplanning.converter.UserConverter;
-import fr.nantes.eni.alterplanning.entity.UserEntity;
+import fr.nantes.eni.alterplanning.model.entity.UserEntity;
 import fr.nantes.eni.alterplanning.repository.IUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
      * @return the user
      */
     public User findById(final String uid) {
-        return converter.toBean(repository.findOne(uid));
+        return converter.toBean(repository.getOne(uid));
     }
 
     /**
@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
      * @param users the users
      */
     public void createAll(final List<User> users) {
-        repository.save(converter.toEntities(users));
+        repository.saveAll(converter.toEntities(users));
     }
 
     /**
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
      * @param user the user
      */
     public void update(final User user) {
-        UserEntity entity= repository.findOne(user.getUid());
+        UserEntity entity= repository.getOne(user.getUid());
 
         if (entity == null)
             throw new EntityNotFoundException();
@@ -94,7 +94,7 @@ public class UserService implements UserDetailsService {
      * @param uid the uid
      */
     public void delete(final String uid) {
-        UserEntity entityToDelete = repository.findOne(uid);
+        UserEntity entityToDelete = repository.getOne(uid);
 
         if (entityToDelete == null)
             throw new EntityNotFoundException();

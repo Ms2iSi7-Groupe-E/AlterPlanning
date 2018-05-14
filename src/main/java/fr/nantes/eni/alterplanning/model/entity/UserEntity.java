@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.entity;
+package fr.nantes.eni.alterplanning.model.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,7 +14,6 @@ import java.util.Date;
 @Table(name = "users", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"email"})
 })
-
 public class UserEntity {
 
     @Id

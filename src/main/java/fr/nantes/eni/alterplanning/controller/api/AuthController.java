@@ -1,12 +1,9 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
-import fr.nantes.eni.alterplanning.bean.User;
+import fr.nantes.eni.alterplanning.model.bean.User;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
-import fr.nantes.eni.alterplanning.model.AuthenticationModel;
-import fr.nantes.eni.alterplanning.model.response.StringResponse;
+import fr.nantes.eni.alterplanning.model.form.AuthenticationForm;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +32,7 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/auth")
-    public StringResponse createAuthenticationToken(@Valid @RequestBody AuthenticationModel model, BindingResult result)
+    public StringResponse createAuthenticationToken(@Valid @RequestBody AuthenticationForm form, BindingResult result)
             throws RestResponseException {
 
         if (result.hasErrors()) {
@@ -45,8 +42,8 @@ public class AuthController {
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        model.getEmail(),
-                        model.getPassword()
+                        form.getEmail(),
+                        form.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);

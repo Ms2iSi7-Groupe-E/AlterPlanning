@@ -1,8 +1,8 @@
 package fr.nantes.eni.alterplanning.validator;
 
 
-import fr.nantes.eni.alterplanning.bean.User;
-import fr.nantes.eni.alterplanning.model.ChangePasswordModel;
+import fr.nantes.eni.alterplanning.model.bean.User;
+import fr.nantes.eni.alterplanning.model.form.ChangePasswordForm;
 import fr.nantes.eni.alterplanning.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,12 +26,12 @@ public class ChangePasswordValidator implements Validator{
 
     @Override
     public boolean supports(Class clazz) {
-        return ChangePasswordModel.class.equals(clazz);
+        return ChangePasswordForm.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        final ChangePasswordModel request = (ChangePasswordModel) target;
+        final ChangePasswordForm request = (ChangePasswordForm) target;
 
         if (request.getOld_password().equals(request.getNew_password())) {
             errors.rejectValue("old_password", null, "should be different of new_password");

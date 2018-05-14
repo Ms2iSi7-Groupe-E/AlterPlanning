@@ -1,8 +1,8 @@
 package fr.nantes.eni.alterplanning.validator;
 
 
-import fr.nantes.eni.alterplanning.bean.User;
-import fr.nantes.eni.alterplanning.model.IUserModel;
+import fr.nantes.eni.alterplanning.model.bean.User;
+import fr.nantes.eni.alterplanning.model.form.IUserForm;
 import fr.nantes.eni.alterplanning.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.Errors;
@@ -25,12 +25,12 @@ public class UserValidator implements Validator{
 
     @Override
     public boolean supports(Class clazz) {
-        return IUserModel.class.equals(clazz);
+        return IUserForm.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        final IUserModel request = (IUserModel) target;
+        final IUserForm request = (IUserForm) target;
 
         if (StringUtils.isNotEmpty(request.getBirthday())) {
             try {

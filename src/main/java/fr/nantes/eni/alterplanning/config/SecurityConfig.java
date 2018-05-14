@@ -1,6 +1,6 @@
 package fr.nantes.eni.alterplanning.config;
 
-import fr.nantes.eni.alterplanning.filter.AuthenticationTokenFilter;
+import fr.nantes.eni.alterplanning.config.filter.AuthenticationTokenFilter;
 import fr.nantes.eni.alterplanning.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

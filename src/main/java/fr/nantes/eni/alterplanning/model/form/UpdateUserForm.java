@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.model;
+package fr.nantes.eni.alterplanning.model.form;
 
 
 import javax.validation.constraints.Email;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by ughostephan on 23/06/2017.
  */
-public class UpdateUserModel implements Serializable, IUserModel {
+public class UpdateUserForm implements Serializable, IUserForm {
 
     @Size(max = 100)
     private String firstname;
@@ -28,7 +28,7 @@ public class UpdateUserModel implements Serializable, IUserModel {
     @Size(max = 100)
     private String country;
 
-    public UpdateUserModel() {
+    public UpdateUserForm() {
     }
 
     public String getFirstname() {

@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.model;
+package fr.nantes.eni.alterplanning.model.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by ughostephan on 23/06/2017.
  */
-public class AuthenticationModel implements Serializable {
+public class AuthenticationForm implements Serializable {
 
     @NotBlank
     @Email
@@ -16,7 +16,7 @@ public class AuthenticationModel implements Serializable {
     @NotBlank
     private String password;
 
-    public AuthenticationModel() {
+    public AuthenticationForm() {
     }
 
     public String getEmail() {
