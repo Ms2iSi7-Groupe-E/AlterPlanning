@@ -32,7 +32,7 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/auth")
-    public StringResponse createAuthenticationToken(@Valid @RequestBody AuthenticationForm form, BindingResult result)
+    public String createAuthenticationToken(@Valid @RequestBody AuthenticationForm form, BindingResult result)
             throws RestResponseException {
 
         if (result.hasErrors()) {
@@ -50,7 +50,7 @@ public class AuthController {
 
         // Create the token
         final String token = jwtTokenUtil.generateToken((User) authentication.getPrincipal());
-        return new StringResponse(token);
+        return token;
     }
 
 }
