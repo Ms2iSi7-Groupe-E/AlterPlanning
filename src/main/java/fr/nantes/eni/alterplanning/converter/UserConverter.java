@@ -28,7 +28,6 @@ public class UserConverter implements IConverter<User, UserEntity> {
             u.setBirthday(bean.getBirthday());
             u.setPassword(bean.getPassword());
             u.setCreated_at(bean.getCreated_at());
-            u.setRoles(StringUtils.join(bean.getRoles(), ';'));
             u.setEnabled(bean.isEnabled());
         }
 
@@ -50,7 +49,6 @@ public class UserConverter implements IConverter<User, UserEntity> {
             u.setBirthday(entity.getBirthday());
             u.setPassword(entity.getPassword());
             u.setCreated_at(entity.getCreated_at());
-            u.setRoles(Arrays.asList(entity.getRoles().split(";")));
             u.setEnabled(entity.isEnabled());
         }
 

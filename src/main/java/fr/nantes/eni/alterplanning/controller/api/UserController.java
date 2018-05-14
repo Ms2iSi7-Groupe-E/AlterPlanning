@@ -1,9 +1,6 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
-import fr.nantes.eni.alterplanning.bean.Role;
 import fr.nantes.eni.alterplanning.bean.User;
-import fr.nantes.eni.alterplanning.config.cache.CacheControl;
-import fr.nantes.eni.alterplanning.config.cache.CachePolicy;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.mailer.UserMailer;
 import fr.nantes.eni.alterplanning.model.AddUserModel;
@@ -13,11 +10,8 @@ import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.UserService;
 import fr.nantes.eni.alterplanning.validator.ChangePasswordValidator;
 import fr.nantes.eni.alterplanning.validator.UserValidator;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
@@ -33,7 +27,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/users")
-@Api(tags = "Users", description = " ")
 public class UserController {
 
     @Resource
@@ -46,16 +39,11 @@ public class UserController {
     private UserMailer mailer;
 
     @GetMapping("")
-    @CacheControl(maxAge = 300)
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-    @ApiOperation(value = "Get all the users", notes = "You need to be an administrator to do that")
     public List<User> getUsers() {
         return userService.findAll();
     }
 
     @GetMapping("/{uid}")
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-    @ApiOperation(value = "Get user by id", notes = "You need to be an administrator to do that")
     public User getUserById(@PathVariable(name = "uid") String uid) throws RestResponseException {
         final User u = userService.findById(uid);
 
@@ -67,7 +55,6 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    @ApiOperation(value = "Get my informations")
     public User getCurrentUser() throws RestResponseException {
         final User userFromToken = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -80,8 +67,6 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-    @ApiOperation(value = "Create a user", notes = "You need to be an administrator to do that")
     public User addUser(@Valid @RequestBody AddUserModel model, BindingResult result) throws RestResponseException {
 
         new UserValidator(userService).validate(model, result);
@@ -100,7 +85,6 @@ public class UserController {
         userToAdd.setCountry(model.getCountry());
         userToAdd.setPassword(passwordEncoder.encode(model.getPassword()));
         userToAdd.setCreated_at(new Date());
-        userToAdd.addRole(Role.ROLE_USER);
         userToAdd.setEnabled(true);
 
         // Create user
@@ -113,16 +97,8 @@ public class UserController {
     }
 
     @PutMapping("/{uid}")
-    @ApiOperation(value = "Update a user", notes = "If you're not an administrator you can only update yourself, otherwise you can update everybody")
     public StringResponse updateUser(@Valid @RequestBody UpdateUserModel model, BindingResult result,
                                      @PathVariable(name = "uid") String uid) throws RestResponseException {
-
-        // User from Token
-        final User userFromToken = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (!userFromToken.getUid().equals(uid) && !userFromToken.hasRole(Role.ROLE_ADMINISTRATOR)) {
-            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "You can't update someone else");
-        }
 
         new UserValidator(userService)
                 .validate(model, result);
@@ -170,7 +146,6 @@ public class UserController {
     }
 
     @PutMapping("/{uid}/change-password")
-    @ApiOperation(value = "Change password of a user", notes = "You can only change your password, even administrators")
     public StringResponse changePassword(@Valid @RequestBody ChangePasswordModel model,
                                  BindingResult result,
                                  @PathVariable(name = "uid") String uid) throws RestResponseException {
@@ -209,8 +184,6 @@ public class UserController {
     }
 
     @DeleteMapping("/{uid}")
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-    @ApiOperation(value = "Delete a user", notes = "You need to be an administrator to do that and you can't delete yourself")
     public StringResponse deleteUser(@PathVariable(name = "uid") String uid) throws RestResponseException {
 
         // User from Token

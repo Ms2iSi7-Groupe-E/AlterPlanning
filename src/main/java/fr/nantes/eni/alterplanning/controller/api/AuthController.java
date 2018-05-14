@@ -26,7 +26,6 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/api")
-@Api(tags = "Authentication", description = " ")
 public class AuthController {
 
     @Resource
@@ -36,7 +35,6 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/auth")
-    @ApiOperation(value = "Create Authentication Token")
     public StringResponse createAuthenticationToken(@Valid @RequestBody AuthenticationModel model, BindingResult result)
             throws RestResponseException {
 

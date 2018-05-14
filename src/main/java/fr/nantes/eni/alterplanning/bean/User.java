@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Created by ughostephan on 23/06/2017.
  */
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails {
 
     /**
      * The constant BIRTHDAY_PATTERN.
@@ -44,8 +42,6 @@ public class User implements UserDetails, Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = CREATED_AT_PATTERN)
     private Date created_at;
 
-    private List<String> roles;
-
     @JsonIgnore
     private boolean enabled;
 
@@ -53,15 +49,12 @@ public class User implements UserDetails, Serializable {
      * Instantiates a new User.
      */
     public User() {
-        roles = new ArrayList<>();
     }
 
     @Override
     @JsonIgnore
     public Collection<SimpleGrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -262,42 +255,5 @@ public class User implements UserDetails, Serializable {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    /**
-     * Gets roles.
-     *
-     * @return the roles
-     */
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    /**
-     * Sets roles.
-     *
-     * @param roles the roles
-     */
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
-    /**
-     * Add role.
-     *
-     * @param role the role
-     */
-    public void addRole(Role role) {
-        this.roles.add(role.toString());
-    }
-
-    /**
-     * Has role boolean.
-     *
-     * @param role the role
-     * @return the boolean
-     */
-    public boolean hasRole(Role role) {
-        return this.roles.contains(role.toString());
     }
 }

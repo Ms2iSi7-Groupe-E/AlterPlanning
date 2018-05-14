@@ -42,8 +42,6 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
-
-
     @ExceptionHandler(RestResponseException.class)
     public ResponseEntity<ErrorResponse> restResponseExceptionHandler(RestResponseException ex) {
         ErrorResponse error = new ErrorResponse();
