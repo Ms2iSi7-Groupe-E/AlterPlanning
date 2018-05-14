@@ -19,7 +19,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     AppComponent,
     LoginComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     NgbModule.forRoot(),
