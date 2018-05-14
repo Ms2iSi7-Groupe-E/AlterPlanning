@@ -1,7 +1,7 @@
 package fr.nantes.eni.alterplanning.model;
 
-import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
