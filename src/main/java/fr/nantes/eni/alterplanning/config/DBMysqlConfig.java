@@ -41,7 +41,6 @@ public class DBMysqlConfig {
     private String HIBERNATE_FORMAT_SQL;
 
     @Bean
-    @ConfigurationProperties("spring.mysql.datasource")
     public DataSource mysqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(Driver.class.getName());
@@ -55,7 +54,6 @@ public class DBMysqlConfig {
     @Bean(name = "mysqlEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory() {
         Properties properties = new Properties();
-//        properties.put("hibernate.dialect", MySQLDialect.class.getName());
         properties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
         properties.put("hibernate.format_sql", HIBERNATE_FORMAT_SQL);
 
