@@ -7,7 +7,6 @@ import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -27,7 +26,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     @Resource
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
+    private AuthenticationManager authenticationManager;
 
     @Resource
     private JwtTokenUtil jwtTokenUtil;
@@ -43,7 +42,7 @@ public class AuthController {
         // Perform the security
         final Authentication authentication;
         try {
-            authentication = authenticationManagerBuilder.build().authenticate(
+            authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             form.getEmail(),
                             form.getPassword()
