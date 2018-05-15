@@ -1,4 +1,51 @@
-<div>
-  <h2>I'm the navbar bitch</h2>
-  <button class="btn btn-danger" (click)="logout()">Logout</button>
-</div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">
+    <i class="fa fa-home"></i> AlterPlanning
+  </a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">
+          <i class="fa fa-calendar-alt"></i> Proposer un planning
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-search"></i> Recherche
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-sync"></i> Importation
+        </a>
+      </li>
+      <li class="nav-item" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle>
+          <i class="fa fa-cog"></i> Organisation
+        </a>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown-item" href="#">Gestion des pré requis</a>
+          <a class="dropdown-item" href="#">Module complémentaire</a>
+          <a class="dropdown-item" href="#">Modèles de planning</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Paramètrage</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle>
+          <i class="fa fa-user"></i> Nom Prénom
+        </a>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown-item" href="#"><i class="fa fa-history"></i> Historique</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> Déconnexion</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,15 @@
+version: "3.6"
+
+services:
+   mssql:
+     image: microsoft/mssql-server-linux:2017-latest
+     ports:
+       - "1433:1433"
+     volumes:
+       - mssql_data:/var/opt/mssql/data
+       - ${PWD}/mssql_backup:/var/opt/mssql/backup
+     environment:
+       ACCEPT_EULA: "Y"
+       SA_PASSWORD: "Alterplanning-2018"
+volumes:
+    mssql_data:
