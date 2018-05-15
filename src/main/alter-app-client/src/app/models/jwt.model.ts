@@ -8,7 +8,7 @@ export class JwtModel {
     this.parsedJwt = JwtHelper.decodeToken(token);
   }
 
-  getUserUid(): String {
+  getUserid(): String {
     return this.parsedJwt["sub"];
   }
 

@@ -36,8 +36,8 @@
         "order": [
           "static-field",
           "instance-field",
-          "static-method",
-          "instance-method"
+          "instance-method",
+          "static-method"
         ]
       }
     ],
@@ -82,7 +82,7 @@
     ],
     "prefer-const": true,
     "quotemark": [
-      true,
+      false,
       "single"
     ],
     "radix": true,

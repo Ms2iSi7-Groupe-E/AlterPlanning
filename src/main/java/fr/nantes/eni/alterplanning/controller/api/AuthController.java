@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.controller.api;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.entity.UserEntity;
 import fr.nantes.eni.alterplanning.model.form.AuthenticationForm;
+import fr.nantes.eni.alterplanning.model.response.TokenResponse;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +33,7 @@ public class AuthController {
     private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/auth")
-    public String createAuthenticationToken(@Valid @RequestBody AuthenticationForm form, BindingResult result)
+    public TokenResponse createAuthenticationToken(@Valid @RequestBody AuthenticationForm form, BindingResult result)
             throws RestResponseException {
 
         if (result.hasErrors()) {
@@ -49,14 +50,13 @@ public class AuthController {
                     )
             );
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Unable to authenticate, " + e.getMessage();
+            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "Bad credentials");
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Create the token
         final String token = jwtTokenUtil.generateToken((UserEntity) authentication.getPrincipal());
-        return token;
+        return new TokenResponse(token);
     }
 
 }

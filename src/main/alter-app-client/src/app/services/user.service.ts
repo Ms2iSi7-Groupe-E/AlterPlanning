@@ -15,9 +15,9 @@ export class UserService {
       .get('/api/users', {headers: AuthService.getHeaders()});
   }
 
-  getUser(uid: String): Observable<any> {
+  getUser(id: number): Observable<any> {
     return this.http
-      .get('/api/users/' + uid, {headers: AuthService.getHeaders()});
+      .get('/api/users/' + id, {headers: AuthService.getHeaders()});
   }
 
   getMe(): Observable<any> {
@@ -30,18 +30,18 @@ export class UserService {
       .post('/api/users', body, {headers: AuthService.getHeaders()});
   }
 
-  updateUser(uid: String, body: UserModel): Observable<any> {
+  updateUser(id: number, body: UserModel): Observable<any> {
     return this.http
-      .put('/api/users/' + uid, body, {headers: AuthService.getHeaders()});
+      .put('/api/users/' + id, body, {headers: AuthService.getHeaders()});
   }
 
-  deleteUser(uid: String): Observable<any> {
+  deleteUser(id: number): Observable<any> {
     return this.http
-      .delete('/api/users/' + uid, {headers: AuthService.getHeaders()});
+      .delete('/api/users/' + id, {headers: AuthService.getHeaders()});
   }
 
-  changePassword(uid: String, body: ChangePasswordModel): Observable<any> {
+  changePassword(id: number, body: ChangePasswordModel): Observable<any> {
     return this.http
-      .put('/api/users/' + uid + '/change-password', body, {headers: AuthService.getHeaders()});
+      .put('/api/users/' + id + '/change-password', body, {headers: AuthService.getHeaders()});
   }
 }

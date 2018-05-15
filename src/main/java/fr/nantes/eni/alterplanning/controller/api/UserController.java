@@ -7,6 +7,7 @@ import fr.nantes.eni.alterplanning.model.form.ChangePasswordForm;
 import fr.nantes.eni.alterplanning.model.form.UpdateUserForm;
 import fr.nantes.eni.alterplanning.model.form.validator.ChangePasswordValidator;
 import fr.nantes.eni.alterplanning.model.form.validator.UserValidator;
+import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import fr.nantes.eni.alterplanning.service.mailer.UserMailer;
 import org.apache.commons.lang.StringUtils;
@@ -90,8 +91,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public String updateUser(@Valid @RequestBody UpdateUserForm form, BindingResult result,
-                             @PathVariable(name = "id") int id) throws RestResponseException {
+    public StringResponse updateUser(@Valid @RequestBody UpdateUserForm form, BindingResult result,
+                                     @PathVariable(name = "id") int id) throws RestResponseException {
 
         new UserValidator(userDAOService)
                 .validate(form, result);
@@ -119,11 +120,11 @@ public class UserController {
         // Update user
         userDAOService.update(userToUpdate);
 
-        return "User successfully updated";
+        return new StringResponse("User successfully updated");
     }
 
     @PutMapping("/{id}/change-password")
-    public String changePassword(@Valid @RequestBody ChangePasswordForm form,
+    public StringResponse changePassword(@Valid @RequestBody ChangePasswordForm form,
                                  BindingResult result,
                                  @PathVariable(name = "id") int id) throws RestResponseException {
 
@@ -157,11 +158,11 @@ public class UserController {
         // Send Mail to notify password change
         mailer.notifyChangePassword(userToUpdate, form.getNew_password());
 
-        return "Password successfully updated";
+        return new StringResponse("Password successfully updated");
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable(name = "id") int id) throws RestResponseException {
+    public StringResponse deleteUser(@PathVariable(name = "id") int id) throws RestResponseException {
 
         // User from Token
         final UserEntity userFromToken = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -180,6 +181,6 @@ public class UserController {
         // Delete User
         userDAOService.delete(id);
 
-        return "User successfully deleted";
+        return new StringResponse("User successfully deleted");
     }
 }

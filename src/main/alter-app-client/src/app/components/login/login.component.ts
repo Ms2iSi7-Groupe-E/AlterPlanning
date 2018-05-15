@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.model).subscribe(
       res => {
-        AuthService.setToken(res.data);
+        AuthService.setToken(res.token);
         this.router.navigate(['/']);
       },
       err => {
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         this.errorMessage = error.message;
         this.errorList = error.errorList ? error.errorList : [];
       }
-    )
+    );
   }
 
 }
