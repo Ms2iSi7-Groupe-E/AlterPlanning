@@ -6,44 +6,44 @@
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link active">
+        <a class="nav-link active" href="#">
           <i class="fa fa-calendar-alt"></i> Proposer un planning
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">
+        <a class="nav-link" href="#">
           <i class="fa fa-search"></i> Recherche
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">
+        <a class="nav-link" href="#">
           <i class="fa fa-sync"></i> Importation
         </a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle>
           <i class="fa fa-cog"></i> Organisation
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#"><span class="oi oi-command"></span> Gestion des pré requis</a>
-          <a class="dropdown-item" href="#"><span class="oi oi-puzzle-piece"></span> Module complémentaire</a>
-          <a class="dropdown-item" href="#"><span class="oi oi-spreadsheet"></span> Modèles de planning</a>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown-item" href="#">Gestion des pré requis</a>
+          <a class="dropdown-item" href="#">Module complémentaire</a>
+          <a class="dropdown-item" href="#">Modèles de planning</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><span class="oi oi-wrench"></span> Paramètrage</a>
+          <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Paramètrage</a>
         </div>
       </li>
     </ul>
   </div>
   <div class="d-flex flex-row-reverse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle>
           <i class="fa fa-user"></i> Nom Prénom
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#"><span class="oi oi-book"></span> Historique</a>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown-item" href="#"><i class="fa fa-history"></i> Historique</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()"><span class="oi oi-x"></span> Déconnexion</a>
+          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> Déconnexion</a>
         </div>
       </li>
     </ul>
