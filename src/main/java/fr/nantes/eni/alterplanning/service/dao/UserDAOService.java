@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by ughostephan on 23/06/2017.
@@ -21,11 +23,12 @@ public class UserDAOService implements UserDetailsService {
     private IUserRepository repository;
 
     public List<UserEntity> findAll() {
-        return repository.findAll();
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public UserEntity findById(final int id) {
-        return repository.getOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     public UserEntity findByEmailAndActive(final String email) {
@@ -37,16 +40,16 @@ public class UserDAOService implements UserDetailsService {
     }
 
     public void update(final UserEntity user) {
-        UserEntity entity = repository.getOne(user.getId());
+        UserEntity entity = repository.findById(user.getId()).orElse(null);
 
         if (entity == null)
             throw new EntityNotFoundException();
 
-        repository.saveAndFlush(user);
+        repository.save(user);
     }
 
     public void delete(final int id) {
-        UserEntity entityToDelete = repository.getOne(id);
+        UserEntity entityToDelete = repository.findById(id).orElse(null);
 
         if (entityToDelete == null)
             throw new EntityNotFoundException();
