@@ -11,6 +11,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     LoginComponent,
     HomeComponent,
     PageNotFoundComponent,
+    NavbarComponent,
   ],
   imports: [
     NgbModule.forRoot(),

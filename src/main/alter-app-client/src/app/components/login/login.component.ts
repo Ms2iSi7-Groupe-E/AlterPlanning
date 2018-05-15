@@ -31,11 +31,9 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.model).subscribe(
       res => {
-        AuthService.setToken(res.token);
         this.router.navigate(['/']);
       },
       err => {
-        console.error(err);
         const error = err.error;
         this.submitted = false;
         this.errorMessage = error.message;
