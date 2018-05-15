@@ -1,6 +1,6 @@
 package fr.nantes.eni.alterplanning.model.form.validator;
 
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.model.form.ChangePasswordForm;
 import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import org.apache.commons.lang.StringUtils;

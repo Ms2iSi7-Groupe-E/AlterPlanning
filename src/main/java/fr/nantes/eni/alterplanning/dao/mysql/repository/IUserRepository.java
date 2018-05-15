@@ -1,6 +1,6 @@
-package fr.nantes.eni.alterplanning.repository;
+package fr.nantes.eni.alterplanning.dao.mysql.repository;
 
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

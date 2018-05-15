@@ -2,7 +2,6 @@ package fr.nantes.eni.alterplanning.config;
 
 import fr.nantes.eni.alterplanning.config.filter.AuthenticationTokenFilter;
 import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -68,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // allow anonymous resource requests
                 .antMatchers("/api/auth/**").anonymous()
+//                .antMatchers("/api/mock/**").anonymous()
                 .antMatchers("/api/**").authenticated().and().exceptionHandling();
 
         // Custom JWT based security filter

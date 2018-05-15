@@ -1,7 +1,7 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.model.form.AddUserForm;
 import fr.nantes.eni.alterplanning.model.form.ChangePasswordForm;
 import fr.nantes.eni.alterplanning.model.form.UpdateUserForm;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 /**

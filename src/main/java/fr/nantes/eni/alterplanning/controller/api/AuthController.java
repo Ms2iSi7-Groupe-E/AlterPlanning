@@ -1,7 +1,7 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.model.form.AuthenticationForm;
 import fr.nantes.eni.alterplanning.model.response.TokenResponse;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;

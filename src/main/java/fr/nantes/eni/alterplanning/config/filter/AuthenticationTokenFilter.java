@@ -1,6 +1,6 @@
 package fr.nantes.eni.alterplanning.config.filter;
 
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import org.apache.commons.lang.StringUtils;

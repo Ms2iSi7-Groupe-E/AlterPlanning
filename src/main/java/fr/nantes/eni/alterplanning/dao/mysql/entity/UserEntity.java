@@ -1,4 +1,4 @@
-package fr.nantes.eni.alterplanning.model.entity;
+package fr.nantes.eni.alterplanning.dao.mysql.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

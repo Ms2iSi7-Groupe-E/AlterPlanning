@@ -1,7 +1,7 @@
 package fr.nantes.eni.alterplanning.service.dao;
 
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
-import fr.nantes.eni.alterplanning.repository.IUserRepository;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.repository.IUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,6 +1,6 @@
 package fr.nantes.eni.alterplanning.service.mailer;
 
-import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.service.MailService;
 import org.apache.velocity.VelocityContext;
 import org.springframework.stereotype.Component;
