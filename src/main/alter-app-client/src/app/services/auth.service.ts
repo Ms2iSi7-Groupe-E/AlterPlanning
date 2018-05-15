@@ -12,7 +12,7 @@ export class AuthService {
 
   static readonly LOCAL_STORAGE_KEY_TOKEN = 'JWT_TOKEN';
 
-  public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public static loggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -20,14 +20,14 @@ export class AuthService {
     return this.http.post('/api/auth', body).map(res =>  {
         if (res && res['token']) {
           AuthService.setToken(res['token']);
-          this.loggedIn.next(true);
+          AuthService.loggedIn.next(true);
         }
         return res;
       });
   }
 
   logout() {
-    this.loggedIn.next(false);
+    AuthService.loggedIn.next(false);
     AuthService.removeToken();
     this.router.navigate(['/login']);
   }
@@ -40,9 +40,11 @@ export class AuthService {
       const jwt = new JwtModel(token);
 
       if (jwt.expireAt() >= new Date()) {
+        AuthService.loggedIn.next(true);
         isAuthenticated = true;
       } else {
         AuthService.removeToken();
+        AuthService.loggedIn.next(false);
       }
     }
 
