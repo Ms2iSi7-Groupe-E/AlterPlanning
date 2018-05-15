@@ -1,12 +1,13 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
-import fr.nantes.eni.alterplanning.model.bean.User;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
+import fr.nantes.eni.alterplanning.model.entity.UserEntity;
 import fr.nantes.eni.alterplanning.model.form.AuthenticationForm;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     @Resource
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Resource
     private JwtTokenUtil jwtTokenUtil;
@@ -40,16 +41,22 @@ public class AuthController {
         }
 
         // Perform the security
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        form.getEmail(),
-                        form.getPassword()
-                )
-        );
+        final Authentication authentication;
+        try {
+            authentication = authenticationManagerBuilder.build().authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            form.getEmail(),
+                            form.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Unable to authenticate, " + e.getMessage();
+        }
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Create the token
-        final String token = jwtTokenUtil.generateToken((User) authentication.getPrincipal());
+        final String token = jwtTokenUtil.generateToken((UserEntity) authentication.getPrincipal());
         return token;
     }
 

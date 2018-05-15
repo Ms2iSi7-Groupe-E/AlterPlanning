@@ -1,6 +1,8 @@
 package fr.nantes.eni.alterplanning.model.form;
 
 
+import fr.nantes.eni.alterplanning.model.form.validator.IUserMailValidator;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -8,45 +10,24 @@ import java.io.Serializable;
 /**
  * Created by ughostephan on 23/06/2017.
  */
-public class UpdateUserForm implements Serializable, IUserForm {
+public class UpdateUserForm implements Serializable, IUserMailValidator {
 
     @Size(max = 100)
-    private String firstname;
-
-    @Size(max = 100)
-    private String lastname;
+    private String name;
 
     @Email
     @Size(max = 100)
     private String email;
 
-    private String birthday;
-
-    @Size(max = 100)
-    private String city;
-
-    @Size(max = 100)
-    private String country;
-
-    public UpdateUserForm() {
+    public String getName() {
+        return name;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
+    @Override
     public String getEmail() {
         return email;
     }
@@ -54,29 +35,4 @@ public class UpdateUserForm implements Serializable, IUserForm {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
 }

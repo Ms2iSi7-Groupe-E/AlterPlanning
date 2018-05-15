@@ -1,9 +1,11 @@
 package fr.nantes.eni.alterplanning.config;
 
 import fr.nantes.eni.alterplanning.config.filter.AuthenticationTokenFilter;
-import fr.nantes.eni.alterplanning.service.UserService;
+import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +27,7 @@ import javax.annotation.Resource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
-    private UserService userDetailsService;
+    private UserDAOService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

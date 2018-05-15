@@ -1,8 +1,8 @@
 package fr.nantes.eni.alterplanning.config.filter;
 
+import fr.nantes.eni.alterplanning.model.entity.UserEntity;
+import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
-import fr.nantes.eni.alterplanning.model.bean.User;
-import fr.nantes.eni.alterplanning.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +26,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     private String tokenHeader;
 
     @Autowired
-    private UserService userService;
+    private UserDAOService userService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -43,12 +43,12 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             }
         }
 
-        final String uid = jwtTokenUtil.getUidFromToken(authToken);
+        final Integer id = jwtTokenUtil.getIdFromToken(authToken);
 
-        if (uid != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (id != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             // It is not compelling necessary to load the use details from the database. You could also store the information
             // in the token and read it from it. It's up to you ;)
-            final User user = userService.findById(uid);
+            final UserEntity user = userService.findById(id);
 
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
             // the database compellingly. Again it's up to you ;)

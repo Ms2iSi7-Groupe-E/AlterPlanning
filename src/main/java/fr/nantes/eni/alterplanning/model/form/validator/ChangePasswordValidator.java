@@ -1,9 +1,8 @@
-package fr.nantes.eni.alterplanning.validator;
+package fr.nantes.eni.alterplanning.model.form.validator;
 
-
-import fr.nantes.eni.alterplanning.model.bean.User;
+import fr.nantes.eni.alterplanning.model.entity.UserEntity;
 import fr.nantes.eni.alterplanning.model.form.ChangePasswordForm;
-import fr.nantes.eni.alterplanning.service.UserService;
+import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Errors;
@@ -14,13 +13,13 @@ import org.springframework.validation.Validator;
  */
 public class ChangePasswordValidator implements Validator{
 
-    private final String uid;
-    private final UserService userService;
+    private final int id;
+    private final UserDAOService userDAOService;
     private final PasswordEncoder passwordEncoder;
 
-    public ChangePasswordValidator(String uid, UserService userService, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.uid = uid;
+    public ChangePasswordValidator(int id, UserDAOService userDAOService, PasswordEncoder passwordEncoder) {
+        this.userDAOService = userDAOService;
+        this.id = id;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -39,7 +38,7 @@ public class ChangePasswordValidator implements Validator{
         }
 
         if (StringUtils.isNotEmpty(request.getOld_password())) {
-            final User user = userService.findById(uid);
+            final UserEntity user = userDAOService.findById(id);
 
             if (!passwordEncoder.matches(request.getOld_password(), user.getPassword())) {
                 errors.rejectValue("old_password", null, "not match with database");

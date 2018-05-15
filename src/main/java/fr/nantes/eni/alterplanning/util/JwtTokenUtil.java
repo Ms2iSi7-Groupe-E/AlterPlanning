@@ -1,6 +1,6 @@
 package fr.nantes.eni.alterplanning.util;
 
-import fr.nantes.eni.alterplanning.model.bean.User;
+import fr.nantes.eni.alterplanning.model.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,9 +34,9 @@ public class JwtTokenUtil {
      * @param user  the user
      * @return the boolean
      */
-    public Boolean validateToken(String token, User user) {
-        final String uid = getUidFromToken(token);
-        return (uid.equals(user.getUid()) && !isTokenExpired(token));
+    public Boolean validateToken(String token, UserEntity user) {
+        final Integer id = getIdFromToken(token);
+        return (id.equals(user.getId()) && !isTokenExpired(token));
     }
 
     /**
@@ -45,23 +45,23 @@ public class JwtTokenUtil {
      * @param user the user
      * @return the string
      */
-    public String generateToken(User user) {
+    public String generateToken(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_SUBJECT, user.getUid());
-        claims.put(CLAIM_KEY_NAME, user.getFirstname() + " " + user.getLastname());
+        claims.put(CLAIM_KEY_SUBJECT, String.valueOf(user.getId()));
+        claims.put(CLAIM_KEY_NAME, user.getName());
         claims.put(CLAIM_KEY_EMAIL, user.getEmail());
         return generateToken(claims);
     }
 
-    public String getUidFromToken(String token) {
-        String uid;
+    public Integer getIdFromToken(String token) {
+        Integer id;
         try {
             final Claims claims = getClaimsFromToken(token);
-            uid = claims.getSubject();
+            id = Integer.parseInt(claims.getSubject());
         } catch (Exception e) {
-            uid = null;
+            id = null;
         }
-        return uid;
+        return id;
     }
 
     private Date getExpirationDateFromToken(String token) {
