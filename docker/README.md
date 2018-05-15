@@ -13,7 +13,7 @@ Documentation pour récupérer un SQL Server avec docker.
 Lancer la commande suivante :
 
 ```
-docker-composer up -d
+docker-compose up -d
 ```
 
 Docker ce lance alors et télécharge (seulement au premier lancement) ses dépendances.
