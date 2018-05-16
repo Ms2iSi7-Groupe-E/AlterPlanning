@@ -41,7 +41,7 @@ public class PromotionController {
     }
 
     @GetMapping("/{codePromotion}/cours")
-    public List<CoursEntity> getCoursByCodePromotion(@PathVariable(name = "codePromotion") String codePromotion) {
-        return coursDAOService.findByCodePromotion(codePromotion);
+    public List<CoursEntity> getCoursByPromotion(@PathVariable(name = "codePromotion") String codePromotion) {
+        return coursDAOService.findByPromotion(codePromotion);
     }
 }
