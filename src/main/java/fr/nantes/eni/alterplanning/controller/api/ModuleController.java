@@ -1,7 +1,9 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.ModuleEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
+import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleDAOService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ public class ModuleController {
     @Resource
     private ModuleDAOService moduleDAOService;
 
+    @Resource
+    private CoursDAOService coursDAOService;
+
     @GetMapping("")
     public List<ModuleEntity> getModules() {
         return moduleDAOService.findAll();
@@ -33,5 +38,10 @@ public class ModuleController {
         }
 
         return m;
+    }
+
+    @GetMapping("/{idModule}/cours")
+    public List<CoursEntity> getCoursByModule(@PathVariable(name = "idModule") Integer idModule) {
+        return coursDAOService.findByModule(idModule);
     }
 }

@@ -1,7 +1,9 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.LieuEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
+import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.LieuDAOService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ public class LieuController {
     @Resource
     private LieuDAOService lieuDAOService;
 
+    @Resource
+    private CoursDAOService coursDAOService;
+
     @GetMapping("")
     public List<LieuEntity> getLieux() {
         return lieuDAOService.findAll();
@@ -33,5 +38,10 @@ public class LieuController {
         }
 
         return l;
+    }
+
+    @GetMapping("/{codeLieu}/cours")
+    public List<CoursEntity> getCoursByLieu(@PathVariable(name = "codeLieu") Integer codeLieu) {
+        return coursDAOService.findByLieu(codeLieu);
     }
 }
