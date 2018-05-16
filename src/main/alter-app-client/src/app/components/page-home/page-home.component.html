@@ -1,37 +1,105 @@
 <div class="container">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">User</h5>
-      <pre>{{user|json}}</pre>
-    </div>
-  </div>
-
-  <br>
-
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Promotions</h5>
-
-      <select class="form-control" [(ngModel)]="selectedPromotion" (change)="changePromotion()">
-        <option selected disabled>Choisir une promotion</option>
-        <option *ngFor="let p of promotions" [ngValue]="p">{{ p.libelle }}</option>
-      </select>
-    </div>
-  </div>
-
-  <br>
-
-  <div class="card" *ngIf="selectedPromotion && cours.length !== 0">
-    <div class="card-body">
-      <h5 class="card-title">Cours associés</h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" *ngFor="let c of cours">
-          <b>{{ c.libelleCours }}</b> <br>
-          {{ c.debut }} / {{ c.fin }}
-        </li>
-      </ul>
-    </div>
-  </div>
-
+  <main role="main" style="padding-top:50px;">
+			<h2>Interface de proposition de planning</h2>
+			<div class="d-flex flex-row mon_form">
+				<div class="p-3 mon_h">
+					<div>
+						<span>Pour :</span>
+						<input type="text" class="form-control" style="width:150px" placeholder="Nom"/>
+						<input type="text" class="form-control" style="width:150px" placeholder="Prénom"/>
+						<input type="text" class="form-control" style="width:200px" placeholder="Nom de l'entreprise"/>
+					</div>
+					<div>
+						<span>Nombre d'heures :</span>
+						<input type="text" class="form-control" style="width:70px" placeholder="Min."/>
+						<span>ou / et</span>
+						<input type="text" class="form-control" style="width:70px" placeholder="Max."/>
+					</div>
+					<div>
+						<span>Date de début :</span>
+						<input type="text" class="form-control" style="width:150px" placeholder="Aujourd'hui"/>
+						<button type="button" class="btn btn-outline-info" style="vertical-align: baseline;"><i class="fas fa-table"></i></button>
+					</div>
+				</div>
+				<div class="p-3">
+					<span>Lieux :</span>
+					<div>
+						<label><input type="checkbox"> Nantes </label>
+						<label><input type="checkbox"> Rennes </label>
+						<label><input type="checkbox"> St Nazaires </label>
+						<label><input type="checkbox"> ENI Service </label>
+						<label><input type="checkbox"> Autre </label>
+					</div>
+					<div>
+						<label><input type="checkbox"> Niort </label>
+						<label><input type="checkbox"> Quimper </label>
+						<label><input type="checkbox"> Hub Creatic </label>
+						<label><input type="checkbox"> La Roche sur Yon </label>
+					</div>
+					<div>
+						<label><input type="checkbox"> Angers </label>
+						<label><input type="checkbox"> Le Mans </label>
+						<label><input type="checkbox"> Eptoyou </label>
+						<label><input type="checkbox"> Salle Edition </label>
+					</div>
+				</div>
+			</div>
+			<hr/>
+			<div class="d-flex flex-row">
+				<div class="p-3">
+					<span>Alimenter à partir du modèle :</span>
+					<select class="form-control" [(ngModel)]="selectedModels" (change)="changeModels()">
+						<option selected [ngValue]="null">Choisir un modèle...</option>
+						<option *ngFor="let m of models" [ngValue]="m">{{ m.name }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="d-flex justify-content-between bd-highlight mb-3">
+				<div class="p-2 bd-highlight">
+					<button type="button" class="btn btn-outline-success" style="vertical-align: baseline;"><i class="fas fa-plus"></i> Ajouter un élément</button>
+				</div>
+				<div class="p-2 bd-highlight">
+					<button type="button" class="btn btn-outline-danger" style="vertical-align: baseline;"><i class="fas fa-ban"></i> Dispenser un élément</button>
+				</div>
+				<div class="p-2 bd-highlight">
+					<button type="button" class="btn btn-outline-secondary" style="vertical-align: baseline;"><i class="far fa-trash-alt"></i> Effacer tout</button>
+				</div>
+			</div>
+			<div class="row" style="border:1px solid #ccc;margin: 0 7px;padding:5px 0 5px 5px;">
+				<div class="col" style="border:1px solid #f4d942;background-color:#fceb8f;padding-top: 5px;">
+					<i class="far fa-calendar-alt"></i> Variante du calendrier #607, à partir du 01/02/2018
+				</div>
+				<div class="col-2" style="text-align:right">
+					<button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
+				</div>
+			</div>
+			<div class="row" style="border:1px solid #ccc;margin: 5px 7px 0px 7px;padding:5px 0 5px 5px;">
+				<div class="col" style="border:1px solid #fc8600;background-color:#ffc787;padding-top: 5px;">
+					<i class="far fa-calendar-alt"></i> Dispense UF : Formation aux tests
+				</div>
+				<div class="col-2" style="text-align:right">
+					<button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
+				</div>
+			</div>
+			<div class="row" style="border:1px solid #ccc;margin: 5px 7px 0px 7px;padding:5px 0 5px 5px;">
+				<div class="col" style="border:1px solid #2d601d;background-color:#d0ffc1;padding-top: 5px;">
+					<i class="far fa-calendar-alt"></i> Formation : MS2I-SI
+				</div>
+				<div class="col-2" style="text-align:right">
+					<button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
+				</div>
+			</div>
+			<div class="row" style="border:1px solid #ccc;margin: 5px 7px 0px 7px;padding:5px 0 5px 5px;">
+				<div class="col" style="border:1px solid #2d601d;background-color:#d0ffc1;padding-top: 5px;">
+					<i class="far fa-calendar-alt"></i> Module : Rappels sur la programmation en Java
+				</div>
+				<div class="col-2" style="text-align:right">
+					<button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
+				</div>
+			</div>
+			<div class="row float-right" style="margin: 10px 7px;">
+				<button type="button" class="btn btn-info" style="vertical-align: baseline;" onclick="window.location.href='detail_calendrier.html'"><i class="fas fa-camera"></i> Génération de la proposition</button>
+			</div>
+		</main>
 </div>
 

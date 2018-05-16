@@ -1,0 +1,116 @@
+h2{
+    padding-left: 10px;
+}
+.row{
+    padding:0 25px;
+    margin-bottom:5px;
+}
+.col:not(:last-child){
+    margin-right:5px;
+}
+.col{
+    border:1px solid #ccc;
+    background-color:#e8e8e8;
+    border-radius:3px;
+}
+.item_module{
+    border:1px solid #2d601d;
+    background-color:#d0ffc1;
+    padding: 2px 10px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75ch;
+}
+.over_green:hover{
+    cursor: pointer;
+    border: 1px solid #4bff12;
+    background-color: #b8ffc0;
+}
+.item_result{
+    background-color:#ecafff;
+}
+.purple:hover{
+    cursor: pointer;
+    background-color: #ecd1f5;
+    border: 1px solid #d8a4da;
+}
+.item_select{
+    background-color:#afdcff;
+    margin-bottom:6px;
+}
+.ico_and{
+    border: 1px solid #99a0ec;
+    border-radius: 3px;
+    background-color: #82bee6;
+    color: white;
+    padding: 5px;
+    margin-bottom:6px;
+}
+.ico_delete{
+    border-radius: 3px;
+    color: #f58282;
+    float: right;
+    margin-top: 2px;
+}
+.ico_delete:hover{
+    color: red;
+    cursor: pointer;
+}
+.ico_or{
+    display: inline-block;
+    border: 1px solid #7cb17b;
+    border-radius: 3px;
+    background-color: #6eec2b;
+    color: white;
+    padding: 3px;
+    margin-bottom:6px;
+}
+.item_show_liste{
+    width: 30%;
+    display: inline-block;
+    float: left;
+    background-color: #b3e6f5;
+}
+.item_show_liste:hover{
+    cursor: pointer;
+    background-color: #e1eef9;
+    border: 1px solid #c7fffc;
+}
+.tbl_liste td{
+    padding-top:5px;
+}
+.tbl_liste tr:first-child td {
+    padding-bottom:5px;
+}
+.tbl_liste tr:not(:last-child){
+    border-bottom:1px solid #ccc;
+}
+.tbl_liste td:nth-child(2){
+    padding-left:5px;
+}
+.td_one{
+    padding-right:5px;
+}
+.no_hover:hover{
+    cursor: pointer;
+}
+.ico_operator_and,.ico_operator_or{
+    padding: 5px;
+    display: inline-block;
+    float: left;
+    margin-right: 4px;
+    border-radius: 3px;
+    color: white;
+}
+.ico_operator_and{
+    border: 1px solid #99a0ec;
+    background-color: #82bee6;
+}
+.ico_operator_or{
+    border: 1px solid #7cb17b;
+    background-color: #6eec2b;
+    line-height: 1;
+    padding: 4px 5px 5px 5px;
+}

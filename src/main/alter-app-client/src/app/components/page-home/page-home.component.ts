@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
-import {PromotionService} from "../../services/promotion.service";
+import { ModelsService } from '../../services/models.service';
+//import { CourService } from '../../services/cour.service';
 
 @Component({
   selector: 'app-home',
@@ -8,43 +8,32 @@ import {PromotionService} from "../../services/promotion.service";
   styleUrls: ['./page-home.component.scss']
 })
 export class PageHomeComponent implements OnInit {
-  user = {};
-  promotions = [];
-  selectedPromotion;
-  cours = [];
+  models = [];
+  selectedModels = null;
 
-  constructor(private userService: UserService,
-              private promotionService: PromotionService) { }
+  constructor(private modelsService: ModelsService) { }
 
   ngOnInit() {
-    this.userService.getMe().subscribe(
-      res => {
-        this.user = res;
-      },
-      err => {
-        console.error(err);
-      }
-    );
-
-    this.promotionService.getPromotions().subscribe(
-      res => {
-        this.promotions = res;
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.models = this.modelsService.getModels();
   }
 
-  changePromotion() {
-    this.promotionService.getCourByCodePromotion(this.selectedPromotion.codePromotion).subscribe(
+  changeModels() {
+    console.log(this.selectedModels);
+  }
+  /*cours = [];
+
+  constructor(private courService: CourService) { }
+
+  ngOnInit() {
+    this.courService.getCours().subscribe(
       res => {
+        //console.log(res);
         this.cours = res;
       },
       err => {
         console.error(err);
       }
     );
-  }
+  }*/
 
 }
