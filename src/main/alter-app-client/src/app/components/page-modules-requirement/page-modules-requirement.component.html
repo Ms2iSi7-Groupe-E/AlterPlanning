@@ -1,3 +1,169 @@
-<p>
-  page-modules-requirement works!
-</p>
+<div class="container">
+  <main role="main" style="padding-top:50px;">
+    <h2>Gestion des pré requis</h2>
+    <div class="row">
+      <div class="col" style="width:33%;">
+        <h4>Module concerné</h4>
+        <table width="100%">
+          <tr>
+            <td>Titre :</td>
+            <td align="right">
+              <input type="text" class="form-control" placeholder="Saisir le titre"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Formation :</td>
+            <td>
+              <input type="text" class="form-control" placeholder="Saisir la formation"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Module :</td>
+            <td>
+              <input type="text" class="form-control" placeholder="Saisir le module"/>
+            </td>
+          </tr>
+        </table>
+        <div>
+          <span style="text-decoration: underline;">Résultat(s):</span>
+          <div class="col item_module over_green">
+            <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
+          </div>
+          <div class="col item_module over_green">
+            <i class="far fa-calendar-alt"></i> Services Réseaux
+          </div>
+          <div class="col item_module over_green">
+            <i class="far fa-calendar-alt"></i> Développement Web côté client
+          </div>
+          <div class="col item_module over_green">
+            <i class="far fa-calendar-alt"></i> .........
+          </div>
+        </div>
+      </div>
+      <div class="col" style="width:33%;">
+        <h4>Ajouter un Pré requis à</h4>
+        <div class="col item_module">
+          <i class="far fa-calendar-alt"></i> Services Réseaux
+        </div>
+        <table width="100%">
+          <tr>
+            <td>Titre :</td>
+            <td align="right">
+              <input type="text" class="form-control" placeholder="Saisir le titre"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Formation :</td>
+            <td>
+              <input type="text" class="form-control" placeholder="Saisir la formation"/>
+            </td>
+          </tr>
+          <tr>
+            <td>Module :</td>
+            <td>
+              <input type="text" class="form-control" placeholder="Saisir le module"/>
+            </td>
+          </tr>
+        </table>
+        <div>
+          <div>
+            <span style="text-decoration: underline;">Résultat(s):</span>
+            <div style="float: right;margin-right: 5px;">
+              <input type="radio" name="item_operator" checked="checked"/> Et
+              <input type="radio" name="item_operator"/> Ou
+            </div>
+          </div>
+          <div class="col item_module item_result purple">
+            <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
+          </div>
+          <div class="col item_module item_result purple">
+            <i class="far fa-calendar-alt"></i> Services Réseaux
+          </div>
+          <div class="col item_module item_result purple">
+            <i class="far fa-calendar-alt"></i> Développement Web côté client
+          </div>
+        </div>
+      </div>
+      <div class="col" style="width:33%;">
+        <h4>Pré requis</h4>
+        <div>
+          <div class="col item_module item_select">
+            <i class="far fa-calendar-alt"></i> Téléphonie IP et Messagerie
+            <i class="fas fa-times-circle ico_delete"></i>
+          </div>
+          <div style="text-align:center;">
+            <i class="fas fa-plus-square ico_and"></i>
+          </div>
+          <div class="col item_module item_select">
+            <i class="far fa-calendar-alt"></i> Développement Web côté client
+            <i class="fas fa-times-circle ico_delete"></i>
+          </div>
+          <div style="text-align:center;">
+            <span class="ico_or">
+              <i class="fas fa-chevron-left"></i>
+              Ou
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </div>
+          <div class="col item_module item_select">
+            <i class="far fa-calendar-alt"></i> ..................
+            <i class="fas fa-times-circle ico_delete"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="padding-bottom:5px;">
+        <h4>Liste des pré requis</h4>
+        <table width="100%" class="tbl_liste">
+          <tr>
+            <td width="30%">
+              Module : 
+              <input type="text" class="form-control" placeholder="Saisir le module" style="display: inline-block;width: auto;"/>
+            </td>
+            <td>
+              Pré requis : 
+              <input type="text" class="form-control" placeholder="Saisir le module pré requis" style="display: inline-block;width: 60%;"/>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td class="td_one">
+              <div class="col item_module over_green">
+                <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
+              </div>
+            </td>
+            <td>
+              <div class="col item_module item_show_liste">
+                <i class="far fa-calendar-alt"></i> Téléphonie IP et Messagerie
+              </div>
+              <i class="fas fa-plus-square ico_operator_and"></i>
+              <div class="col item_module item_show_liste">
+                <i class="far fa-calendar-alt"></i> Développement Web côté client
+              </div>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td class="td_one">
+              <div class="col item_module over_green">
+                <i class="far fa-calendar-alt"></i> .....................
+              </div>
+            </td>
+            <td>
+              <div class="col item_module item_show_liste">
+                <i class="far fa-calendar-alt"></i> .................
+              </div>
+              <div class="ico_operator_or">
+                <i class="fas fa-chevron-left"></i>
+                Ou
+                <i class="fas fa-chevron-right"></i>
+              </div>
+              <div class="col item_module item_show_liste">
+                <i class="far fa-calendar-alt"></i> .................
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
