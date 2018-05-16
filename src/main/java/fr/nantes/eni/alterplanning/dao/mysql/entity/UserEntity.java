@@ -38,11 +38,11 @@ public class UserEntity implements UserDetails {
     @JsonIgnore
     private String password;
 
-    @Column(name = "isAdmin")
+    @Column(name = "is_admin")
     @NotNull
     private boolean admin = false;
 
-    @Column(name = "isActive")
+    @Column(name = "is_active")
     @NotNull
     @JsonIgnore
     private boolean active = true;
