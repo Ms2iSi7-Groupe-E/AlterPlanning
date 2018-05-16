@@ -32,7 +32,7 @@ public class ModuleEntity {
     private Integer typeModule;
 
     @Column(name = "Archiver")
-    private Integer archiver;
+    private Boolean archiver;
 
     public Integer getIdModule() {
         return idModule;
@@ -90,11 +90,11 @@ public class ModuleEntity {
         this.typeModule = typeModule;
     }
 
-    public Integer getArchiver() {
+    public Boolean getArchiver() {
         return archiver;
     }
 
-    public void setArchiver(Integer archiver) {
+    public void setArchiver(Boolean archiver) {
         this.archiver = archiver;
     }
 }

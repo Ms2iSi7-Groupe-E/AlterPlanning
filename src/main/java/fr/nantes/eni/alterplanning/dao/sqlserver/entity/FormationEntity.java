@@ -48,10 +48,10 @@ public class FormationEntity {
     private Integer dureeEnSemaines;
 
     @Column(name = "Archiver")
-    private Integer archiver;
+    private Boolean archiver;
 
     @Column(name = "ECFaPasser")
-    private Integer eCFaPasser;
+    private Boolean eCFaPasser;
 
     @Column(name = "TypeFormation")
     private Integer typeFormation;
@@ -155,19 +155,19 @@ public class FormationEntity {
         this.dureeEnSemaines = dureeEnSemaines;
     }
 
-    public Integer getArchiver() {
+    public Boolean getArchiver() {
         return archiver;
     }
 
-    public void setArchiver(Integer archiver) {
+    public void setArchiver(Boolean archiver) {
         this.archiver = archiver;
     }
 
-    public Integer geteCFaPasser() {
+    public Boolean geteCFaPasser() {
         return eCFaPasser;
     }
 
-    public void seteCFaPasser(Integer eCFaPasser) {
+    public void seteCFaPasser(Boolean eCFaPasser) {
         this.eCFaPasser = eCFaPasser;
     }
 
