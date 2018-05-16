@@ -8,35 +8,26 @@
           <tr>
             <td>Titre :</td>
             <td align="right">
-              <input type="text" class="form-control" placeholder="Saisir le titre"/>
+              <input type="text" class="form-control" placeholder="Saisir le titre" [(ngModel)]="sourceTitle" (keyup)="findModuleSource()"/>
             </td>
           </tr>
           <tr>
             <td>Formation :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir la formation"/>
+              <input type="text" class="form-control" placeholder="Saisir la formation" [(ngModel)]="sourceFormation" (keyup)="findModuleSource()"/>
             </td>
           </tr>
           <tr>
             <td>Module :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir le module"/>
+              <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
             </td>
           </tr>
         </table>
         <div>
           <span style="text-decoration: underline;">Résultat(s):</span>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
-          </div>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> Services Réseaux
-          </div>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> Développement Web côté client
-          </div>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> .........
+          <div *ngFor="let m of sourcesModules" class="col item_module over_green">
+            <i class="far fa-calendar-alt"></i> {{ m.Libelle }}
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ import { ModelsService } from '../../services/models.service';
 export class PageHomeComponent implements OnInit {
   models = [];
   selectedModels = null;
+  searchCriteria = [];
 
   constructor(private modelsService: ModelsService) { }
 

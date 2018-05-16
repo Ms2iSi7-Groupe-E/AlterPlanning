@@ -1,0 +1,1722 @@
+[
+  {
+    "Libelle": "Le langage de requête SQL",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SQL",
+    "IdModule": "20",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Procédures stockées avec PL-SQL",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PL-SQL",
+    "IdModule": "21",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Stage Développeur Logiciel",
+    "DureeEnHeures": "280",
+    "DureeEnSemaines": "8",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "STAGE-DL",
+    "IdModule": "33",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Utilisation de frameworks pour le développement avec Java EE",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "J2EAV",
+    "IdModule": "34",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Conduite de projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "CP-COURS",
+    "IdModule": "36",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Base des réseaux",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-BDR",
+    "IdModule": "44",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Utilisation et administration d'un système Windows Client",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-W7",
+    "IdModule": "45",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "ITIL, gestion de parc et centre de support",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-ITIL",
+    "IdModule": "51",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "TP services réseaux hétérogènes",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-RES-TP",
+    "IdModule": "53",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Messagerie",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-MESSAG",
+    "IdModule": "54",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "TP et évaluations finales",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-EVAL",
+    "IdModule": "56",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Stage Informaticien Micro",
+    "DureeEnHeures": "280",
+    "DureeEnSemaines": "8",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-STAGE",
+    "IdModule": "57",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Stage Administrateur Système et Réseau",
+    "DureeEnHeures": "280",
+    "DureeEnSemaines": "8",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "STAGE-ASR",
+    "IdModule": "93",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Assistance bureautique",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "BUREAUTIQUE",
+    "IdModule": "192",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Utilisation et administration d'un système Linux",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-UA-LINUX",
+    "IdModule": "269",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services Réseaux Linux",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-RES-LIN-2014",
+    "IdModule": "270",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement avec Java SE",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "JAVA-1",
+    "IdModule": "301",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté serveur avec Java EE",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "JAVA-2",
+    "IdModule": "302",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Stage CDI",
+    "DureeEnHeures": "280",
+    "DureeEnSemaines": "8",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "STAGE-CDI2",
+    "IdModule": "304",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Supervision avec Nagios",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "NAGIOS",
+    "IdModule": "317",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services réseaux Windows",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-RES-WINDOWS",
+    "IdModule": "344",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Déploiement des postes de travail sur un réseau d'entreprise",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-WDS",
+    "IdModule": "345",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Administration d'un serveur applicatif",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-SERV-APPL",
+    "IdModule": "346",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Virtualisation et clients légers",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-VIRT",
+    "IdModule": "347",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Bilan final",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-IM-BILAN",
+    "IdModule": "421",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Supervision avec NAGIOS",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-NAGIOS",
+    "IdModule": "477",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Initiation aux réseaux en environnement CISCO (CCNA-1V5)",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "CISCO-1",
+    "IdModule": "478",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Immersion en entreprise",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "STAGE-POE2",
+    "IdModule": "497",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Utilisation des environnements Windows et GNU/Linux",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "UTIL-POSTE",
+    "IdModule": "506",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Administration des systèmes informatiques",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "ADMIN-SYST",
+    "IdModule": "509",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Virtualisation de serveurs : gestion et exploitation",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "VIRT-TSRIT",
+    "IdModule": "513",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Gestion de projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GPROJ-TSRIT",
+    "IdModule": "515",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Scripting et PowerShell",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SCRIPT-PWSHEL",
+    "IdModule": "517",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Téléphonie IP et Messagerie",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "TOIP-MESSAGERIE",
+    "IdModule": "519",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Routage et commutation avancés en environnement CISCO (CCNA 2 et 3 V5)",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "CISCO-2-3",
+    "IdModule": "523",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Stage Systèmes et Réseaux",
+    "DureeEnHeures": "280",
+    "DureeEnSemaines": "8",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "STAGE-TSRIT",
+    "IdModule": "525",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Utilisation et administration d'une base de données",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "UTIL-ADMIN-BD",
+    "IdModule": "527",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Administration des systèmes informatiques : niveau avancé",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "ADMIN-SYST-AV",
+    "IdModule": "529",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services réseaux et sécurité",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SERV-RES-SEC",
+    "IdModule": "531",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Virtualisation de serveurs : conception et architecture",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "VIRT-ASR",
+    "IdModule": "533",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Serveurs WEB et serveurs d'applications",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SERV-WEB",
+    "IdModule": "536",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté client",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "DVWEBCL",
+    "IdModule": "541",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté serveur avec PHP et Symfony",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "DVWEBPH",
+    "IdModule": "544",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Analyse et conception",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "CONC-1",
+    "IdModule": "552",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet analyse et conception",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "CONC-2",
+    "IdModule": "553",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté serveur avec ASP.Net",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "DVWEBASPX",
+    "IdModule": "560",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Technologie multi plateforme (Cross-platform)",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "XAMARIN",
+    "IdModule": "566",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Immersion en entreprise",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-STAGE-POE",
+    "IdModule": "576",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Projet systèmes et réseaux - 1",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PROJ-TSRIT",
+    "IdModule": "625",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Algorithme et initiation à la programmation",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-SOP-ALGO",
+    "IdModule": "648",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "SQL et initiation NoSQL",
+    "DureeEnHeures": "21",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-SOP-SQL",
+    "IdModule": "649",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Programmation orientée objet avec Java",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-SOP-POOJ",
+    "IdModule": "650",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "AngularJS",
+    "DureeEnHeures": "21",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-SOP-ANG",
+    "IdModule": "655",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Algorithme et initiation programmation",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "MODULEINDEPENDANT",
+    "IdModule": "692",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Initiation à la programmation orientée objet et au langage SQL",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "INIPOOSQL",
+    "IdModule": "698",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Préparation à la certification CFTL/ISTQB niveau Fondation",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "ISQTQB-FOND2",
+    "IdModule": "699",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Quality Center",
+    "DureeEnHeures": "21",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-TEST-QCENTER",
+    "IdModule": "702",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "TestLink : mise en oeuvre d'un gestionnaire de tests Open Source",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-TEST-LINK",
+    "IdModule": "706",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Programmation orientée objet avec Java",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "16DL-POOJ",
+    "IdModule": "708",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement avec Java SE",
+    "DureeEnHeures": "49",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-JAVA-1",
+    "IdModule": "712",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté client (HTML-CSS-Javascript)",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-WEBCL",
+    "IdModule": "713",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web avec Java EE",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-JAVA-2",
+    "IdModule": "714",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Cas pratique",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-PRATIQU",
+    "IdModule": "715",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "TP système client",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IM-TPSYS17",
+    "IdModule": "720",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services Réseaux",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SERV-RES17",
+    "IdModule": "721",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services Réseaux (mise en  situation professionnelle)",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SRVRES-MSP",
+    "IdModule": "722",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Algorithme",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "ALGO-DL17",
+    "IdModule": "723",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Initiation à la programmation procédurale avec Java",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "INIT-DL17",
+    "IdModule": "724",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement en couches avec Java",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "JAVA1-DL17",
+    "IdModule": "725",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet 2 - Développement d'une application web ",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PRJ2-DEV17",
+    "IdModule": "727",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement d'une application mobile avec Android",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "MOB1-DEV17",
+    "IdModule": "728",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet 3 - Développement d'une application mobile",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PRJ3-DEV17",
+    "IdModule": "729",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet 1 - Développement d'une application client-serveur",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PRJ1-DEV17",
+    "IdModule": "730",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Administration d'un serveur Apache sous Linux",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "APAC-CDI17",
+    "IdModule": "731",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Bilan final",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "BILAN_FIN",
+    "IdModule": "733",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Analyse et conception",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "CONC-DEV17",
+    "IdModule": "734",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Base des réseaux",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-BDR",
+    "IdModule": "735",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Assistance bureautique",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-BUREAU",
+    "IdModule": "736",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Utilisation et administration d'un système Windows Client",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-WIN-CLIENT",
+    "IdModule": "737",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Utilisation d'un système Linux",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-LIN-UTIL",
+    "IdModule": "738",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services réseaux Windows",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-SERV-RES",
+    "IdModule": "739",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Virtualisation et clients légers",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-VIRT-CLI",
+    "IdModule": "740",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Messagerie",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-MESSAGE",
+    "IdModule": "741",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Gestion de parc",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-GES-PARC",
+    "IdModule": "742",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Modélisation et conception UML",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-UML",
+    "IdModule": "743",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Linux/Unix : utilisation en mode commande",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-LINUX-U",
+    "IdModule": "744",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Préparation à la certification ISTQB -  niveau Fondation",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-ISTQB-FOND",
+    "IdModule": "745",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement avec Java",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-JAVA",
+    "IdModule": "746",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Immersion en entreprise",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-STAGE",
+    "IdModule": "747",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Théorie des réseaux locaux",
+    "DureeEnHeures": "7",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-BDR-17",
+    "IdModule": "749",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Cas pratique",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-TP",
+    "IdModule": "750",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Hibernate/JPA",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SOP-HIB-JPA",
+    "IdModule": "751",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Selenium : automatiser les tests fonctionnels des applications Web",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-TEST-SELEN",
+    "IdModule": "752",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement web côté client",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17-WEBCLI",
+    "IdModule": "754",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Javascript",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17-JSCRIPT",
+    "IdModule": "755",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Le langage PHP",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17-PHP",
+    "IdModule": "756",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement avec le framework Symfony",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17-SYMFONY",
+    "IdModule": "757",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Integration web",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17-INTEGR",
+    "IdModule": "758",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Mise en oeuvre d'un CMS",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17-CMS",
+    "IdModule": "759",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet : développement d'une application web",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE17--PROJET",
+    "IdModule": "760",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Conduite de projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-RAPPELS-CP",
+    "IdModule": "761",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Analyse des besoins",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-BESOINS",
+    "IdModule": "762",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Analyse et conception",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-ANALYSE",
+    "IdModule": "763",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "CLOUD ",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-CLOUD",
+    "IdModule": "764",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Organisation d'une DSI",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-ORGA-DSI",
+    "IdModule": "765",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "CCNA Sécurité",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-CCNA-SECUR",
+    "IdModule": "766",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Entretien mémoire & mise en commun projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-PROJ-MEMOIRE",
+    "IdModule": "767",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Qualité",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-QUALITE",
+    "IdModule": "768",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Soutenance intermédiaire & mise en commun projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-PROJ-SOUTENANCE",
+    "IdModule": "769",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Ethical Hacking",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-ETHICAL-HACKING",
+    "IdModule": "770",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Sécurité du Système d'Information",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-SECURITE-SI",
+    "IdModule": "771",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "ITIL",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-ITIL",
+    "IdModule": "772",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Business Intelligence",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-BUSINESS-INTEL",
+    "IdModule": "773",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Présentation du projet d'études",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-PROJ-FINAL",
+    "IdModule": "774",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Conduite de projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-RAPPELS-CP",
+    "IdModule": "775",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Initiation aux réseaux",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-CISCO-1",
+    "IdModule": "776",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Analyse des besoins",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-BESOINS",
+    "IdModule": "777",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Qualité",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-QUALITE",
+    "IdModule": "778",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Soutenance intermédiaire & mise en commun projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-PROJ-SOUTENANCE",
+    "IdModule": "779",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Urbanisation d'un système d'information",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-URBANISATION-SI",
+    "IdModule": "780",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Agilité en gestion de projet ",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-AGILITE",
+    "IdModule": "782",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Simulations d'entretiens",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-ORGA-DSI",
+    "IdModule": "783",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Entretien mémoire & mise en commun projet",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-PROJ-MEMOIRE",
+    "IdModule": "784",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "ITIL & organisation d'une DSI",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-ITIL",
+    "IdModule": "785",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Administration d'une base de données SQL Server",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-ADMIN-SQL",
+    "IdModule": "786",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Business Intelligence",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-BUSINESS-INTEL",
+    "IdModule": "787",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Objets connectés - Marketing",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-IOT-MARKET",
+    "IdModule": "788",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Présentation du projet d'études",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17SI-PROJ-FINAL",
+    "IdModule": "789",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Présentation des métiers du numérique",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "METIERS NUM",
+    "IdModule": "790",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Métiers \"Etudes et développement\"",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "METIERS DEV",
+    "IdModule": "791",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Métiers \"Support et infrastructure\"",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "METIERS SUPINF",
+    "IdModule": "792",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Autres métiers du numérique",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "METIERS AUTRES",
+    "IdModule": "793",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "UML",
+    "DureeEnHeures": "28",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-SOP-UML2",
+    "IdModule": "796",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Rentrée",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "RENTRÉE",
+    "IdModule": "797",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Programmation orientée objet avec Java",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17DLAPP_POOJ",
+    "IdModule": "798",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet 1 - Développement d'une application client-serveur",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PRJ1-DLAPP17",
+    "IdModule": "799",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Mobilité européenne",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "MOB-DLAPP17",
+    "IdModule": "800",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Bilan - synthèse",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "BIL-DLAPP",
+    "IdModule": "801",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté serveur avec PHP",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "PHP-APP17",
+    "IdModule": "802",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement Web côté serveur avec Symfony",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "SYM-APP17",
+    "IdModule": "803",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "TP services réseaux hétérogènes",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "IMAPP-RES-TP",
+    "IdModule": "804",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "CMAP",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-TEST-CMAP",
+    "IdModule": "805",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Savoir être",
+    "DureeEnHeures": "7",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-TEST-ETRE",
+    "IdModule": "807",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Evaluations (2ème chance)",
+    "DureeEnHeures": "7",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17IN-EVAL-2CHANCE",
+    "IdModule": "811",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Bilan final",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17CDIQ_BILAN",
+    "IdModule": "812",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Rappels POO & SQL ",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17POO&SQL",
+    "IdModule": "813",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement d'une application objet avec C#",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17DEVOBJC#",
+    "IdModule": "814",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Développement web côté serveur avec ASP",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17POOASP",
+    "IdModule": "815",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Bilan final",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17BILAN FINAL",
+    "IdModule": "817",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Base des réseaux",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN BASE RESEAU",
+    "IdModule": "818",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Assistance bureautique",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN BUREAUTIQUE",
+    "IdModule": "819",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Utilisation et administration d’un système Windows client ",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN WIN CLIENT",
+    "IdModule": "820",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Utilisation et administration d’un système linux",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN LINUX",
+    "IdModule": "821",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Travaux pratiques - Système client",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN TP SYS CLIENT",
+    "IdModule": "822",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services réseaux Windows",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN SRV RES WIN",
+    "IdModule": "823",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "ITIL, gestion de parc et centre de support",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN ITIL",
+    "IdModule": "824",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Déploiement à partir de Microsoft Windows Server - Savoir-être & recherche d'emploi",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN DEPLOI TRE",
+    "IdModule": "825",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Stage en entreprise",
+    "DureeEnHeures": "140",
+    "DureeEnSemaines": "4",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN STAGE",
+    "IdModule": "826",
+    "Archiver": "0",
+    "TypeModule": "2"
+  },
+  {
+    "Libelle": "Services réseaux Linux",
+    "DureeEnHeures": "105",
+    "DureeEnSemaines": "3",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN SRV RES LINUX",
+    "IdModule": "827",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Travaux pratiques - Administration d’un réseau Windows serveur et Linux ",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN TP SRV RESEAUX",
+    "IdModule": "828",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Serveur applicatif",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN SERVEUR APPLI",
+    "IdModule": "829",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Virtualisation et clients légers",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN VIRTUALISATION",
+    "IdModule": "830",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Messagerie",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN MESSAGERIE",
+    "IdModule": "831",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Supervision",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN SUPERVISION",
+    "IdModule": "832",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Projet final et evaluations",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN TP EVAL",
+    "IdModule": "833",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Session d'examen",
+    "DureeEnHeures": "14",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN EXAM CCP",
+    "IdModule": "834",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "SQL",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "1",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "R-SOP-SQL3",
+    "IdModule": "835",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Révision et passage de certification",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-REV-CERT",
+    "IdModule": "836",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Services Réseaux",
+    "DureeEnHeures": "70",
+    "DureeEnSemaines": "2",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "POE-SERV-RES",
+    "IdModule": "837",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Rappels sur la programmation en Java",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17POERAPPELSJAVA",
+    "IdModule": "843",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "CFTL Fondation",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "17POETESTCFTL35",
+    "IdModule": "844",
+    "Archiver": "0",
+    "TypeModule": "1"
+  },
+  {
+    "Libelle": "Semaine AGIR",
+    "DureeEnHeures": "35",
+    "DureeEnSemaines": "0",
+    "PrixPublicEnCours": "0",
+    "LibelleCourt": "GEN AGIR",
+    "IdModule": "845",
+    "Archiver": "0",
+    "TypeModule": "1"
+  }
+]
