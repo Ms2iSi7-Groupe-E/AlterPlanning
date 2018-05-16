@@ -7,8 +7,8 @@
     <facet type="web" name="Web">
       <configuration>
         <webroots>
-         <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
-       </webroots>
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
+        </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/alter-app-client" />
           <root url="file://$MODULE_DIR$/src/main/java" />
@@ -125,5 +125,6 @@
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre8" level="project" />
   </component>
 </module>
