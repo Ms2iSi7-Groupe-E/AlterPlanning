@@ -1,26 +1,37 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
-import fr.nantes.eni.alterplanning.dao.sqlserver.repository.ICoursRepository;
+import fr.nantes.eni.alterplanning.exception.RestResponseException;
+import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/cours")
 public class CoursController {
 
     @Resource
-    private ICoursRepository repository;
+    private CoursDAOService coursDAOService;
 
     @GetMapping("")
     public List<CoursEntity> getCours() {
-        return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+        return coursDAOService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public CoursEntity getCoursById(@PathVariable(name = "id") String id) throws RestResponseException {
+        final CoursEntity c = coursDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Cours not found");
+        }
+
+        return c;
     }
 }
