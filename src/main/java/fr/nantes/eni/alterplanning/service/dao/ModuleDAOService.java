@@ -26,4 +26,8 @@ public class ModuleDAOService {
     public ModuleEntity findById(final Integer id) {
         return repository.findById(id).orElse(null);
     }
+
+    public List<ModuleEntity> findByFormation(final String codeFormation) {
+        return repository.findByFormation(codeFormation);
+    }
 }
