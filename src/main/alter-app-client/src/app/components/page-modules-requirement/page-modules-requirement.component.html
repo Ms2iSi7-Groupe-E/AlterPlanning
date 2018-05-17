@@ -26,16 +26,23 @@
         </table>
         <div>
           <span style="text-decoration: underline;">Résultat(s):</span>
-          <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="sourceSelected = m">
-            <i class="far fa-calendar-alt"></i> {{ m.Libelle }}
+          <div class="lstSource">
+            <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="sourceSelected = m">
+              <i class="fas fa-cube"></i> {{ m.libelle }}
+            </div>
           </div>
         </div>
       </div>
       <div class="col" style="width:33%;">
         <h4>Ajouter un Pré requis à</h4>
-        <div *ngIf="sourceSelected != null" class="col item_module">
-          <i class="far fa-calendar-alt"></i> {{ sourceSelected.Libelle }}
+        <div *ngIf="sourceSelected != null; else noSourceSelectedBlock" class="col item_module">
+          <i class="fas fa-cube"></i> {{ sourceSelected.libelle }}
         </div>
+        <ng-template #noSourceSelectedBlock>
+          <div class="col item_module item_none">
+            <i class="fas fa-exclamation"></i> Auncun module source sélectionné
+          </div>
+        </ng-template>
         <table width="100%">
           <tr>
             <td>Titre :</td>
@@ -64,8 +71,10 @@
               <input type="radio" name="item_operator"/> Ou
             </div>
           </div>
-          <div *ngFor="let m of targetModules" class="col item_module item_result purple" (click)="targetSelected = m">
-            <i class="far fa-calendar-alt"></i> {{ m.Libelle }}
+          <div class="lstTarget">
+            <div *ngFor="let m of filterTargetModules(targetModules)" class="col item_module item_result purple" (click)="targetSelected = m">
+              <i class="fas fa-cube"></i> {{ m.libelle }}
+            </div>
           </div>
         </div>
       </div>
@@ -73,14 +82,14 @@
         <h4>Pré requis</h4>
         <div>
           <div class="col item_module item_select">
-            <i class="far fa-calendar-alt"></i> Téléphonie IP et Messagerie
+            <i class="fas fa-crosshairs"></i> Téléphonie IP et Messagerie
             <i class="fas fa-times-circle ico_delete"></i>
           </div>
           <div style="text-align:center;">
             <i class="fas fa-plus-square ico_and"></i>
           </div>
           <div class="col item_module item_select">
-            <i class="far fa-calendar-alt"></i> Développement Web côté client
+            <i class="fas fa-crosshairs"></i> Développement Web côté client
             <i class="fas fa-times-circle ico_delete"></i>
           </div>
           <div style="text-align:center;">
@@ -91,7 +100,7 @@
             </span>
           </div>
           <div class="col item_module item_select">
-            <i class="far fa-calendar-alt"></i> ..................
+            <i class="fas fa-crosshairs"></i> ..................
             <i class="fas fa-times-circle ico_delete"></i>
           </div>
         </div>
@@ -114,28 +123,28 @@
           <tr valign="top">
             <td class="td_one">
               <div class="col item_module over_green">
-                <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
+                <i class="fas fa-cube"></i> Rappels sur la programmation en Java
               </div>
             </td>
             <td>
               <div class="col item_module item_show_liste">
-                <i class="far fa-calendar-alt"></i> Téléphonie IP et Messagerie
+                <i class="fas fa-cube"></i> Téléphonie IP et Messagerie
               </div>
               <i class="fas fa-plus-square ico_operator_and"></i>
               <div class="col item_module item_show_liste">
-                <i class="far fa-calendar-alt"></i> Développement Web côté client
+                <i class="fas fa-cube"></i> Développement Web côté client
               </div>
             </td>
           </tr>
           <tr valign="top">
             <td class="td_one">
               <div class="col item_module over_green">
-                <i class="far fa-calendar-alt"></i> .....................
+                <i class="fas fa-cube"></i> .....................
               </div>
             </td>
             <td>
               <div class="col item_module item_show_liste">
-                <i class="far fa-calendar-alt"></i> .................
+                <i class="fas fa-cube"></i> .................
               </div>
               <div class="ico_operator_or">
                 <i class="fas fa-chevron-left"></i>
@@ -143,7 +152,7 @@
                 <i class="fas fa-chevron-right"></i>
               </div>
               <div class="col item_module item_show_liste">
-                <i class="far fa-calendar-alt"></i> .................
+                <i class="fas fa-cube"></i> .................
               </div>
             </td>
           </tr>

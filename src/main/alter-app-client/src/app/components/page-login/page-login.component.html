@@ -1,32 +1,20 @@
 <div class="container">
-
-  <h1>Connexion</h1>
-
-  <hr>
-
-  <div class="alert alert-danger" *ngIf="errorMessage">
-    {{errorMessage}}
-  </div>
-
-  <form #authForm="ngForm" (ngSubmit)="onSubmit()">
-
-    <div class="form-group">
-      <label for="email" class="control-label">Email address</label>
-      <input type="email"
+  <form #authForm="ngForm" (ngSubmit)="onSubmit()" class="form-signin" style="text-align: center">
+    <img class="mb-4" src="assets/images/logo_ap.png" alt="" width="72" height="72" style="border-radius: 10%;">
+    <h1 class="h3 mb-3 font-weight-normal">ALTER PLANING</h1>
+    <label for="email" class="sr-only">Identifiant</label>
+    <input type="email"
              class="form-control"
              id="email"
              name="email"
-             placeholder="Enter email"
+             placeholder="Identifiant"
              required
+             autofocus
              [class.is-invalid]="errorList['email']"
              [(ngModel)]="model.email">
-
-      <span *ngIf="errorList['email']" class="invalid-feedback">{{errorList['email']}}</span>
-    </div>
-
-    <div class="form-group">
-      <label for="password" class="control-label">Password</label>
-      <input type="password"
+    <span *ngIf="errorList['email']" class="invalid-feedback">{{errorList['email']}}</span>
+    <label for="password" class="sr-only">Mot de passe</label>
+    <input type="password"
              class="form-control"
              id="password"
              name="password"
@@ -34,11 +22,11 @@
              required
              [class.is-invalid]="errorList['password']"
              [(ngModel)]="model.password">
-
-      <span *ngIf="errorList['password']" class="invalid-feedback">{{errorList['password']}}</span>
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="!authForm.form.valid || submitted">Submit</button>
-
+    <span *ngIf="errorList['password']" class="invalid-feedback">{{errorList['password']}}</span>
+    <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!authForm.form.valid || submitted">Valider</button>
+    <p class="mt-5 mb-3 text-muted">&copy; GROUPE-E 2017-2018</p>
   </form>
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
 </div>
