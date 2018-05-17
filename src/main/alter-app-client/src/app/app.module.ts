@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from "@angular/common/http";
+import {NgSelectModule} from '@ng-select/ng-select';
 import {AppComponent} from './app.component';
 import {PageLoginComponent} from './components/page-login/page-login.component';
 import {AuthService} from "./services/auth.service";
@@ -23,7 +24,6 @@ import { PageModulesRequirementComponent } from './components/page-modules-requi
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
 import { ModuleService } from './services/module.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +44,8 @@ import { ModuleService } from './services/module.service';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgSelectModule
   ],
   providers: [
     AuthService,

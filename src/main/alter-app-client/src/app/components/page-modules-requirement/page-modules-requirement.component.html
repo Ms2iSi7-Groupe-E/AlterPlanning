@@ -21,6 +21,13 @@
             <td>Module :</td>
             <td>
               <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
+              
+             
+              <ng-select [items]="dataModules"
+                bindLabel="libelle"
+                [(ngModel)]="sourceModule">
+              </ng-select>
+
             </td>
           </tr>
         </table>
