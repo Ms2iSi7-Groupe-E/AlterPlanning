@@ -48,7 +48,7 @@
 			<div class="d-flex flex-row">
 				<div class="p-3">
 					<span>Alimenter à partir du modèle :</span>
-					<select class="form-control" [(ngModel)]="selectedModels" (change)="changeModels()">
+					<select class="form-control" style="display:inline;width:auto;" [(ngModel)]="selectedModels" (change)="changeModels()">
 						<option selected [ngValue]="null">Choisir un modèle...</option>
 						<option *ngFor="let m of models" [ngValue]="m">{{ m.name }}</option>
 					</select>

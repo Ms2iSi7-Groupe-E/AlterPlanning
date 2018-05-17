@@ -21,6 +21,7 @@ import { PageParametersComponent } from './components/page-parameters/page-param
 import { PageCalendarModelsComponent } from './components/page-calendar-models/page-calendar-models.component';
 import { PageModulesRequirementComponent } from './components/page-modules-requirement/page-modules-requirement.component';
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
+import { ModuleService } from './services/module.service';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { PageIndependantModulesComponent } from './components/page-independant-m
     UserService,
     CourService,
     PromotionService,
-    ModelsService
+    ModelsService,
+    ModuleService
   ],
   bootstrap: [AppComponent]
 })

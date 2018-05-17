@@ -8,60 +8,51 @@
           <tr>
             <td>Titre :</td>
             <td align="right">
-              <input type="text" class="form-control" placeholder="Saisir le titre"/>
+              <input type="text" class="form-control" placeholder="Saisir le titre" [(ngModel)]="sourceTitle" (keyup)="findModuleSource()"/>
             </td>
           </tr>
           <tr>
             <td>Formation :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir la formation"/>
+              <input type="text" class="form-control" placeholder="Saisir la formation" [(ngModel)]="sourceFormation" (keyup)="findModuleSource()"/>
             </td>
           </tr>
           <tr>
             <td>Module :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir le module"/>
+              <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
             </td>
           </tr>
         </table>
         <div>
           <span style="text-decoration: underline;">Résultat(s):</span>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
-          </div>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> Services Réseaux
-          </div>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> Développement Web côté client
-          </div>
-          <div class="col item_module over_green">
-            <i class="far fa-calendar-alt"></i> .........
+          <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="sourceSelected = m">
+            <i class="far fa-calendar-alt"></i> {{ m.Libelle }}
           </div>
         </div>
       </div>
       <div class="col" style="width:33%;">
         <h4>Ajouter un Pré requis à</h4>
-        <div class="col item_module">
-          <i class="far fa-calendar-alt"></i> Services Réseaux
+        <div *ngIf="sourceSelected != null" class="col item_module">
+          <i class="far fa-calendar-alt"></i> {{ sourceSelected.Libelle }}
         </div>
         <table width="100%">
           <tr>
             <td>Titre :</td>
             <td align="right">
-              <input type="text" class="form-control" placeholder="Saisir le titre"/>
+              <input type="text" class="form-control" placeholder="Saisir le titre" [(ngModel)]="targetTitle" (keyup)="findModuleTarget()"/>
             </td>
           </tr>
           <tr>
             <td>Formation :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir la formation"/>
+              <input type="text" class="form-control" placeholder="Saisir la formation" [(ngModel)]="targetFormation" (keyup)="findModuleTarget()"/>
             </td>
           </tr>
           <tr>
             <td>Module :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir le module"/>
+              <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="targetModule" (keyup)="findModuleTarget()"/>
             </td>
           </tr>
         </table>
@@ -73,14 +64,8 @@
               <input type="radio" name="item_operator"/> Ou
             </div>
           </div>
-          <div class="col item_module item_result purple">
-            <i class="far fa-calendar-alt"></i> Rappels sur la programmation en Java
-          </div>
-          <div class="col item_module item_result purple">
-            <i class="far fa-calendar-alt"></i> Services Réseaux
-          </div>
-          <div class="col item_module item_result purple">
-            <i class="far fa-calendar-alt"></i> Développement Web côté client
+          <div *ngFor="let m of targetModules" class="col item_module item_result purple" (click)="targetSelected = m">
+            <i class="far fa-calendar-alt"></i> {{ m.Libelle }}
           </div>
         </div>
       </div>
