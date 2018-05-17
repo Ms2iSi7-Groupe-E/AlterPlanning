@@ -17,6 +17,15 @@ public interface ICoursRepository extends CrudRepository<CoursEntity, String> {
     @SuppressWarnings("JpaQlInspection")
     @Query("SELECT c FROM CoursEntity c " +
             "WHERE c.codePromotion= :codePromotion")
-    List<CoursEntity> findAllByCodePromotion(@Param("codePromotion") String codePromotion);
+    List<CoursEntity> findAllByPromotion(@Param("codePromotion") String codePromotion);
 
+    @SuppressWarnings("JpaQlInspection")
+    @Query("SELECT c FROM CoursEntity c " +
+            "WHERE c.codeLieu= :codeLieu")
+    List<CoursEntity> findAllByLieu(@Param("codeLieu") Integer codeLieu);
+
+    @SuppressWarnings("JpaQlInspection")
+    @Query("SELECT c FROM CoursEntity c " +
+            "WHERE c.idModule= :idModule")
+    List<CoursEntity> findAllByModule(@Param("idModule") Integer idModule);
 }

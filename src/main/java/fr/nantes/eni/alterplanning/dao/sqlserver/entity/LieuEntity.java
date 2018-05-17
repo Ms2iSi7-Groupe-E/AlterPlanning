@@ -27,10 +27,10 @@ public class LieuEntity {
     private String finPM;
 
     @Column(name = "archive")
-    private Integer archive;
+    private Boolean archive;
 
     @Column(name = "GestionEmargement")
-    private Integer gestionEmargement;
+    private Boolean gestionEmargement;
 
     @Column(name = "Adresse")
     private String adresse;
@@ -89,19 +89,19 @@ public class LieuEntity {
         this.finPM = finPM;
     }
 
-    public Integer getArchive() {
+    public Boolean getArchive() {
         return archive;
     }
 
-    public void setArchive(Integer archive) {
+    public void setArchive(Boolean archive) {
         this.archive = archive;
     }
 
-    public Integer getGestionEmargement() {
+    public Boolean getGestionEmargement() {
         return gestionEmargement;
     }
 
-    public void setGestionEmargement(Integer gestionEmargement) {
+    public void setGestionEmargement(Boolean gestionEmargement) {
         this.gestionEmargement = gestionEmargement;
     }
 

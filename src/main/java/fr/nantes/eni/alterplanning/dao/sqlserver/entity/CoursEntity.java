@@ -31,7 +31,7 @@ public class CoursEntity {
     private String codeSalle;
 
     @Column(name = "DateAdefinir")
-    private String dateAdefinir;
+    private Boolean dateAdefinir;
 
     @Column(name = "DureePrevueEnHeures")
     private Integer dureePrevueEnHeures;
@@ -101,11 +101,11 @@ public class CoursEntity {
         this.codeSalle = codeSalle;
     }
 
-    public String getDateAdefinir() {
+    public Boolean getDateAdefinir() {
         return dateAdefinir;
     }
 
-    public void setDateAdefinir(String dateAdefinir) {
+    public void setDateAdefinir(Boolean dateAdefinir) {
         this.dateAdefinir = dateAdefinir;
     }
 

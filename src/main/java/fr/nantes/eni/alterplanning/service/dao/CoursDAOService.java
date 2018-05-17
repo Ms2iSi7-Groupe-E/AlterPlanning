@@ -27,7 +27,15 @@ public class CoursDAOService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<CoursEntity> findByCodePromotion(final String codePromotion) {
-        return repository.findAllByCodePromotion(codePromotion);
+    public List<CoursEntity> findByPromotion(final String codePromotion) {
+        return repository.findAllByPromotion(codePromotion);
+    }
+
+    public List<CoursEntity> findByLieu(final Integer codeLieu) {
+        return repository.findAllByLieu(codeLieu);
+    }
+
+    public List<CoursEntity> findByModule(final Integer idModule) {
+        return repository.findAllByModule(idModule);
     }
 }
