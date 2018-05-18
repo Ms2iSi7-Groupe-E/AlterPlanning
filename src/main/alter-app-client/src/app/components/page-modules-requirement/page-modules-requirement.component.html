@@ -4,11 +4,19 @@
     <div class="row">
       <div class="col" style="width:33%;">
         <h4>Module concerné</h4>
-        <table width="100%">
+        <table width="100%" style="table-layout:fixed;white-space: nowrap;">
           <tr>
             <td>Titre :</td>
             <td align="right">
-              <input type="text" class="form-control" placeholder="Saisir le titre" [(ngModel)]="sourceTitle" (keyup)="findModuleSource()"/>
+              <ng-select 
+                [items]="dataTitres"
+                bindLabel="libelleLong"
+                bindValue="codeTitre"
+                placeholder="Saisir le titre"
+                notFoundText="Aucun titre trouvé"
+                (change)="findModuleSource()"
+                [(ngModel)]="sourceCodeTitre">
+              </ng-select>
             </td>
           </tr>
           <tr>
@@ -21,13 +29,6 @@
             <td>Module :</td>
             <td>
               <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
-              
-             
-              <ng-select [items]="dataModules"
-                bindLabel="libelle"
-                [(ngModel)]="sourceModule">
-              </ng-select>
-
             </td>
           </tr>
         </table>
@@ -47,7 +48,7 @@
         </div>
         <ng-template #noSourceSelectedBlock>
           <div class="col item_module item_none">
-            <i class="fas fa-exclamation"></i> Auncun module source sélectionné
+            <i class="fas fa-exclamation"></i> Sélectionnez le module concerné
           </div>
         </ng-template>
         <table width="100%">

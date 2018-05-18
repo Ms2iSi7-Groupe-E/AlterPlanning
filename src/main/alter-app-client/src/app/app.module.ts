@@ -23,6 +23,7 @@ import { PageCalendarModelsComponent } from './components/page-calendar-models/p
 import { PageModulesRequirementComponent } from './components/page-modules-requirement/page-modules-requirement.component';
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
 import { ModuleService } from './services/module.service';
+import { TitreService } from './services/titre.service';
 
 @NgModule({
   declarations: [
@@ -39,13 +40,13 @@ import { ModuleService } from './services/module.service';
     PageIndependantModulesComponent,
   ],
   imports: [
+    NgSelectModule,
     NgbModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    NgSelectModule
+    AppRoutingModule
   ],
   providers: [
     AuthService,
@@ -53,7 +54,8 @@ import { ModuleService } from './services/module.service';
     CourService,
     PromotionService,
     ModelsService,
-    ModuleService
+    ModuleService,
+    TitreService
   ],
   bootstrap: [AppComponent]
 })

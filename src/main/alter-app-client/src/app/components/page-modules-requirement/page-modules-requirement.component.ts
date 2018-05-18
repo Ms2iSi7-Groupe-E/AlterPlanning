@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModuleService } from '../../services/module.service';
+import { TitreService } from '../../services/titre.service';
 
 @Component({
   selector: 'app-page-modules-requirement',
@@ -8,18 +9,19 @@ import { ModuleService } from '../../services/module.service';
 })
 export class PageModulesRequirementComponent implements OnInit {
   dataModules = [];
-  sourceTitle = '';
+  dataTitres = [];
+  sourceCodeTitre = '';
   sourceFormation = '';
   sourceModule = '';
   sourcesModules = [];
   sourceSelected = null;
-  targetTitle = '';
+  targetCodeTitre = '';
   targetFormation = '';
   targetModule = '';
   targetModules = [];
   targetSelected = null;
 
-  constructor(private moduleService: ModuleService) { }
+  constructor(private moduleService: ModuleService, private titreService: TitreService) { }
 
   ngOnInit() {
 
@@ -34,12 +36,22 @@ export class PageModulesRequirementComponent implements OnInit {
         console.error(err);
       }
     );
+
+    // recuperation de la liste des titres
+    this.titreService.getTitres().subscribe(
+      res => {
+        this.dataTitres = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
   findModuleSource(){
 
     // controle de la taille des saisies
-    if( this.sourceTitle.length < 1 && this.sourceFormation.length < 1 && this.sourceModule.length < 1 ){
+    if( this.sourceCodeTitre == '' && this.sourceFormation.length < 1 && this.sourceModule.length < 1 ){
       this.sourcesModules = this.dataModules;
       return;
     }
@@ -56,11 +68,6 @@ export class PageModulesRequirementComponent implements OnInit {
       //TODO: les autres criteres
 
       showRes.push(item);
-
-      // si la taille maximum est atteinte
-      if( showRes.length == 5 ){
-        break;
-      }
     }
     this.sourcesModules = showRes;
   }
@@ -79,7 +86,7 @@ export class PageModulesRequirementComponent implements OnInit {
   findModuleTarget(){
 
     // controle de la taille des saisies
-    if( this.targetTitle.length < 1 && this.targetFormation.length < 1 && this.targetModule.length < 1 ){
+    if( this.targetCodeTitre == '' && this.targetFormation.length < 1 && this.targetModule.length < 1 ){
       this.targetModules = this.dataModules;
       return;
     }
@@ -101,11 +108,6 @@ export class PageModulesRequirementComponent implements OnInit {
       //TODO: les autres criteres
 
       showRes.push(item);
-
-      // si la taille maximum est atteinte
-      if( showRes.length == 4 ){
-        break;
-      }
     }
     this.targetModules = showRes;
   }
