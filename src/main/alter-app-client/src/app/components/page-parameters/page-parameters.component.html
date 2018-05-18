@@ -1,3 +1,16 @@
 <div class="container">
+  <main role="main" style="padding-top:50px;">
+    <h2>Page de gestion des paramètres</h2>
 
+      <div class="well">
+
+        <table>
+          <tr *ngFor="let parameter of parameters">
+            <td>{{parameter.key}}</td>
+            <td><input type="text" value="{{parameter.value}}"></td>
+          </tr>
+        </table>
+
+      </div>
+  </main>
 </div>

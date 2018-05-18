@@ -5,6 +5,7 @@ import fr.nantes.eni.alterplanning.dao.mysql.repository.IParameterRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -24,5 +25,16 @@ public class ParameterDAOService {
         return repository.findById(key).orElse(null);
     }
 
+    public ParameterEntity create(final ParameterEntity parameter){
+        return repository.save(parameter);
+    }
 
+    public void update(ParameterEntity parameter){
+        ParameterEntity paramInDb = repository.findById(parameter.getKey()).orElse(null);
+
+        if(paramInDb == null)
+            throw new EntityNotFoundException();
+
+        repository.save(parameter);
+    }
 }

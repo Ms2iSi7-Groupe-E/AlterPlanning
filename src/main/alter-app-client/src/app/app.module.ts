@@ -24,6 +24,7 @@ import { PageModulesRequirementComponent } from './components/page-modules-requi
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
 import { ModuleService } from './services/module.service';
 import { TitreService } from './services/titre.service';
+import {ParameterService} from "./services/parameter.service";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { TitreService } from './services/titre.service';
     PromotionService,
     ModelsService,
     ModuleService,
-    TitreService
+    TitreService,
+    ParameterService
   ],
   bootstrap: [AppComponent]
 })

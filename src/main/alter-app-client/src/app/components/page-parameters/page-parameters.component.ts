@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ParameterService} from "../../services/parameter.service";
 
 @Component({
   selector: 'app-page-parameters',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-parameters.component.scss']
 })
 export class PageParametersComponent implements OnInit {
+  parameters = [];
 
-  constructor() { }
+  constructor(private parameterService : ParameterService) { }
 
   ngOnInit() {
+    this.parameterService.getParamters().subscribe(
+      res => {
+        this.parameters = res;
+      },
+      err => {
+        console.error(err);
+      }
+    )
   }
 
 }
