@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from "@angular/common/http";
+import {NgSelectModule} from '@ng-select/ng-select';
 import {AppComponent} from './app.component';
 import {PageLoginComponent} from './components/page-login/page-login.component';
 import {AuthService} from "./services/auth.service";
@@ -22,7 +23,7 @@ import { PageCalendarModelsComponent } from './components/page-calendar-models/p
 import { PageModulesRequirementComponent } from './components/page-modules-requirement/page-modules-requirement.component';
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
 import { ModuleService } from './services/module.service';
-
+import { TitreService } from './services/titre.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ModuleService } from './services/module.service';
     PageIndependantModulesComponent,
   ],
   imports: [
+    NgSelectModule,
     NgbModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
@@ -52,7 +54,8 @@ import { ModuleService } from './services/module.service';
     CourService,
     PromotionService,
     ModelsService,
-    ModuleService
+    ModuleService,
+    TitreService
   ],
   bootstrap: [AppComponent]
 })

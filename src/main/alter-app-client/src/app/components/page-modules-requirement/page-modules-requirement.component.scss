@@ -23,6 +23,10 @@ h2{
     text-overflow: ellipsis;
     max-width: 75ch;
 }
+.item_none{
+    border: 1px solid #676d66;
+    background-color: #d8d8d8;
+}
 .over_green:hover{
     cursor: pointer;
     border: 1px solid #4bff12;
@@ -113,4 +117,14 @@ h2{
     background-color: #6eec2b;
     line-height: 1;
     padding: 4px 5px 5px 5px;
+}
+.lstSource{
+    overflow-y: scroll;
+    height: 300px;
+    margin-bottom: 5px;
+}
+.lstTarget{
+    overflow-y: scroll;
+    height: 265px;
+    margin-bottom: 5px;
 }

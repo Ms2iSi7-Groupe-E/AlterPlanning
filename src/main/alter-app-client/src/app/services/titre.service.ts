@@ -4,14 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import {AuthService} from "./auth.service";
 
 @Injectable()
-export class ModuleService {
-
+export class TitreService {Module
 
   constructor(private http: HttpClient) {
   }
 
-  getModules(): Observable<any> {
+  getTitres(): Observable<any> {
     return this.http
-      .get('/api/module', {headers: AuthService.getHeaders()});
+      .get('/api/titre', {headers: AuthService.getHeaders()});
   }
 }
