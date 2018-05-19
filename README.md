@@ -15,3 +15,7 @@ Projet MS2I
 - Java Spring
 - Angular 5
 - MySql
+
+## Doc API
+
+La description des webservices est présente à l'url : `http://localhost:8080/swagger-ui.html`
