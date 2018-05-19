@@ -31,6 +31,22 @@ CREATE TABLE IF NOT EXISTS `parameters` (
   `parameter_value` text,
   PRIMARY KEY (`parameter_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `calendars`
+--
+
+CREATE TABLE `calendars` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stagiaireId` int(11) DEFAULT NULL,
+  `entrepriseId` int(11) DEFAULT NULL,
+  `startDate` date DEFAULT NULL,
+  `endDate` date DEFAULT NULL,
+  `state` enum('DRAFT','PROPOSAL','VALIDATED') NOT NULL DEFAULT 'DRAFT',
+  `isModel` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -39,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `parameters` (
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `is_active` bit(1) NOT NULL,
   `is_admin` bit(1) NOT NULL,
   `email` varchar(100) NOT NULL,

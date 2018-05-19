@@ -1,6 +1,5 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.ParameterEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.AddParameterForm;
@@ -40,6 +39,7 @@ public class ParameterController {
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public ParameterEntity addParameter(@Valid @RequestBody AddParameterForm form, BindingResult result) throws RestResponseException{
 
         if(result.hasErrors()){
