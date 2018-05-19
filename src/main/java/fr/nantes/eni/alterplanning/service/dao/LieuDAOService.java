@@ -26,4 +26,8 @@ public class LieuDAOService {
     public LieuEntity findById(final Integer codeLieu) {
         return repository.findById(codeLieu).orElse(null);
     }
+
+    public List<LieuEntity> findAllTeachingCours() {
+        return repository.findAllTeachingCours();
+    }
 }

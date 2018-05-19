@@ -29,6 +29,11 @@ public class LieuController {
         return lieuDAOService.findAll();
     }
 
+    @GetMapping("/all-teaching-cours")
+    public List<LieuEntity> getLieuxTeachingCours() {
+        return lieuDAOService.findAllTeachingCours();
+    }
+
     @GetMapping("/{codeLieu}")
     public LieuEntity getLieuById(@PathVariable(name = "codeLieu") Integer codeLieu) throws RestResponseException {
         final LieuEntity l = lieuDAOService.findById(codeLieu);
