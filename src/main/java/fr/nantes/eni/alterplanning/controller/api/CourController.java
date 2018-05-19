@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cours")
-public class CoursController {
+public class CourController {
 
     @Resource
     private CoursDAOService coursDAOService;
@@ -25,7 +25,7 @@ public class CoursController {
     }
 
     @GetMapping("/{id}")
-    public CoursEntity getCoursById(@PathVariable(name = "id") String id) throws RestResponseException {
+    public CoursEntity getCourById(@PathVariable(name = "id") String id) throws RestResponseException {
         final CoursEntity c = coursDAOService.findById(id);
 
         if (c == null) {
