@@ -16,9 +16,6 @@ public class EntrepriseEntity {
     @Column(name = "RaisonSociale")
     private String raisonSociale;
 
-    @Column(name = "NomCommercial")
-    private String nomCommercial;
-
     @Column(name = "Email")
     private String email;
 
@@ -36,14 +33,6 @@ public class EntrepriseEntity {
 
     public void setRaisonSociale(String raisonSociale) {
         this.raisonSociale = raisonSociale;
-    }
-
-    public String getNomCommercial() {
-        return nomCommercial;
-    }
-
-    public void setNomCommercial(String nomCommercial) {
-        this.nomCommercial = nomCommercial;
     }
 
     public String getEmail() {

@@ -13,9 +13,6 @@ public class StagiaireEntity {
     @Column(name = "CodeStagiaire")
     private Integer codeStagiaire;
 
-    @Column(name = "Civilite")
-    private String civilite;
-
     @Column(name = "Nom")
     private String nom;
 
@@ -31,14 +28,6 @@ public class StagiaireEntity {
 
     public void setCodeStagiaire(Integer codeStagiaire) {
         this.codeStagiaire = codeStagiaire;
-    }
-
-    public String getCivilite() {
-        return civilite;
-    }
-
-    public void setCivilite(String civilite) {
-        this.civilite = civilite;
     }
 
     public String getNom() {
