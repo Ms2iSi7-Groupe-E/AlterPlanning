@@ -25,9 +25,6 @@ public class UniteFormationEntity {
     @Column(name = "DureeEnSemaines")
     private Integer dureeEnSemaines;
 
-    @Column(name = "Archiver")
-    private Boolean archiver;
-
     public Integer getIdUniteFormation() {
         return idUniteFormation;
     }
@@ -66,13 +63,5 @@ public class UniteFormationEntity {
 
     public void setDureeEnSemaines(Integer dureeEnSemaines) {
         this.dureeEnSemaines = dureeEnSemaines;
-    }
-
-    public Boolean getArchiver() {
-        return archiver;
-    }
-
-    public void setArchiver(Boolean archiver) {
-        this.archiver = archiver;
     }
 }

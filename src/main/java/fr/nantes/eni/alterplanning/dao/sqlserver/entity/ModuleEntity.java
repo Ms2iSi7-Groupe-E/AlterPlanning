@@ -25,15 +25,6 @@ public class ModuleEntity {
     @Column(name = "DureeEnSemaines")
     private Integer dureeEnSemaines;
 
-    @Column(name = "PrixPublicEnCours")
-    private Float prixPublicEnCours;
-
-    @Column(name = "TypeModule")
-    private Integer typeModule;
-
-    @Column(name = "Archiver")
-    private Boolean archiver;
-
     public Integer getIdModule() {
         return idModule;
     }
@@ -72,29 +63,5 @@ public class ModuleEntity {
 
     public void setDureeEnSemaines(Integer dureeEnSemaines) {
         this.dureeEnSemaines = dureeEnSemaines;
-    }
-
-    public Float getPrixPublicEnCours() {
-        return prixPublicEnCours;
-    }
-
-    public void setPrixPublicEnCours(Float prixPublicEnCours) {
-        this.prixPublicEnCours = prixPublicEnCours;
-    }
-
-    public Integer getTypeModule() {
-        return typeModule;
-    }
-
-    public void setTypeModule(Integer typeModule) {
-        this.typeModule = typeModule;
-    }
-
-    public Boolean getArchiver() {
-        return archiver;
-    }
-
-    public void setArchiver(Boolean archiver) {
-        this.archiver = archiver;
     }
 }

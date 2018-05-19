@@ -26,12 +26,6 @@ public class LieuEntity {
     @Column(name = "FinPM")
     private String finPM;
 
-    @Column(name = "archive")
-    private Boolean archive;
-
-    @Column(name = "GestionEmargement")
-    private Boolean gestionEmargement;
-
     @Column(name = "Adresse")
     private String adresse;
 
@@ -87,22 +81,6 @@ public class LieuEntity {
 
     public void setFinPM(String finPM) {
         this.finPM = finPM;
-    }
-
-    public Boolean getArchive() {
-        return archive;
-    }
-
-    public void setArchive(Boolean archive) {
-        this.archive = archive;
-    }
-
-    public Boolean getGestionEmargement() {
-        return gestionEmargement;
-    }
-
-    public void setGestionEmargement(Boolean gestionEmargement) {
-        this.gestionEmargement = gestionEmargement;
     }
 
     public String getAdresse() {

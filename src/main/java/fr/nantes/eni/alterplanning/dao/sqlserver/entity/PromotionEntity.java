@@ -1,7 +1,5 @@
 package fr.nantes.eni.alterplanning.dao.sqlserver.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,8 +8,6 @@ import java.util.Date;
 public class PromotionEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "CodePromotion")
     private String codePromotion;
 
@@ -20,15 +16,6 @@ public class PromotionEntity {
 
     @Column(name = "CodeFormation")
     private String codeFormation;
-
-    @Column(name = "PrixPublicAffecte")
-    private Float prixPublicAffecte;
-
-    @Column(name = "PrixPECAffecte")
-    private Float prixPECAffecte;
-
-    @Column(name = "PrixFinanceAffecte")
-    private Float prixFinanceAffecte;
 
     @Column(name = "CodeLieu")
     private Integer codeLieu;
@@ -63,30 +50,6 @@ public class PromotionEntity {
 
     public void setCodeFormation(String codeFormation) {
         this.codeFormation = codeFormation;
-    }
-
-    public Float getPrixPublicAffecte() {
-        return prixPublicAffecte;
-    }
-
-    public void setPrixPublicAffecte(Float prixPublicAffecte) {
-        this.prixPublicAffecte = prixPublicAffecte;
-    }
-
-    public Float getPrixPECAffecte() {
-        return prixPECAffecte;
-    }
-
-    public void setPrixPECAffecte(Float prixPECAffecte) {
-        this.prixPECAffecte = prixPECAffecte;
-    }
-
-    public Float getPrixFinanceAffecte() {
-        return prixFinanceAffecte;
-    }
-
-    public void setPrixFinanceAffecte(Float prixFinanceAffecte) {
-        this.prixFinanceAffecte = prixFinanceAffecte;
     }
 
     public Integer getCodeLieu() {

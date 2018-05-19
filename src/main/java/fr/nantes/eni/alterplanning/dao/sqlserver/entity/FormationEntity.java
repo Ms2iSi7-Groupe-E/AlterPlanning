@@ -1,16 +1,15 @@
 package fr.nantes.eni.alterplanning.dao.sqlserver.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Formation")
 public class FormationEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "CodeFormation")
     private String codeFormation;
 
@@ -23,14 +22,8 @@ public class FormationEntity {
     @Column(name = "DureeEnHeures")
     private Integer dureeEnHeures;
 
-    @Column(name = "TauxHoraire")
-    private Float tauxHoraire;
-
     @Column(name = "CodeTitre")
     private String codeTitre;
-
-    @Column(name = "PrixPublicEnCours")
-    private Float prixPublicEnCours;
 
     @Column(name = "HeuresCentre")
     private Integer heuresCentre;
@@ -46,15 +39,6 @@ public class FormationEntity {
 
     @Column(name = "DureeEnSemaines")
     private Integer dureeEnSemaines;
-
-    @Column(name = "Archiver")
-    private Boolean archiver;
-
-    @Column(name = "ECFaPasser")
-    private Boolean eCFaPasser;
-
-    @Column(name = "TypeFormation")
-    private Integer typeFormation;
 
     @Column(name = "CodeLieu")
     private Integer codeLieu;
@@ -91,28 +75,12 @@ public class FormationEntity {
         this.dureeEnHeures = dureeEnHeures;
     }
 
-    public Float getTauxHoraire() {
-        return tauxHoraire;
-    }
-
-    public void setTauxHoraire(Float tauxHoraire) {
-        this.tauxHoraire = tauxHoraire;
-    }
-
     public String getCodeTitre() {
         return codeTitre;
     }
 
     public void setCodeTitre(String codeTitre) {
         this.codeTitre = codeTitre;
-    }
-
-    public Float getPrixPublicEnCours() {
-        return prixPublicEnCours;
-    }
-
-    public void setPrixPublicEnCours(Float prixPublicEnCours) {
-        this.prixPublicEnCours = prixPublicEnCours;
     }
 
     public Integer getHeuresCentre() {
@@ -153,30 +121,6 @@ public class FormationEntity {
 
     public void setDureeEnSemaines(Integer dureeEnSemaines) {
         this.dureeEnSemaines = dureeEnSemaines;
-    }
-
-    public Boolean getArchiver() {
-        return archiver;
-    }
-
-    public void setArchiver(Boolean archiver) {
-        this.archiver = archiver;
-    }
-
-    public Boolean geteCFaPasser() {
-        return eCFaPasser;
-    }
-
-    public void seteCFaPasser(Boolean eCFaPasser) {
-        this.eCFaPasser = eCFaPasser;
-    }
-
-    public Integer getTypeFormation() {
-        return typeFormation;
-    }
-
-    public void setTypeFormation(Integer typeFormation) {
-        this.typeFormation = typeFormation;
     }
 
     public Integer getCodeLieu() {
