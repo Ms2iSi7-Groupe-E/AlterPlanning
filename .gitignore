@@ -5,7 +5,7 @@ target/
 # IDEs and editors
 /.idea
 .project
-/src/*.iml
+*.iml
 .classpath
 .c9/
 *.launch
