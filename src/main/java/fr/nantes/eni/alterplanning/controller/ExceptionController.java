@@ -1,5 +1,6 @@
-package fr.nantes.eni.alterplanning.exception;
+package fr.nantes.eni.alterplanning.controller;
 
+import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.response.ErrorResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class ExceptionControllerAdvice {
+public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
