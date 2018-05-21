@@ -14,10 +14,10 @@ public class AddCalendarForm implements Serializable {
 
     private Integer entrepriseId;
 
-    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date startDate;
 
-    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endDate;
 
     public Integer getStagiaireId() {
