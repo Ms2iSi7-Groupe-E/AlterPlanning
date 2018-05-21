@@ -1,5 +1,7 @@
 package fr.nantes.eni.alterplanning.dao.mysql.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import java.util.Date;
 public class CalendarEntity {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -24,10 +27,12 @@ public class CalendarEntity {
 
     @Column(name = "startDate")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name = "endDate")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 
     @Column(name = "state")
@@ -85,6 +90,7 @@ public class CalendarEntity {
         this.state = state;
     }
 
+    @JsonProperty("isModel")
     public Boolean getModel() {
         return isModel;
     }

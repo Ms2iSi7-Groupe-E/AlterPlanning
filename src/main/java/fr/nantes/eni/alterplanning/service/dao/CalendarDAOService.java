@@ -47,11 +47,6 @@ public class CalendarDAOService {
     }
 
     public void delete(final Integer id) {
-        CalendarEntity entityToDelete = repository.findById(id).orElse(null);
-
-        if (entityToDelete == null)
-            throw new EntityNotFoundException();
-
-        repository.delete(entityToDelete);
+        repository.deleteById(id);
     }
 }

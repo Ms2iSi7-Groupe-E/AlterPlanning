@@ -49,12 +49,7 @@ public class UserDAOService implements UserDetailsService {
     }
 
     public void delete(final int id) {
-        UserEntity entityToDelete = repository.findById(id).orElse(null);
-
-        if (entityToDelete == null)
-            throw new EntityNotFoundException();
-
-        repository.delete(entityToDelete);
+        repository.deleteById(id);
     }
 
     /**

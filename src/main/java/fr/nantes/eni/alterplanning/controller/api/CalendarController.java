@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -55,12 +56,18 @@ public class CalendarController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public CalendarEntity addCalendar(@Valid @RequestBody AddCalendarForm form, BindingResult result) throws RestResponseException {
-        if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+
+        if (form.getEndDate() != null && form.getStartDate() != null && form.getEndDate().before(form.getStartDate())) {
+            result.addError(new FieldError("startDate",  "startDate", "should be before endDate"));
+            result.addError(new FieldError("endDate",  "endDate", "should be after startDate"));
         }
 
         // TODO: check stagiaireId exist
         // TODO: check entrepriseId exist
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+        }
 
         // Define new Calendar
         final CalendarEntity calendar = new CalendarEntity();
