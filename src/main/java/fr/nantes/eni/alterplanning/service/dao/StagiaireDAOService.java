@@ -26,4 +26,8 @@ public class StagiaireDAOService {
     public StagiaireEntity findById(final Integer id) {
         return repository.findById(id).orElse(null);
     }
+
+    public boolean existsById(final Integer id) {
+        return repository.existsById(id);
+    }
 }
