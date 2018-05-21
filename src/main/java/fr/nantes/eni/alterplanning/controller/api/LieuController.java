@@ -6,10 +6,7 @@ import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.LieuDAOService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,13 +22,12 @@ public class LieuController {
     private CoursDAOService coursDAOService;
 
     @GetMapping("")
-    public List<LieuEntity> getLieux() {
-        return lieuDAOService.findAll();
-    }
-
-    @GetMapping("/all-teaching-cours")
-    public List<LieuEntity> getLieuxTeachingCours() {
-        return lieuDAOService.findAllTeachingCours();
+    public List<LieuEntity> getLieux(@RequestParam(value = "with-courses", required = false, defaultValue = "false") final Boolean withCourses) {
+        if (withCourses) {
+            return lieuDAOService.findAllTeachingCours();
+        } else {
+            return lieuDAOService.findAll();
+        }
     }
 
     @GetMapping("/{codeLieu}")
