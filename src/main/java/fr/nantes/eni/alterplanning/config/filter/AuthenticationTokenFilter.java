@@ -49,12 +49,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
         final Integer id = jwtTokenUtil.getIdFromToken(token);
 
-        if (id == null) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token is not valid");
-            return;
-        }
-
-        if ("Bearer".equals(tokenType) && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (id != null && "Bearer".equals(tokenType) && SecurityContextHolder.getContext().getAuthentication() == null) {
             // It is not compelling necessary to load the use details from the database. You could also store the information
             // in the token and read it from it. It's up to you ;)
             final UserEntity user = userService.findById(id);
@@ -69,10 +64,6 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token has expired");
                 return;
             }
-        } else {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "A Token is needed in Authorization Header. " +
-                    "Exemple: Authorization: Bearer <token>");
-            return;
         }
 
         chain.doFilter(request, response);
