@@ -105,4 +105,8 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
+
+    public Long getExpiration() {
+        return expiration;
+    }
 }

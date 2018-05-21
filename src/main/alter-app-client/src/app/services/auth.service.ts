@@ -18,8 +18,8 @@ export class AuthService {
 
   login(body: AuthModel): Observable<any> {
     return this.http.post('/api/auth', body).map(res =>  {
-        if (res && res['token']) {
-          AuthService.setToken(res['token']);
+        if (res && res['access_token']) {
+          AuthService.setToken(res['access_token']);
           AuthService.loggedIn.next(true);
         }
         return res;

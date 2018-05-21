@@ -54,9 +54,10 @@ public class AuthController {
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+
         // Create the token
         final String token = jwtTokenUtil.generateToken((UserEntity) authentication.getPrincipal());
-        return new TokenResponse(token);
+        return new TokenResponse(token, "bearer", jwtTokenUtil.getExpiration());
     }
 
 }
