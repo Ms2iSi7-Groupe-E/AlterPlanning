@@ -6,6 +6,7 @@ import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -34,29 +35,44 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        String authToken = request.getHeader(this.tokenHeader);
-        if (StringUtils.isNotEmpty(authToken)) {
+        final String authorizationToken = request.getHeader(this.tokenHeader);
+        String token = null;
+        String tokenType = "";
+        if (StringUtils.isNotEmpty(authorizationToken)) {
             try {
-                authToken = authToken.split(" ")[1];
+                tokenType = authorizationToken.split(" ")[0];
+                token = authorizationToken.split(" ")[1];
             } catch (Exception e) {
-                authToken = null;
+                token = null;
             }
         }
 
-        final Integer id = jwtTokenUtil.getIdFromToken(authToken);
+        final Integer id = jwtTokenUtil.getIdFromToken(token);
 
-        if (id != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (id == null) {
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token is not valid");
+            return;
+        }
+
+        if ("Bearer".equals(tokenType) && SecurityContextHolder.getContext().getAuthentication() == null) {
             // It is not compelling necessary to load the use details from the database. You could also store the information
             // in the token and read it from it. It's up to you ;)
             final UserEntity user = userService.findById(id);
 
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
             // the database compellingly. Again it's up to you ;)
-            if (jwtTokenUtil.validateToken(authToken, user)) {
+            if (jwtTokenUtil.validateToken(token, user)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token has expired");
+                return;
             }
+        } else {
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "A Token is needed in Authorization Header. " +
+                    "Exemple: Authorization: Bearer <token>");
+            return;
         }
 
         chain.doFilter(request, response);
