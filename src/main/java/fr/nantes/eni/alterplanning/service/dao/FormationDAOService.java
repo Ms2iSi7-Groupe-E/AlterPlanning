@@ -26,4 +26,8 @@ public class FormationDAOService {
     public FormationEntity findById(final String codeFormation) {
         return repository.findById(codeFormation).orElse(null);
     }
+
+    public List<FormationEntity> findByTitre(final String codeTitre) {
+        return repository.findByTitre(codeTitre);
+    }
 }
