@@ -24,8 +24,8 @@ public class CourController {
         return coursDAOService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public CoursEntity getCourById(@PathVariable(name = "id") String id) throws RestResponseException {
+    @GetMapping("/{idCours}")
+    public CoursEntity getCourById(@PathVariable(name = "idCours") String id) throws RestResponseException {
         final CoursEntity c = coursDAOService.findById(id);
 
         if (c == null) {

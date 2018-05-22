@@ -24,9 +24,10 @@ public class StagiaireController {
         return stagiaireDAOService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public StagiaireEntity getStagiaireById(@PathVariable(name = "id") Integer id) throws RestResponseException {
-        final StagiaireEntity s = stagiaireDAOService.findById(id);
+    @GetMapping("/{codeStagiaire}")
+    public StagiaireEntity getStagiaireById(@PathVariable(name = "codeStagiaire") Integer codeStagiaire)
+            throws RestResponseException {
+        final StagiaireEntity s = stagiaireDAOService.findById(codeStagiaire);
 
         if (s == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Stagiaire not found");

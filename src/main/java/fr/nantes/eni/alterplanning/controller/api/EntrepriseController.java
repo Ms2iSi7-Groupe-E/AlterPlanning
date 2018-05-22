@@ -24,9 +24,10 @@ public class EntrepriseController {
         return entrepriseDAOService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public EntrepriseEntity getEntrepriseById(@PathVariable(name = "id") Integer id) throws RestResponseException {
-        final EntrepriseEntity s = entrepriseDAOService.findById(id);
+    @GetMapping("/{codeEntreprise}")
+    public EntrepriseEntity getEntrepriseById(@PathVariable(name = "codeEntreprise") Integer codeEntreprise)
+            throws RestResponseException {
+        final EntrepriseEntity s = entrepriseDAOService.findById(codeEntreprise);
 
         if (s == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Entreprise not found");
