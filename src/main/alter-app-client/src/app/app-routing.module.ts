@@ -6,7 +6,7 @@ import {PageHomeComponent} from "./components/page-home/page-home.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {GuestGuard} from "./guards/guest.guard";
 import { PageSearchComponent } from './components/page-search/page-search.component';
-import { PageHistoryComponent } from './components/page-history/page-history.component';;
+import { PageHistoryComponent } from './components/page-history/page-history.component';
 import { PageParametersComponent } from './components/page-parameters/page-parameters.component';
 import { PageCalendarModelsComponent } from './components/page-calendar-models/page-calendar-models.component';
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
@@ -14,7 +14,7 @@ import { PageModulesRequirementComponent } from './components/page-modules-requi
 
 // Define the routes
 const ROUTES: Routes = [
-  { 
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'
