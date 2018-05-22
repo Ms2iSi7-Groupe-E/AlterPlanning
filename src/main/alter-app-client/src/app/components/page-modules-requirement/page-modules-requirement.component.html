@@ -22,11 +22,19 @@
           <tr>
             <td>Formation :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir la formation" [(ngModel)]="sourceFormation" (keyup)="findModuleSource()"/>
+              <ng-select 
+                [items]="dataFormations"
+                bindLabel="libelleLong"
+                bindValue="codeFormation"
+                placeholder="Saisir la formation"
+                notFoundText="Aucune formation trouvée"
+                (change)="findModuleSource()"
+                [(ngModel)]="sourceFormation">
+              </ng-select>
             </td>
           </tr>
           <tr>
-            <td>Module :</td>
+            <td>Module : </td>
             <td>
               <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
             </td>

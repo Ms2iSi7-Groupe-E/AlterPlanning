@@ -16,15 +16,16 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import {CourService} from "./services/cour.service";
 import {PromotionService} from "./services/promotion.service";
 import {ModelsService} from "./services/models.service"
-import { PageSearchComponent } from './components/page-search/page-search.component';
-import { PageHistoryComponent } from './components/page-history/page-history.component';
-import { PageParametersComponent } from './components/page-parameters/page-parameters.component';
-import { PageCalendarModelsComponent } from './components/page-calendar-models/page-calendar-models.component';
-import { PageModulesRequirementComponent } from './components/page-modules-requirement/page-modules-requirement.component';
-import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
-import { ModuleService } from './services/module.service';
-import { TitreService } from './services/titre.service';
+import {PageSearchComponent} from './components/page-search/page-search.component';
+import {PageHistoryComponent} from './components/page-history/page-history.component';
+import {PageParametersComponent} from './components/page-parameters/page-parameters.component';
+import {PageCalendarModelsComponent} from './components/page-calendar-models/page-calendar-models.component';
+import {PageModulesRequirementComponent} from './components/page-modules-requirement/page-modules-requirement.component';
+import {PageIndependantModulesComponent} from './components/page-independant-modules/page-independant-modules.component';
+import {ModuleService } from './services/module.service';
+import {TitreService } from './services/titre.service';
 import {ParameterService} from "./services/parameter.service";
+import {FormationService} from "./services/formation.service";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {ParameterService} from "./services/parameter.service";
     ModelsService,
     ModuleService,
     TitreService,
-    ParameterService
+    ParameterService,
+    FormationService
   ],
   bootstrap: [AppComponent]
 })

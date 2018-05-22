@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModuleService } from '../../services/module.service';
 import { TitreService } from '../../services/titre.service';
+import { FormationService } from '../../services/formation.service';
 
 @Component({
   selector: 'app-page-modules-requirement',
@@ -10,6 +11,7 @@ import { TitreService } from '../../services/titre.service';
 export class PageModulesRequirementComponent implements OnInit {
   dataModules = [];
   dataTitres = [];
+  dataFormations = [];
   sourceCodeTitre = '';
   sourceFormation = '';
   sourceModule = '';
@@ -21,7 +23,7 @@ export class PageModulesRequirementComponent implements OnInit {
   targetModules = [];
   targetSelected = null;
 
-  constructor(private moduleService: ModuleService, private titreService: TitreService) { }
+  constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
   ngOnInit() {
 
@@ -46,6 +48,16 @@ export class PageModulesRequirementComponent implements OnInit {
         console.error(err);
       }
     );
+
+    // recuperation de la liste des formations
+    this.formationService.getFormations().subscribe(
+      res => {
+        this.dataFormations = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
   findModuleSource(){
@@ -56,6 +68,10 @@ export class PageModulesRequirementComponent implements OnInit {
       return;
     }
 
+    // si il y a un titre de renseigne
+    // recupere toutes le formation d'un titre
+      // pour chaque formation, recuperer l'ensemble des modules
+
     // filtre les resultats a afficher
     let showRes = [];
     for (let item of this.dataModules) {
@@ -64,6 +80,9 @@ export class PageModulesRequirementComponent implements OnInit {
       if( this.sourceModule.length > 1 && item.libelle.toLowerCase().indexOf( this.sourceModule.toLowerCase() ) == -1 ){
         continue;
       }
+
+      
+
 
       //TODO: les autres criteres
 
