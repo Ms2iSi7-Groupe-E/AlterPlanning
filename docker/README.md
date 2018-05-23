@@ -39,4 +39,7 @@ La base est alors accesible sur localhost avec les identifiants suivants :
 
 ## Restore From Backup
 
-Dans le dossier `mssql_backup` ce trouve le ficher de backup de la base.
+Lancer la commande suivante permet de restaurer / créer la base `alterplanning` :
+```
+docker exec -d mssql_server /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Alterplanning-2018' -Q 'RESTORE DATABASE alterplanning FROM DISK = "/var/opt/mssql/backup/alterplanning-2018-05-23.bak"'
+```

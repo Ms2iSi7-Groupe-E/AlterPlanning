@@ -3,6 +3,7 @@ version: "3.6"
 services:
    mssql:
      image: microsoft/mssql-server-linux:2017-latest
+     container_name: mssql_server
      ports:
        - "1433:1433"
      volumes:
