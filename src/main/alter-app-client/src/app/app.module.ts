@@ -26,6 +26,7 @@ import {ModuleService } from './services/module.service';
 import {TitreService } from './services/titre.service';
 import {ParameterService} from "./services/parameter.service";
 import {FormationService} from "./services/formation.service";
+import {LieuService} from "./services/lieu.service";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {FormationService} from "./services/formation.service";
     ModuleService,
     TitreService,
     ParameterService,
-    FormationService
+    FormationService,
+    LieuService
   ],
   bootstrap: [AppComponent]
 })

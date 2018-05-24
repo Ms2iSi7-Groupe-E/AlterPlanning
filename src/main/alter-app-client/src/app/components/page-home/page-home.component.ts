@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { ModelsService } from '../../services/models.service';
-//import { CourService } from '../../services/cour.service';
+import {ModelsService} from '../../services/models.service';
+import {LieuService} from "../../services/lieu.service";
 
 @Component({
   selector: 'app-home',
@@ -9,13 +9,23 @@ import { ModelsService } from '../../services/models.service';
 })
 export class PageHomeComponent implements OnInit {
   models = [];
+  lieux = [];
   selectedModels = null;
   searchCriteria = [];
 
-  constructor(private modelsService: ModelsService) { }
+  constructor(private modelsService: ModelsService, private lieuService: LieuService) { }
 
   ngOnInit() {
     this.models = this.modelsService.getModels();
+
+    this.lieuService.getLieuxTeachningCourses().subscribe(
+      res => {
+        this.lieux = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
   changeModels() {
