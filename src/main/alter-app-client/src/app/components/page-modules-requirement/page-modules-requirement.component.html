@@ -14,7 +14,7 @@
                 bindValue="codeTitre"
                 placeholder="Saisir le titre"
                 notFoundText="Aucun titre trouvé"
-                (change)="findModuleSource()"
+                (change)="selectTitreSource()"
                 [(ngModel)]="sourceCodeTitre">
               </ng-select>
             </td>
@@ -59,17 +59,33 @@
             <i class="fas fa-exclamation"></i> Sélectionnez le module concerné
           </div>
         </ng-template>
-        <table width="100%">
+        <table width="100%" style="table-layout:fixed;white-space: nowrap;">
           <tr>
             <td>Titre :</td>
             <td align="right">
-              <input type="text" class="form-control" placeholder="Saisir le titre" [(ngModel)]="targetTitle" (keyup)="findModuleTarget()"/>
+                <ng-select 
+                  [items]="dataTitres"
+                  bindLabel="libelleLong"
+                  bindValue="codeTitre"
+                  placeholder="Saisir le titre"
+                  notFoundText="Aucun titre trouvé"
+                  (change)="findModuleTarget()"
+                  [(ngModel)]="targetTitle">
+                </ng-select>
             </td>
           </tr>
           <tr>
             <td>Formation :</td>
             <td>
-              <input type="text" class="form-control" placeholder="Saisir la formation" [(ngModel)]="targetFormation" (keyup)="findModuleTarget()"/>
+                <ng-select 
+                  [items]="dataFormations"
+                  bindLabel="libelleLong"
+                  bindValue="codeFormation"
+                  placeholder="Saisir la formation"
+                  notFoundText="Aucune formation trouvée"
+                  (change)="findModuleTarget()"
+                  [(ngModel)]="targetFormation">
+                </ng-select>
             </td>
           </tr>
           <tr>

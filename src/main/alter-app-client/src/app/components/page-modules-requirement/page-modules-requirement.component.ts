@@ -52,6 +52,9 @@ export class PageModulesRequirementComponent implements OnInit {
     // recuperation de la liste des formations
     this.formationService.getFormations().subscribe(
       res => {
+        for (let i = 0; i < res.length; ++i) {
+          res[i].libelleLong =  res[i].libelleLong + ' - ' + res[i].libelleCourt;
+        }
         this.dataFormations = res;
       },
       err => {
@@ -60,10 +63,14 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
-  findModuleSource(){
+  selectTitreSource() {
+    // sdfsd
+  }
+
+  findModuleSource() {
 
     // controle de la taille des saisies
-    if( this.sourceCodeTitre == '' && this.sourceFormation.length < 1 && this.sourceModule.length < 1 ){
+    if ( this.sourceCodeTitre === '' && this.sourceFormation.length < 1 && this.sourceModule.length < 1 ) {
       this.sourcesModules = this.dataModules;
       return;
     }
@@ -73,28 +80,27 @@ export class PageModulesRequirementComponent implements OnInit {
       // pour chaque formation, recuperer l'ensemble des modules
 
     // filtre les resultats a afficher
-    let showRes = [];
-    for (let item of this.dataModules) {
+    let showRes: any[];
+    showRes = [];
+    for (const item of this.dataModules) {
 
       // filtre sur le libelle du module
-      if( this.sourceModule.length > 1 && item.libelle.toLowerCase().indexOf( this.sourceModule.toLowerCase() ) == -1 ){
+      if ( this.sourceModule.length > 1 && item.libelle.toLowerCase().indexOf( this.sourceModule.toLowerCase() ) === -1 ) {
         continue;
       }
 
-      
-
-
-      //TODO: les autres criteres
+      // TODO: les autres criteres
 
       showRes.push(item);
     }
     this.sourcesModules = showRes;
   }
 
-  filterTargetModules(modules){
-    let lstModules = [];
-    for (let item of modules) {
-      if( this.sourceSelected != null && ( this.sourceSelected.idModule == item.idModule ) ){
+  filterTargetModules(modules) {
+    let lstModules: any[];
+    lstModules = [];
+    for (const item of modules) {
+      if ( this.sourceSelected != null && ( this.sourceSelected.idModule === item.idModule ) ) {
         continue;
       }
       lstModules.push(item);
@@ -102,29 +108,30 @@ export class PageModulesRequirementComponent implements OnInit {
     return lstModules;
   }
 
-  findModuleTarget(){
+  findModuleTarget() {
 
     // controle de la taille des saisies
-    if( this.targetCodeTitre == '' && this.targetFormation.length < 1 && this.targetModule.length < 1 ){
+    if ( this.targetCodeTitre === '' && this.targetFormation.length < 1 && this.targetModule.length < 1 ) {
       this.targetModules = this.dataModules;
       return;
     }
 
     // filtre les resultats a afficher
-    let showRes = [];
-    for (let item of this.dataModules) {
+    let showRes: any[];
+    showRes = [];
+    for (const item of this.dataModules) {
 
       // filtre sur le libelle du module
-      if( this.targetModule.length > 1 && item.libelle.toLowerCase().indexOf( this.targetModule.toLowerCase() ) == -1 ){
+      if ( this.targetModule.length > 1 && item.libelle.toLowerCase().indexOf( this.targetModule.toLowerCase() ) === -1 ) {
         continue;
       }
 
       // si c'est le module source
-      if( this.sourceSelected != null && this.sourceSelected.idModule == item.idModule ){
+      if ( this.sourceSelected != null && this.sourceSelected.idModule === item.idModule ) {
         continue;
       }
 
-      //TODO: les autres criteres
+      // TODO: les autres criteres
 
       showRes.push(item);
     }
