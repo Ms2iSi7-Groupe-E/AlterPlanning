@@ -1,105 +1,103 @@
 <div class="container">
-  <main role="main">
-    <h2>Recherche de calendrier</h2>
-    <h4>Filtre de recherche</h4>
-    <div class="d-flex flex-row">
-      <div class="p-2"><input type="text" class="form-control" placeholder="Nom du stagiaire"/></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Prénom du stagiaire"/></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Nom de l’entreprise"/></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Nom de la promotion"/></div>
+  <h2>Recherche de calendrier</h2>
+  <h4>Filtre de recherche</h4>
+  <div class="d-flex flex-row">
+    <div class="p-2"><input type="text" class="form-control" placeholder="Nom du stagiaire"/></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Prénom du stagiaire"/></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Nom de l’entreprise"/></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Nom de la promotion"/></div>
+  </div>
+  <div class="d-flex flex-row">
+    <div class="p-2"><input type="text" class="form-control" placeholder="Nom du cursus"/></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Nom du module"/></div>
+    <div class="p-2"><span style="padding-top: 5px;display: table-cell">Dates :</span></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Début"/></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Fin"/></div>
+    <div class="p-2"><input type="text" class="form-control" placeholder="Incluse"/></div>
+  </div>
+  <div class="row" style="padding-left: 10px">
+    <div class="col">
+      Etats :&nbsp;
+      <label><input type="radio" name="item_etat" checked="checked"/> Tous</label>&nbsp;
+      <label><input type="radio" name="item_etat"/> Proposition</label>&nbsp;
+      <label><input type="radio" name="item_etat"/> Confirmé</label>
     </div>
-    <div class="d-flex flex-row">
-      <div class="p-2"><input type="text" class="form-control" placeholder="Nom du cursus"/></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Nom du module"/></div>
-      <div class="p-2"><span style="padding-top: 5px;display: table-cell">Dates :</span></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Début"/></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Fin"/></div>
-      <div class="p-2"><input type="text" class="form-control" placeholder="Incluse"/></div>
+    <div class="col">
+      <button type="button" class="btn btn-outline-secondary float-right" style="margin-right: 10px;"><i class="fas fa-search"></i> Rechercher</button>
     </div>
-    <div class="row" style="padding-left: 10px">
-      <div class="col">
-        Etats :&nbsp;
-        <label><input type="radio" name="item_etat" checked="checked"/> Tous</label>&nbsp;
-        <label><input type="radio" name="item_etat"/> Proposition</label>&nbsp;
-        <label><input type="radio" name="item_etat"/> Confirmé</label>
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-outline-secondary float-right" style="margin-right: 10px;"><i class="fas fa-search"></i> Rechercher</button>
-      </div>
+  </div>
+  <hr/>
+  <h4>Liste des résultats de recherche</h4>
+  <div class="row">
+    <div class="col" style="text-align: center;">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="#">&lt;&lt;</a></li>
+          <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">5</a></li>
+          <li class="page-item"><a class="page-link" href="#">6</a></li>
+          <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+          <li class="page-item"><a class="page-link" href="#">&gt;&gt;</a></li>
+        </ul>
+      </nav>
     </div>
-    <hr/>
-    <h4>Liste des résultats de recherche</h4>
-    <div class="row">
-      <div class="col" style="text-align: center;">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">&lt;&lt;</a></li>
-            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">6</a></li>
-            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-            <li class="page-item"><a class="page-link" href="#">&gt;&gt;</a></li>
-          </ul>
-        </nav>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col" style="padding-right: 40px;">
+      <table width="100%" class="tbl_search">
+        <tr>
+          <td>Etat</td>
+          <td>Nom</td>
+          <td>Prénom</td>
+          <td>Entreprise</td>
+          <td>Date de modification</td>
+          <td>Dates</td>
+        </tr>
+        <tr>
+          <td class="stat_proposition"><i class="far fa-eye"></i> Proposition</td>
+          <td>Paul</td>
+          <td>Valéry</td>
+          <td>GFI Informatique</td>
+          <td>01/02/2017 15:35:00</td>
+          <td>03/10/2016 au 30/12/2016</td>
+        </tr>
+        <tr>
+          <td class="stat_proposition"><i class="far fa-eye"></i> Proposition</td>
+          <td>Paul</td>
+          <td>Valéry</td>
+          <td>GFI Informatique</td>
+          <td>01/02/2017 15:35:00</td>
+          <td>09/04/2018 au 22/03/2019</td>
+        </tr>
+        <tr>
+          <td class="stat_confirme"><i class="far fa-eye"></i> Confirmé</td>
+          <td>Yves</td>
+          <td>Saint Laurent</td>
+          <td>Orange Business Services</td>
+          <td>01/02/2017 15:35:00</td>
+          <td>17/10/2016 au 20/10/2017</td>
+        </tr>
+        <tr>
+          <td class="stat_confirme"><i class="far fa-eye"></i> Confirmé</td>
+          <td>Jean-Jacques</td>
+          <td>Rousseau</td>
+          <td>Atos</td>
+          <td>01/02/2017 15:35:00</td>
+          <td>09/04/2018 au 22/03/2019</td>
+        </tr>
+        <tr>
+          <td class="stat_proposition"><i class="far fa-eye"></i> Proposition</td>
+          <td>Bertrand</td>
+          <td>Laporte</td>
+          <td>Capgemini</td>
+          <td>01/02/2017 15:35:00</td>
+          <td>02/11/2015 au 21/07/2017</td>
+        </tr>
+      </table>
     </div>
-    <div class="row">
-      <div class="col" style="padding-right: 40px;">
-        <table width="100%" class="tbl_search">
-          <tr>
-            <td>Etat</td>
-            <td>Nom</td>
-            <td>Prénom</td>
-            <td>Entreprise</td>
-            <td>Date de modification</td>
-            <td>Dates</td>
-          </tr>
-          <tr>
-            <td class="stat_proposition"><i class="far fa-eye"></i> Proposition</td>
-            <td>Paul</td>
-            <td>Valéry</td>
-            <td>GFI Informatique</td>
-            <td>01/02/2017 15:35:00</td>
-            <td>03/10/2016 au 30/12/2016</td>
-          </tr>
-          <tr>
-            <td class="stat_proposition"><i class="far fa-eye"></i> Proposition</td>
-            <td>Paul</td>
-            <td>Valéry</td>
-            <td>GFI Informatique</td>
-            <td>01/02/2017 15:35:00</td>
-            <td>09/04/2018 au 22/03/2019</td>
-          </tr>
-          <tr>
-            <td class="stat_confirme"><i class="far fa-eye"></i> Confirmé</td>
-            <td>Yves</td>
-            <td>Saint Laurent</td>
-            <td>Orange Business Services</td>
-            <td>01/02/2017 15:35:00</td>
-            <td>17/10/2016 au 20/10/2017</td>
-          </tr>
-          <tr>
-            <td class="stat_confirme"><i class="far fa-eye"></i> Confirmé</td>
-            <td>Jean-Jacques</td>
-            <td>Rousseau</td>
-            <td>Atos</td>
-            <td>01/02/2017 15:35:00</td>
-            <td>09/04/2018 au 22/03/2019</td>
-          </tr>
-          <tr>
-            <td class="stat_proposition"><i class="far fa-eye"></i> Proposition</td>
-            <td>Bertrand</td>
-            <td>Laporte</td>
-            <td>Capgemini</td>
-            <td>01/02/2017 15:35:00</td>
-            <td>02/11/2015 au 21/07/2017</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </main>
+  </div>
 </div>

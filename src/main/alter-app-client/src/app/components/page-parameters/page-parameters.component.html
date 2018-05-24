@@ -1,16 +1,16 @@
 <div class="container">
-  <main role="main">
-    <h2>Page de gestion des paramètres</h2>
+  <h2>Page de gestion des paramètres</h2>
 
-      <div class="well">
+  <div class="well">
 
-        <table>
-          <tr *ngFor="let parameter of parameters">
-            <td>{{parameter.key}}</td>
-            <td><input type="text" value="{{parameter.value}}"></td>
-          </tr>
-        </table>
+    <table>
+      <tr *ngFor="let parameter of parameters">
+        <td>{{parameter.key}}</td>
+        <td><input type="text" value="{{parameter.value}}"></td>
+      </tr>
+    </table>
 
-      </div>
-  </main>
+    <h3 *ngIf="parameters.length === 0">Aucun paramètre</h3>
+
+  </div>
 </div>
