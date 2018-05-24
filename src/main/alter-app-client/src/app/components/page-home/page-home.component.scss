@@ -11,3 +11,28 @@ h2 {
     min-width: 8em;
   }
 }
+
+.calendar-constraint {
+  border:1px solid #ccc;
+  padding:5px 0 5px 5px;
+  margin-top: 5px;
+
+  .constraint-ajout {
+    padding-top: 5px;
+    background-color:#d0ffc1;
+  }
+
+  .constraint-dispense {
+    padding-top: 5px;
+    background-color:#ffc787;
+  }
+
+  .constraint-variante {
+    padding-top: 5px;
+    background-color:#fceb8f;
+  }
+}
+
+.proposal-btn {
+  margin: 10px 0;
+}

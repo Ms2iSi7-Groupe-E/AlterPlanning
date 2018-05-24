@@ -26,14 +26,14 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-3 col-form-label">Date de début :</label>
+        <label class="col-4 col-form-label">Date de début :</label>
         <div class="col-3">
           <input type="text" class="form-control" placeholder=""/>
         </div>
         <button type="button" class="btn btn-outline-info"><i class="fas fa-table"></i></button>
       </div>
       <div class="form-group row">
-        <label class="col-3 col-form-label">Date de fin :</label>
+        <label class="col-4 col-form-label">Date de fin :</label>
         <div class="col-3">
           <input type="text" class="form-control" placeholder=""/>
         </div>
@@ -52,60 +52,64 @@
   </div>
 
   <hr/>
-  <div class="d-flex flex-row">
-    <div class="p-3">
-      <span>Alimenter à partir du modèle :</span>
-      <select class="form-control" style="display:inline;width:auto;" [(ngModel)]="selectedModels" (change)="changeModels()">
-        <option selected [ngValue]="null">Choisir un modèle...</option>
-        <option *ngFor="let m of models" [ngValue]="m">{{ m.name }}</option>
-      </select>
+
+  <div class="form-group row">
+    <label class="col-4 col-form-label">Alimenter à partir du modèle :</label>
+    <select class="form-control col-4" [(ngModel)]="selectedModels" (change)="changeModels()">
+      <option selected [ngValue]="null">Choisir un modèle...</option>
+      <option *ngFor="let m of models" [ngValue]="m">{{ m.name }}</option>
+    </select>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-outline-success"><i class="fas fa-plus"></i> Ajouter un élément</button>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Dispenser un élément</button>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-outline-secondary"><i class="far fa-trash-alt"></i> Effacer tout</button>
     </div>
   </div>
-  <div class="d-flex justify-content-between bd-highlight mb-3">
-    <div class="p-2 bd-highlight">
-      <button type="button" class="btn btn-outline-success" style="vertical-align: baseline;"><i class="fas fa-plus"></i> Ajouter un élément</button>
-    </div>
-    <div class="p-2 bd-highlight">
-      <button type="button" class="btn btn-outline-danger" style="vertical-align: baseline;"><i class="fas fa-ban"></i> Dispenser un élément</button>
-    </div>
-    <div class="p-2 bd-highlight">
-      <button type="button" class="btn btn-outline-secondary" style="vertical-align: baseline;"><i class="far fa-trash-alt"></i> Effacer tout</button>
-    </div>
-  </div>
-  <div class="row" style="border:1px solid #ccc;margin: 0 7px;padding:5px 0 5px 5px;">
-    <div class="col" style="border:1px solid #f4d942;background-color:#fceb8f;padding-top: 5px;">
+
+  <div class="row calendar-constraint">
+    <div class="col-10 constraint-variante">
       <i class="far fa-calendar-alt"></i> Variante du calendrier #607, à partir du 01/02/2018
     </div>
-    <div class="col-2" style="text-align:right">
+    <div class="col-2 text-right">
       <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
     </div>
   </div>
-  <div class="row" style="border:1px solid #ccc;margin: 5px 7px 0px 7px;padding:5px 0 5px 5px;">
-    <div class="col" style="border:1px solid #fc8600;background-color:#ffc787;padding-top: 5px;">
+  <div class="row calendar-constraint">
+    <div class="col-10 constraint-dispense">
       <i class="far fa-calendar-alt"></i> Dispense UF : Formation aux tests
     </div>
-    <div class="col-2" style="text-align:right">
+    <div class="col-2 text-right">
       <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
     </div>
   </div>
-  <div class="row" style="border:1px solid #ccc;margin: 5px 7px 0px 7px;padding:5px 0 5px 5px;">
-    <div class="col" style="border:1px solid #2d601d;background-color:#d0ffc1;padding-top: 5px;">
+  <div class="row calendar-constraint">
+    <div class="col-10 constraint-ajout">
       <i class="far fa-calendar-alt"></i> Formation : MS2I-SI
     </div>
-    <div class="col-2" style="text-align:right">
+    <div class="col-2 text-right">
       <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
     </div>
   </div>
-  <div class="row" style="border:1px solid #ccc;margin: 5px 7px 0px 7px;padding:5px 0 5px 5px;">
-    <div class="col" style="border:1px solid #2d601d;background-color:#d0ffc1;padding-top: 5px;">
+  <div class="row calendar-constraint">
+    <div class="col-10 constraint-ajout">
       <i class="far fa-calendar-alt"></i> Module : Rappels sur la programmation en Java
     </div>
-    <div class="col-2" style="text-align:right">
+    <div class="col-2 text-right">
       <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
     </div>
   </div>
-  <div class="row float-right" style="margin: 10px 7px;">
-    <button type="button" class="btn btn-info" style="vertical-align: baseline;" onclick="window.location.href='detail_calendrier.html'"><i class="fas fa-camera"></i> Génération de la proposition</button>
+
+  <div class="row proposal-btn">
+    <div class="col-12 text-right">
+      <button type="button" class="btn btn-info" onclick="window.location.href='detail_calendrier.html'"><i class="fas fa-camera"></i> Génération de la proposition</button>
+    </div>
   </div>
 </div>
 
