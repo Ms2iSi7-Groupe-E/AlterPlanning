@@ -1,135 +1,141 @@
 <div class="container">
-  <main role="main">
+  <div class="row mb-3">
     <h2>Gestion des pré requis</h2>
-    <div class="row">
-      <div class="col" style="width:33%;">
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-requirement">
+      <div class="requirement-panel">
         <h4>Module concerné</h4>
-        <table width="100%" style="table-layout:fixed;white-space: nowrap;">
-          <tr>
-            <td>Titre :</td>
-            <td align="right">
-              <ng-select
-                [items]="dataTitres"
-                bindLabel="libelleLong"
-                bindValue="codeTitre"
-                placeholder="Saisir le titre"
-                notFoundText="Aucun titre trouvé"
-                (change)="selectTitreSource()"
-                [(ngModel)]="sourceCodeTitre">
-              </ng-select>
-            </td>
-          </tr>
-          <tr>
-            <td>Formation :</td>
-            <td>
-              <ng-select
-                [items]="dataFormations"
-                bindLabel="libelleLong"
-                bindValue="codeFormation"
-                placeholder="Saisir la formation"
-                notFoundText="Aucune formation trouvée"
-                (change)="findModuleSource()"
-                [(ngModel)]="sourceFormation">
-              </ng-select>
-            </td>
-          </tr>
-          <tr>
-            <td>Module : </td>
-            <td>
-              <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
-            </td>
-          </tr>
-        </table>
-        <div>
-          <span style="text-decoration: underline;">Résultat(s):</span>
-          <div class="lstSource">
-            <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="sourceSelected = m">
-              <i class="fas fa-cube"></i> {{ m.libelle }}
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Titre :</label>
+          <div class="col-lg-8">
+            <ng-select
+              [items]="dataTitres"
+              bindLabel="libelleLong"
+              bindValue="codeTitre"
+              placeholder="Saisir le titre"
+              notFoundText="Aucun titre trouvé"
+              (change)="selectTitreSource()"
+              [(ngModel)]="sourceCodeTitre">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Formation :</label>
+          <div class="col-lg-8">
+            <ng-select
+              [items]="dataFormations"
+              bindLabel="libelleLong"
+              bindValue="codeFormation"
+              placeholder="Saisir la formation"
+              notFoundText="Aucune formation trouvée"
+              (change)="findModuleSource()"
+              [(ngModel)]="sourceFormation">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Module :</label>
+          <div class="col-lg-8">
+            <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span><u>Résultat(s):</u></span>
+            <div class="lstSource">
+              <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="sourceSelected = m">
+                <i class="fas fa-cube"></i> {{ m.libelle }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col" style="width:33%;">
+    </div>
+    <div class="col-md-4 col-requirement">
+      <div class="requirement-panel">
         <h4>Ajouter un Pré requis à</h4>
-        <div *ngIf="sourceSelected != null; else noSourceSelectedBlock" class="col item_module">
+        <div *ngIf="sourceSelected" class="col item_module">
           <i class="fas fa-cube"></i> {{ sourceSelected.libelle }}
         </div>
-        <ng-template #noSourceSelectedBlock>
-          <div class="col item_module item_none">
-            <i class="fas fa-exclamation"></i> Sélectionnez le module concerné
+        <div *ngIf="!sourceSelected" class="col item_module item_none">
+          <i class="fas fa-exclamation"></i> Sélectionnez le module concerné
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Titre :</label>
+          <div class="col-lg-8">
+            <ng-select
+              [items]="dataTitres"
+              bindLabel="libelleLong"
+              bindValue="codeTitre"
+              placeholder="Saisir le titre"
+              notFoundText="Aucun titre trouvé"
+              (change)="findModuleTarget()"
+              [(ngModel)]="targetCodeTitre">
+            </ng-select>
           </div>
-        </ng-template>
-        <table width="100%" style="table-layout:fixed;white-space: nowrap;">
-          <tr>
-            <td>Titre :</td>
-            <td align="right">
-                <ng-select
-                  [items]="dataTitres"
-                  bindLabel="libelleLong"
-                  bindValue="codeTitre"
-                  placeholder="Saisir le titre"
-                  notFoundText="Aucun titre trouvé"
-                  (change)="findModuleTarget()"
-                  [(ngModel)]="targetTitle">
-                </ng-select>
-            </td>
-          </tr>
-          <tr>
-            <td>Formation :</td>
-            <td>
-                <ng-select
-                  [items]="dataFormations"
-                  bindLabel="libelleLong"
-                  bindValue="codeFormation"
-                  placeholder="Saisir la formation"
-                  notFoundText="Aucune formation trouvée"
-                  (change)="findModuleTarget()"
-                  [(ngModel)]="targetFormation">
-                </ng-select>
-            </td>
-          </tr>
-          <tr>
-            <td>Module :</td>
-            <td>
-              <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="targetModule" (keyup)="findModuleTarget()"/>
-            </td>
-          </tr>
-        </table>
-        <div>
-          <div>
-            <span style="text-decoration: underline;">Résultat(s):</span>
-            <div style="float: right;margin-right: 5px;">
-              <input type="radio" name="item_operator" checked="checked"/> Et
-              <input type="radio" name="item_operator"/> Ou
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Formation :</label>
+          <div class="col-lg-8">
+            <ng-select
+              [items]="dataFormations"
+              bindLabel="libelleLong"
+              bindValue="codeFormation"
+              placeholder="Saisir la formation"
+              notFoundText="Aucune formation trouvée"
+              (change)="findModuleTarget()"
+              [(ngModel)]="targetFormation">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Module :</label>
+          <div class="col-lg-8">
+            <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="targetModule" (keyup)="findModuleTarget()"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div>
+              <span><u>Résultat(s):</u></span>
+              <div style="float: right;margin-right: 5px;">
+                <label><input type="radio" name="item_operator" checked="checked"/> Et</label>
+                <label><input type="radio" name="item_operator" checked="checked"/> Ou</label>
+              </div>
             </div>
-          </div>
-          <div class="lstTarget">
-            <div *ngFor="let m of filterTargetModules(targetModules)" class="col item_module item_result purple" (click)="targetSelected = m">
-              <i class="fas fa-cube"></i> {{ m.libelle }}
+            <div class="lstTarget">
+              <div *ngFor="let m of filterTargetModules(targetModules)" class="col item_module item_result purple" (click)="targetSelected = m">
+                <i class="fas fa-cube"></i> {{ m.libelle }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col" style="width:33%;">
+    </div>
+    <div class="col-md-4 col-requirement">
+      <div class="requirement-panel">
         <h4>Pré requis</h4>
         <div>
           <div class="col item_module item_select">
             <i class="fas fa-crosshairs"></i> Téléphonie IP et Messagerie
             <i class="fas fa-times-circle ico_delete"></i>
           </div>
-          <div style="text-align:center;">
-            <i class="fas fa-plus-square ico_and"></i>
+          <div class="col text-center">
+            <div class="ico_and">
+              <i class="fas fa-plus-square"></i>
+            </div>
           </div>
           <div class="col item_module item_select">
             <i class="fas fa-crosshairs"></i> Développement Web côté client
             <i class="fas fa-times-circle ico_delete"></i>
           </div>
-          <div style="text-align:center;">
-            <span class="ico_or">
+          <div class="col text-center">
+            <div class="ico_or">
               <i class="fas fa-chevron-left"></i>
               Ou
               <i class="fas fa-chevron-right"></i>
-            </span>
+            </div>
           </div>
           <div class="col item_module item_select">
             <i class="fas fa-crosshairs"></i> ..................
@@ -138,52 +144,60 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col" style="padding-bottom:5px;">
+  </div>
+  <div class="row">
+    <div class="col-12 col-requirement">
+      <div class="requirement-panel">
         <h4>Liste des pré requis</h4>
-        <table width="100%" class="tbl_liste">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Module :</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Saisir le module" />
+          </div>
+          <label class="col-md-2 col-form-label">Pré requis :</label>
+          <div class="col-md-5">
+            <input type="text" class="form-control" placeholder="Saisir le module pré requis"/>
+          </div>
+        </div>
+        <table class="table table-sm table-hover table-prerequis">
           <tr>
-            <td width="30%">
-              Module :
-              <input type="text" class="form-control" placeholder="Saisir le module" style="display: inline-block;width: auto;"/>
-            </td>
-            <td>
-              Pré requis :
-              <input type="text" class="form-control" placeholder="Saisir le module pré requis" style="display: inline-block;width: 60%;"/>
-            </td>
-          </tr>
-          <tr valign="top">
-            <td class="td_one">
-              <div class="col item_module over_green">
+            <td class="first-col">
+              <div class="item_module over_green item_module_liste">
                 <i class="fas fa-cube"></i> Rappels sur la programmation en Java
               </div>
             </td>
             <td>
-              <div class="col item_module item_show_liste">
+              <div class="item_module item_show_liste">
                 <i class="fas fa-crosshairs"></i> Téléphonie IP et Messagerie
               </div>
-              <i class="fas fa-plus-square ico_operator_and"></i>
-              <div class="col item_module item_show_liste">
+              <div class="item_ico_liste">
+                <div class="ico_and">
+                  <i class="fas fa-plus-square"></i>
+                </div>
+              </div>
+              <div class="item_module item_show_liste">
                 <i class="fas fa-crosshairs"></i> Développement Web côté client
               </div>
             </td>
           </tr>
-          <tr valign="top">
-            <td class="td_one">
-              <div class="col item_module over_green">
+          <tr>
+            <td class="first-col">
+              <div class="item_module over_green item_module_liste">
                 <i class="fas fa-cube"></i> .....................
               </div>
             </td>
             <td>
-              <div class="col item_module item_show_liste">
+              <div class="item_module item_show_liste">
                 <i class="fas fa-crosshairs"></i> .................
               </div>
-              <div class="ico_operator_or">
-                <i class="fas fa-chevron-left"></i>
-                Ou
-                <i class="fas fa-chevron-right"></i>
+              <div class="item_ico_liste">
+                <div class="ico_or">
+                  <i class="fas fa-chevron-left"></i>
+                  Ou
+                  <i class="fas fa-chevron-right"></i>
+                </div>
               </div>
-              <div class="col item_module item_show_liste">
+              <div class="item_module item_show_liste">
                 <i class="fas fa-crosshairs"></i> .................
               </div>
             </td>
@@ -191,5 +205,5 @@
         </table>
       </div>
     </div>
-  </main>
+  </div>
 </div>
