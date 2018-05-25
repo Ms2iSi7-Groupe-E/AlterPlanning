@@ -1,37 +1,22 @@
-h2{
-    padding-left: 10px;
+.tbl_search {
+  td {
+    &.stat_proposition{
+      background-color: #f58f8f;
+
+      &:hover{
+        background-color: #f95a5a;
+        cursor: pointer;
+      }
+    }
+
+    &.stat_confirme{
+      background-color: #74e674;
+
+      &:hover{
+        background-color: #40f740;
+        cursor: pointer;
+      }
+    }
+  }
 }
-h4{
-    padding-left: 10px;
-    text-decoration: underline;
-}
-.tbl_search{
-    margin: 0 20px;
-}
-.tbl_search tr{
-    line-height: 30px;
-}
-.tbl_search tr:first-child td{
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
-}
-.tbl_search td:not(:last-child){
-    border-right: 1px solid #ccc;
-}
-.tbl_search td{
-    padding-left: 5px;
-}
-.stat_proposition{
-    background-color: #f58f8f;
-}
-.stat_proposition:hover{
-    background-color: #f95a5a;
-    cursor: pointer;
-}
-.stat_confirme{
-    background-color: #74e674;
-}
-.stat_confirme:hover{
-    background-color: #40f740;
-    cursor: pointer;
-}
+
