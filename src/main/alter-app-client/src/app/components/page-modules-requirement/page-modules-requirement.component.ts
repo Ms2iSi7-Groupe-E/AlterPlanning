@@ -21,7 +21,7 @@ export class PageModulesRequirementComponent implements OnInit {
   targetFormation;
   targetModule;
   targetModules = [];
-  targetSelected = null;
+  targetSelected;
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
