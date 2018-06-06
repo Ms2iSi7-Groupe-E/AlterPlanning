@@ -25,7 +25,7 @@
         <jackson-core.version>2.9.5</jackson-core.version>
         <mysql-connector-java.version>8.0.11</mysql-connector-java.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <jjwt.version>0.7.0</jjwt.version>
+        <jjwt.version>0.9.0</jjwt.version>
         <junit.version>4.12</junit.version>
         <mail.version>1.4.7</mail.version>
         <log4j.version>1.2.17</log4j.version>
@@ -143,6 +143,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <configuration>
                     <workingDirectory>src/main/alter-app-client</workingDirectory>
                 </configuration>
@@ -177,8 +178,9 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+                <version>1.8</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -196,6 +198,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
