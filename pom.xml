@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.0.BUILD-SNAPSHOT</version>
+        <version>2.0.2.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -22,8 +22,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <tomcat-embed-jasper.version>9.0.8</tomcat-embed-jasper.version>
-        <jstl.version>1.2</jstl.version>
         <jackson-core.version>2.9.5</jackson-core.version>
         <mysql-connector-java.version>8.0.11</mysql-connector-java.version>
         <commons-lang.version>2.6</commons-lang.version>
@@ -59,18 +57,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Tomcat and JSP Dependencies -->
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <version>${tomcat-embed-jasper.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
         </dependency>
 
         <!-- JSON Formatter -->
@@ -200,11 +186,11 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <tasks>
-                                <delete>
+                            <target>
+                                <delete failonerror="false">
                                     <fileset dir="${basedir}/src/main/resources/static" />
                                 </delete>
-                            </tasks>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
@@ -252,23 +238,4 @@
             </resource>
         </resources>
     </build>
-
-    <repositories>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>
