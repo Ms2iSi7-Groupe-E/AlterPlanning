@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 
@@ -25,26 +24,21 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "email")
     @Size(max = 100)
-    @NotNull
     private String email;
 
     @Column(name = "name")
     @Size(max = 100)
-    @NotNull
     private String name;
 
     @Column(name = "password")
     @Size(max = 200)
-    @NotNull
     @JsonIgnore
     private String password;
 
     @Column(name = "is_admin")
-    @NotNull
     private boolean admin = false;
 
     @Column(name = "is_active")
-    @NotNull
     @JsonIgnore
     private boolean active = true;
 
