@@ -29,7 +29,7 @@
     </ul>
   </div>
   <div class="d-flex flex-row-reverse">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" *ngIf="user">
       <li class="nav-item" ngbDropdown>
         <a class="nav-link" ngbDropdownToggle>
           <i class="fa fa-user"></i> {{ user.email }}

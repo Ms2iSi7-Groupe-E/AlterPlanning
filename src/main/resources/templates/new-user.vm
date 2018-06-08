@@ -3,7 +3,7 @@
 
 </head>
 <body>
-    <h2>Welcome $user.Firstname $user.Lastname.toUpperCase()</h2>
+    <h2>Welcome $user.Name</h2>
 
     <p>You're account have been created successfully</p>
 

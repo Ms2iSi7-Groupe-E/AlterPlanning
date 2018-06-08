@@ -12,16 +12,16 @@ export class PageModulesRequirementComponent implements OnInit {
   dataModules = [];
   dataTitres = [];
   dataFormations = [];
-  sourceCodeTitre = '';
-  sourceFormation = '';
-  sourceModule = '';
+  sourceCodeTitre;
+  sourceFormation;
+  sourceModule;
   sourcesModules = [];
-  sourceSelected = null;
-  targetCodeTitre = '';
-  targetFormation = '';
-  targetModule = '';
+  sourceSelected;
+  targetCodeTitre;
+  targetFormation;
+  targetModule;
   targetModules = [];
-  targetSelected = null;
+  targetSelected;
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 

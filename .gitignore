@@ -21,3 +21,7 @@ target/
 
 # Mac
 *.DS_Store
+
+# Log
+alterplanning.log
+velocity.log
