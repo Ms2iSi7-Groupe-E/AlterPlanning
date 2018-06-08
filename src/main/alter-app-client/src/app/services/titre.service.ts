@@ -13,4 +13,9 @@ export class TitreService {
     return this.http
       .get('/api/titre', {headers: AuthService.getHeaders()});
   }
+
+  getFormations(codeTitre: string): Observable<any> {
+    return this.http
+      .get('/api/titre/' + codeTitre + '/formations', {headers: AuthService.getHeaders()});
+  }
 }

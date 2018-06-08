@@ -64,7 +64,17 @@ export class PageModulesRequirementComponent implements OnInit {
   }
 
   selectTitreSource() {
-    // sdfsd
+
+    // recupere la liste des formation d'un titre
+    this.titreService.getFormations(this.sourceCodeTitre).subscribe(
+      res => {
+        // this.dataTitres = res;
+        console.log(res);
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
   findModuleSource() {
