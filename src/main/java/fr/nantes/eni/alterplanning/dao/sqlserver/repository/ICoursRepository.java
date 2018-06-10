@@ -28,4 +28,9 @@ public interface ICoursRepository extends CrudRepository<CoursEntity, String> {
     @Query("SELECT c FROM CoursEntity c " +
             "WHERE c.idModule= :idModule")
     List<CoursEntity> findAllByModule(@Param("idModule") Integer idModule);
+
+    @SuppressWarnings("JpaQlInspection")
+    @Query("SELECT c FROM CoursEntity c " +
+            "WHERE c.idCours IN (:ids)")
+    List<CoursEntity> findAllByFromListIdCours(@Param("ids") List<String> ids);
 }

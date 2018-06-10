@@ -1,8 +1,10 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
@@ -10,9 +12,7 @@ import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
-import fr.nantes.eni.alterplanning.service.dao.CalendarDAOService;
-import fr.nantes.eni.alterplanning.service.dao.EntrepriseDAOService;
-import fr.nantes.eni.alterplanning.service.dao.StagiaireDAOService;
+import fr.nantes.eni.alterplanning.service.dao.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,12 @@ public class CalendarController {
 
     @Resource
     private CalendarDAOService calendarDAOService;
+
+    @Resource
+    private CalendarCoursDAOService calendarCoursDAOService;
+
+    @Resource
+    private CoursDAOService coursDAOService;
 
     @Resource
     private StagiaireDAOService stagiaireDAOService;
@@ -100,7 +107,16 @@ public class CalendarController {
             calendarDetailResponse.setStagiaire(stagiaireEntity);
         }
 
-        // TODO : récupérer cours et contraintes d'un calendrier
+        final List<CalendarCoursEntity> calendarCoursEntities = calendarCoursDAOService.findByCalendarId(id);
+
+        if (!calendarCoursEntities.isEmpty()) {
+            final List<String> idsCours = calendarCoursEntities.stream().map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
+            final List<CoursEntity> coursEntities = coursDAOService.findByListIdCours(idsCours);
+
+            calendarDetailResponse.setCours(coursEntities);
+        }
+
+        // TODO : contraintes d'un calendrier
 
         return calendarDetailResponse;
     }
@@ -149,6 +165,12 @@ public class CalendarController {
         return getCalendarDetailsById(createdCalendar.getId());
     }
 
+    @PutMapping("/{id}")
+    public StringResponse updateCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
+        // TODO : modif de calendar
+        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    }
+
     @DeleteMapping("/{id}")
     public StringResponse deleteCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
         // Find Calendar to delete
@@ -163,4 +185,19 @@ public class CalendarController {
 
         return new StringResponse("Calendar successfully deleted");
     }
+
+    @PostMapping("/{id}/constraint")
+    @ResponseStatus(HttpStatus.CREATED)
+    public StringResponse addConstraintToCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
+        // TODO : ajout de contraintes
+        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    }
+
+    @DeleteMapping("/{id}/constraint/{idConstraint}")
+    public StringResponse deleteConstraintForCalendar(@PathVariable(name = "id") int idCalendar,
+                                                      @PathVariable(name = "idConstraint") int idConstraint) throws RestResponseException {
+        // TODO : suppression de contraintes
+        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    }
+
 }

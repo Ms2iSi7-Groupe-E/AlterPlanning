@@ -12,5 +12,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IParameterRepository extends CrudRepository<ParameterEntity, String> {
-
 }

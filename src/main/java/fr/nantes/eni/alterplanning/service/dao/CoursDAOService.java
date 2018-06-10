@@ -38,4 +38,8 @@ public class CoursDAOService {
     public List<CoursEntity> findByModule(final Integer idModule) {
         return repository.findAllByModule(idModule);
     }
+
+    public List<CoursEntity> findByListIdCours(final List<String> idsCours) {
+        return repository.findAllByFromListIdCours(idsCours);
+    }
 }
