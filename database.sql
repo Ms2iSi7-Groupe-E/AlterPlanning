@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jun 10, 2018 at 04:57 PM
+-- Generation Time: Jun 10, 2018 at 08:51 PM
 -- Server version: 10.3.6-MariaDB-1:10.3.6+maria~jessie
 -- PHP Version: 7.2.4
 
@@ -65,6 +65,61 @@ CREATE TABLE `calendar_cours` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `calendar_models`
+--
+
+CREATE TABLE `calendar_models` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `calendarId` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history`
+--
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `createdAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `independant_modules`
+--
+
+CREATE TABLE `independant_modules` (
+  `id` int(11) NOT NULL,
+  `shortName` varchar(20) NOT NULL,
+  `longName` varchar(200) NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `hours` int(11) NOT NULL,
+  `codeLieu` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_requirements`
+--
+
+CREATE TABLE `module_requirements` (
+  `id` int(11) NOT NULL,
+  `moduleId` int(11) NOT NULL,
+  `requiredModuleId` int(11) NOT NULL,
+  `isOr` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `parameters`
 --
 
@@ -86,7 +141,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
@@ -119,6 +174,26 @@ ALTER TABLE `calendar_cours`
   ADD PRIMARY KEY (`calendarId`,`coursId`);
 
 --
+-- Indexes for table `calendar_models`
+--
+ALTER TABLE `calendar_models`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `calendarId` (`calendarId`);
+
+--
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `module_requirements`
+--
+ALTER TABLE `module_requirements`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `parameters`
 --
 ALTER TABLE `parameters`
@@ -148,6 +223,24 @@ ALTER TABLE `calendar_constraints`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `calendar_models`
+--
+ALTER TABLE `calendar_models`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `module_requirements`
+--
+ALTER TABLE `module_requirements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -168,6 +261,18 @@ ALTER TABLE `calendar_constraints`
 --
 ALTER TABLE `calendar_cours`
   ADD CONSTRAINT `fk_calendarcours_calendar` FOREIGN KEY (`calendarId`) REFERENCES `calendars` (`id`);
+
+--
+-- Constraints for table `calendar_models`
+--
+ALTER TABLE `calendar_models`
+  ADD CONSTRAINT `fk_calendarmodels_calendar` FOREIGN KEY (`calendarId`) REFERENCES `calendars` (`id`);
+
+--
+-- Constraints for table `history`
+--
+ALTER TABLE `history`
+  ADD CONSTRAINT `fk_history_user` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
