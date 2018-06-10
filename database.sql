@@ -114,7 +114,7 @@ CREATE TABLE `module_requirements` (
   `id` int(11) NOT NULL,
   `moduleId` int(11) NOT NULL,
   `requiredModuleId` int(11) NOT NULL,
-  `isOr` tinyint(1) NOT NULL
+  `isOr` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
