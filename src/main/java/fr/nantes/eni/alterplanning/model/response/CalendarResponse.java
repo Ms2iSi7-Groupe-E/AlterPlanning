@@ -1,6 +1,7 @@
 package fr.nantes.eni.alterplanning.model.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
@@ -57,6 +58,7 @@ public class CalendarResponse {
         this.state = state;
     }
 
+    @JsonProperty("isModel")
     public Boolean getModel() {
         return isModel;
     }

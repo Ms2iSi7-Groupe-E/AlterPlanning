@@ -1,7 +1,5 @@
 package fr.nantes.eni.alterplanning.dao.mysql.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 
 import javax.persistence.*;
@@ -88,7 +86,6 @@ public class CalendarEntity {
         this.state = state;
     }
 
-    @JsonProperty("isModel")
     public Boolean getModel() {
         return isModel;
     }
