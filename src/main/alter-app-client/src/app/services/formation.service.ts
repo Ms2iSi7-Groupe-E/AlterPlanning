@@ -12,4 +12,9 @@ export class FormationService {
     return this.http
       .get('/api/formation', {headers: AuthService.getHeaders()});
   }
+
+  getModules(codeFormation: string): Observable<any> {
+    return this.http
+      .get('/api/formation/' + codeFormation + '/modules', {headers: AuthService.getHeaders()});
+  }
 }

@@ -12,14 +12,17 @@ export class PageModulesRequirementComponent implements OnInit {
   dataModules = [];
   dataTitres = [];
   dataFormations = [];
+  // concernant la partie des sources
   sourceCodeTitre;
   sourceFormation;
-  sourceModule;
+  sourceModule = '';
   sourcesModules = [];
   sourceSelected;
+  sourceIdsModulesTitreFiltre = [];
+  // concernant la partie des cibles
   targetCodeTitre;
   targetFormation;
-  targetModule;
+  targetModule = '';
   targetModules = [];
   targetSelected;
 
@@ -68,8 +71,30 @@ export class PageModulesRequirementComponent implements OnInit {
     // recupere la liste des formation d'un titre
     this.titreService.getFormations(this.sourceCodeTitre).subscribe(
       res => {
-        // this.dataTitres = res;
-        console.log(res);
+
+        // recherche de tous les modules associes a chaque formation
+        this.sourceIdsModulesTitreFiltre = [];
+        for (let i = 0; i < res.length; ++i) {
+          this.formationService.getModules(res[i].codeFormation).subscribe(
+            resM => {
+
+              // ajout des modules au filtres
+              for (let a = 0; a < resM.length; ++a) {
+                if (this.sourceIdsModulesTitreFiltre.indexOf(resM[a].idModule) === - 1) {
+                  this.sourceIdsModulesTitreFiltre.push(resM[a].idModule);
+                }
+              }
+
+              // pour la derniere recherche
+              if ( i === res.length - 1 ) {
+                this.findModuleSource();
+              }
+            },
+            errM => {
+              console.error(errM);
+            }
+          );
+        }
       },
       err => {
         console.error(err);
@@ -85,10 +110,6 @@ export class PageModulesRequirementComponent implements OnInit {
       return;
     }
 
-    // si il y a un titre de renseigne
-    // recupere toutes le formation d'un titre
-      // pour chaque formation, recuperer l'ensemble des modules
-
     // filtre les resultats a afficher
     let showRes: any[];
     showRes = [];
@@ -96,6 +117,11 @@ export class PageModulesRequirementComponent implements OnInit {
 
       // filtre sur le libelle du module
       if ( this.sourceModule.length > 1 && item.libelle.toLowerCase().indexOf( this.sourceModule.toLowerCase() ) === -1 ) {
+        continue;
+      }
+
+      // si il y a un filtre sur les modules d'un titre
+      if ( this.sourceIdsModulesTitreFiltre.length > 0 && this.sourceIdsModulesTitreFiltre.indexOf(item.idModule) === - 1 ) {
         continue;
       }
 
