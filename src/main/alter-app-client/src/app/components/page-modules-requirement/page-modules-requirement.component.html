@@ -70,7 +70,7 @@
               bindValue="codeTitre"
               placeholder="Saisir le titre"
               notFoundText="Aucun titre trouvé"
-              (change)="findModuleTarget()"
+              (change)="selectTitreTarget()"
               [(ngModel)]="targetCodeTitre">
             </ng-select>
           </div>
@@ -84,7 +84,7 @@
               bindValue="codeFormation"
               placeholder="Saisir la formation"
               notFoundText="Aucune formation trouvée"
-              (change)="findModuleTarget()"
+              (change)="selectFormationTarget()"
               [(ngModel)]="targetFormation">
             </ng-select>
           </div>

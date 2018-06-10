@@ -9,6 +9,7 @@ import { FormationService } from '../../services/formation.service';
   styleUrls: ['./page-modules-requirement.component.scss']
 })
 export class PageModulesRequirementComponent implements OnInit {
+  // concernant les donnees de references
   dataModules = [];
   dataTitres = [];
   dataFormations = [];
@@ -19,13 +20,15 @@ export class PageModulesRequirementComponent implements OnInit {
   sourcesModules = [];
   sourceSelected;
   sourceIdsModulesTitreFiltre = [];
+  sourceIdsModulesFomationFiltre = [];
   // concernant la partie des cibles
   targetCodeTitre;
   targetFormation;
   targetModule = '';
   targetModules = [];
   targetSelected;
-  sourceIdsModulesFomationFiltre = [];
+  targetIdsModulesTitreFiltre = [];
+  targetIdsModulesFomationFiltre = [];
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
@@ -67,7 +70,7 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
-  // sur la selection d'un filtre
+  // sur la selection d'un filtre source
   selectTitreSource() {
     this.sourceIdsModulesTitreFiltre = [];
 
@@ -110,7 +113,7 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
-  // sur la selection d'une formation
+  // sur la selection d'une formation source
   selectFormationSource() {
     this.sourceIdsModulesFomationFiltre = [];
 
@@ -171,6 +174,77 @@ export class PageModulesRequirementComponent implements OnInit {
     this.sourcesModules = showRes;
   }
 
+  // sur la selection d'un filtre cible
+  selectTitreTarget() {
+    this.targetIdsModulesTitreFiltre = [];
+
+    // si aucun titre n'est selectionne
+    if (this.targetCodeTitre == null) {
+      this.findModuleTarget();
+      return;
+    }
+
+    // recupere la liste des formation d'un titre
+    this.titreService.getFormations(this.targetCodeTitre).subscribe(
+      res => {
+
+        // recherche de tous les modules associes a chaque formation
+        for (let i = 0; i < res.length; ++i) {
+          this.formationService.getModules(res[i].codeFormation).subscribe(
+            resM => {
+
+              // ajout des modules au filtres
+              for (let a = 0; a < resM.length; ++a) {
+                if (this.targetIdsModulesTitreFiltre.indexOf(resM[a].idModule) === - 1) {
+                  this.targetIdsModulesTitreFiltre.push(resM[a].idModule);
+                }
+              }
+
+              // pour la derniere recherche
+              if ( i === res.length - 1 ) {
+                this.findModuleTarget();
+              }
+            },
+            errM => {
+              console.error(errM);
+            }
+          );
+        }
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
+  // sur la selection d'une formation cible
+  selectFormationTarget() {
+    this.targetIdsModulesFomationFiltre = [];
+
+    // si aucune formation n'est selectionnee
+    if (this.targetFormation == null) {
+      this.findModuleTarget();
+      return;
+    }
+
+    this.formationService.getModules(this.targetFormation).subscribe(
+      res => {
+
+        // ajout des modules au filtres
+        for (let a = 0; a < res.length; ++a) {
+          if (this.targetIdsModulesFomationFiltre.indexOf(res[a].idModule) === - 1) {
+            this.targetIdsModulesFomationFiltre.push(res[a].idModule);
+          }
+        }
+
+        this.findModuleTarget();
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
   filterTargetModules(modules) {
     let lstModules: any[];
     lstModules = [];
@@ -206,7 +280,15 @@ export class PageModulesRequirementComponent implements OnInit {
         continue;
       }
 
-      // TODO: les autres criteres
+      // si il y a un filtre sur les modules d'un titre
+      if ( this.targetIdsModulesTitreFiltre.length > 0 && this.targetIdsModulesTitreFiltre.indexOf(item.idModule) === - 1 ) {
+        continue;
+      }
+
+      // si il y a un filtre sur les modules d'une formation
+      if ( this.targetIdsModulesFomationFiltre.length > 0 && this.targetIdsModulesFomationFiltre.indexOf(item.idModule) === - 1 ) {
+        continue;
+      }
 
       showRes.push(item);
     }
