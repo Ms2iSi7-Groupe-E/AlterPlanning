@@ -1,14 +1,20 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
+import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
+import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
+import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.CalendarDAOService;
 import fr.nantes.eni.alterplanning.service.dao.EntrepriseDAOService;
 import fr.nantes.eni.alterplanning.service.dao.StagiaireDAOService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ughostephan on 23/06/2017.
@@ -34,24 +41,73 @@ public class CalendarController {
     private EntrepriseDAOService entrepriseDAOService;
 
     @GetMapping("")
-    public List<CalendarEntity> getCalendars() {
-        return calendarDAOService.findAll();
+    public List<CalendarResponse> getCalendars() {
+        final List<StagiaireEntity> allStagiaires = stagiaireDAOService.findAll();
+        final List<EntrepriseEntity> allEntreprises = entrepriseDAOService.findAll();
+
+        return calendarDAOService.findAll().stream().map(c -> {
+            final CalendarResponse calendar = new CalendarResponse();
+            calendar.setId(c.getId());
+            calendar.setStartDate(c.getStartDate());
+            calendar.setEndDate(c.getEndDate());
+            calendar.setModel(c.getModel());
+            calendar.setState(c.getState());
+
+            if (c.getEntrepriseId() != null) {
+                final EntrepriseEntity entrepriseEntity = allEntreprises
+                        .stream()
+                        .filter(x -> x.getCodeEntreprise().equals(c.getEntrepriseId()))
+                        .findFirst()
+                        .orElse(null);
+                calendar.setEntreprise(entrepriseEntity);
+            }
+
+            if (c.getStagiaireId() != null) {
+                final StagiaireEntity stagiaireEntity = allStagiaires
+                        .stream()
+                        .filter(x -> x.getCodeStagiaire().equals(c.getStagiaireId()))
+                        .findFirst()
+                        .orElse(null);
+                calendar.setStagiaire(stagiaireEntity);
+            }
+
+            return calendar;
+        }).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public CalendarEntity getCalendarById(@PathVariable(name = "id") int id) throws RestResponseException {
+    public CalendarDetailResponse getCalendarDetailsById(@PathVariable(name = "id") int id) throws RestResponseException {
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
         }
 
-        return c;
+        final CalendarDetailResponse calendarDetailResponse = new CalendarDetailResponse();
+        calendarDetailResponse.setId(c.getId());
+        calendarDetailResponse.setStartDate(c.getStartDate());
+        calendarDetailResponse.setEndDate(c.getEndDate());
+        calendarDetailResponse.setModel(c.getModel());
+        calendarDetailResponse.setState(c.getState());
+
+        if (c.getEntrepriseId() != null) {
+            EntrepriseEntity entrepriseEntity = entrepriseDAOService.findById(c.getEntrepriseId());
+            calendarDetailResponse.setEntreprise(entrepriseEntity);
+        }
+
+        if (c.getStagiaireId() != null) {
+            StagiaireEntity stagiaireEntity = stagiaireDAOService.findById(c.getStagiaireId());
+            calendarDetailResponse.setStagiaire(stagiaireEntity);
+        }
+
+        // TODO : récupérer cours et contraintes d'un calendrier
+
+        return calendarDetailResponse;
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public CalendarEntity addCalendar(@Valid @RequestBody AddCalendarForm form, BindingResult result) throws RestResponseException {
+    public CalendarDetailResponse addCalendar(@Valid @RequestBody AddCalendarForm form, BindingResult result) throws RestResponseException {
 
         if (form.getEndDate() != null && form.getStartDate() != null && form.getEndDate().before(form.getStartDate())) {
             result.addError(new FieldError("startDate",  "startDate", "should be before endDate"));
@@ -89,6 +145,22 @@ public class CalendarController {
         calendar.setEndDate(form.getEndDate());
         calendar.setState(CalendarState.DRAFT);
 
-        return calendarDAOService.create(calendar);
+        final CalendarEntity createdCalendar = calendarDAOService.create(calendar);
+        return getCalendarDetailsById(createdCalendar.getId());
+    }
+
+    @DeleteMapping("/{id}")
+    public StringResponse deleteCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
+        // Find Calendar to delete
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
+        }
+
+        // Delete Calendar
+        calendarDAOService.delete(id);
+
+        return new StringResponse("Calendar successfully deleted");
     }
 }

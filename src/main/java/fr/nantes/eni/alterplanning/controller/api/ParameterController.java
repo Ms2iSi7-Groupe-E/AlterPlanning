@@ -75,10 +75,4 @@ public class ParameterController {
 
         return new StringResponse("Parameter updated");
     }
-
-
-    /**
-     * Delete Method is useless
-     */
-
 }
