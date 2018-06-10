@@ -25,6 +25,7 @@ export class PageModulesRequirementComponent implements OnInit {
   targetModule = '';
   targetModules = [];
   targetSelected;
+  sourceIdsModulesFomationFiltre = [];
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
@@ -66,14 +67,21 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
+  // sur la selection d'un filtre
   selectTitreSource() {
+    this.sourceIdsModulesTitreFiltre = [];
+
+    // si aucun titre n'est selectionne
+    if (this.sourceCodeTitre == null) {
+      this.findModuleSource();
+      return;
+    }
 
     // recupere la liste des formation d'un titre
     this.titreService.getFormations(this.sourceCodeTitre).subscribe(
       res => {
 
         // recherche de tous les modules associes a chaque formation
-        this.sourceIdsModulesTitreFiltre = [];
         for (let i = 0; i < res.length; ++i) {
           this.formationService.getModules(res[i].codeFormation).subscribe(
             resM => {
@@ -95,6 +103,34 @@ export class PageModulesRequirementComponent implements OnInit {
             }
           );
         }
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
+  // sur la selection d'une formation
+  selectFormationSource() {
+    this.sourceIdsModulesFomationFiltre = [];
+
+    // si aucune formation n'est selectionnee
+    if (this.sourceFormation == null) {
+      this.findModuleSource();
+      return;
+    }
+
+    this.formationService.getModules(this.sourceFormation).subscribe(
+      res => {
+
+        // ajout des modules au filtres
+        for (let a = 0; a < res.length; ++a) {
+          if (this.sourceIdsModulesFomationFiltre.indexOf(res[a].idModule) === - 1) {
+            this.sourceIdsModulesFomationFiltre.push(res[a].idModule);
+          }
+        }
+
+        this.findModuleSource();
       },
       err => {
         console.error(err);
@@ -125,7 +161,10 @@ export class PageModulesRequirementComponent implements OnInit {
         continue;
       }
 
-      // TODO: les autres criteres
+      // si il y a un filtre sur les modules d'une formation
+      if ( this.sourceIdsModulesFomationFiltre.length > 0 && this.sourceIdsModulesFomationFiltre.indexOf(item.idModule) === - 1 ) {
+        continue;
+      }
 
       showRes.push(item);
     }
