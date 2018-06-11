@@ -2,7 +2,6 @@ package fr.nantes.eni.alterplanning.controller.api;
 
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
-import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
@@ -14,14 +13,12 @@ import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +54,7 @@ public class CalendarController {
             calendar.setId(c.getId());
             calendar.setStartDate(c.getStartDate());
             calendar.setEndDate(c.getEndDate());
+            calendar.setCreatedAt(c.getCreatedAt());
             calendar.setModel(c.getModel());
             calendar.setState(c.getState());
 
@@ -94,6 +92,7 @@ public class CalendarController {
         calendarDetailResponse.setId(c.getId());
         calendarDetailResponse.setStartDate(c.getStartDate());
         calendarDetailResponse.setEndDate(c.getEndDate());
+        calendarDetailResponse.setCreatedAt(c.getCreatedAt());
         calendarDetailResponse.setModel(c.getModel());
         calendarDetailResponse.setState(c.getState());
 

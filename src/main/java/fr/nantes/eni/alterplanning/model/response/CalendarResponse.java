@@ -18,6 +18,9 @@ public class CalendarResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date createdAt;
+
     private CalendarState state;
 
     private Boolean isModel;
@@ -81,5 +84,13 @@ public class CalendarResponse {
 
     public void setEntreprise(EntrepriseEntity entreprise) {
         this.entreprise = entreprise;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

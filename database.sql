@@ -35,7 +35,8 @@ CREATE TABLE `calendars` (
   `startDate` date DEFAULT NULL,
   `endDate` date DEFAULT NULL,
   `state` enum('DRAFT','PROPOSAL','VALIDATED') NOT NULL DEFAULT 'DRAFT',
-  `isModel` tinyint(1) NOT NULL DEFAULT 0
+  `isModel` tinyint(1) NOT NULL DEFAULT 0,
+  `createdAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

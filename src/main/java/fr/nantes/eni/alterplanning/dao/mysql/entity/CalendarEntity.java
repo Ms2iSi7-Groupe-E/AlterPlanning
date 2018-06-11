@@ -38,6 +38,10 @@ public class CalendarEntity {
     @Column(name = "isModel")
     private Boolean isModel = false;
 
+    @Column(name = "createdAt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
+
     public int getId() {
         return id;
     }
@@ -92,5 +96,13 @@ public class CalendarEntity {
 
     public void setModel(Boolean model) {
         isModel = model;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
