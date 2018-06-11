@@ -41,7 +41,13 @@ public class FormationController {
     }
 
     @GetMapping("/{codeFormation}/modules")
-    public List<ModuleEntity> getModuleByFormation(@PathVariable(name = "codeFormation") String codeFormation) {
+    public List<ModuleEntity> getModuleByFormation(@PathVariable(name = "codeFormation") String codeFormation) throws RestResponseException {
+        final FormationEntity f = formationDAOService.findById(codeFormation);
+
+        if (f == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Formation not found");
+        }
+
         return moduleDAOService.findByFormation(codeFormation);
     }
 }

@@ -42,7 +42,13 @@ public class LieuController {
     }
 
     @GetMapping("/{codeLieu}/cours")
-    public List<CoursEntity> getCoursByLieu(@PathVariable(name = "codeLieu") Integer codeLieu) {
+    public List<CoursEntity> getCoursByLieu(@PathVariable(name = "codeLieu") Integer codeLieu) throws RestResponseException {
+        final LieuEntity l = lieuDAOService.findById(codeLieu);
+
+        if (l == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Lieu not found");
+        }
+
         return coursDAOService.findByLieu(codeLieu);
     }
 }

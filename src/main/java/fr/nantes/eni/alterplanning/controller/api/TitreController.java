@@ -41,7 +41,13 @@ public class TitreController {
     }
 
     @GetMapping("/{codeTitre}/formations")
-    public List<FormationEntity> getFormationsByTitre(@PathVariable(name = "codeTitre") String codeTitre) {
+    public List<FormationEntity> getFormationsByTitre(@PathVariable(name = "codeTitre") String codeTitre) throws RestResponseException {
+        final TitreEntity t = titreDAOService.findById(codeTitre);
+
+        if (t == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Titre not found");
+        }
+
         return formationDAOService.findByTitre(codeTitre);
     }
 }

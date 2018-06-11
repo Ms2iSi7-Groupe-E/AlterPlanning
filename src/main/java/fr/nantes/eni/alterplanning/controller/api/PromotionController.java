@@ -41,7 +41,13 @@ public class PromotionController {
     }
 
     @GetMapping("/{codePromotion}/cours")
-    public List<CoursEntity> getCoursByPromotion(@PathVariable(name = "codePromotion") String codePromotion) {
+    public List<CoursEntity> getCoursByPromotion(@PathVariable(name = "codePromotion") String codePromotion) throws RestResponseException {
+        final PromotionEntity p = promotionDAOService.findById(codePromotion);
+
+        if (p == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Promotion not found");
+        }
+
         return coursDAOService.findByPromotion(codePromotion);
     }
 }
