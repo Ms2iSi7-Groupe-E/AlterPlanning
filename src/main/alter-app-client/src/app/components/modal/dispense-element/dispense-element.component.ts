@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -6,11 +6,14 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './dispense-element.component.html',
   styleUrls: ['./dispense-element.component.scss']
 })
-export class DispenseElementComponent {
+export class DispenseElementComponent implements OnInit {
 
   @Output() dispense = new EventEmitter<any>();
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(private activeModal: NgbActiveModal) {}
+
+  ngOnInit() {
+  }
 
   dispenseElement() {
     this.dispense.emit({
