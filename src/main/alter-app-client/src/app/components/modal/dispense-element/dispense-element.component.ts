@@ -17,5 +17,6 @@ export class DispenseElementComponent {
       name: 'PAS_EN_MEME_TEMPS_QUE',
       value: 211
     });
+    this.activeModal.dismiss('Cross click');
   }
 }

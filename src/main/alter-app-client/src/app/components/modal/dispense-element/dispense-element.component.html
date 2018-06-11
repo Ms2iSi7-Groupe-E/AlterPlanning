@@ -5,6 +5,32 @@
   </button>
 </div>
 <div class="modal-body">
-  <p>Hello</p>
-  <button class="btn btn-default" (click)="dispenseElement()">Test</button>
+  <ngb-tabset justify="fill">
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="fas fa-book"></i> Un module</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte de dispense de module</div>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="fas fa-address-book"></i> Pas en même temps que</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte pas en même temps que</div>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="far fa-clock"></i> Une période définie</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte de dispense de cours pour la période définie</div>
+
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-danger" (click)="dispenseElement()">Valider</button>
 </div>

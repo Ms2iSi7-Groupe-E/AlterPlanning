@@ -5,6 +5,40 @@
   </button>
 </div>
 <div class="modal-body">
-  <p>Hello</p>
-  <button class="btn btn-default" (click)="addElement()">Test</button>
+  <ngb-tabset justify="fill">
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="fas fa-briefcase"></i> Une Formation</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte d'ajout de formation</div>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="fas fa-book"></i> Un module</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte d'ajout de module</div>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="fas fa-address-book"></i> En même temps que</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte en même temps que</div>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab>
+      <ng-template ngbTabTitle><i class="far fa-clock"></i> Une période définie</ng-template>
+      <ng-template ngbTabContent>
+        <div class="alert alert-light mt-2">Ajouter une contrainte de cours pour la période définie</div>
+
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-success" (click)="addElement()">Valider</button>
 </div>

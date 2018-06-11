@@ -17,5 +17,6 @@ export class AddElementComponent {
       name: 'FORMATION',
       value: 'MS2I-SI7'
     });
+    this.activeModal.dismiss('Cross click');
   }
 }
