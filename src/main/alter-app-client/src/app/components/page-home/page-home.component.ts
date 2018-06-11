@@ -117,20 +117,20 @@ export class PageHomeComponent implements OnInit {
   }
 
   openModalAddElement() {
-    const modalRef = this.modalService.open(AddElementComponent);
-    modalRef.componentInstance.add.subscribe(this.addElements);
+    const modalRef = this.modalService.open(AddElementComponent, { size: 'lg' });
+    modalRef.componentInstance.add.subscribe(this.addConstraintElements);
   }
 
   openModalDispenseElement() {
-    const modalRef = this.modalService.open(DispenseElementComponent);
-    modalRef.componentInstance.dispense.subscribe(this.dispenseElements);
+    const modalRef = this.modalService.open(DispenseElementComponent, { size: 'lg' });
+    modalRef.componentInstance.dispense.subscribe(this.dispenseConstraintElements);
   }
 
-  addElements(payload) {
+  addConstraintElements(payload) {
     console.log(payload);
   }
 
-  dispenseElements(payload) {
+  dispenseConstraintElements(payload) {
     console.log(payload);
   }
 }
