@@ -118,19 +118,19 @@ export class PageHomeComponent implements OnInit {
 
   openModalAddElement() {
     const modalRef = this.modalService.open(AddElementComponent, { size: 'lg' });
-    modalRef.componentInstance.add.subscribe(this.addConstraintElements);
+    modalRef.componentInstance.add.subscribe(res => this.constraints.push(res));
   }
 
   openModalDispenseElement() {
     const modalRef = this.modalService.open(DispenseElementComponent, { size: 'lg' });
-    modalRef.componentInstance.dispense.subscribe(this.dispenseConstraintElements);
+    modalRef.componentInstance.dispense.subscribe(res => this.constraints.push(res));
   }
 
-  addConstraintElements(payload) {
-    console.log(payload);
+  clearAllConstraints() {
+    this.constraints = [];
   }
 
-  dispenseConstraintElements(payload) {
-    console.log(payload);
+  removeConstraint(index) {
+    this.constraints.splice(index, 1);
   }
 }

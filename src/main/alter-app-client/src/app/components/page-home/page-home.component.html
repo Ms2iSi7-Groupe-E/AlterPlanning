@@ -88,10 +88,20 @@
       <button type="button" class="btn btn-outline-danger" (click)="openModalDispenseElement()"><i class="fas fa-ban"></i> Dispenser un élément</button>
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-secondary"><i class="far fa-trash-alt"></i> Effacer tout</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="clearAllConstraints()"><i class="far fa-trash-alt"></i> Effacer tout</button>
     </div>
   </div>
 
+  <div class="row calendar-constraint" *ngFor="let constraint of constraints; let i = index">
+    <div class="col-10" [ngClass]="constraint.cssClass">
+      <i class="far fa-calendar-alt"></i> {{ constraint.title }}
+    </div>
+    <div class="col-2 text-right">
+      <button type="button" class="btn btn-outline-danger" (click)="removeConstraint(i)"><i class="fas fa-ban"></i> Supprimer</button>
+    </div>
+  </div>
+
+  <!--
   <div class="row calendar-constraint">
     <div class="col-10 constraint-variante">
       <i class="far fa-calendar-alt"></i> Variante du calendrier #607, à partir du 01/02/2018
@@ -100,6 +110,7 @@
       <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
     </div>
   </div>
+
   <div class="row calendar-constraint">
     <div class="col-10 constraint-dispense">
       <i class="far fa-calendar-alt"></i> Dispense UF : Formation aux tests
@@ -124,6 +135,7 @@
       <button type="button" class="btn btn-outline-danger"><i class="fas fa-ban"></i> Supprimer</button>
     </div>
   </div>
+  -->
 
   <div class="row proposal-btn">
     <div class="col-12 text-right">

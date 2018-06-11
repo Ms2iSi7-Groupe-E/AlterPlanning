@@ -58,18 +58,22 @@ export class AddElementComponent implements OnInit {
 
   addElement(type) {
     let value = null;
+    let title = null;
 
     switch (type) {
       case this.AJOUT_FORMATION:
         value = this.formations.find(f => f.codeFormation === this.selectedFormation);
+        title = 'Formation : ' + value.libelleLong + ' - ' + value.libelleCourt;
         break;
 
       case this.AJOUT_MODULE:
         value = this.modules.find(m => m.idModule === this.selectedModule);
+        title = 'Module : ' + value.libelleCourt + ' - ' + value.libelle;
         break;
 
       case this.EN_MEME_TEMPS_QUE:
         value = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
+        title = 'En même temps que : ' + value.prenom + ' ' + value.nom;
         break;
 
       case this.AJOUT_PERIODE:
@@ -77,13 +81,19 @@ export class AddElementComponent implements OnInit {
           from: new Date(this.selectedPeriodeDebut.year, this.selectedPeriodeDebut.month - 1, this.selectedPeriodeDebut.day),
           to: new Date(this.selectedPeriodeFin.year, this.selectedPeriodeFin.month - 1, this.selectedPeriodeFin.day)
         };
+        title = 'Période du ' + value.from.toLocaleDateString() + ' au ' + value.to.toLocaleDateString();
         break;
 
       default:
         return;
     }
 
-    this.add.emit({ type, value });
+    this.add.emit({
+      type,
+      value,
+      title,
+      cssClass: 'constraint-ajout'
+    });
 
     this.activeModal.dismiss('Cross click');
   }
