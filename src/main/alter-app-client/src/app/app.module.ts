@@ -27,6 +27,8 @@ import {TitreService } from './services/titre.service';
 import {ParameterService} from "./services/parameter.service";
 import {FormationService} from "./services/formation.service";
 import {LieuService} from "./services/lieu.service";
+import {StagiaireService} from "./services/stagiaire.service";
+import {EntrepriseService} from "./services/entreprise.service";
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import {LieuService} from "./services/lieu.service";
     TitreService,
     ParameterService,
     FormationService,
-    LieuService
+    LieuService,
+    StagiaireService,
+    EntrepriseService
   ],
   bootstrap: [AppComponent]
 })

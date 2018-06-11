@@ -6,46 +6,60 @@
     <div class="col-md-7">
       <div class="form-group row">
         <label class="col-3 col-form-label">Pour :</label>
-        <div class="col-3">
-          <input type="text" class="form-control" placeholder="Nom"/>
+        <div class="col-5">
+          <ng-select [(ngModel)]="selectedStagiaire"
+                     (change)="changeStagiaire()"
+                     placeholder="Stagiaire"
+                     notFoundText="Aucun stagiaire trouvé">
+            <ng-option *ngFor="let stagiaire of stagiaires"
+                       [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}}</ng-option>
+          </ng-select>
         </div>
-        <div class="col-3">
-          <input type="text" class="form-control" placeholder="Prénom"/>
-        </div>
-        <div class="col-3">
-          <input type="text" class="form-control" placeholder="Entreprise"/>
+        <div class="col-4">
+          <ng-select
+            [items]="entreprises"
+            bindLabel="raisonSociale"
+            bindValue="codeEntreprise"
+            placeholder="Entreprise"
+            notFoundText="Aucune entreprise trouvée"
+            (change)="changeEntreprise()"
+            [(ngModel)]="selectedEntreprise">
+          </ng-select>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-3 col-form-label">Nombre d'heures :</label>
         <div class="col-2">
-          <input type="text" class="form-control" placeholder="Min."/>
+          <input type="text" class="form-control" [(ngModel)]="selectedHeureMin" name="heureMin" placeholder="Min."/>
         </div>
         <label class="col-2 col-form-label">ou / et</label>
         <div class="col-2">
-          <input type="text" class="form-control" placeholder="Max."/>
+          <input type="text" class="form-control" [(ngModel)]="selectedHeureMax" name="heureMax" placeholder="Max."/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-3 col-form-label">Début :</label>
         <div class="col-4">
-          <input type="text" class="form-control" placeholder=""/>
+          <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="dd-mm-yyyy"
+                 ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle()" readonly/>
         </div>
-        <button type="button" class="btn btn-outline-info"><i class="fas fa-table"></i></button>
+        <button type="button" class="btn btn-outline-info" (click)="dpDebut.toggle()"><i class="fas fa-table"></i></button>
       </div>
       <div class="form-group row">
         <label class="col-3 col-form-label">Fin :</label>
         <div class="col-4">
-          <input type="text" class="form-control" placeholder=""/>
+          <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="dd-mm-yyyy"
+                 ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle()" readonly/>
         </div>
-        <button type="button" class="btn btn-outline-info"><i class="fas fa-table"></i></button>
+        <button type="button" class="btn btn-outline-info" (click)="dpFin.toggle()"><i class="fas fa-table"></i></button>
       </div>
     </div>
     <div class="col-md-5">
       <span>Lieux :</span>
       <div class="form-group group-lieux">
         <div class="wrap" *ngFor="let lieu of lieux">
-          <input [id]="lieu.codeLieu" class="checkbox-inline" type="checkbox" [value]="lieu.codeLieu">
+          <input [id]="lieu.codeLieu" class="checkbox-inline" type="checkbox" [value]="lieu.codeLieu"
+                 name="lieu" (change)="changeLieux($event, lieu.codeLieu)">
           <label [for]="lieu.codeLieu" class="checkbox-label">{{ lieu.libelle }}</label>
         </div>
       </div>
@@ -109,7 +123,7 @@
 
   <div class="row proposal-btn">
     <div class="col-12 text-right">
-      <button type="button" class="btn btn-info" onclick="window.location.href='detail_calendrier.html'"><i class="fas fa-camera"></i> Génération de la proposition</button>
+      <button type="button" class="btn btn-info" (click)="generateCalendar()"><i class="fas fa-camera"></i> Génération de la proposition</button>
     </div>
   </div>
 </div>
