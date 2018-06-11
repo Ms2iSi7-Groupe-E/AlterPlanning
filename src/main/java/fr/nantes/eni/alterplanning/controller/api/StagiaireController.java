@@ -1,7 +1,9 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
+import fr.nantes.eni.alterplanning.service.dao.EntrepriseDAOService;
 import fr.nantes.eni.alterplanning.service.dao.StagiaireDAOService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ public class StagiaireController {
     @Resource
     private StagiaireDAOService stagiaireDAOService;
 
+    @Resource
+    private EntrepriseDAOService entrepriseDAOService;
+
     @GetMapping("")
     public List<StagiaireEntity> getStagiaires() {
         return stagiaireDAOService.findAll();
@@ -34,5 +39,17 @@ public class StagiaireController {
         }
 
         return s;
+    }
+
+    @GetMapping("/{codeStagiaire}/entreprises")
+    public List<EntrepriseEntity> getEntreprisesForStagiaire(@PathVariable(name = "codeStagiaire") Integer codeStagiaire)
+            throws RestResponseException {
+        final StagiaireEntity s = stagiaireDAOService.findById(codeStagiaire);
+
+        if (s == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Stagiaire not found");
+        }
+
+        return entrepriseDAOService.findByStagiaire(codeStagiaire);
     }
 }

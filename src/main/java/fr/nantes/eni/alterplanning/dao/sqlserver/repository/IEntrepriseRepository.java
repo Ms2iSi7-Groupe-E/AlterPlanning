@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Created by ughostephan on 23/06/2017.
@@ -19,5 +19,5 @@ public interface IEntrepriseRepository extends CrudRepository<EntrepriseEntity, 
             "INNER JOIN StagiaireParEntrepriseEntity spe on ent.codeEntreprise = spe.codeEntreprise " +
             "INNER JOIN StagiaireEntity sta on spe.codeStagiaire = sta.codeStagiaire " +
             "WHERE sta.codeStagiaire = :codeStagiaire")
-    Optional<EntrepriseEntity> findByStagiaire(@Param("codeStagiaire") Integer codeStagiaire);
+    List<EntrepriseEntity> findByStagiaire(@Param("codeStagiaire") Integer codeStagiaire);
 }

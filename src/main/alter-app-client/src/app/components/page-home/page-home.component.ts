@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ModelsService} from '../../services/models.service';
 import {LieuService} from "../../services/lieu.service";
+import {EntrepriseService} from "../../services/entreprise.service";
+import {StagiaireService} from "../../services/stagiaire.service";
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,23 @@ import {LieuService} from "../../services/lieu.service";
 export class PageHomeComponent implements OnInit {
   models = [];
   lieux = [];
+  allStagiaires = [];
+  allEntreprises = [];
+  stagiaires = [];
+  entreprises = [];
   selectedModels = null;
-  searchCriteria = [];
+  selectedDateDebut = null;
+  selectedDateFin = null;
+  selectedHeureMin = null;
+  selectedEntreprise = null;
+  selectedStagiaire = null;
+  selectedHeureMax = null;
+  selectedLieux = [];
 
-  constructor(private modelsService: ModelsService, private lieuService: LieuService) { }
+  constructor(private modelsService: ModelsService,
+              private lieuService: LieuService,
+              private entrepriseService: EntrepriseService,
+              private stagiaireService: StagiaireService) { }
 
   ngOnInit() {
     this.models = this.modelsService.getModels();
@@ -26,25 +41,82 @@ export class PageHomeComponent implements OnInit {
         console.error(err);
       }
     );
-  }
 
-  changeModels() {
-    console.log(this.selectedModels);
-  }
-  /*cours = [];
-
-  constructor(private courService: CourService) { }
-
-  ngOnInit() {
-    this.courService.getCours().subscribe(
+    this.entrepriseService.getEntreprises().subscribe(
       res => {
-        //console.log(res);
-        this.cours = res;
+        this.allEntreprises = res;
+        this.entreprises = res;
       },
       err => {
         console.error(err);
       }
     );
-  }*/
 
+    this.stagiaireService.getStagiaires().subscribe(
+      res => {
+        this.allStagiaires = res;
+        this.stagiaires = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
+  changeModels() {
+    // console.log(this.selectedModels);
+  }
+
+  changeLieux(ev, val) {
+    if (ev.target.checked) {
+      this.selectedLieux.push(val);
+    } else {
+      const i = this.selectedLieux.indexOf(val);
+      this.selectedLieux.splice(i, 1);
+    }
+  }
+
+  changeEntreprise() {
+    if (this.selectedEntreprise === null) {
+      this.stagiaires = this.allStagiaires;
+    } else {
+      this.stagiaires = [];
+      this.entrepriseService.getStagiairesForEntreprise(this.selectedEntreprise).subscribe(
+        res => {
+          this.stagiaires = res;
+        },
+        err => {
+          console.error(err);
+        }
+      );
+    }
+  }
+
+  changeStagiaire() {
+    if (this.selectedStagiaire === null) {
+      this.entreprises = this.allEntreprises;
+    } else {
+      this.entreprises = [];
+
+      this.stagiaireService.getEntreprisesForStagiaire(this.selectedStagiaire).subscribe(
+        res => {
+          this.entreprises = res;
+        },
+        err => {
+          console.error(err);
+        }
+      );
+    }
+  }
+
+  generateCalendar() {
+    console.log('entreprise', this.selectedEntreprise);
+    console.log('stagiaire', this.selectedStagiaire);
+    console.log('model', this.selectedModels);
+    console.log('lieux', this.selectedLieux);
+    console.log('dateDebut', this.selectedDateDebut);
+    console.log('dateFin', this.selectedDateFin);
+    console.log('heureMin', this.selectedHeureMin);
+    console.log('heureMax', this.selectedHeureMax);
+  }
 }
