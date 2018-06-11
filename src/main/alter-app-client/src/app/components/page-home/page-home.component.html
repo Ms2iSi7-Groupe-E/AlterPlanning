@@ -55,13 +55,18 @@
       </div>
     </div>
     <div class="col-md-5">
-      <span>Lieux :</span>
-      <div class="form-group group-lieux">
-        <div class="wrap" *ngFor="let lieu of lieux">
-          <input [id]="lieu.codeLieu" class="checkbox-inline" type="checkbox" [value]="lieu.codeLieu"
-                 name="lieu" (change)="changeLieux($event, lieu.codeLieu)">
-          <label [for]="lieu.codeLieu" class="checkbox-label">{{ lieu.libelle }}</label>
-        </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Lieux :</label>
+
+        <ng-select [items]="lieux"
+                   [(ngModel)]="selectedLieux"
+                   class="col-10"
+                   [multiple]="true"
+                   bindLabel="libelle"
+                   bindValue="codeLieu"
+                   placeholder="Lieux"
+                   notFoundText="Aucun lieu trouvé">
+        </ng-select>
       </div>
     </div>
   </div>

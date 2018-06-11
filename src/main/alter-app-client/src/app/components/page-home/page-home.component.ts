@@ -67,15 +67,6 @@ export class PageHomeComponent implements OnInit {
     // console.log(this.selectedModels);
   }
 
-  changeLieux(ev, val) {
-    if (ev.target.checked) {
-      this.selectedLieux.push(val);
-    } else {
-      const i = this.selectedLieux.indexOf(val);
-      this.selectedLieux.splice(i, 1);
-    }
-  }
-
   changeEntreprise() {
     if (this.selectedEntreprise === null) {
       this.stagiaires = this.allStagiaires;
