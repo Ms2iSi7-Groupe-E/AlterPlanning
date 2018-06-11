@@ -10,6 +10,10 @@ export class DispenseElementComponent implements OnInit {
 
   @Output() dispense = new EventEmitter<any>();
 
+  private readonly DISPENSE_PERIODE = 'DISPENSE_PERIODE';
+  private readonly DISPENSE_MODULE = 'DISPENSE_MODULE';
+  private readonly PAS_EN_MEME_TEMPS_QUE = 'PAS_EN_MEME_TEMPS_QUE';
+
   constructor(private activeModal: NgbActiveModal) {}
 
   ngOnInit() {

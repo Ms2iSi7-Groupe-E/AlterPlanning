@@ -13,6 +13,11 @@ export class AddElementComponent implements OnInit {
 
   @Output() add = new EventEmitter<any>();
 
+  private readonly AJOUT_FORMATION = 'AJOUT_FORMATION';
+  private readonly AJOUT_MODULE = 'AJOUT_MODULE';
+  private readonly AJOUT_PERIODE = 'AJOUT_PERIODE';
+  private readonly EN_MEME_TEMPS_QUE = 'EN_MEME_TEMPS_QUE';
+
   formations = [];
   modules = [];
   stagiaires = [];
@@ -51,11 +56,35 @@ export class AddElementComponent implements OnInit {
       });
   }
 
-  addElement() {
-    this.add.emit({
-      name: 'FORMATION',
-      value: 'MS2I-SI7'
-    });
+  addElement(type) {
+    let value = null;
+
+    switch (type) {
+      case this.AJOUT_FORMATION:
+        value = this.formations.find(f => f.codeFormation === this.selectedFormation);
+        break;
+
+      case this.AJOUT_MODULE:
+        value = this.modules.find(m => m.idModule === this.selectedModule);
+        break;
+
+      case this.EN_MEME_TEMPS_QUE:
+        value = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
+        break;
+
+      case this.AJOUT_PERIODE:
+        value = {
+          from: new Date(this.selectedPeriodeDebut.year, this.selectedPeriodeDebut.month - 1, this.selectedPeriodeDebut.day),
+          to: new Date(this.selectedPeriodeFin.year, this.selectedPeriodeFin.month - 1, this.selectedPeriodeFin.day)
+        };
+        break;
+
+      default:
+        return;
+    }
+
+    this.add.emit({ type, value });
+
     this.activeModal.dismiss('Cross click');
   }
 }

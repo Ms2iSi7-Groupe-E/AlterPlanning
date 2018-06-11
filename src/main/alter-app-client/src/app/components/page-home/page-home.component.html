@@ -41,17 +41,17 @@
         <label class="col-3 col-form-label">Début :</label>
         <div class="col-4">
           <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="yyyy-mm-dd"
-                 ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle()" [maxDate]="selectedDateFin" readonly/>
+                 ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedDateFin" navigation="arrows"/>
         </div>
-        <button type="button" class="btn btn-outline-info" (click)="dpDebut.toggle()"><i class="fas fa-table"></i></button>
+        <button type="button" class="btn btn-outline-info" (click)="dpDebut.toggle(); dpFin.close()"><i class="fas fa-table"></i></button>
       </div>
       <div class="form-group row">
         <label class="col-3 col-form-label">Fin :</label>
         <div class="col-4">
           <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="yyyy-mm-dd"
-                 ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle()" [minDate]="selectedDateDebut" readonly/>
+                 ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedDateDebut" navigation="arrows"/>
         </div>
-        <button type="button" class="btn btn-outline-info" (click)="dpFin.toggle()"><i class="fas fa-table"></i></button>
+        <button type="button" class="btn btn-outline-info" (click)="dpFin.toggle(); dpDebut.close()"><i class="fas fa-table"></i></button>
       </div>
     </div>
     <div class="col-md-5">

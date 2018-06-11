@@ -21,7 +21,8 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement()">Valider</button>
+            <button class="btn btn-outline-dark" (click)="addElement(AJOUT_FORMATION)"
+                    [disabled]="!selectedFormation">Valider</button>
           </div>
         </div>
       </ng-template>
@@ -42,7 +43,8 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement()">Valider</button>
+            <button class="btn btn-outline-dark" (click)="addElement(AJOUT_MODULE)"
+                    [disabled]="!selectedModule">Valider</button>
           </div>
         </div>
       </ng-template>
@@ -63,7 +65,8 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement()">Valider</button>
+            <button class="btn btn-outline-dark" (click)="addElement(EN_MEME_TEMPS_QUE)"
+                    [disabled]="!selectedStagiaire">Valider</button>
           </div>
         </div>
       </ng-template>
@@ -76,17 +79,18 @@
           <label class="col-2 col-form-label">Du :</label>
           <div class="col-3">
             <input type="text" class="form-control" [(ngModel)]="selectedPeriodeDebut" name="dateDebut" placeholder="yyyy-mm-dd"
-                   ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle()" [maxDate]="selectedPeriodeFin" readonly/>
+                   ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedPeriodeFin" navigation="arrows"/>
           </div>
           <label class="col-2 col-form-label">au</label>
           <div class="col-3">
             <input type="text" class="form-control" [(ngModel)]="selectedPeriodeFin" name="dateFin" placeholder="yyyy-mm-dd"
-                   ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle()" [minDate]="selectedPeriodeDebut" readonly/>
+                   ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedPeriodeDebut" navigation="arrows"/>
           </div>
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement()">Valider</button>
+            <button class="btn btn-outline-dark" (click)="addElement(AJOUT_PERIODE)"
+                    [disabled]="!selectedPeriodeDebut || !selectedPeriodeFin">Valider</button>
           </div>
         </div>
       </ng-template>
