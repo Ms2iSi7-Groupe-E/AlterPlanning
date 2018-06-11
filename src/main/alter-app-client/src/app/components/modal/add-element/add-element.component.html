@@ -81,7 +81,7 @@
             <input type="text" class="form-control" [(ngModel)]="selectedPeriodeDebut" name="dateDebut" placeholder="yyyy-mm-dd"
                    ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedPeriodeFin" navigation="arrows"/>
           </div>
-          <label class="col-2 col-form-label">au</label>
+          <label class="col-2 col-form-label text-center">au</label>
           <div class="col-3">
             <input type="text" class="form-control" [(ngModel)]="selectedPeriodeFin" name="dateFin" placeholder="yyyy-mm-dd"
                    ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedPeriodeDebut" navigation="arrows"/>

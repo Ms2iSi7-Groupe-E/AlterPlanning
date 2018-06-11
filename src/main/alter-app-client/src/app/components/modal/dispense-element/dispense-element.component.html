@@ -9,28 +9,69 @@
     <ngb-tab>
       <ng-template ngbTabTitle><i class="fas fa-book"></i> Un module</ng-template>
       <ng-template ngbTabContent>
-        <div class="alert alert-light mt-2">Ajouter une contrainte de dispense de module</div>
-
+        <div class="form-group row mt-4">
+          <label class="col-3 col-form-label">Modules :</label>
+          <ng-select [(ngModel)]="selectedModule"
+                     class="col-9"
+                     placeholder="Module"
+                     notFoundText="Aucun module trouvé">
+            <ng-option *ngFor="let module of modules"
+                       [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="row text-center">
+          <div class="col-12">
+            <button class="btn btn-outline-dark" (click)="dispenseElement(DISPENSE_MODULE)"
+                    [disabled]="!selectedModule">Valider</button>
+          </div>
+        </div>
       </ng-template>
     </ngb-tab>
 
     <ngb-tab>
       <ng-template ngbTabTitle><i class="fas fa-address-book"></i> Pas en même temps que</ng-template>
       <ng-template ngbTabContent>
-        <div class="alert alert-light mt-2">Ajouter une contrainte pas en même temps que</div>
-
+        <div class="form-group row mt-4">
+          <label class="col-3 col-form-label">Stagiaires :</label>
+          <ng-select [(ngModel)]="selectedStagiaire"
+                     class="col-9"
+                     placeholder="Stagiaire"
+                     notFoundText="Aucun stagiaire trouvé">
+            <ng-option *ngFor="let stagiaire of stagiaires"
+                       [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="row text-center">
+          <div class="col-12">
+            <button class="btn btn-outline-dark" (click)="dispenseElement(PAS_EN_MEME_TEMPS_QUE)"
+                    [disabled]="!selectedStagiaire">Valider</button>
+          </div>
+        </div>
       </ng-template>
     </ngb-tab>
 
     <ngb-tab>
       <ng-template ngbTabTitle><i class="far fa-clock"></i> Une période définie</ng-template>
       <ng-template ngbTabContent>
-        <div class="alert alert-light mt-2">Ajouter une contrainte de dispense de cours pour la période définie</div>
-
+        <div class="form-group row mt-4">
+          <label class="col-2 col-form-label">Du :</label>
+          <div class="col-3">
+            <input type="text" class="form-control" [(ngModel)]="selectedPeriodeDebut" name="dateDebut" placeholder="yyyy-mm-dd"
+                   ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedPeriodeFin" navigation="arrows"/>
+          </div>
+          <label class="col-2 col-form-label text-center">au</label>
+          <div class="col-3">
+            <input type="text" class="form-control" [(ngModel)]="selectedPeriodeFin" name="dateFin" placeholder="yyyy-mm-dd"
+                   ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedPeriodeDebut" navigation="arrows"/>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-12">
+            <button class="btn btn-outline-dark" (click)="dispenseElement(DISPENSE_PERIODE)"
+                    [disabled]="!selectedPeriodeDebut || !selectedPeriodeFin">Valider</button>
+          </div>
+        </div>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-outline-dark" (click)="dispenseElement()">Valider</button>
 </div>
