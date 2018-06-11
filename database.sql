@@ -192,7 +192,8 @@ ALTER TABLE `history`
 -- Indexes for table `module_requirements`
 --
 ALTER TABLE `module_requirements`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `module_requirements_uq` (`moduleId`,`requiredModuleId`,`isOr`);
 
 --
 -- Indexes for table `parameters`
