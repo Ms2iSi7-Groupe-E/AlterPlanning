@@ -124,8 +124,8 @@ public class UserController {
 
     @PutMapping("/{id}/change-password")
     public StringResponse changePassword(@Valid @RequestBody ChangePasswordForm form,
-                                 BindingResult result,
-                                 @PathVariable(name = "id") int id) throws RestResponseException {
+                                         BindingResult result,
+                                         @PathVariable(name = "id") int id) throws RestResponseException {
 
         // User from Token
         final UserEntity userFromToken = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
