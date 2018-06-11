@@ -80,8 +80,8 @@ public class CalendarController {
         }).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public CalendarDetailResponse getCalendarDetailsById(@PathVariable(name = "id") int id) throws RestResponseException {
+    @GetMapping("/{idCalendar}")
+    public CalendarDetailResponse getCalendarDetailsById(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
@@ -164,14 +164,14 @@ public class CalendarController {
         return getCalendarDetailsById(createdCalendar.getId());
     }
 
-    @PutMapping("/{id}")
-    public StringResponse updateCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
+    @PutMapping("/{idCalendar}")
+    public StringResponse updateCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // TODO : modif de calendar
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
-    @DeleteMapping("/{id}")
-    public StringResponse deleteCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
+    @DeleteMapping("/{idCalendar}")
+    public StringResponse deleteCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // Find Calendar to delete
         final CalendarEntity c = calendarDAOService.findById(id);
 
@@ -185,17 +185,31 @@ public class CalendarController {
         return new StringResponse("Calendar successfully deleted");
     }
 
-    @PostMapping("/{id}/constraint")
+    @PostMapping("/{idCalendar}/constraint")
     @ResponseStatus(HttpStatus.CREATED)
-    public StringResponse addConstraintToCalendar(@PathVariable(name = "id") int id) throws RestResponseException {
+    public StringResponse addConstraintToCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // TODO : ajout de contraintes
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
-    @DeleteMapping("/{id}/constraint/{idConstraint}")
-    public StringResponse deleteConstraintForCalendar(@PathVariable(name = "id") int idCalendar,
+    @DeleteMapping("/{idCalendar}/constraint/{idConstraint}")
+    public StringResponse deleteConstraintForCalendar(@PathVariable(name = "idCalendar") int idCalendar,
                                                       @PathVariable(name = "idConstraint") int idConstraint) throws RestResponseException {
         // TODO : suppression de contraintes
+        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    }
+
+    @PostMapping("/{idCalendar}/cours")
+    @ResponseStatus(HttpStatus.CREATED)
+    public StringResponse addCoursToCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        // TODO : ajout d'un cour
+        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    }
+
+    @DeleteMapping("/{idCalendar}/cours/{idCours}")
+    public StringResponse deleteCoursForCalendar(@PathVariable(name = "idCalendar") int idCalendar,
+                                                 @PathVariable(name = "idCours") String idCours) throws RestResponseException {
+        // TODO : suppression d'un cours
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
