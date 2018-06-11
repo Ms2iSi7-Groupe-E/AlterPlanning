@@ -30,4 +30,8 @@ public class StagiaireDAOService {
     public boolean existsById(final Integer id) {
         return repository.existsById(id);
     }
+
+    public List<StagiaireEntity> findAllByEntreprise(final Integer codeEntreprise) {
+        return repository.findByEntreprise(codeEntreprise);
+    }
 }
