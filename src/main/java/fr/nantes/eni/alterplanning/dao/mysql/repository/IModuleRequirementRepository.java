@@ -15,4 +15,13 @@ public interface IModuleRequirementRepository extends CrudRepository<ModuleRequi
     @Query("SELECT m FROM ModuleRequirementEntity m " +
             "WHERE m.moduleId = :idModule")
     List<ModuleRequirementEntity> findByModule(@Param("idModule") int idModule);
+
+    @SuppressWarnings("JpaQlInspection")
+    @Query("SELECT COUNT(m) FROM ModuleRequirementEntity m " +
+            "WHERE m.moduleId = :moduleId " +
+            "AND m.requiredModuleId = :requiredModuleId " +
+            "AND m.or = :isOr")
+    int countForUniqueConstraint(@Param("moduleId") int moduleId,
+                                 @Param("requiredModuleId") int requiredModuleId,
+                                 @Param("isOr") boolean isOr);
 }

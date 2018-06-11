@@ -93,7 +93,10 @@ public class ModuleController {
             }
         }
 
-        // TODO : check if already exist : constraint 'module_requirements_uq'
+        // If no error yet, check if onstraint 'module_requirements_uq' is OK
+        if (!result.hasErrors() && moduleRequirementDAOService.alreadyExist(idModule, form.getRequiredModuleId(), form.getOr())) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Entity already exist in database");
+        }
 
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);

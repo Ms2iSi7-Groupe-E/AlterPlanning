@@ -49,7 +49,7 @@ public class ExceptionController {
         HttpStatus httpStatus = ex.getStatus() == null ? HttpStatus.INTERNAL_SERVER_ERROR : ex.getStatus();
 
         error.setStatus(httpStatus.value());
-        error.setError("Error");
+        error.setError(httpStatus.getReasonPhrase());
         error.setMessage(ex.getMessage());
 
         if (StringUtils.isEmpty(ex.getMessage())) {

@@ -48,4 +48,8 @@ public class ModuleRequirementDAOService {
     public void delete(final Integer id) {
         repository.deleteById(id);
     }
+
+    public boolean alreadyExist(final int moduleId, final int requiredModuleId, final boolean isOr) {
+        return repository.countForUniqueConstraint(moduleId, requiredModuleId, isOr) > 0;
+    }
 }

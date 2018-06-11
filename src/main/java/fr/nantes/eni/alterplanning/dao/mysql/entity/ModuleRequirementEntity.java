@@ -6,7 +6,9 @@ import javax.persistence.*;
  * Created by ughostephan on 23/06/2017.
  */
 @Entity
-@Table(name = "module_requirements")
+@Table(name = "module_requirements", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"moduleId", "requiredModuleId", "isOr"})
+})
 public class ModuleRequirementEntity {
 
     @Id
