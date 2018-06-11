@@ -27,8 +27,8 @@ public class EntrepriseDAOService {
         return repository.findById(id).orElse(null);
     }
 
-    public EntrepriseEntity findByStagiaire(final Integer codeStagiaire) {
-        return repository.findByStagiaire(codeStagiaire).orElse(null);
+    public List<EntrepriseEntity> findByStagiaire(final Integer codeStagiaire) {
+        return repository.findByStagiaire(codeStagiaire);
     }
 
     public boolean existsById(final Integer id) {

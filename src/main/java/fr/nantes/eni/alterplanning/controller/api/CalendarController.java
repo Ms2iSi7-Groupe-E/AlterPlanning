@@ -142,8 +142,12 @@ public class CalendarController {
         }
 
         if (form.getStagiaireId() != null && form.getEntrepriseId() != null && !stagaireOrEntrepriseError) {
-            EntrepriseEntity entrepriseEntity = entrepriseDAOService.findByStagiaire(form.getStagiaireId());
-            if (entrepriseEntity == null || !entrepriseEntity.getCodeEntreprise().equals(form.getEntrepriseId())) {
+            final List<EntrepriseEntity> stagiaireEntreprises = entrepriseDAOService.findByStagiaire(form.getStagiaireId());
+            final List<Integer> entrepriseIds = stagiaireEntreprises.stream()
+                    .map(EntrepriseEntity::getCodeEntreprise)
+                    .collect(Collectors.toList());
+
+            if (stagiaireEntreprises.isEmpty() || !entrepriseIds.contains(form.getEntrepriseId())) {
                 result.addError(new FieldError("entrepriseId",  "entrepriseId", "not the stagiaire entreprise"));
             }
         }

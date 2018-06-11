@@ -42,7 +42,7 @@ public class StagiaireController {
     }
 
     @GetMapping("/{codeStagiaire}/entreprise")
-    public EntrepriseEntity getStagiaireEntreprise(@PathVariable(name = "codeStagiaire") Integer codeStagiaire)
+    public List<EntrepriseEntity> getStagiaireEntreprises(@PathVariable(name = "codeStagiaire") Integer codeStagiaire)
             throws RestResponseException {
         final StagiaireEntity s = stagiaireDAOService.findById(codeStagiaire);
 
