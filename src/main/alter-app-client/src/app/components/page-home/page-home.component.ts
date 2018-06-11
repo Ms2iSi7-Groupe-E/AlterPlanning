@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModelsService} from '../../services/models.service';
 import {LieuService} from "../../services/lieu.service";
 import {EntrepriseService} from "../../services/entreprise.service";
 import {StagiaireService} from "../../services/stagiaire.service";
+import {AddElementComponent} from "../modal/add-element/add-element.component";
+import {DispenseElementComponent} from "../modal/dispense-element/dispense-element.component";
 
 @Component({
   selector: 'app-home',
@@ -16,6 +19,7 @@ export class PageHomeComponent implements OnInit {
   allEntreprises = [];
   stagiaires = [];
   entreprises = [];
+  constraints = [];
   selectedModels = null;
   selectedDateDebut = null;
   selectedDateFin = null;
@@ -25,7 +29,8 @@ export class PageHomeComponent implements OnInit {
   selectedHeureMax = null;
   selectedLieux = [];
 
-  constructor(private modelsService: ModelsService,
+  constructor(private modalService: NgbModal,
+              private modelsService: ModelsService,
               private lieuService: LieuService,
               private entrepriseService: EntrepriseService,
               private stagiaireService: StagiaireService) { }
@@ -109,5 +114,23 @@ export class PageHomeComponent implements OnInit {
     console.log('dateFin', this.selectedDateFin);
     console.log('heureMin', this.selectedHeureMin);
     console.log('heureMax', this.selectedHeureMax);
+  }
+
+  openModalAddElement() {
+    const modalRef = this.modalService.open(AddElementComponent);
+    modalRef.componentInstance.add.subscribe(this.addElements);
+  }
+
+  openModalDispenseElement() {
+    const modalRef = this.modalService.open(DispenseElementComponent);
+    modalRef.componentInstance.dispense.subscribe(this.dispenseElements);
+  }
+
+  addElements(payload) {
+    console.log(payload);
+  }
+
+  dispenseElements(payload) {
+    console.log(payload);
   }
 }

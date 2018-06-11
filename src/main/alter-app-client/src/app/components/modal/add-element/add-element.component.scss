@@ -1,0 +1,8 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.modal-header {
+  background: $success;
+  color: white;
+  border-radius: unset;
+}

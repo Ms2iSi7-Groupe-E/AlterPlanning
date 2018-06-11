@@ -29,6 +29,8 @@ import {FormationService} from "./services/formation.service";
 import {LieuService} from "./services/lieu.service";
 import {StagiaireService} from "./services/stagiaire.service";
 import {EntrepriseService} from "./services/entreprise.service";
+import { AddElementComponent } from './components/modal/add-element/add-element.component';
+import { DispenseElementComponent } from './components/modal/dispense-element/dispense-element.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import {EntrepriseService} from "./services/entreprise.service";
     PageCalendarModelsComponent,
     PageModulesRequirementComponent,
     PageIndependantModulesComponent,
+    AddElementComponent,
+    DispenseElementComponent,
   ],
   imports: [
     NgSelectModule,
@@ -66,6 +70,10 @@ import {EntrepriseService} from "./services/entreprise.service";
     LieuService,
     StagiaireService,
     EntrepriseService
+  ],
+  entryComponents: [
+    AddElementComponent,
+    DispenseElementComponent,
   ],
   bootstrap: [AppComponent]
 })
