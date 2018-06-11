@@ -30,17 +30,17 @@
       <div class="form-group row">
         <label class="col-3 col-form-label">Nombre d'heures :</label>
         <div class="col-2">
-          <input type="text" class="form-control" [(ngModel)]="selectedHeureMin" name="heureMin" placeholder="Min."/>
+          <input type="number" class="form-control" [(ngModel)]="selectedHeureMin" name="heureMin" placeholder="Min." [min]="0"/>
         </div>
         <label class="col-2 col-form-label">ou / et</label>
         <div class="col-2">
-          <input type="text" class="form-control" [(ngModel)]="selectedHeureMax" name="heureMax" placeholder="Max."/>
+          <input type="number" class="form-control" [(ngModel)]="selectedHeureMax" name="heureMax" placeholder="Max." [min]="0"/>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-3 col-form-label">Début :</label>
         <div class="col-4">
-          <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="dd-mm-yyyy"
+          <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="yyyy-mm-dd"
                  ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle()" readonly/>
         </div>
         <button type="button" class="btn btn-outline-info" (click)="dpDebut.toggle()"><i class="fas fa-table"></i></button>
@@ -48,7 +48,7 @@
       <div class="form-group row">
         <label class="col-3 col-form-label">Fin :</label>
         <div class="col-4">
-          <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="dd-mm-yyyy"
+          <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="yyyy-mm-dd"
                  ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle()" readonly/>
         </div>
         <button type="button" class="btn btn-outline-info" (click)="dpFin.toggle()"><i class="fas fa-table"></i></button>

@@ -17,4 +17,9 @@ export class EntrepriseService {
     return this.http
       .get('/api/entreprise/' + codeEntreprise, {headers: AuthService.getHeaders()});
   }
+
+  getStagiairesForEntreprise(codeEntreprise: number): Observable<any> {
+    return this.http
+      .get('/api/entreprise/' + codeEntreprise + '/stagiaires', {headers: AuthService.getHeaders()});
+  }
 }
