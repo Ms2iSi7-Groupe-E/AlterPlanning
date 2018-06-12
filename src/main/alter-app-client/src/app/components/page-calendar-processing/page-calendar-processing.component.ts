@@ -31,7 +31,7 @@ export class PageCalendarProcessingComponent implements OnInit {
             }
           });
       } else {
-        this.error = "l'id calendrier est mal renseigné dans l'URL. Merci de contacter votre administrateur.";
+        this.error = "L'identifiant du calendrier est mal renseigné dans l'URL. Merci de contacter votre administrateur.";
       }
     });
   }
