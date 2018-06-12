@@ -94,10 +94,10 @@
 
   <div class="row calendar-constraint" *ngFor="let constraint of constraints; let i = index">
     <div class="col-10" [ngClass]="constraint.cssClass">
-      <i class="far fa-calendar-alt"></i> {{ constraint.title }}
+      <i class="fas fa-list"></i> {{ constraint.title }}
     </div>
     <div class="col-2 text-right">
-      <button type="button" class="btn btn-outline-danger" (click)="removeConstraint(i)"><i class="fas fa-ban"></i> Supprimer</button>
+      <button type="button" class="btn btn-outline-danger" (click)="removeConstraint(i)"><i class="far fa-trash-alt"></i> Enlever</button>
     </div>
   </div>
 

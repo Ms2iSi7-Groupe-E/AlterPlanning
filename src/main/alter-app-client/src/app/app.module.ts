@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {HttpClientModule} from "@angular/common/http";
 import {NgSelectModule} from '@ng-select/ng-select';
 import {AppComponent} from './app.component';
@@ -11,8 +11,8 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
 import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { NavbarComponent } from './components/navbar/navbar.component';
+import {NgbDatepickerI18n, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NavbarComponent} from './components/navbar/navbar.component';
 import {CourService} from "./services/cour.service";
 import {PromotionService} from "./services/promotion.service";
 import {ModelsService} from "./services/models.service";
@@ -22,15 +22,16 @@ import {PageParametersComponent} from './components/page-parameters/page-paramet
 import {PageCalendarModelsComponent} from './components/page-calendar-models/page-calendar-models.component';
 import {PageModulesRequirementComponent} from './components/page-modules-requirement/page-modules-requirement.component';
 import {PageIndependantModulesComponent} from './components/page-independant-modules/page-independant-modules.component';
-import {ModuleService } from './services/module.service';
-import {TitreService } from './services/titre.service';
+import {ModuleService} from './services/module.service';
+import {TitreService} from './services/titre.service';
 import {ParameterService} from "./services/parameter.service";
 import {FormationService} from "./services/formation.service";
 import {LieuService} from "./services/lieu.service";
 import {StagiaireService} from "./services/stagiaire.service";
 import {EntrepriseService} from "./services/entreprise.service";
-import { AddElementComponent } from './components/modal/add-element/add-element.component';
-import { DispenseElementComponent } from './components/modal/dispense-element/dispense-element.component';
+import {AddElementComponent} from './components/modal/add-element/add-element.component';
+import {DispenseElementComponent} from './components/modal/dispense-element/dispense-element.component';
+import {DatepickerI18n} from "./components/custom/datepicker-i18n";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,8 @@ import { DispenseElementComponent } from './components/modal/dispense-element/di
     AppRoutingModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'fr' },
+    { provide: NgbDatepickerI18n, useClass: DatepickerI18n },
     AuthService,
     UserService,
     CourService,
