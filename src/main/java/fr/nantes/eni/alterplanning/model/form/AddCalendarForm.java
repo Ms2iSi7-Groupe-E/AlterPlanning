@@ -2,6 +2,7 @@ package fr.nantes.eni.alterplanning.model.form;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class AddCalendarForm implements Serializable {
     private Date endDate;
 
     @NotNull
+    @NotEmpty
     private List<ConstraintForm> constraints = new ArrayList<>();
 
     public Integer getStagiaireId() {
