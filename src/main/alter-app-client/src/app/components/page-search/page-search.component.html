@@ -3,24 +3,73 @@
     <h2>Recherche de calendrier</h2>
   </div>
   <div class="form-group row">
-    <div class="col-sm-3"><input type="text" class="form-control" placeholder="Nom du stagiaire"/></div>
-    <div class="col-sm-3"><input type="text" class="form-control" placeholder="Prénom du stagiaire"/></div>
-    <div class="col-sm-3"><input type="text" class="form-control" placeholder="Nom de l’entreprise"/></div>
-    <div class="col-sm-3"><input type="text" class="form-control" placeholder="Nom de la promotion"/></div>
+    <div class="col-sm-5">
+      <ng-select [(ngModel)]="selectedStagiaire"
+                 placeholder="Stagiaire"
+                 notFoundText="Aucun stagiaire trouvé">
+        <ng-option *ngFor="let stagiaire of stagiaires"
+                   [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-sm-4">
+      <ng-select
+        [items]="entreprises"
+        bindLabel="raisonSociale"
+        bindValue="codeEntreprise"
+        placeholder="Entreprise"
+        notFoundText="Aucune entreprise trouvée"
+        [(ngModel)]="selectedEntreprise">
+      </ng-select>
+    </div>
+    <div class="col-sm-3">
+      <ng-select
+        [items]="promotions"
+        bindLabel="libelle"
+        bindValue="codePromotion"
+        placeholder="Promotion"
+        notFoundText="Aucune promotion trouvée"
+        [(ngModel)]="selectedPromotion">
+      </ng-select>
+    </div>
   </div>
   <div class="form-group row">
-    <div class="col-sm-3"><input type="text" class="form-control" placeholder="Nom du cursus"/></div>
-    <div class="col-sm-3"><input type="text" class="form-control" placeholder="Nom du module"/></div>
+    <div class="col-sm-3">
+      <ng-select [(ngModel)]="selectedFormation"
+                 placeholder="Formation"
+                 notFoundText="Aucune formation trouvée">
+        <ng-option *ngFor="let formation of formations"
+                   [value]="formation.codeFormation">{{formation.libelleCourt}} - {{formation.libelleLong}}</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-sm-3">
+      <ng-select [(ngModel)]="selectedModule"
+                 placeholder="Module"
+                 notFoundText="Aucun module trouvé">
+        <ng-option *ngFor="let module of modules"
+                   [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
+      </ng-select>
+    </div>
     <label class="col-sm-1 col-form-label">Dates :</label>
-    <div class="col-sm-2"><input type="text" class="form-control" placeholder="Début"/></div>
-    <div class="col-sm-2"><input type="text" class="form-control" placeholder="Fin"/></div>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="yyyy-mm-dd"
+             ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedDateFin" navigation="arrows"/>
+    </div>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="yyyy-mm-dd"
+             ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedDateDebut" navigation="arrows"/>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-10">
       <label class="col-sm-1 col-form-label">Etats :</label>
-      <label><input type="radio" name="item_etat" checked="checked"/> Tous</label>&nbsp;
-      <label><input type="radio" name="item_etat"/> Proposition</label>&nbsp;
-      <label><input type="radio" name="item_etat"/> Confirmé</label>
+      <label>
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" value="ALL"/> Tous</label>&nbsp;
+      <label>
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" [value]="CALENDAR_STATE.VALIDATED"/> Confirmé</label>&nbsp;
+      <label>
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" [value]="CALENDAR_STATE.PROPOSAL"/> Proposition</label>&nbsp;
+      <label>
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" [value]="CALENDAR_STATE.DRAFT"/> Brouillon</label>
     </div>
     <div class="col-sm-2 text-right">
       <button type="button" class="btn btn-outline-secondary float-right" (click)="search()">

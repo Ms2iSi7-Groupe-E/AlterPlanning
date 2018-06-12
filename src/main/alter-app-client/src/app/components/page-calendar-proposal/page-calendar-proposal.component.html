@@ -12,7 +12,7 @@
                      placeholder="Stagiaire"
                      notFoundText="Aucun stagiaire trouvé">
             <ng-option *ngFor="let stagiaire of stagiaires"
-                       [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}}</ng-option>
+                       [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})</ng-option>
           </ng-select>
         </div>
         <div class="col-4">
