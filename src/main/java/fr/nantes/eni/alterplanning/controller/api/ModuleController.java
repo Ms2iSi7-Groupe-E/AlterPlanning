@@ -63,7 +63,7 @@ public class ModuleController {
         return coursDAOService.findByModule(idModule);
     }
 
-    @GetMapping("/modules-with-requirement")
+    @GetMapping("/with-requirement")
     @ApiOperation(value = "", notes = "Permet de retourner tous les modules ayant des pré-requis (avec leurs pré-requis).")
     public List<ModuleRequirementResponse> getModulesWithRequirement() {
         final List<ModuleRequirementEntity> moduleRequirementEntities = moduleRequirementDAOService.findAll();
