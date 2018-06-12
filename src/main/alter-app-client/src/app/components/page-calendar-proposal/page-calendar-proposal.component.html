@@ -29,11 +29,11 @@
       </div>
       <div class="form-group row">
         <label class="col-3 col-form-label">Nombre d'heures :</label>
-        <div class="col-2">
+        <div class="col-3">
           <input type="number" class="form-control" [(ngModel)]="selectedHeureMin" name="heureMin" placeholder="Min." [min]="0"/>
         </div>
         <label class="col-2 col-form-label">ou / et</label>
-        <div class="col-2">
+        <div class="col-3">
           <input type="number" class="form-control" [(ngModel)]="selectedHeureMax" name="heureMax" placeholder="Max." [min]="0"/>
         </div>
       </div>
@@ -139,7 +139,7 @@
 
   <div class="row proposal-btn">
     <div class="col-12 text-right">
-      <button type="button" class="btn btn-info" (click)="generateCalendar()"><i class="fas fa-camera"></i> Génération de la proposition</button>
+      <button type="button" class="btn btn-info" (click)="generateCalendar()" [disabled]="!formIsValid"><i class="fas fa-camera"></i> Génération de la proposition</button>
     </div>
   </div>
 </div>
