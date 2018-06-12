@@ -32,6 +32,8 @@ import {EntrepriseService} from "./services/entreprise.service";
 import {AddElementComponent} from './components/modal/add-element/add-element.component';
 import {DispenseElementComponent} from './components/modal/dispense-element/dispense-element.component';
 import {DatepickerI18n} from "./components/custom/datepicker-i18n";
+import { PageCalendarProcessingComponent } from './components/page-calendar-processing/page-calendar-processing.component';
+import { PageCalendarDetailsComponent } from './components/page-calendar-details/page-calendar-details.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import {DatepickerI18n} from "./components/custom/datepicker-i18n";
     PageIndependantModulesComponent,
     AddElementComponent,
     DispenseElementComponent,
+    PageCalendarProcessingComponent,
+    PageCalendarDetailsComponent,
   ],
   imports: [
     NgSelectModule,

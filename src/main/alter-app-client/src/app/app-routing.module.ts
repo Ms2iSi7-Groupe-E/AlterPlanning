@@ -11,6 +11,8 @@ import { PageParametersComponent } from './components/page-parameters/page-param
 import { PageCalendarModelsComponent } from './components/page-calendar-models/page-calendar-models.component';
 import { PageIndependantModulesComponent } from './components/page-independant-modules/page-independant-modules.component';
 import { PageModulesRequirementComponent } from './components/page-modules-requirement/page-modules-requirement.component';
+import {PageCalendarProcessingComponent} from "./components/page-calendar-processing/page-calendar-processing.component";
+import {PageCalendarDetailsComponent} from "./components/page-calendar-details/page-calendar-details.component";
 
 // Define the routes
 const ROUTES: Routes = [
@@ -33,6 +35,16 @@ const ROUTES: Routes = [
     path: 'search',
     canActivate: [AuthGuard],
     component: PageSearchComponent
+  },
+  {
+    path: 'calendar/:id/processing',
+    canActivate: [AuthGuard],
+    component: PageCalendarProcessingComponent
+  },
+  {
+    path: 'calendar/:id/details',
+    canActivate: [AuthGuard],
+    component: PageCalendarDetailsComponent
   },
   {
     path: 'calendar-models',
