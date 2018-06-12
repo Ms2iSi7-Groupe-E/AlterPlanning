@@ -73,12 +73,24 @@ export class PageSearchComponent implements OnInit {
   }
 
   search() {
-    // TODO : For the moment get all calendar for mock
-    this.calendarService.getCalendars().subscribe(res => {
-      this.calendars = res;
-    }, err => {
-      console.error(err);
-    });
+    this.calendars = [];
+
+    if (this.allFieldsAreClear) {
+      this.calendarService.getCalendars().subscribe(res => {
+        this.calendars = res;
+      }, err => {
+        console.error(err);
+      });
+    } else {
+      // TODO : apply filters
+    }
+  }
+
+  get allFieldsAreClear() {
+    return this.selectedStagiaire === null && this.selectedState === "ALL"
+      && this.selectedEntreprise === null && this.selectedModule === null
+      && this.selectedFormation === null && this.selectedPromotion === null
+      && this.selectedDateDebut === null && this.selectedDateFin === null;
   }
 
   getCalendarStagiairePrenom(calendar) {
