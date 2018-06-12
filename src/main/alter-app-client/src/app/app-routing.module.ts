@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PageLoginComponent} from "./components/page-login/page-login.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
-import {PageHomeComponent} from "./components/page-home/page-home.component";
+import {PageProposeCalendarComponent} from "./components/page-propose-calendar/page-propose-calendar.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {GuestGuard} from "./guards/guest.guard";
 import { PageSearchComponent } from './components/page-search/page-search.component';
@@ -16,13 +16,13 @@ import { PageModulesRequirementComponent } from './components/page-modules-requi
 const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/propose-calendar',
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'propose-calendar',
     canActivate: [AuthGuard],
-    component: PageHomeComponent
+    component: PageProposeCalendarComponent
   },
   {
     path: 'login',

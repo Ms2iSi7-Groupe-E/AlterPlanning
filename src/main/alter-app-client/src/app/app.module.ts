@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {PageLoginComponent} from './components/page-login/page-login.component';
 import {AuthService} from "./services/auth.service";
 import {UserService} from "./services/user.service";
-import {PageHomeComponent} from './components/page-home/page-home.component';
+import {PageProposeCalendarComponent} from './components/page-propose-calendar/page-propose-calendar.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule} from "@angular/forms";
@@ -37,7 +37,7 @@ import {DatepickerI18n} from "./components/custom/datepicker-i18n";
   declarations: [
     AppComponent,
     PageLoginComponent,
-    PageHomeComponent,
+    PageProposeCalendarComponent,
     PageNotFoundComponent,
     NavbarComponent,
     PageSearchComponent,
