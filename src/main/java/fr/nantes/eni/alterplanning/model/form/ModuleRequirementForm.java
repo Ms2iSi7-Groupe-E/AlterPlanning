@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by ughostephan on 23/06/2017.
  */
-public class AddModuleRequirementForm implements Serializable {
+public class ModuleRequirementForm implements Serializable {
 
     @NotNull
     private Integer requiredModuleId;

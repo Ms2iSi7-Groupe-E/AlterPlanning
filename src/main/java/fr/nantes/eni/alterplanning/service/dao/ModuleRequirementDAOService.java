@@ -28,21 +28,17 @@ public class ModuleRequirementDAOService {
         return repository.findById(id).orElse(null);
     }
 
+    public Integer findIdByUniqueConstraint(final ModuleRequirementEntity mr) {
+        final ModuleRequirementEntity entity = repository.findByUniqueConstraint(mr.getModuleId(), mr.getRequiredModuleId(), mr.isOr());
+        return entity != null ? entity.getId() : null;
+    }
+
     public List<ModuleRequirementEntity> findByModule(final Integer idModule) {
         return repository.findByModule(idModule);
     }
 
     public ModuleRequirementEntity create(final ModuleRequirementEntity moduleRequirement) {
         return repository.save(moduleRequirement);
-    }
-
-    public void update(final ModuleRequirementEntity moduleRequirement) {
-        ModuleRequirementEntity entity = repository.findById(moduleRequirement.getId()).orElse(null);
-
-        if (entity == null)
-            throw new EntityNotFoundException();
-
-        repository.save(moduleRequirement);
     }
 
     public void delete(final Integer id) {

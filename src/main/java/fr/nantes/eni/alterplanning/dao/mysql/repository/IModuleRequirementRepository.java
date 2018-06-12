@@ -24,4 +24,13 @@ public interface IModuleRequirementRepository extends CrudRepository<ModuleRequi
     int countForUniqueConstraint(@Param("moduleId") int moduleId,
                                  @Param("requiredModuleId") int requiredModuleId,
                                  @Param("isOr") boolean isOr);
+
+    @SuppressWarnings("JpaQlInspection")
+    @Query("SELECT m FROM ModuleRequirementEntity m " +
+            "WHERE m.moduleId = :moduleId " +
+            "AND m.requiredModuleId = :requiredModuleId " +
+            "AND m.or = :isOr")
+    ModuleRequirementEntity findByUniqueConstraint(@Param("moduleId") int moduleId,
+                                                   @Param("requiredModuleId") int requiredModuleId,
+                                                   @Param("isOr") boolean isOr);
 }

@@ -4,8 +4,7 @@ import fr.nantes.eni.alterplanning.dao.mysql.entity.ModuleRequirementEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.ModuleEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
-import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
-import fr.nantes.eni.alterplanning.model.form.AddModuleRequirementForm;
+import fr.nantes.eni.alterplanning.model.form.ModuleRequirementForm;
 import fr.nantes.eni.alterplanning.model.response.ModuleRequirementResponse;
 import fr.nantes.eni.alterplanning.model.response.RequirementResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
@@ -13,7 +12,6 @@ import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleRequirementDAOService;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -122,9 +120,9 @@ public class ModuleController {
 
     @PostMapping("/{idModule}/requirement")
     @ApiOperation(value = "", notes = "Service permettant d'ajouter un pré-requis à un module")
-    public StringResponse addRequirementForModule(@Valid @RequestBody AddModuleRequirementForm form,
-                                                           BindingResult result,
-                                                           @PathVariable(name = "idModule") int idModule) throws RestResponseException {
+    public StringResponse addRequirementForModule(@Valid @RequestBody ModuleRequirementForm form,
+                                                  BindingResult result,
+                                                  @PathVariable(name = "idModule") int idModule) throws RestResponseException {
         final ModuleEntity m = moduleDAOService.findById(idModule);
 
         if (m == null) {
@@ -148,6 +146,8 @@ public class ModuleController {
             throw new RestResponseException(HttpStatus.CONFLICT, "Entity already exist in database");
         }
 
+        // TODO: gérer les prérequis en mode dépendances circulaires ...
+
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
         }
@@ -163,8 +163,26 @@ public class ModuleController {
     }
 
     @DeleteMapping("/{idModule}/requirement")
-    public StringResponse deleteRequirementByModule(@PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
-        // TODO
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    public StringResponse deleteRequirementByModule(@Valid @RequestBody ModuleRequirementForm form,
+                                                    BindingResult result,
+                                                    @PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+        }
+
+        ModuleRequirementEntity entity = new ModuleRequirementEntity();
+        entity.setModuleId(idModule);
+        entity.setRequiredModuleId(form.getRequiredModuleId());
+        entity.setOr(form.getOr());
+
+        final Integer moduleRequirementId = moduleRequirementDAOService.findIdByUniqueConstraint(entity);
+
+        if (moduleRequirementId == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Constraint not found");
+        }
+
+        moduleRequirementDAOService.delete(moduleRequirementId);
+
+        return new StringResponse("Module constraint succesfully deleted");
     }
 }
