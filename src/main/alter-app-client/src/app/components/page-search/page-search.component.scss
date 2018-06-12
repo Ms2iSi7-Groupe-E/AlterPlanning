@@ -17,6 +17,15 @@
         cursor: pointer;
       }
     }
+
+    &.stat_brouillon{
+      background-color: #e0d0d0;
+
+      &:hover{
+        background-color: #c0b0b0;
+        cursor: pointer;
+      }
+    }
   }
 }
 
