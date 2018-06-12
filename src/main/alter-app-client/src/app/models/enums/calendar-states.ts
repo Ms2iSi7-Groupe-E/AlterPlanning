@@ -1,5 +1,5 @@
 export enum CalendarStates {
-  DRAFT,
-  PROPOSAL,
-  VALIDATED,
+  DRAFT = "DRAFT",
+  PROPOSAL = "PROPOSAL",
+  VALIDATED = "VALIDATED",
 }

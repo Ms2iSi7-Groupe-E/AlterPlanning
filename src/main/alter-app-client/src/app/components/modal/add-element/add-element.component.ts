@@ -60,26 +60,30 @@ export class AddElementComponent implements OnInit {
 
     switch (type) {
       case ConstraintTypes.AJOUT_FORMATION:
-        value = this.formations.find(f => f.codeFormation === this.selectedFormation);
-        title = 'Formation : ' + value.libelleLong + ' - ' + value.libelleCourt;
+        const formation = this.formations.find(f => f.codeFormation === this.selectedFormation);
+        value = this.selectedFormation;
+        title = 'Formation : ' + formation.libelleLong + ' - ' + formation.libelleCourt;
         break;
 
       case ConstraintTypes.AJOUT_MODULE:
-        value = this.modules.find(m => m.idModule === this.selectedModule);
-        title = 'Module : ' + value.libelleCourt + ' - ' + value.libelle;
+        const module = this.modules.find(m => m.idModule === this.selectedModule);
+        value = this.selectedModule;
+        title = 'Module : ' + module.libelleCourt + ' - ' + module.libelle;
         break;
 
       case ConstraintTypes.EN_MEME_TEMPS_QUE:
-        value = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
-        title = 'En même temps que : ' + value.prenom + ' ' + value.nom;
+        const stagiaire = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
+        value = this.selectedStagiaire;
+        title = 'En même temps que : ' + stagiaire.prenom + ' ' + stagiaire.nom;
         break;
 
       case ConstraintTypes.AJOUT_PERIODE:
-        value = {
+        const periode = {
           from: new Date(this.selectedPeriodeDebut.year, this.selectedPeriodeDebut.month - 1, this.selectedPeriodeDebut.day),
           to: new Date(this.selectedPeriodeFin.year, this.selectedPeriodeFin.month - 1, this.selectedPeriodeFin.day)
         };
-        title = 'Période du ' + value.from.toLocaleDateString() + ' au ' + value.to.toLocaleDateString();
+        value = periode.from.toLocaleDateString() + ' - ' + periode.to.toLocaleDateString();
+        title = 'Période du ' + periode.from.toLocaleDateString() + ' au ' + periode.to.toLocaleDateString();
         break;
 
       default:

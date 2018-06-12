@@ -49,21 +49,24 @@ export class DispenseElementComponent implements OnInit {
 
     switch (type) {
       case ConstraintTypes.DISPENSE_MODULE:
-        value = this.modules.find(m => m.idModule === this.selectedModule);
-        title = 'Dispense de module : ' + value.libelleCourt + ' - ' + value.libelle;
+        const module = this.modules.find(m => m.idModule === this.selectedModule);
+        value = this.selectedModule;
+        title = 'Dispense de module : ' + module.libelleCourt + ' - ' + module.libelle;
         break;
 
       case ConstraintTypes.PAS_EN_MEME_TEMPS_QUE:
-        value = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
-        title = 'Pas en même temps que : ' + value.prenom + ' ' + value.nom;
+        const stagiaire = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
+        value = this.selectedStagiaire;
+        title = 'Pas en même temps que : ' + stagiaire.prenom + ' ' + stagiaire.nom;
         break;
 
       case ConstraintTypes.DISPENSE_PERIODE:
-        value = {
+        const periode = {
           from: new Date(this.selectedPeriodeDebut.year, this.selectedPeriodeDebut.month - 1, this.selectedPeriodeDebut.day),
           to: new Date(this.selectedPeriodeFin.year, this.selectedPeriodeFin.month - 1, this.selectedPeriodeFin.day)
         };
-        title = 'Dispense de la période du ' + value.from.toLocaleDateString() + ' au ' + value.to.toLocaleDateString();
+        value = periode.from.toLocaleDateString() + ' - ' + periode.to.toLocaleDateString();
+        title = 'Dispense de la période du ' + periode.from.toLocaleDateString() + ' au ' + periode.to.toLocaleDateString();
         break;
 
       default:

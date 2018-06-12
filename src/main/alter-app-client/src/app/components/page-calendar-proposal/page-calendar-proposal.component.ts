@@ -7,6 +7,9 @@ import {StagiaireService} from "../../services/stagiaire.service";
 import {AddElementComponent} from "../modal/add-element/add-element.component";
 import {DispenseElementComponent} from "../modal/dispense-element/dispense-element.component";
 import {Router} from "@angular/router";
+import {CalendarService} from "../../services/calendar.service";
+import {CalendarModel} from "../../models/calendar.model";
+import {ConstraintTypes} from "../../models/enums/constraint-types";
 
 @Component({
   selector: 'app-propose-calendar',
@@ -32,6 +35,7 @@ export class PageCalendarProposalComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private router: Router,
+              private calendarService: CalendarService,
               private modelsService: ModelsService,
               private lieuService: LieuService,
               private entrepriseService: EntrepriseService,
@@ -112,19 +116,55 @@ export class PageCalendarProposalComponent implements OnInit {
   }
 
   generateCalendar() {
-    console.log('entreprise', this.selectedEntreprise);
-    console.log('stagiaire', this.selectedStagiaire);
-    console.log('model', this.selectedModels);
-    console.log('lieux', this.selectedLieux);
-    console.log('dateDebut', this.selectedDateDebut);
-    console.log('dateFin', this.selectedDateFin);
-    console.log('heureMin', this.selectedHeureMin);
-    console.log('heureMax', this.selectedHeureMax);
+    const calendarModel = new CalendarModel();
+    calendarModel.stagiaireId = this.selectedStagiaire;
+    calendarModel.entrepriseId = this.selectedEntreprise;
 
-    // TODO : create calendar by call API
-    // TODO : And get the id from response
-    const idCalendar = 30; // TODO : replace 30 by id calendar
-    this.router.navigate(['/calendar/' + idCalendar + '/processing']);
+    const startDate = !this.selectedDateDebut ? null :
+      new Date(this.selectedDateDebut.year, this.selectedDateDebut.month - 1, this.selectedDateDebut.day);
+    const endDate = !this.selectedDateFin ? null :
+      new Date(this.selectedDateFin.year, this.selectedDateFin.month - 1, this.selectedDateFin.day);
+
+    calendarModel.startDate = startDate;
+    calendarModel.endDate = endDate;
+
+    this.selectedLieux.forEach(codeLieu => {
+      calendarModel.constraints.push({
+        type: ConstraintTypes.LIEUX,
+        value: codeLieu
+      });
+    });
+
+    if (this.selectedModels) {
+      // TODO: add constraint for model
+    }
+
+    if (this.selectedHeureMin) {
+      calendarModel.constraints.push({
+        type: ConstraintTypes.HEURES_MIN,
+        value: this.selectedHeureMin
+      });
+    }
+
+    if (this.selectedHeureMax) {
+      calendarModel.constraints.push({
+        type: ConstraintTypes.HEURES_MAX,
+        value: this.selectedHeureMax
+      });
+    }
+
+    this.constraints.forEach(c => {
+      calendarModel.constraints.push({
+        type: c.type,
+        value: c.value
+      });
+    });
+
+    this.calendarService.addCalendar(calendarModel).subscribe(res => {
+      this.router.navigate(['/calendar/' + res.id + '/processing']);
+    }, err => {
+      console.error(err);
+    });
   }
 
   openModalAddElement() {
