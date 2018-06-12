@@ -49,6 +49,11 @@
     </div>
   </div>
   -->
+  <div class="row mt-5" *ngIf="calendars.length === 0">
+    <div class="alert alert-info col-12">
+      Aucun calendrier
+    </div>
+  </div>
   <div class="row mt-5" *ngIf="calendars.length > 0">
     <table class="col-12 table table-hover tbl_search">
       <thead>
