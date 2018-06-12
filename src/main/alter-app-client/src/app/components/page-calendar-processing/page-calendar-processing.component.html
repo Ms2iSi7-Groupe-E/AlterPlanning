@@ -1,6 +1,12 @@
 <div class="container">
-  <div class="row mb-3">
-    <h2>Gestion des cours du calendrier</h2>
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
   </div>
-  <pre>{{ calendar | json }}</pre>
+
+  <div *ngIf="!error">
+    <div class="row mb-3">
+      <h2>Gestion des cours du calendrier</h2>
+    </div>
+    <pre>{{ calendar | json }}</pre>
+  </div>
 </div>

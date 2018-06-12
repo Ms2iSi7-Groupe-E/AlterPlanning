@@ -34,6 +34,7 @@ import {DispenseElementComponent} from './components/modal/dispense-element/disp
 import {DatepickerI18n} from "./components/custom/datepicker-i18n";
 import { PageCalendarProcessingComponent } from './components/page-calendar-processing/page-calendar-processing.component';
 import { PageCalendarDetailsComponent } from './components/page-calendar-details/page-calendar-details.component';
+import {CalendarService} from "./services/calendar.service";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { PageCalendarDetailsComponent } from './components/page-calendar-details
     AuthService,
     UserService,
     CourService,
+    CalendarService,
     PromotionService,
     ModelsService,
     ModuleService,
