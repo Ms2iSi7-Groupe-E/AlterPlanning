@@ -71,7 +71,7 @@ export class PageCalendarProposalComponent implements OnInit {
   }
 
   get formIsValid() {
-    return this.selectedLieux.length > 0 && this.selectedDateDebut && this.constraints.length > 0;
+    return this.selectedLieux.length > 0 && this.constraints.length > 0;
   }
 
   changeModels() {

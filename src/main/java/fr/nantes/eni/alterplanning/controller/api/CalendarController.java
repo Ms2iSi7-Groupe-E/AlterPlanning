@@ -1,5 +1,6 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarConstraintEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,9 @@ public class CalendarController {
 
     @Resource
     private CalendarCoursDAOService calendarCoursDAOService;
+
+    @Resource
+    private CalendarConstraintDAOService calendarConstraintDAOService;
 
     @Resource
     private CoursDAOService coursDAOService;
@@ -115,7 +120,11 @@ public class CalendarController {
             calendarDetailResponse.setCours(coursEntities);
         }
 
-        // TODO : contraintes d'un calendrier
+        final List<CalendarConstraintEntity> constraints = calendarConstraintDAOService.findByCalendarId(id);
+
+        if (!constraints.isEmpty()) {
+            calendarDetailResponse.setConstraints(constraints);
+        }
 
         return calendarDetailResponse;
     }
@@ -152,6 +161,8 @@ public class CalendarController {
             }
         }
 
+        // TODO : Vérifier contraintes d'un calendrier
+
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
         }
@@ -165,6 +176,19 @@ public class CalendarController {
         calendar.setState(CalendarState.DRAFT);
 
         final CalendarEntity createdCalendar = calendarDAOService.create(calendar);
+
+        // Ajouter les contraintes d'un calendrier en base
+        if (!form.getConstraints().isEmpty()) {
+            List<CalendarConstraintEntity> constraints = form.getConstraints().stream().map(c -> {
+                final CalendarConstraintEntity calendarConstraintEntity = new CalendarConstraintEntity();
+                calendarConstraintEntity.setCalendarId(createdCalendar.getId());
+                calendarConstraintEntity.setConstraintType(c.getType());
+                calendarConstraintEntity.setConstraintValue(c.getValue());
+                return calendarConstraintEntity;
+            }).collect(Collectors.toList());
+            calendarConstraintDAOService.createAll(constraints);
+        }
+
         return getCalendarDetailsById(createdCalendar.getId());
     }
 
@@ -187,20 +211,6 @@ public class CalendarController {
         calendarDAOService.delete(id);
 
         return new StringResponse("Calendar successfully deleted");
-    }
-
-    @PostMapping("/{idCalendar}/constraint")
-    @ResponseStatus(HttpStatus.CREATED)
-    public StringResponse addConstraintToCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
-        // TODO : ajout de contraintes
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
-    }
-
-    @DeleteMapping("/{idCalendar}/constraint/{idConstraint}")
-    public StringResponse deleteConstraintForCalendar(@PathVariable(name = "idCalendar") int idCalendar,
-                                                      @PathVariable(name = "idConstraint") int idConstraint) throws RestResponseException {
-        // TODO : suppression de contraintes
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
     @PostMapping("/{idCalendar}/cours")
