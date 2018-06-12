@@ -21,7 +21,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement(AJOUT_FORMATION)"
+            <button class="btn btn-outline-dark" (click)="addElement(CONSTRAINT_TYPE.AJOUT_FORMATION)"
                     [disabled]="!selectedFormation">Valider</button>
           </div>
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement(AJOUT_MODULE)"
+            <button class="btn btn-outline-dark" (click)="addElement(CONSTRAINT_TYPE.AJOUT_MODULE)"
                     [disabled]="!selectedModule">Valider</button>
           </div>
         </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement(EN_MEME_TEMPS_QUE)"
+            <button class="btn btn-outline-dark" (click)="addElement(CONSTRAINT_TYPE.EN_MEME_TEMPS_QUE)"
                     [disabled]="!selectedStagiaire">Valider</button>
           </div>
         </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="addElement(AJOUT_PERIODE)"
+            <button class="btn btn-outline-dark" (click)="addElement(CONSTRAINT_TYPE.AJOUT_PERIODE)"
                     [disabled]="!selectedPeriodeDebut || !selectedPeriodeFin">Valider</button>
           </div>
         </div>

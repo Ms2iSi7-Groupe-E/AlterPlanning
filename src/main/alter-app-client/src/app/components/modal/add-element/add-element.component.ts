@@ -3,6 +3,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormationService} from "../../../services/formation.service";
 import {ModuleService} from "../../../services/module.service";
 import {StagiaireService} from "../../../services/stagiaire.service";
+import {ConstraintTypes} from "../../../models/enums/constraint-types";
 
 @Component({
   selector: 'app-add-element',
@@ -13,10 +14,7 @@ export class AddElementComponent implements OnInit {
 
   @Output() add = new EventEmitter<any>();
 
-  private readonly AJOUT_FORMATION = 'AJOUT_FORMATION';
-  private readonly AJOUT_MODULE = 'AJOUT_MODULE';
-  private readonly AJOUT_PERIODE = 'AJOUT_PERIODE';
-  private readonly EN_MEME_TEMPS_QUE = 'EN_MEME_TEMPS_QUE';
+  private readonly CONSTRAINT_TYPE = ConstraintTypes;
 
   formations = [];
   modules = [];
@@ -56,27 +54,27 @@ export class AddElementComponent implements OnInit {
       });
   }
 
-  addElement(type) {
+  addElement(type: ConstraintTypes) {
     let value = null;
     let title = null;
 
     switch (type) {
-      case this.AJOUT_FORMATION:
+      case ConstraintTypes.AJOUT_FORMATION:
         value = this.formations.find(f => f.codeFormation === this.selectedFormation);
         title = 'Formation : ' + value.libelleLong + ' - ' + value.libelleCourt;
         break;
 
-      case this.AJOUT_MODULE:
+      case ConstraintTypes.AJOUT_MODULE:
         value = this.modules.find(m => m.idModule === this.selectedModule);
         title = 'Module : ' + value.libelleCourt + ' - ' + value.libelle;
         break;
 
-      case this.EN_MEME_TEMPS_QUE:
+      case ConstraintTypes.EN_MEME_TEMPS_QUE:
         value = this.stagiaires.find(s => s.codeStagiaire === this.selectedStagiaire);
         title = 'En même temps que : ' + value.prenom + ' ' + value.nom;
         break;
 
-      case this.AJOUT_PERIODE:
+      case ConstraintTypes.AJOUT_PERIODE:
         value = {
           from: new Date(this.selectedPeriodeDebut.year, this.selectedPeriodeDebut.month - 1, this.selectedPeriodeDebut.day),
           to: new Date(this.selectedPeriodeFin.year, this.selectedPeriodeFin.month - 1, this.selectedPeriodeFin.day)

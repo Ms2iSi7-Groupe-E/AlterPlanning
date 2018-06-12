@@ -21,7 +21,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="dispenseElement(DISPENSE_MODULE)"
+            <button class="btn btn-outline-dark" (click)="dispenseElement(CONSTRAINT_TYPE.DISPENSE_MODULE)"
                     [disabled]="!selectedModule">Valider</button>
           </div>
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="dispenseElement(PAS_EN_MEME_TEMPS_QUE)"
+            <button class="btn btn-outline-dark" (click)="dispenseElement(CONSTRAINT_TYPE.PAS_EN_MEME_TEMPS_QUE)"
                     [disabled]="!selectedStagiaire">Valider</button>
           </div>
         </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="row text-center">
           <div class="col-12">
-            <button class="btn btn-outline-dark" (click)="dispenseElement(DISPENSE_PERIODE)"
+            <button class="btn btn-outline-dark" (click)="dispenseElement(CONSTRAINT_TYPE.DISPENSE_PERIODE)"
                     [disabled]="!selectedPeriodeDebut || !selectedPeriodeFin">Valider</button>
           </div>
         </div>
