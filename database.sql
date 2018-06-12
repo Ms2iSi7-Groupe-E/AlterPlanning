@@ -48,7 +48,7 @@ CREATE TABLE `calendars` (
 CREATE TABLE `calendar_constraints` (
   `id` int(11) NOT NULL,
   `calendarId` int(11) NOT NULL,
-  `constraintType` varchar(255) NOT NULL,
+  `constraintType` enum('AJOUT_FORMATION','AJOUT_MODULE','AJOUT_PERIODE','EN_MEME_TEMPS_QUE','PAS_EN_MEME_TEMPS_QUE','DISPENSE_PERIODE','DISPENSE_MODULE','A_PARTIR_DE_MODELE','LIEUX','HEURES_MIN','HEURES_MAX') NOT NULL,
   `constraintValue` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
