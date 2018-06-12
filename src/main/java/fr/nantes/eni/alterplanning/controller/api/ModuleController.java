@@ -159,7 +159,7 @@ public class ModuleController {
 
         moduleRequirementDAOService.create(entity);
 
-        return new StringResponse("Requirement successfully updated for Module " + idModule);
+        return new StringResponse("Requirement successfully added for Module " + idModule);
     }
 
     @DeleteMapping("/{idModule}/requirement")
