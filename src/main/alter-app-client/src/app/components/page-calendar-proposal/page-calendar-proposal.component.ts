@@ -9,10 +9,10 @@ import {DispenseElementComponent} from "../modal/dispense-element/dispense-eleme
 
 @Component({
   selector: 'app-propose-calendar',
-  templateUrl: './page-propose-calendar.component.html',
-  styleUrls: ['./page-propose-calendar.component.scss']
+  templateUrl: './page-calendar-proposal.component.html',
+  styleUrls: ['./page-calendar-proposal.component.scss']
 })
-export class PageProposeCalendarComponent implements OnInit {
+export class PageCalendarProposalComponent implements OnInit {
   models = [];
   lieux = [];
   allStagiaires = [];
