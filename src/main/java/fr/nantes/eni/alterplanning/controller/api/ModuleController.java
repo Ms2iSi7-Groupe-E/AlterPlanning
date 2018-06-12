@@ -6,10 +6,13 @@ import fr.nantes.eni.alterplanning.dao.sqlserver.entity.ModuleEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.form.AddModuleRequirementForm;
+import fr.nantes.eni.alterplanning.model.response.ModuleRequirementResponse;
+import fr.nantes.eni.alterplanning.model.response.RequirementResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleRequirementDAOService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -60,19 +65,64 @@ public class ModuleController {
         return coursDAOService.findByModule(idModule);
     }
 
+    @GetMapping("/modules-with-requirement")
+    @ApiOperation(value = "", notes = "Permet de retourner tous les modules ayant des pré-requis (avec leurs pré-requis).")
+    public List<ModuleRequirementResponse> getModulesWithRequirement() {
+        final List<ModuleRequirementEntity> moduleRequirementEntities = moduleRequirementDAOService.findAll();
+        final HashMap<Integer, List<RequirementResponse>> hm = new HashMap<>();
+
+        moduleRequirementEntities.forEach(mre -> {
+            List<RequirementResponse> requirementResponses = new ArrayList<>();
+
+            if (hm.containsKey(mre.getModuleId())) {
+                requirementResponses = hm.get(mre.getModuleId());
+            }
+
+            RequirementResponse requirement = new RequirementResponse();
+            requirement.setModuleId(mre.getRequiredModuleId());
+            requirement.setOr(mre.isOr());
+            requirementResponses.add(requirement);
+
+            hm.put(mre.getModuleId(), requirementResponses);
+        });
+
+        final List<ModuleRequirementResponse> response = new ArrayList<>();
+        hm.forEach((k, v) -> {
+            ModuleRequirementResponse moduleRequirementResponse = new ModuleRequirementResponse();
+            moduleRequirementResponse.setModuleId(k);
+            moduleRequirementResponse.setRequirements(v);
+            response.add(moduleRequirementResponse);
+        });
+
+        return response;
+    }
+
     @GetMapping("/{idModule}/requirement")
-    public List<ModuleRequirementEntity> getRequirementByModule(@PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
+    @ApiOperation(value = "", notes = "Permet de retourner les pré-requis d'un module en particulier")
+    public ModuleRequirementResponse getRequirementByModule(@PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
         final ModuleEntity m = moduleDAOService.findById(idModule);
 
         if (m == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Module not found");
         }
 
-        return moduleRequirementDAOService.findByModule(idModule);
+        final List<ModuleRequirementEntity> moduleRequirementEntities = moduleRequirementDAOService.findByModule(idModule);
+        final ModuleRequirementResponse response = new ModuleRequirementResponse();
+        response.setModuleId(idModule);
+
+        moduleRequirementEntities.forEach(mre -> {
+            RequirementResponse requirement = new RequirementResponse();
+            requirement.setModuleId(mre.getRequiredModuleId());
+            requirement.setOr(mre.isOr());
+            response.addRequirement(requirement);
+        });
+
+        return response;
     }
 
     @PostMapping("/{idModule}/requirement")
-    public ModuleRequirementEntity addRequirementForModule(@Valid @RequestBody AddModuleRequirementForm form,
+    @ApiOperation(value = "", notes = "Service permettant d'ajouter un pré-requis à un module")
+    public StringResponse addRequirementForModule(@Valid @RequestBody AddModuleRequirementForm form,
                                                            BindingResult result,
                                                            @PathVariable(name = "idModule") int idModule) throws RestResponseException {
         final ModuleEntity m = moduleDAOService.findById(idModule);
@@ -107,13 +157,9 @@ public class ModuleController {
         entity.setOr(form.getOr());
         entity.setRequiredModuleId(form.getRequiredModuleId());
 
-        return moduleRequirementDAOService.create(entity);
-    }
+        moduleRequirementDAOService.create(entity);
 
-    @PutMapping("/{idModule}/requirement")
-    public StringResponse updateRequirementByModule(@PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
-        // TODO
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+        return new StringResponse("Requirement successfully updated for Module " + idModule);
     }
 
     @DeleteMapping("/{idModule}/requirement")

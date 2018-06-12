@@ -73,6 +73,6 @@ public class ParameterController {
         parameterToUpdate.setValue(form.getValue());
         parameterDAOService.update(parameterToUpdate);
 
-        return new StringResponse("Parameter updated");
+        return new StringResponse("Parameter successfully updated");
     }
 }
