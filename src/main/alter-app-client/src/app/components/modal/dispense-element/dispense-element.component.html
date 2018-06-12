@@ -11,13 +11,14 @@
       <ng-template ngbTabContent>
         <div class="form-group row mt-4">
           <label class="col-3 col-form-label">Modules :</label>
-          <ng-select [(ngModel)]="selectedModule"
-                     class="col-9"
-                     placeholder="Module"
-                     notFoundText="Aucun module trouvé">
-            <ng-option *ngFor="let module of modules"
-                       [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
-          </ng-select>
+          <div class="col-9">
+            <ng-select [(ngModel)]="selectedModule"
+                       placeholder="Module"
+                       notFoundText="Aucun module trouvé">
+              <ng-option *ngFor="let module of modules"
+                         [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
+            </ng-select>
+          </div>
         </div>
         <div class="row text-center">
           <div class="col-12">
@@ -33,13 +34,14 @@
       <ng-template ngbTabContent>
         <div class="form-group row mt-4">
           <label class="col-3 col-form-label">Stagiaires :</label>
-          <ng-select [(ngModel)]="selectedStagiaire"
-                     class="col-9"
-                     placeholder="Stagiaire"
-                     notFoundText="Aucun stagiaire trouvé">
-            <ng-option *ngFor="let stagiaire of stagiaires"
-                       [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}}</ng-option>
-          </ng-select>
+          <div class="col-9">
+            <ng-select [(ngModel)]="selectedStagiaire"
+                       placeholder="Stagiaire"
+                       notFoundText="Aucun stagiaire trouvé">
+              <ng-option *ngFor="let stagiaire of stagiaires"
+                         [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})</ng-option>
+            </ng-select>
+          </div>
         </div>
         <div class="row text-center">
           <div class="col-12">

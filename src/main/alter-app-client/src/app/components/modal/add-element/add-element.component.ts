@@ -14,7 +14,7 @@ export class AddElementComponent implements OnInit {
 
   @Output() add = new EventEmitter<any>();
 
-  private readonly CONSTRAINT_TYPE = ConstraintTypes;
+  CONSTRAINT_TYPE = ConstraintTypes;
 
   formations = [];
   modules = [];
@@ -26,7 +26,7 @@ export class AddElementComponent implements OnInit {
   selectedPeriodeDebut = null;
   selectedPeriodeFin = null;
 
-  constructor(private activeModal: NgbActiveModal,
+  constructor(public activeModal: NgbActiveModal,
               private formationService: FormationService,
               private moduleService: ModuleService,
               private stagiaireService: StagiaireService) {}

@@ -13,7 +13,7 @@ export class DispenseElementComponent implements OnInit {
 
   @Output() dispense = new EventEmitter<any>();
 
-  private readonly CONSTRAINT_TYPE = ConstraintTypes;
+  CONSTRAINT_TYPE = ConstraintTypes;
 
   modules = [];
   stagiaires = [];
@@ -23,7 +23,7 @@ export class DispenseElementComponent implements OnInit {
   selectedPeriodeDebut = null;
   selectedPeriodeFin = null;
 
-  constructor(private activeModal: NgbActiveModal,
+  constructor(public activeModal: NgbActiveModal,
               private moduleService: ModuleService,
               private stagiaireService: StagiaireService) {}
 
