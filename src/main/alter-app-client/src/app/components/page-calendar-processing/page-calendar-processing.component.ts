@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageCalendarProcessingComponent implements OnInit {
 
+  calendar;
+
   constructor() { }
 
   ngOnInit() {

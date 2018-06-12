@@ -6,6 +6,7 @@ import {EntrepriseService} from "../../services/entreprise.service";
 import {StagiaireService} from "../../services/stagiaire.service";
 import {AddElementComponent} from "../modal/add-element/add-element.component";
 import {DispenseElementComponent} from "../modal/dispense-element/dispense-element.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-propose-calendar',
@@ -30,6 +31,7 @@ export class PageCalendarProposalComponent implements OnInit {
   selectedLieux = [];
 
   constructor(private modalService: NgbModal,
+              private router: Router,
               private modelsService: ModelsService,
               private lieuService: LieuService,
               private entrepriseService: EntrepriseService,
@@ -114,6 +116,11 @@ export class PageCalendarProposalComponent implements OnInit {
     console.log('dateFin', this.selectedDateFin);
     console.log('heureMin', this.selectedHeureMin);
     console.log('heureMax', this.selectedHeureMax);
+
+    // TODO : create calendar by call API
+    // TODO : And get the id from response
+    const idCalendar = 30; // TODO : replace 30 by id calendar
+    this.router.navigate(['/calendar/' + idCalendar + '/processing']);
   }
 
   openModalAddElement() {
