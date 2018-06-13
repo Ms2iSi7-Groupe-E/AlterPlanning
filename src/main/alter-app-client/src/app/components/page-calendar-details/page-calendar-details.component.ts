@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CalendarService} from "../../services/calendar.service";
+import {CalendarStates} from "../../models/enums/calendar-states";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -21,7 +22,12 @@ export class PageCalendarDetailsComponent implements OnInit {
       if (p['params'] && p['params'].id) {
         const id = p['params'].id;
         this.calendarService.getCalendar(id).subscribe(
-          res => this.calendar = res,
+          res => {
+            this.calendar = res;
+            if (this.calendar.state === CalendarStates.DRAFT) {
+              this.router.navigate(['/calendar/' + res.id + '/processing']);
+            }
+          },
           err => {
             if (err['status'] === 404) {
               this.error = "Ce calendrier n'existe pas ou plus.";

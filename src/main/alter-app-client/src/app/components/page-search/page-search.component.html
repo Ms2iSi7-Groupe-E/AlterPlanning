@@ -138,7 +138,9 @@
       <tbody>
         <tr *ngFor="let calendar of calendars">
           <td [ngClass]="getCalendarCssClass(calendar)"
-              routerLink="/calendar/{{calendar.id}}/details"><i class="far fa-eye"></i> {{ getCalendarState(calendar) }}</td>
+              routerLink="/calendar/{{calendar.id}}/{{calendar.state === CALENDAR_STATE.DRAFT ? 'processing' : 'details'}}">
+            <i class="far fa-eye"></i> {{ getCalendarState(calendar) }}
+          </td>
           <td>{{ getCalendarStagiairePrenom(calendar) }}</td>
           <td>{{ getCalendarStagiaireNom(calendar) }}</td>
           <td>{{ getCalendarEntrepriseName(calendar) }}</td>
