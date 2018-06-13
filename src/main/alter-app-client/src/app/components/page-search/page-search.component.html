@@ -5,6 +5,7 @@
   <div class="form-group row">
     <div class="col-sm-5">
       <ng-select [(ngModel)]="selectedStagiaire"
+                 (change)="selectedValueChange(QUERY_KEYS.stagiaire)"
                  placeholder="Stagiaire"
                  notFoundText="Aucun stagiaire trouvé">
         <ng-option *ngFor="let stagiaire of stagiaires"
@@ -14,6 +15,7 @@
     <div class="col-sm-4">
       <ng-select
         [items]="entreprises"
+        (change)="selectedValueChange(QUERY_KEYS.entreprise)"
         bindLabel="raisonSociale"
         bindValue="codeEntreprise"
         placeholder="Entreprise"
@@ -24,6 +26,7 @@
     <div class="col-sm-3">
       <ng-select
         [items]="promotions"
+        (change)="selectedValueChange(QUERY_KEYS.promotion)"
         bindLabel="libelle"
         bindValue="codePromotion"
         placeholder="Promotion"
@@ -35,6 +38,7 @@
   <div class="form-group row">
     <div class="col-sm-3">
       <ng-select [(ngModel)]="selectedFormation"
+                 (change)="selectedValueChange(QUERY_KEYS.formation)"
                  placeholder="Formation"
                  notFoundText="Aucune formation trouvée">
         <ng-option *ngFor="let formation of formations"
@@ -43,6 +47,7 @@
     </div>
     <div class="col-sm-3">
       <ng-select [(ngModel)]="selectedModule"
+                 (change)="selectedValueChange(QUERY_KEYS.module)"
                  placeholder="Module"
                  notFoundText="Aucun module trouvé">
         <ng-option *ngFor="let module of modules"
@@ -51,25 +56,29 @@
     </div>
     <label class="col-sm-1 col-form-label">Dates :</label>
     <div class="col-sm-2">
-      <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="yyyy-mm-dd"
-             ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedDateFin" navigation="arrows"/>
+      <input type="text" class="form-control" [(ngModel)]="selectedDateDebut"
+             (ngModelChange)="selectedValueChange(QUERY_KEYS.startDate)" name="dateDebut" placeholder="yyyy-mm-dd"
+             ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()"
+             [maxDate]="selectedDateFin" navigation="arrows"/>
     </div>
     <div class="col-sm-2">
-      <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="yyyy-mm-dd"
-             ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedDateDebut" navigation="arrows"/>
+      <input type="text" class="form-control" [(ngModel)]="selectedDateFin"
+             (ngModelChange)="selectedValueChange(QUERY_KEYS.endDate)" name="dateFin" placeholder="yyyy-mm-dd"
+             ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()"
+             [minDate]="selectedDateDebut" navigation="arrows"/>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-10">
       <label class="col-sm-1 col-form-label">Etats :</label>
       <label>
-        <input type="radio" name="item_etat" [(ngModel)]="selectedState" value="ALL"/> Tous</label>&nbsp;
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" (change)="selectedValueChange(QUERY_KEYS.state)" value="ALL"/> Tous</label>&nbsp;
       <label>
-        <input type="radio" name="item_etat" [(ngModel)]="selectedState" [value]="CALENDAR_STATE.VALIDATED"/> Confirmé</label>&nbsp;
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" (change)="selectedValueChange(QUERY_KEYS.state)" [value]="CALENDAR_STATE.VALIDATED"/> Confirmé</label>&nbsp;
       <label>
-        <input type="radio" name="item_etat" [(ngModel)]="selectedState" [value]="CALENDAR_STATE.PROPOSAL"/> Proposition</label>&nbsp;
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" (change)="selectedValueChange(QUERY_KEYS.state)" [value]="CALENDAR_STATE.PROPOSAL"/> Proposition</label>&nbsp;
       <label>
-        <input type="radio" name="item_etat" [(ngModel)]="selectedState" [value]="CALENDAR_STATE.DRAFT"/> Brouillon</label>
+        <input type="radio" name="item_etat" [(ngModel)]="selectedState" (change)="selectedValueChange(QUERY_KEYS.state)" [value]="CALENDAR_STATE.DRAFT"/> Brouillon</label>
     </div>
     <div class="col-sm-2 text-right">
       <button type="button" class="btn btn-outline-secondary float-right" (click)="search()">

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarStates} from "../../models/enums/calendar-states";
 import {StagiaireService} from "../../services/stagiaire.service";
@@ -6,6 +7,8 @@ import {EntrepriseService} from "../../services/entreprise.service";
 import {ModuleService} from "../../services/module.service";
 import {PromotionService} from "../../services/promotion.service";
 import {FormationService} from "../../services/formation.service";
+import {SearchKeys} from "../../models/enums/search-keys";
+import {validate} from "codelyzer/walkerFactory/walkerFn";
 
 @Component({
   selector: 'app-page-search',
@@ -14,6 +17,7 @@ import {FormationService} from "../../services/formation.service";
 })
 export class PageSearchComponent implements OnInit {
 
+  QUERY_KEYS = SearchKeys;
   CALENDAR_STATE = CalendarStates;
 
   stagiaires = [];
@@ -33,7 +37,9 @@ export class PageSearchComponent implements OnInit {
 
   calendars = [];
 
-  constructor(private calendarService: CalendarService,
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private calendarService: CalendarService,
               private stagiaireService: StagiaireService,
               private entrepriseService: EntrepriseService,
               private moduleService: ModuleService,
@@ -70,10 +76,13 @@ export class PageSearchComponent implements OnInit {
     }, err => {
       console.error(err);
     });
+
+    this.handleQueryParams();
   }
 
   search() {
     this.calendars = [];
+    this.addParamToRoute(this.QUERY_KEYS.validated, true);
 
     if (this.allFieldsAreClear) {
       this.calendarService.getCalendars().subscribe(res => {
@@ -91,6 +100,92 @@ export class PageSearchComponent implements OnInit {
       && this.selectedEntreprise === null && this.selectedModule === null
       && this.selectedFormation === null && this.selectedPromotion === null
       && this.selectedDateDebut === null && this.selectedDateFin === null;
+  }
+
+  addParamToRoute(key, value) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        ...this.activatedRoute.snapshot.queryParams,
+        [key]: value,
+      }
+    });
+  }
+
+  handleQueryParams() {
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+
+    this.selectedState = queryParams.state ? queryParams.state : "ALL";
+    this.selectedStagiaire = queryParams.stagiaire ? parseInt(queryParams.stagiaire, 10) : null;
+    this.selectedEntreprise = queryParams.entreprise ? parseInt(queryParams.entreprise, 10) : null;
+    this.selectedModule = queryParams.module ? parseInt(queryParams.module, 10) : null;
+    this.selectedFormation = queryParams.formation ? queryParams.formation : null;
+    this.selectedPromotion = queryParams.promotion ? queryParams.promotion : null;
+
+    const dateDeb = queryParams.startDate ? new Date(parseInt(queryParams.startDate, 10)) : null;
+    const dateFin = queryParams.endDate ? new Date(parseInt(queryParams.endDate, 10)) : null;
+
+    this.selectedDateDebut = !dateDeb ? null : {
+      year: dateDeb.getFullYear(),
+      month: dateDeb.getMonth() + 1,
+      day: dateDeb.getDate()
+    };
+
+    this.selectedDateFin = !dateFin ? null : {
+      year: dateFin.getFullYear(),
+      month: dateFin.getMonth() + 1,
+      day: dateFin.getDate()
+    };
+
+    if (queryParams.validated) {
+      if (queryParams.validated === 'true') {
+        this.search();
+      }
+    } else {
+      this.addParamToRoute(this.QUERY_KEYS.validated, false);
+    }
+  }
+
+  selectedValueChange(key: SearchKeys) {
+    switch (key) {
+      case SearchKeys.state:
+        this.addParamToRoute(key, this.selectedState);
+        break;
+
+      case SearchKeys.stagiaire:
+        this.addParamToRoute(key, this.selectedStagiaire);
+        break;
+
+      case SearchKeys.entreprise:
+        this.addParamToRoute(key, this.selectedEntreprise);
+        break;
+
+      case SearchKeys.module:
+        this.addParamToRoute(key, this.selectedModule);
+        break;
+
+      case SearchKeys.formation:
+        this.addParamToRoute(key, this.selectedFormation);
+        break;
+
+      case SearchKeys.promotion:
+        this.addParamToRoute(key, this.selectedPromotion);
+        break;
+
+      case SearchKeys.startDate:
+        const dateDeb = !this.selectedDateDebut ? null :
+          new Date(this.selectedDateDebut.year, this.selectedDateDebut.month - 1, this.selectedDateDebut.day);
+        const valueDeb = dateDeb ? dateDeb.getTime() : null;
+        this.addParamToRoute(key, valueDeb);
+        break;
+
+      case SearchKeys.endDate:
+        const dateFin = !this.selectedDateFin ? null :
+          new Date(this.selectedDateFin.year, this.selectedDateFin.month - 1, this.selectedDateFin.day);
+        const valueFin = dateFin ? dateFin.getTime() : null;
+        this.addParamToRoute(key, valueFin);
+        break;
+    }
   }
 
   getCalendarStagiairePrenom(calendar) {
