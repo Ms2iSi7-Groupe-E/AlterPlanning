@@ -17,6 +17,7 @@ import {ConstraintTypes} from "../../models/enums/constraint-types";
   styleUrls: ['./page-calendar-proposal.component.scss']
 })
 export class PageCalendarProposalComponent implements OnInit {
+  error = null;
   models = [];
   lieux = [];
   allStagiaires = [];
@@ -32,6 +33,8 @@ export class PageCalendarProposalComponent implements OnInit {
   selectedStagiaire = null;
   selectedHeureMax = null;
   selectedLieux = [];
+
+  searching = false;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -116,6 +119,8 @@ export class PageCalendarProposalComponent implements OnInit {
   }
 
   generateCalendar() {
+    this.searching = true;
+    this.error = null;
     const calendarModel = new CalendarModel();
     calendarModel.stagiaireId = this.selectedStagiaire;
     calendarModel.entrepriseId = this.selectedEntreprise;
@@ -161,8 +166,11 @@ export class PageCalendarProposalComponent implements OnInit {
     });
 
     this.calendarService.addCalendar(calendarModel).subscribe(res => {
+      this.searching = false;
       this.router.navigate(['/calendar/' + res.id + '/processing']);
     }, err => {
+      this.searching = false;
+      this.error = 'Une erreur est survenue, contacter votre administrateur.';
       console.error(err);
     });
   }

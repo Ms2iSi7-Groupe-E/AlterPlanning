@@ -207,6 +207,9 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
         }
 
+        // Before delete calendar
+        // TODO : delete cours associés
+        // TODO : delete contraintes associés
         // Delete Calendar
         calendarDAOService.delete(id);
 

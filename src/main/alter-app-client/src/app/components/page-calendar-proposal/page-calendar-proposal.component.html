@@ -2,6 +2,7 @@
   <div class="row mb-3">
     <h2>Créer une proposition de planning</h2>
   </div>
+  <div class="row" *ngIf="error"><div class="col-12 alert alert-danger">{{ error }}</div></div>
   <div class="row">
     <div class="col-md-7">
       <div class="form-group row">
@@ -143,7 +144,9 @@
 
   <div class="row proposal-btn">
     <div class="col-12 text-right">
-      <button type="button" class="btn btn-info" (click)="generateCalendar()" [disabled]="!formIsValid"><i class="fas fa-camera"></i> Génération de la proposition</button>
+      <button type="button" class="btn btn-info"
+              (click)="generateCalendar()"
+              [disabled]="!formIsValid || searching"><i class="fas fa-camera"></i> Génération de la proposition</button>
     </div>
   </div>
 </div>
