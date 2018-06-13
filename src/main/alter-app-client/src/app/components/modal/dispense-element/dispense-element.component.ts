@@ -28,19 +28,8 @@ export class DispenseElementComponent implements OnInit {
               private stagiaireService: StagiaireService) {}
 
   ngOnInit() {
-    this.moduleService.getModules().subscribe(res => {
-        this.modules = res;
-      },
-      err => {
-        console.error(err);
-      });
-
-    this.stagiaireService.getStagiaires().subscribe(res => {
-        this.stagiaires = res;
-      },
-      err => {
-        console.error(err);
-      });
+    this.moduleService.getModules().subscribe(res => this.modules = res, console.error);
+    this.stagiaireService.getStagiaires().subscribe(res => this.stagiaires = res, console.error);
   }
 
   dispenseElement(type: ConstraintTypes) {

@@ -49,35 +49,11 @@ export class PageSearchComponent implements OnInit {
               private formationService: FormationService) { }
 
   ngOnInit() {
-    this.stagiaireService.getStagiaires().subscribe(res => {
-      this.stagiaires = res;
-    }, err => {
-      console.error(err);
-    });
-
-    this.entrepriseService.getEntreprises().subscribe(res => {
-      this.entreprises = res;
-    }, err => {
-      console.error(err);
-    });
-
-    this.moduleService.getModules().subscribe(res => {
-      this.modules = res;
-    }, err => {
-      console.error(err);
-    });
-
-    this.promotionService.getPromotions().subscribe(res => {
-      this.promotions = res;
-    }, err => {
-      console.error(err);
-    });
-
-    this.formationService.getFormations().subscribe(res => {
-      this.formations = res;
-    }, err => {
-      console.error(err);
-    });
+    this.stagiaireService.getStagiaires().subscribe(res => this.stagiaires = res, console.error);
+    this.entrepriseService.getEntreprises().subscribe(res => this.entreprises = res, console.error);
+    this.moduleService.getModules().subscribe(res => this.modules = res, console.error);
+    this.promotionService.getPromotions().subscribe(res => this.promotions = res, console.error);
+    this.formationService.getFormations().subscribe(res => this.formations = res, console.error);
 
     this.handleQueryParams();
   }
