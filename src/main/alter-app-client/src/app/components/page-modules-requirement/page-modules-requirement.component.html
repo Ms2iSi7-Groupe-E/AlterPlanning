@@ -100,12 +100,12 @@
             <div>
               <span><u>Résultat(s):</u></span>
               <div style="float: right;margin-right: 5px;">
-                <label><input type="radio" name="item_operator" checked="checked"/> Et</label>
-                <label><input type="radio" name="item_operator" checked="checked"/> Ou</label>
+                <label><input type="radio" ng-model="requirementOrOperator" value="false" checked="checked"/> Et</label>
+                <label><input type="radio" ng-model="requirementOrOperator" value="true" checked="checked"/> Ou</label>
               </div>
             </div>
             <div class="lstTarget">
-              <div *ngFor="let m of filterTargetModules(targetModules)" class="col item_module item_result purple" (click)="targetSelected = m">
+              <div *ngFor="let m of filterTargetModules(targetModules)" class="col item_module item_result purple" (click)="addRequirement(m)">
                 <i class="fas fa-cube"></i> {{ m.libelle }}
               </div>
             </div>
@@ -160,10 +160,10 @@
           </div>
         </div>
         <table class="table table-sm table-hover table-prerequis">
-          <tr>
+          <tr *ngFor="let m of moduleWithRequirement">
             <td class="first-col">
               <div class="item_module over_green item_module_liste">
-                <i class="fas fa-cube"></i> Rappels sur la programmation en Java
+                <i class="fas fa-cube"></i> {{ getLibelleModule(m.moduleId) }}
               </div>
             </td>
             <td>

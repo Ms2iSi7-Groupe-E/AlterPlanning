@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModuleService } from '../../services/module.service';
 import { TitreService } from '../../services/titre.service';
 import { FormationService } from '../../services/formation.service';
+import { RequirementModel } from "../../models/requirement.model";
 
 @Component({
   selector: 'app-page-modules-requirement',
@@ -26,9 +27,11 @@ export class PageModulesRequirementComponent implements OnInit {
   targetFormation;
   targetModule = '';
   targetModules = [];
-  targetSelected;
   targetIdsModulesTitreFiltre = [];
   targetIdsModulesFomationFiltre = [];
+  // concernant la liste des modules ayants des pre-requis
+  moduleWithRequirement = [];
+  requirementOrOperator = false;
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
@@ -63,6 +66,22 @@ export class PageModulesRequirementComponent implements OnInit {
           res[i].libelleLong =  res[i].libelleLong + ' - ' + res[i].libelleCourt;
         }
         this.dataFormations = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
+
+    // recuperation de la liste des modules ayants des pre-requis
+    this.updateModuleWithRequirement();
+  }
+
+  // mise a jour de la liste des modules ayants des pre-requis
+  updateModuleWithRequirement() {
+    this.moduleWithRequirement = [];
+    this.moduleService.getModulesWithRequirement().subscribe(
+      res => {
+        this.moduleWithRequirement = res;
       },
       err => {
         console.error(err);
@@ -293,5 +312,30 @@ export class PageModulesRequirementComponent implements OnInit {
       showRes.push(item);
     }
     this.targetModules = showRes;
+  }
+
+  // retourne le libelle d'un module
+  getLibelleModule ( idModule: string ) {
+    for (const item of this.dataModules) {
+      if ( item.idModule === idModule ) {
+        return item.libelle;
+      }
+    }
+    return '';
+  }
+
+  // ajout d'un element de pre-requis a un module
+  addRequirement (module) {
+    const body = new RequirementModel();
+    body.or = this.requirementOrOperator;
+    body.requiredModuleId = module.idModule;
+    this.moduleService.addRequirementForModule(this.sourceSelected.idModule, body).subscribe(
+      res => {
+        this.updateModuleWithRequirement();
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 }
