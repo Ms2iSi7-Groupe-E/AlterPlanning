@@ -25,6 +25,9 @@ export class PageSearchComponent implements OnInit {
   modules = [];
   formations = [];
 
+  validated = false;
+  searching = false;
+
   selectedState = "ALL";
   selectedStagiaire = null;
   selectedEntreprise = null;
@@ -81,15 +84,20 @@ export class PageSearchComponent implements OnInit {
 
   search() {
     this.calendars = [];
+    this.validated = true;
+    this.searching = true;
     this.addParamToRoute(this.QUERY_KEYS.validated, true);
 
     if (this.allFieldsAreClear) {
       this.calendarService.getCalendars().subscribe(res => {
         this.calendars = res;
+        this.searching = false;
       }, err => {
         console.error(err);
+        this.searching = false;
       });
     } else {
+      this.searching = false;
       // TODO : apply filters
     }
   }

@@ -81,7 +81,8 @@
         <input type="radio" name="item_etat" [(ngModel)]="selectedState" (change)="selectedValueChange(QUERY_KEYS.state)" [value]="CALENDAR_STATE.DRAFT"/> Brouillon</label>
     </div>
     <div class="col-sm-2 text-right">
-      <button type="button" class="btn btn-outline-secondary float-right" (click)="search()">
+      <button type="button" class="btn btn-outline-secondary float-right"
+              [disabled]="searching" (click)="search()">
         <i class="fas fa-search"></i> Rechercher
       </button>
     </div>
@@ -107,7 +108,17 @@
     </div>
   </div>
   -->
-  <div class="row mt-5" *ngIf="calendars.length === 0">
+  <div class="row mt-5" *ngIf="searching">
+    <div class="col-12">
+      <div class="loader">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5" *ngIf="calendars.length === 0 && validated && !searching">
     <div class="alert alert-info col-12">
       Aucun calendrier
     </div>
