@@ -73,8 +73,13 @@ const ROUTES: Routes = [
   },
   {
     path: '**',
+    redirectTo: '/404',
+    pathMatch: 'full'
+  },
+  {
+    path: '404',
     component: PageNotFoundComponent
-  }
+  },
 ];
 
 @NgModule({
