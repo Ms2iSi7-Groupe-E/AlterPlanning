@@ -72,13 +72,13 @@ const ROUTES: Routes = [
     component: PageParametersComponent
   },
   {
+    path: '404',
+    component: PageNotFoundComponent
+  },
+  {
     path: '**',
     redirectTo: '/404',
     pathMatch: 'full'
-  },
-  {
-    path: '404',
-    component: PageNotFoundComponent
   },
 ];
 
