@@ -8,7 +8,6 @@ import {ModuleService} from "../../services/module.service";
 import {PromotionService} from "../../services/promotion.service";
 import {FormationService} from "../../services/formation.service";
 import {SearchKeys} from "../../models/enums/search-keys";
-import {validate} from "codelyzer/walkerFactory/walkerFn";
 
 @Component({
   selector: 'app-page-search',
