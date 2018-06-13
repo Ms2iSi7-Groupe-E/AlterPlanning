@@ -20,6 +20,7 @@ export class PageModulesRequirementComponent implements OnInit {
   sourceModule = '';
   sourcesModules = [];
   sourceSelected;
+  sourceRequirementSelected = [];
   sourceIdsModulesTitreFiltre = [];
   sourceIdsModulesFomationFiltre = [];
   // concernant la partie des cibles
@@ -31,7 +32,7 @@ export class PageModulesRequirementComponent implements OnInit {
   targetIdsModulesFomationFiltre = [];
   // concernant la liste des modules ayants des pre-requis
   moduleWithRequirement = [];
-  requirementOrOperator = false;
+  requirementOrOperator = true;
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
@@ -264,6 +265,23 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
+  // click sur la selection d'un module source
+  clickSource(module) {
+
+    this.sourceSelected = module;
+    this.sourceRequirementSelected = [];
+
+    // recherche si il existe des pre-requis
+    this.moduleService.getRequirementByModule(module.idModule).subscribe(
+      res => {
+        this.sourceRequirementSelected = res.requirements;
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
   filterTargetModules(modules) {
     let lstModules: any[];
     lstModules = [];
@@ -332,6 +350,7 @@ export class PageModulesRequirementComponent implements OnInit {
     this.moduleService.addRequirementForModule(this.sourceSelected.idModule, body).subscribe(
       res => {
         this.updateModuleWithRequirement();
+        this.clickSource(this.sourceSelected);
       },
       err => {
         console.error(err);

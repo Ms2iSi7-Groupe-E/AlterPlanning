@@ -44,7 +44,7 @@
           <div class="col-12">
             <span><u>Résultat(s):</u></span>
             <div class="lstSource">
-              <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="sourceSelected = m">
+              <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="clickSource(m)">
                 <i class="fas fa-cube"></i> {{ m.libelle }}
               </div>
             </div>
@@ -100,8 +100,8 @@
             <div>
               <span><u>Résultat(s):</u></span>
               <div style="float: right;margin-right: 5px;">
-                <label><input type="radio" ng-model="requirementOrOperator" value="false" checked="checked"/> Et</label>
-                <label><input type="radio" ng-model="requirementOrOperator" value="true" checked="checked"/> Ou</label>
+                <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="true"/> Et</label>
+                <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="false"/> Ou</label>
               </div>
             </div>
             <div class="lstTarget">
@@ -117,7 +117,28 @@
       <div class="requirement-panel">
         <h4>Pré requis</h4>
         <div>
-          <div class="col item_module item_select">
+          <div *ngFor="let r of sourceRequirementSelected; first as isFirst">
+            <div *ngIf="!isFirst">
+              <div *ngIf="r.or" class="col text-center">
+                <div class="ico_and">
+                  <i class="fas fa-plus-square"></i>
+                </div>
+              </div>
+              <div *ngIf="!r.or" class="col text-center">
+                <div class="ico_or">
+                  <i class="fas fa-chevron-left"></i>
+                  Ou
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col item_module item_select">
+              <i class="fas fa-crosshairs"></i> {{ getLibelleModule(r.moduleId) }}
+              <i class="fas fa-times-circle ico_delete"></i>
+            </div>
+          </div>
+          
+          <!--<div class="col item_module item_select">
             <i class="fas fa-crosshairs"></i> Téléphonie IP et Messagerie
             <i class="fas fa-times-circle ico_delete"></i>
           </div>
@@ -140,7 +161,7 @@
           <div class="col item_module item_select">
             <i class="fas fa-crosshairs"></i> ..................
             <i class="fas fa-times-circle ico_delete"></i>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

@@ -16,6 +16,12 @@ export class ModuleService {
       .get('/api/module', {headers: AuthService.getHeaders()});
   }
 
+  getRequirementByModule(idModule: string): Observable<any> {
+    return this.http
+      .get('/api/module/' + idModule + '/requirement',
+        {headers: AuthService.getHeaders()} );
+  }
+
   addRequirementForModule(idModule: string, body: RequirementModel): Observable<any> {
     return this.http
       .post('/api/module/' + idModule + '/requirement', body,
