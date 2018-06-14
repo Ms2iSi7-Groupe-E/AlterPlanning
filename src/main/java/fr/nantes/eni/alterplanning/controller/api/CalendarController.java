@@ -13,13 +13,20 @@ import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.*;
+import fr.nantes.eni.alterplanning.util.MediaTypeUtil;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +37,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/calendar")
 public class CalendarController {
+
+    @Resource
+    private ServletContext servletContext;
 
     @Resource
     private CalendarDAOService calendarDAOService;
@@ -214,6 +224,49 @@ public class CalendarController {
         calendarDAOService.delete(id);
 
         return new StringResponse("Calendar successfully deleted");
+    }
+
+    @GetMapping("/{idCalendar}/download")
+    public ResponseEntity<InputStreamResource> downloadCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        // Find Calendar to delete
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
+        }
+
+        // TODO code for download PDF of a calendar
+        final String str = "Hello World";
+
+        File file;
+        InputStreamResource resource;
+
+        try {
+            //create a temp file
+            file = File.createTempFile("test", ".txt");
+            // Write in file
+            FileWriter writer = new FileWriter(file);
+            writer.write(str);
+            writer.close();
+            //create stream
+            resource = new InputStreamResource(new FileInputStream(file));
+            System.out.println(file.getName());
+        } catch (IOException e){
+            e.printStackTrace();
+            throw new RestResponseException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
+        final String filename = file.getName();
+        final MediaType mediaType = MediaTypeUtil.getMediaTypeForFileName(servletContext, filename);
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + filename)
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length())
+                .body(resource);
     }
 
     @PostMapping("/{idCalendar}/cours")
