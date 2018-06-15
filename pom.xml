@@ -33,6 +33,7 @@
         <mssql-jdbc.version>6.4.0.jre8</mssql-jdbc.version>
         <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.8.0</springfox-swagger-ui.version>
+        <itext.version>7.1.2</itext.version>
     </properties>
 
     <dependencies>
@@ -136,6 +137,29 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-swagger-ui.version}</version>
         </dependency>
+
+        <!-- ItextPdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>${itext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>io</artifactId>
+            <version>${itext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>${itext.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

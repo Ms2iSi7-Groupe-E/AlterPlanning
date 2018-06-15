@@ -1,0 +1,17 @@
+<html>
+<head>
+    <style>
+        p {
+            color : #084975;
+        }
+        div{
+            color: #F99D25;
+        }
+    </style>
+</head>
+<body>
+<img src="https://www.eni-ecole.fr/Content/Images/Static/logo-eni.png" alt="Logo Ecole ENI">
+<p>Calendrier $name</p>
+<div>Your developer journey with iText begins here</div>
+</body>
+</html>

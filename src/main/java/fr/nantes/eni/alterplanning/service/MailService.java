@@ -2,8 +2,6 @@ package fr.nantes.eni.alterplanning.service;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,7 +9,6 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.StringWriter;
 import java.util.Date;
 
 /**
@@ -27,9 +24,6 @@ public class MailService {
 
     @Resource
     private JavaMailSender mailSender;
-
-    @Resource
-    private VelocityEngine velocityEngine;
 
     /**
      * The constant BREAK_LINE.
@@ -62,19 +56,6 @@ public class MailService {
      */
     public void sendMailText(final String to, final String bcc, final String subject, final String contentText) {
         send(defaultFrom, to, bcc, subject, contentText, false);
-    }
-
-    /**
-     * Resolve template string.
-     *
-     * @param templateName the template name
-     * @param context      the context
-     * @return the string
-     */
-    public String resolveTemplate(final String templateName, final VelocityContext context) {
-        StringWriter writer = new StringWriter();
-        velocityEngine.mergeTemplate(templateName, "UTF-8", context, writer);
-        return writer.toString();
     }
 
     private void send(final String from, final String to, final String bcc, final String subject, final String content, final boolean isHtml) {

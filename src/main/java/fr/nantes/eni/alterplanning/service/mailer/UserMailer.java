@@ -2,6 +2,7 @@ package fr.nantes.eni.alterplanning.service.mailer;
 
 import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.service.MailService;
+import fr.nantes.eni.alterplanning.service.TemplateService;
 import org.apache.velocity.VelocityContext;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,9 @@ public class UserMailer {
     @Resource
     private MailService service;
 
+    @Resource
+    private TemplateService templateService;
+
     /**
      * Notify new user.
      *
@@ -27,7 +31,7 @@ public class UserMailer {
         VelocityContext context = new VelocityContext();
         context.put("user", user);
         context.put("password", clearPassword);
-        final String content = service.resolveTemplate("templates/new-user.vm", context);
+        final String content = templateService.resolveTemplate("new-user.vm", context);
 
         service.sendMailHtml(user.getEmail(), null, "Welcome", content);
     }
@@ -41,7 +45,7 @@ public class UserMailer {
     public void notifyChangePassword(final UserEntity user, final String new_password) {
         VelocityContext context = new VelocityContext();
         context.put("password", new_password);
-        final String content = service.resolveTemplate("templates/change-password.vm", context);
+        final String content = templateService.resolveTemplate("change-password.vm", context);
 
         service.sendMailHtml(user.getEmail(), null, "Password change", content);
     }
