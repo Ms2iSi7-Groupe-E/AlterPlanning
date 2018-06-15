@@ -1,17 +1,111 @@
 <html>
 <head>
     <style>
-        p {
-            color : #084975;
+        .text-center {
+            text-align: center
         }
-        div{
-            color: #F99D25;
+
+        .text-right {
+            text-align: right;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 20px;
+        }
+
+        .subtitle {
+            font-size: 12px
+        }
+
+        .yellow {
+            background-color: #ffe941;
+        }
+
+        .turquoise {
+            background-color: #48f9fb;
+        }
+
+        .planning {
+            width: 100%;
+        }
+
+        .planning, .planning tr, .planning td, .planning th {
+            text-align: center;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        .planning td, .planning th {
+            height: 40px;
+        }
+
+        .planning td:first-child, .planning th:first-child, .planning td:nth-child(2), .planning th:nth-child(2) {
+            width: 90px;
+        }
+
+        .planning td:nth-child(3), .planning th:nth-child(3) {
+            width: 130px;
         }
     </style>
 </head>
 <body>
 <img src="https://www.eni-ecole.fr/Content/Images/Static/logo-eni.png" alt="Logo Ecole ENI">
-<p>Calendrier $name</p>
-<div>Your developer journey with iText begins here</div>
+<br>
+<p class="title bold text-center">MANAGER DES SYSTÈMES D'INFORMATION ET D'INFRASTRUCTURE - OPTION SYSTÈMES D'INFORMATION</p>
+<p class="subtitle text-center">Préparation au titre «Manager des Systèmes d'Information et d'Infrastructure» Niveau I</p>
+<br>
+<table style="width: 100%;" class="bold">
+    <tr>
+        <td>Date de début (formation) : 24/10/2016</td>
+        <td class="text-right">Date de fin (formation) : 14/09/2018</td>
+    </tr>
+</table>
+<p class="text-center bold">Formation en centre : 903 Heures</p>
+<table style="width: 100%;" class="bold">
+    <tr>
+        <td>Entreprise : CONSERTO</td>
+        <td class="text-right">Salarié : STEPHAN Ugho</td>
+    </tr>
+</table>
+<table class="planning">
+    <thead>
+    <tr class="yellow">
+        <th>Début</th>
+        <th>Fin</th>
+        <th>Lieu</th>
+        <th>Programme</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Procédures stockées avec PL-SQL</td>
+    </tr>
+    <tr>
+        <td>31/10/2016 </td>
+        <td>18/11/2016 </td>
+        <td colspan="2" class="bold">ENTREPRISE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Utilisation de frameworks pour le développement avec Java EE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 70 heures</td>
+        <td>Architectures applicatives</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
+
