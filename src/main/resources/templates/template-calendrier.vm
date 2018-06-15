@@ -22,7 +22,7 @@
         }
 
         .yellow {
-            background-color: #ffe941;
+            background-color: #ffff00;
         }
 
         .turquoise {
@@ -40,7 +40,7 @@
         }
 
         .planning td, .planning th {
-            height: 40px;
+            height: 30px;
         }
 
         .planning td:first-child, .planning th:first-child, .planning td:nth-child(2), .planning th:nth-child(2) {
