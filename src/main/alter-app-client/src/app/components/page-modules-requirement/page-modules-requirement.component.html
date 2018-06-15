@@ -132,36 +132,11 @@
                 </div>
               </div>
             </div>
-            <div class="col item_module item_select">
-              <i class="fas fa-crosshairs"></i> {{ getLibelleModule(r.moduleId) }}
+            <div class="col item_module item_select" (click)="clickDelete(r)">
+              <i class="fas fa-crosshairs"></i> {{ getModuleById(r.moduleId).libelle }}
               <i class="fas fa-times-circle ico_delete"></i>
             </div>
           </div>
-          
-          <!--<div class="col item_module item_select">
-            <i class="fas fa-crosshairs"></i> Téléphonie IP et Messagerie
-            <i class="fas fa-times-circle ico_delete"></i>
-          </div>
-          <div class="col text-center">
-            <div class="ico_and">
-              <i class="fas fa-plus-square"></i>
-            </div>
-          </div>
-          <div class="col item_module item_select">
-            <i class="fas fa-crosshairs"></i> Développement Web côté client
-            <i class="fas fa-times-circle ico_delete"></i>
-          </div>
-          <div class="col text-center">
-            <div class="ico_or">
-              <i class="fas fa-chevron-left"></i>
-              Ou
-              <i class="fas fa-chevron-right"></i>
-            </div>
-          </div>
-          <div class="col item_module item_select">
-            <i class="fas fa-crosshairs"></i> ..................
-            <i class="fas fa-times-circle ico_delete"></i>
-          </div>-->
         </div>
       </div>
     </div>
@@ -183,43 +158,27 @@
         <table class="table table-sm table-hover table-prerequis">
           <tr *ngFor="let m of moduleWithRequirement">
             <td class="first-col">
-              <div class="item_module over_green item_module_liste">
-                <i class="fas fa-cube"></i> {{ getLibelleModule(m.moduleId) }}
+              <div *ngIf="getModuleById(m.moduleId) != null" class="item_module over_green item_module_liste" (click)="clickSource(getModuleById(m.moduleId))">
+                <i class="fas fa-cube"></i> {{ getModuleById(m.moduleId).libelle }}
               </div>
             </td>
             <td>
-              <div class="item_module item_show_liste">
-                <i class="fas fa-crosshairs"></i> Téléphonie IP et Messagerie
-              </div>
-              <div class="item_ico_liste">
-                <div class="ico_and">
-                  <i class="fas fa-plus-square"></i>
+              <div *ngFor="let r of m.requirements; first as isFirst">
+                <div *ngIf="!isFirst && r.or" class="item_ico_liste">
+                  <div class="ico_and">
+                    <i class="fas fa-plus-square"></i>
+                  </div>
                 </div>
-              </div>
-              <div class="item_module item_show_liste">
-                <i class="fas fa-crosshairs"></i> Développement Web côté client
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="first-col">
-              <div class="item_module over_green item_module_liste">
-                <i class="fas fa-cube"></i> .....................
-              </div>
-            </td>
-            <td>
-              <div class="item_module item_show_liste">
-                <i class="fas fa-crosshairs"></i> .................
-              </div>
-              <div class="item_ico_liste">
-                <div class="ico_or">
-                  <i class="fas fa-chevron-left"></i>
-                  Ou
-                  <i class="fas fa-chevron-right"></i>
+                <div *ngIf="!isFirst && !r.or" class="item_ico_liste">
+                    <div class="ico_or">
+                      <i class="fas fa-chevron-left"></i>
+                      Ou
+                      <i class="fas fa-chevron-right"></i>
+                    </div>
+                  </div>
+                <div class="item_module item_show_liste" *ngIf="getModuleById(r.moduleId) != null">
+                  <i class="fas fa-crosshairs"></i> {{ getModuleById(r.moduleId).libelle }}
                 </div>
-              </div>
-              <div class="item_module item_show_liste">
-                <i class="fas fa-crosshairs"></i> .................
               </div>
             </td>
           </tr>

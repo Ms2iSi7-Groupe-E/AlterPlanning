@@ -33,6 +33,7 @@ export class PageModulesRequirementComponent implements OnInit {
   // concernant la liste des modules ayants des pre-requis
   moduleWithRequirement = [];
   requirementOrOperator = true;
+  listeModule = '';
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
@@ -282,6 +283,25 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
+  // click sur la suppression d'un pre-requis
+  clickDelete(r) {
+
+    const body = new RequirementModel();
+    body.or = r.or;
+    body.requiredModuleId = r.moduleId;
+
+    // supprime le pre-requis
+    this.moduleService.deleteRequirementByModule(this.sourceSelected.idModule, body).subscribe(
+      res => {
+        this.updateModuleWithRequirement();
+        this.clickSource(this.sourceSelected);
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
   filterTargetModules(modules) {
     let lstModules: any[];
     lstModules = [];
@@ -332,18 +352,21 @@ export class PageModulesRequirementComponent implements OnInit {
     this.targetModules = showRes;
   }
 
-  // retourne le libelle d'un module
-  getLibelleModule ( idModule: string ) {
+  // retourne un module en fonction d'un identifiant
+  getModuleById ( idModule: string ) {
     for (const item of this.dataModules) {
       if ( item.idModule === idModule ) {
-        return item.libelle;
+        return item;
       }
     }
-    return '';
+    return null;
   }
 
   // ajout d'un element de pre-requis a un module
   addRequirement (module) {
+    if ( this.sourceSelected == null ) {
+      return;
+    }
     const body = new RequirementModel();
     body.or = this.requirementOrOperator;
     body.requiredModuleId = module.idModule;
@@ -356,5 +379,9 @@ export class PageModulesRequirementComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  findModuleListe() {
+    
   }
 }
