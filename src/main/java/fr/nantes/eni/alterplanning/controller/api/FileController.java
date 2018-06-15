@@ -92,13 +92,28 @@ public class FileController {
 
             // Create stream resource for download file
             resource = new InputStreamResource(new FileInputStream(outputFile));
+
+            // Remove Html File
+            if (htmlFile.delete()) {
+                logger.info(htmlFile.getAbsolutePath() + " is deleted!");
+            } else {
+                logger.error("Delete operation is failed for file " + htmlFile.getAbsolutePath());
+            }
         } catch (IOException e){
             e.printStackTrace();
             throw new RestResponseException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
 
         final String filename = outputFile.getName();
+        final Long filesize = outputFile.length();
         final MediaType mediaType = MediaTypeUtil.getMediaTypeForFileName(servletContext, filename);
+
+        // Remove Html File
+        if (outputFile.delete()) {
+            logger.info(outputFile.getAbsolutePath() + " is deleted!");
+        } else {
+            logger.error("Delete operation is failed for file " + outputFile.getAbsolutePath());
+        }
 
         return ResponseEntity.ok()
                 // Content-Disposition
@@ -106,7 +121,7 @@ public class FileController {
                 // Content-Type
                 .contentType(mediaType)
                 // Contet-Length
-                .contentLength(outputFile.length())
+                .contentLength(filesize)
                 .body(resource);
     }
 
