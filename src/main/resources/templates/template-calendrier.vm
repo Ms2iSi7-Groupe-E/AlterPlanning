@@ -68,7 +68,7 @@
 <table style="width: 100%;" class="bold">
     <tr>
         <td>Entreprise : CONSERTO</td>
-        <td class="text-right">Salarié : STEPHAN Ugho</td>
+        <td class="text-right">Salarié : $name</td>
     </tr>
 </table>
 <table class="planning">
