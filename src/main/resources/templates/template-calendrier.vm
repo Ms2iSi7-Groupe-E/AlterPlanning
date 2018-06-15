@@ -104,6 +104,75 @@
         <td class="turquoise">ENI (Nantes) 70 heures</td>
         <td>Architectures applicatives</td>
     </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Procédures stockées avec PL-SQL</td>
+    </tr>
+    <tr>
+        <td>31/10/2016 </td>
+        <td>18/11/2016 </td>
+        <td colspan="2" class="bold">ENTREPRISE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Utilisation de frameworks pour le développement avec Java EE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 70 heures</td>
+        <td>Architectures applicatives</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Procédures stockées avec PL-SQL</td>
+    </tr>
+    <tr>
+        <td>31/10/2016 </td>
+        <td>18/11/2016 </td>
+        <td colspan="2" class="bold">ENTREPRISE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Utilisation de frameworks pour le développement avec Java EE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 70 heures</td>
+        <td>Architectures applicatives</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Procédures stockées avec PL-SQL</td>
+    </tr>
+    <tr>
+        <td>31/10/2016 </td>
+        <td>18/11/2016 </td>
+        <td colspan="2" class="bold">ENTREPRISE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 35 heures</td>
+        <td>Utilisation de frameworks pour le développement avec Java EE</td>
+    </tr>
+    <tr>
+        <td>24/10/2016</td>
+        <td>28/10/2016</td>
+        <td class="turquoise">ENI (Nantes) 70 heures</td>
+        <td>Architectures applicatives</td>
+    </tr>
     </tbody>
 </table>
 </body>
