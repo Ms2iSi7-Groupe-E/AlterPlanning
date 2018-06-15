@@ -44,7 +44,7 @@ public class FileController {
     @Resource
     private StagiaireDAOService stagiaireDAOService;
 
-    @GetMapping("/calendar/{idCalendar}/{format}")
+    @GetMapping(value = "/calendar/{idCalendar}/{format}", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
     public ResponseEntity<InputStreamResource> downloadCalendar(@PathVariable(name = "idCalendar") int id,
                                                                 @PathVariable(name = "format") DownloadFormat format) throws RestResponseException {
         // Find Calendar to download
