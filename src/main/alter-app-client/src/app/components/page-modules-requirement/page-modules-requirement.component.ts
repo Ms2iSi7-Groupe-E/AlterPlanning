@@ -32,8 +32,10 @@ export class PageModulesRequirementComponent implements OnInit {
   targetIdsModulesFomationFiltre = [];
   // concernant la liste des modules ayants des pre-requis
   moduleWithRequirement = [];
+  moduleWithRequirementFiltre = [];
   requirementOrOperator = true;
   listeModule = '';
+  listePrerequis = '';
 
   constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
 
@@ -84,6 +86,7 @@ export class PageModulesRequirementComponent implements OnInit {
     this.moduleService.getModulesWithRequirement().subscribe(
       res => {
         this.moduleWithRequirement = res;
+        this.findModuleListe();
       },
       err => {
         console.error(err);
@@ -382,6 +385,48 @@ export class PageModulesRequirementComponent implements OnInit {
   }
 
   findModuleListe() {
-    
+
+    // controle de la taille des saisies
+    if ( this.listeModule.trim() === '' && this.listePrerequis.trim() === '' ) {
+      this.moduleWithRequirementFiltre = this.moduleWithRequirement;
+      return;
+    }
+
+    // filtre les resultats a afficher
+    let showRes: any[];
+    showRes = [];
+    for (const m of this.moduleWithRequirement) {
+
+      // recupere le module concerne
+      if ( this.listeModule.length > 1 ) {
+        const module = this.getModuleById(m.moduleId);
+
+        // filtre sur le libelle du module
+        if ( module.libelle.toLowerCase().indexOf( this.listeModule.toLowerCase() ) === -1 ) {
+          continue;
+        }
+      }
+
+      // filtre sur les module pre-requis
+      if ( this.listePrerequis.length > 1 ) {
+        let isPresent = false;
+        for (const r of m.requirements) {
+
+          // recupere le module concerne
+          const module = this.getModuleById(r.moduleId);
+
+          // filtre sur le libelle du module
+          if ( module.libelle.toLowerCase().indexOf( this.listePrerequis.toLowerCase() ) !== -1 ) {
+            isPresent = true;
+            break;
+          }
+        }
+        if ( !isPresent ) {
+          continue;
+        }
+      }
+      showRes.push(m);
+    }
+    this.moduleWithRequirementFiltre = showRes;
   }
 }

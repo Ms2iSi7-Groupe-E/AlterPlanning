@@ -148,15 +148,15 @@
         <div class="form-group row">
           <label class="col-md-2 col-form-label">Module :</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="Saisir le module" />
+            <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="listeModule" (keyup)="findModuleListe()"/>
           </div>
           <label class="col-md-2 col-form-label">Pré requis :</label>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Saisir le module pré requis"/>
+            <input type="text" class="form-control" placeholder="Saisir le module pré requis" [(ngModel)]="listePrerequis" (keyup)="findModuleListe()"/>
           </div>
         </div>
         <table class="table table-sm table-hover table-prerequis">
-          <tr *ngFor="let m of moduleWithRequirement">
+          <tr *ngFor="let m of moduleWithRequirementFiltre">
             <td class="first-col">
               <div *ngIf="getModuleById(m.moduleId) != null" class="item_module over_green item_module_liste" (click)="clickSource(getModuleById(m.moduleId))">
                 <i class="fas fa-cube"></i> {{ getModuleById(m.moduleId).libelle }}
