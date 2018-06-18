@@ -37,22 +37,19 @@
         <div class="form-group row">
           <label class="col-lg-4 col-form-label">Module :</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="sourceModule" (keyup)="findModuleSource()"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <span><u>Résultat(s):</u></span>
-            <div class="lstSource">
-              <div *ngFor="let m of sourcesModules" class="col item_module over_green" (click)="clickSource(m)">
-                <i class="fas fa-cube"></i> {{ m.libelle }}
-              </div>
-            </div>
+            <ng-select
+              [items]="sourcesModules"
+              bindLabel="libelle"
+              bindValue="idModule"
+              placeholder="Saisir le module"
+              notFoundText="Aucun module trouvé"
+              (change)="clickSource($event)">
+            </ng-select>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-requirement">
+    <div class="col-md-4 col-requirement" *ngIf="sourceSelected">
       <div class="requirement-panel">
         <h4>Ajouter un Pré requis à</h4>
         <div *ngIf="sourceSelected" class="col item_module">
@@ -92,28 +89,26 @@
         <div class="form-group row">
           <label class="col-lg-4 col-form-label">Module :</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" placeholder="Saisir le module" [(ngModel)]="targetModule" (keyup)="findModuleTarget()"/>
+            <ng-select
+              [items]="filterTargetModules"
+              bindLabel="libelle"
+              bindValue="idModule"
+              placeholder="Saisir le module"
+              notFoundText="Aucun module trouvé"
+              (change)="addRequirement($event)">
+            </ng-select>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12">
-            <div>
-              <span><u>Résultat(s):</u></span>
-              <div style="float: right;margin-right: 5px;">
-                <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="true"/> Et</label>
-                <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="false"/> Ou</label>
-              </div>
-            </div>
-            <div class="lstTarget">
-              <div *ngFor="let m of filterTargetModules(targetModules)" class="col item_module item_result purple" (click)="addRequirement(m)">
-                <i class="fas fa-cube"></i> {{ m.libelle }}
-              </div>
-            </div>
+        <div class="form-group row">
+          <label class="col-lg-4 col-form-label">Constrainte :</label>
+          <div class="col-lg-8 text-right">
+            <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="true"/> Et</label>
+            <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="false"/> Ou</label>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-requirement">
+    <div class="col-md-4 col-requirement" *ngIf="sourceSelected">
       <div class="requirement-panel">
         <h4>Pré requis</h4>
         <div>
@@ -138,6 +133,11 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="col-md-8 col-requirement" *ngIf="!sourceSelected">
+      <div class="requirement-panel">
+        <h4>Aucun module de renseigné</h4>
       </div>
     </div>
   </div>

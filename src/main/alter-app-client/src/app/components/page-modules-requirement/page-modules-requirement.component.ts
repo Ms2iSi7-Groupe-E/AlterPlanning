@@ -28,6 +28,7 @@ export class PageModulesRequirementComponent implements OnInit {
   targetFormation;
   targetModule = '';
   targetModules = [];
+  filterTargetModules = [];
   targetIdsModulesTitreFiltre = [];
   targetIdsModulesFomationFiltre = [];
   // concernant la liste des modules ayants des pre-requis
@@ -166,7 +167,6 @@ export class PageModulesRequirementComponent implements OnInit {
   }
 
   findModuleSource() {
-
     // controle de la taille des saisies
     if ( this.sourceCodeTitre === '' && this.sourceFormation.length < 1 && this.sourceModule.length < 1 ) {
       this.sourcesModules = this.dataModules;
@@ -275,6 +275,12 @@ export class PageModulesRequirementComponent implements OnInit {
     this.sourceSelected = module;
     this.sourceRequirementSelected = [];
 
+    if (!module) {
+      return;
+    }
+
+    this.findModuleTarget();
+
     // recherche si il existe des pre-requis
     this.moduleService.getRequirementByModule(module.idModule).subscribe(
       res => {
@@ -305,16 +311,15 @@ export class PageModulesRequirementComponent implements OnInit {
     );
   }
 
-  filterTargetModules(modules) {
-    let lstModules: any[];
-    lstModules = [];
-    for (const item of modules) {
+  getFilterTargetModules() {
+    const lstModules = [];
+    for (const item of this.targetModules) {
       if ( this.sourceSelected != null && ( this.sourceSelected.idModule === item.idModule ) ) {
         continue;
       }
       lstModules.push(item);
     }
-    return lstModules;
+    this.filterTargetModules = lstModules;
   }
 
   findModuleTarget() {
@@ -326,8 +331,7 @@ export class PageModulesRequirementComponent implements OnInit {
     }
 
     // filtre les resultats a afficher
-    let showRes: any[];
-    showRes = [];
+    const showRes = [];
     for (const item of this.dataModules) {
 
       // filtre sur le libelle du module
@@ -353,6 +357,7 @@ export class PageModulesRequirementComponent implements OnInit {
       showRes.push(item);
     }
     this.targetModules = showRes;
+    this.getFilterTargetModules();
   }
 
   // retourne un module en fonction d'un identifiant
@@ -367,7 +372,7 @@ export class PageModulesRequirementComponent implements OnInit {
 
   // ajout d'un element de pre-requis a un module
   addRequirement (module) {
-    if ( this.sourceSelected == null ) {
+    if (!module) {
       return;
     }
     const body = new RequirementModel();

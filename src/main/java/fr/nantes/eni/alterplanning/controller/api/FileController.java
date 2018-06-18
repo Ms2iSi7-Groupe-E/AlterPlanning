@@ -57,7 +57,7 @@ public class FileController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
         }
 
-        final String baseUrl = String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
+        final String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());
 
         String fileTitle = "calendrier";
 
