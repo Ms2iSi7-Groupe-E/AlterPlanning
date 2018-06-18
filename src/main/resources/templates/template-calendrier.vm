@@ -1,6 +1,11 @@
 <html>
 <head>
     <style>
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
         .text-center {
             text-align: center
         }
@@ -53,7 +58,7 @@
     </style>
 </head>
 <body>
-<img src="https://www.eni-ecole.fr/Content/Images/Static/logo-eni.png" alt="Logo Ecole ENI">
+<img class="logo" src="$logoUrl" alt="Logo Ecole ENI">
 <br>
 <p class="title bold text-center">MANAGER DES SYSTÈMES D'INFORMATION ET D'INFRASTRUCTURE - OPTION SYSTÈMES D'INFORMATION</p>
 <p class="subtitle text-center">Préparation au titre «Manager des Systèmes d'Information et d'Infrastructure» Niveau I</p>

@@ -12,6 +12,7 @@ import fr.nantes.eni.alterplanning.service.dao.StagiaireDAOService;
 import fr.nantes.eni.alterplanning.util.MediaTypeUtil;
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 @RestController
@@ -46,13 +48,16 @@ public class FileController {
 
     @GetMapping(value = "/calendar/{idCalendar}/{format}", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
     public ResponseEntity<InputStreamResource> downloadCalendar(@PathVariable(name = "idCalendar") int id,
-                                                                @PathVariable(name = "format") DownloadFormat format) throws RestResponseException {
+                                                                @PathVariable(name = "format") DownloadFormat format,
+                                                                HttpServletRequest request) throws RestResponseException {
         // Find Calendar to download
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
         }
+
+        final String baseUrl = String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
 
         String fileTitle = "calendrier";
 
@@ -75,6 +80,7 @@ public class FileController {
             // Fill html file with velocity
             final VelocityContext context = new VelocityContext();
             context.put("name", stagiaireName);
+            context.put("logoUrl", baseUrl + "/assets/images/logo-eni.jpg");
             final String htmlContent = templateService.resolveTemplate("template-calendrier.vm", context);
 
             // Insert html content in html file
