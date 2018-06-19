@@ -31,11 +31,13 @@
       <div class="form-group row">
         <label class="col-3 col-form-label">Nombre d'heures :</label>
         <div class="col-3">
-          <input type="number" class="form-control" [(ngModel)]="selectedHeureMin" name="heureMin" placeholder="Min." [min]="0"/>
+          <input type="number" class="form-control" [(ngModel)]="selectedHeureMin" name="heureMin" placeholder="Min."
+                 [min]="0" [max]="selectedHeureMax"/>
         </div>
         <label class="col-2 col-form-label">ou / et</label>
         <div class="col-3">
-          <input type="number" class="form-control" [(ngModel)]="selectedHeureMax" name="heureMax" placeholder="Max." [min]="0"/>
+          <input type="number" class="form-control" [(ngModel)]="selectedHeureMax" name="heureMax" placeholder="Max."
+                 [min]="selectedHeureMin || 0"/>
         </div>
       </div>
       <div class="form-group row">
