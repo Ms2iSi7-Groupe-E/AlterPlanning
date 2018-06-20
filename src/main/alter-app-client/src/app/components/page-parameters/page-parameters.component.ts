@@ -24,7 +24,12 @@ export class PageParametersComponent implements OnInit {
         this.formation_colors = this.parameters.filter(p => p.key.startsWith("FORMATION"));
         this.course_colors = this.parameters.filter(p => p.key.startsWith("COURSE"));
         this.switch_colors = this.parameters.filter(p => p.key.startsWith("SWITCH_COLOR"));
-        this.switch_values = this.parameters.filter(p => p.key.startsWith("SWITCH_VALUE"));
+        this.switch_values = this.parameters.filter(p => p.key.startsWith("SWITCH_VALUE")).map(sv => {
+          return {
+            key: sv.key,
+            value: parseInt(sv.value, 10)
+          };
+        });
       },
       err => {
         console.error(err);

@@ -46,7 +46,7 @@
                    [cpSaveClickOutside]="false"/>
           </td>
           <td colspan="3">
-            <input type="number" min="0" *ngIf="switch_values && switch_values[0]" [(ngModel)]="switch_values[0].value"
+            <input type="number" min="1" [max]="switch_values[1].value - 1" *ngIf="switch_values && switch_values[0]" [(ngModel)]="switch_values[0].value"
                    (change)="switchValueChanged(switch_values[0].key, $event)">
           </td>
           <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[1]" [(colorPicker)]="switch_colors[1].value" [style.background]="switch_colors[1].value"
@@ -55,7 +55,7 @@
                                  [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                                  [cpSaveClickOutside]="false"/>
           </td>
-          <td colspan="3"><input type="number" min="0" *ngIf="switch_values && switch_values[1]" [(ngModel)]="switch_values[1].value"
+          <td colspan="3"><input type="number" [min]="switch_values[0].value + 1" *ngIf="switch_values && switch_values[1]" [(ngModel)]="switch_values[1].value"
                                  (change)="switchValueChanged(switch_values[1].key, $event)">
           </td>
           <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[2]" [(colorPicker)]="switch_colors[2].value" [style.background]="switch_colors[2].value"
