@@ -16,7 +16,7 @@ export class PageHistoryComponent implements OnInit {
     this.dtOptions = {
       order: [],
       columnDefs: [{targets: 'no-sort', orderable: false}],
-      language: new DatatableFrench()
+      language: DatatableFrench.getLanguages(),
     };
   }
 
