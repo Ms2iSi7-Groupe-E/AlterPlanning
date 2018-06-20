@@ -10,6 +10,7 @@ import fr.nantes.eni.alterplanning.model.form.validator.UserValidator;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import fr.nantes.eni.alterplanning.service.mailer.UserMailer;
+import fr.nantes.eni.alterplanning.util.HistoryUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
+    @Resource
+    private HistoryUtil historyUtil;
 
     @Resource
     private UserDAOService userDAOService;
@@ -86,6 +90,8 @@ public class UserController {
         // Sen mail to New User
         mailer.notifyNewUser(userAdded, form.getPassword());
 
+        historyUtil.addLine("Ajout de l'utilisateur n°" + userAdded.getId());
+
         return userAdded;
     }
 
@@ -118,6 +124,8 @@ public class UserController {
 
         // Update user
         userDAOService.update(userToUpdate);
+
+        historyUtil.addLine("Modification de l'utilisateur n°" + userToUpdate.getId());
 
         return new StringResponse("User successfully updated");
     }
@@ -157,6 +165,8 @@ public class UserController {
         // Send Mail to notify password change
         mailer.notifyChangePassword(userToUpdate, form.getNew_password());
 
+        historyUtil.addLine("Réinitialisation du mot de passe de l'utilisateur n°" + userToUpdate.getId());
+
         return new StringResponse("Password successfully updated");
     }
 
@@ -179,6 +189,8 @@ public class UserController {
 
         // Delete User
         userDAOService.delete(id);
+
+        historyUtil.addLine("Suppression de l'utilisateur n°" + id);
 
         return new StringResponse("User successfully deleted");
     }

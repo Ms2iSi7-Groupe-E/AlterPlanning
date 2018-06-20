@@ -11,6 +11,7 @@ import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleDAOService;
 import fr.nantes.eni.alterplanning.service.dao.ModuleRequirementDAOService;
+import fr.nantes.eni.alterplanning.util.HistoryUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/module")
 public class ModuleController {
+
+    @Resource
+    private HistoryUtil historyUtil;
 
     @Resource
     private ModuleDAOService moduleDAOService;
@@ -129,8 +133,10 @@ public class ModuleController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Module not found");
         }
 
+        ModuleEntity requiredModule = null;
+
         if (form.getRequiredModuleId() != null) {
-            final ModuleEntity requiredModule = moduleDAOService.findById(form.getRequiredModuleId());
+            requiredModule = moduleDAOService.findById(form.getRequiredModuleId());
 
             if (requiredModule == null) {
                 result.addError(new FieldError("requiredModuleId",  "requiredModuleId", "not exist"));
@@ -146,8 +152,6 @@ public class ModuleController {
             throw new RestResponseException(HttpStatus.CONFLICT, "Entity already exist in database");
         }
 
-        // TODO: gérer les prérequis en mode dépendances circulaires ...
-
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
         }
@@ -158,6 +162,11 @@ public class ModuleController {
         entity.setRequiredModuleId(form.getRequiredModuleId());
 
         moduleRequirementDAOService.create(entity);
+
+        historyUtil.addLine("Ajout du prérequis \"" 
+                + requiredModule.getLibelle()
+                + "\" au module \"" 
+                + m.getLibelle() + "\"");
 
         return new StringResponse("Requirement successfully added for Module " + idModule);
     }
@@ -182,6 +191,14 @@ public class ModuleController {
         }
 
         moduleRequirementDAOService.delete(moduleRequirementId);
+
+        final ModuleEntity module = moduleDAOService.findById(idModule);
+        final ModuleEntity requiredModule = moduleDAOService.findById(form.getRequiredModuleId());
+
+        historyUtil.addLine("Suppression du prérequis \""
+                + requiredModule.getLibelle()
+                + "\" pour le module \""
+                + module.getLibelle() + "\"");
 
         return new StringResponse("Module constraint succesfully deleted");
     }

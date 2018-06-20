@@ -6,6 +6,7 @@ import fr.nantes.eni.alterplanning.model.form.AddParameterForm;
 import fr.nantes.eni.alterplanning.model.form.UpdateParameterForm;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.ParameterDAOService;
+import fr.nantes.eni.alterplanning.util.HistoryUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/parameter")
 public class ParameterController {
+
+    @Resource
+    private HistoryUtil historyUtil;
 
     @Resource
     private ParameterDAOService parameterDAOService;
@@ -52,7 +56,12 @@ public class ParameterController {
         newParam.setValue(form.getValue());
 
         //Save Parameter
-        return parameterDAOService.create(newParam);
+        ParameterEntity createdParameter = parameterDAOService.create(newParam);
+
+        historyUtil.addLine("Ajout du paramètre \""
+                + createdParameter.getKey() + "\" avec la valeur \""
+                + createdParameter.getValue() + "\"");
+        return createdParameter;
     }
 
     @PutMapping("/{key}")
@@ -69,9 +78,15 @@ public class ParameterController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Parameter not found");
         }
 
+        final String oldValue = parameterToUpdate.getValue();
+
         //Update and save new Parameter
         parameterToUpdate.setValue(form.getValue());
         parameterDAOService.update(parameterToUpdate);
+
+        historyUtil.addLine("Modification du paramètre \""
+                + key + "\". De la valeur \""
+                + oldValue + "\" à la valeur \"" + form.getValue() + "\"");
 
         return new StringResponse("Parameter successfully updated");
     }
