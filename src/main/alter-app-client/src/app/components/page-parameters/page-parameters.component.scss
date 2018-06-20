@@ -1,23 +1,60 @@
 input{
   border: none;
   width: 100px;
-  //padding: 5px;
-  //margin: 10px;
+
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 input[type=number]{
   width: 50px;
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
   border: 1px solid grey;
   text-align: center;
 }
 
 #start-value{
-  margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .switch-color{
-  margin-right: 20px;
+  //margin-right: 20px;
 }
 
+hr{
+  color: black;
+  width: 170px;
+  margin-left: 0;
+  margin-right: 10px;
+  border-radius: 20px;
+}
 
+td{
+  //border: 1px solid red;
+  text-align: center;
+}
+
+table{
+  text-align: center;
+}
+
+.bleft{
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.bright{
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.bbottom{
+  border-bottom: 2px solid black;
+}
+
+.trspace{
+  height: 10px;
+}

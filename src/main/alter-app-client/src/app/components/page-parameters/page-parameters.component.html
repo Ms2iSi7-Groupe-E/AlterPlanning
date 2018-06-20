@@ -31,7 +31,76 @@
 
     <h5><u>Valeurs de basculement</u></h5>
     <div class="row col-12">
-      <span id="start-value">0</span>
+
+      <table>
+        <tr>
+          <td colspan="2"><span id="start-value">0</span></td>
+          <td align="center" colspan="1">
+            <input class="switch-color"  *ngIf="switch_colors && switch_colors[0]" [(colorPicker)]="switch_colors[0].value" [style.background]="switch_colors[0].value"
+                                 (colorPickerChange)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
+                                 [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                                 [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
+                                 [cpSaveClickOutside]="false"/>
+          </td>
+          <td colspan="3">
+            <input type="number" min="0" *ngIf="switch_values && switch_values[0]" [ngModel]="switch_values[0].value"
+                   (change)="switchValueChanged(switch_values[0].key, $event)">
+          </td>
+          <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[1]" [(colorPicker)]="switch_colors[1].value" [style.background]="switch_colors[1].value"
+                                 (colorPickerChange)="colorPickerChanged(switch_colors[1].key, $event)" [cpDisableInput]="true"
+                                 [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                                 [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
+                                 [cpSaveClickOutside]="false"/>
+          </td>
+          <td colspan="3"><input type="number" min="0" *ngIf="switch_values && switch_values[1]" [(ngModel)]="switch_values[1].value"
+                                 (change)="switchValueChanged(switch_values[1].key, $event)">
+          </td>
+          <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[2]" [(colorPicker)]="switch_colors[2].value" [style.background]="switch_colors[2].value"
+                                 (colorPickerChange)="colorPickerChanged(switch_colors[2].key, $event)" [cpDisableInput]="true"
+                                 [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                                 [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
+                                 [cpSaveClickOutside]="false"/>
+          </td>
+          <td colspan="2">
+            <span *ngIf="switch_values && switch_values[1]">plus de {{switch_values[1].value}}</span>
+          </td>
+        </tr>
+
+        <tr class="trspace"></tr>
+
+        <tr class="trspace">
+          <td></td>
+          <td class="bleft"></td>
+          <td class="bbottom"></td>
+          <td class="bright"></td>
+          <td></td>
+          <td class="bleft"></td>
+          <td class="bbottom"></td>
+          <td class="bright"></td>
+          <td></td>
+          <td class="bleft"></td>
+          <td class="bbottom"></td>
+          <td class="bright"></td>
+          <td></td>
+        </tr>
+        <tr class="trspace">
+          <td></td>
+          <td></td>
+          <td><span>De 0 à 20</span></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><span>De 20 à 30</span></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><span>Plus de 30</span></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+
+     <!-- <span id="start-value">0</span>
 
       <input class="switch-color"  *ngIf="switch_colors && switch_colors[0]" [(colorPicker)]="switch_colors[0].value" [style.background]="switch_colors[0].value"
              (colorPickerChange)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
@@ -58,7 +127,15 @@
              [cpSaveClickOutside]="false"/>
 
       <span *ngIf="switch_values && switch_values[1]">plus de {{switch_values[1].value}}</span>
+    </div>-->
+   <!-- <div class="row col-12">
+      <hr><hr><hr>
     </div>
+    <div class="row col-12">
+      <span>De 0 à 20</span>
+      <span>De 20 à 30</span>
+      <span>PLus de 30</span>
+    </div>-->
 
     <h3 *ngIf="parameters.length === 0">Aucun paramètre</h3>
 
