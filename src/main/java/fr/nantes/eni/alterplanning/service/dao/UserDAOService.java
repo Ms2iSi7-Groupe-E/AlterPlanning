@@ -35,6 +35,10 @@ public class UserDAOService implements UserDetailsService {
         return repository.findByEmailAndActive(email);
     }
 
+    public List<UserEntity> findByListIdCours(final List<Integer> ids) {
+        return repository.findAllByFromListIdUser(ids);
+    }
+
     public UserEntity create(final UserEntity user) {
         return repository.save(user);
     }

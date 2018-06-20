@@ -113,7 +113,11 @@ public class CalendarController {
         final List<CalendarCoursEntity> calendarCoursEntities = calendarCoursDAOService.findByCalendarId(id);
 
         if (!calendarCoursEntities.isEmpty()) {
-            final List<String> idsCours = calendarCoursEntities.stream().map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
+            final List<String> idsCours = calendarCoursEntities
+                    .stream()
+                    .map(CalendarCoursEntity::getCoursId)
+                    .distinct()
+                    .collect(Collectors.toList());
             final List<CoursEntity> coursEntities = coursDAOService.findByListIdCours(idsCours);
 
             calendarDetailResponse.setCours(coursEntities);
