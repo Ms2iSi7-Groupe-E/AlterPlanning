@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class HistoryController {
     private UserDAOService userDAOService;
 
     @GetMapping("")
-    public List<HistoryResponse> getCours() {
+    public List<HistoryResponse> getHistories() {
         final List<HistoryEntity> historyEntities = historyDAOService.findAll();
         final List<Integer> idsUser = historyEntities
                 .stream()
@@ -32,7 +33,13 @@ public class HistoryController {
                 .distinct()
                 .collect(Collectors.toList());
 
-        final List<UserEntity> userEntities = userDAOService.findByListIdCours(idsUser);
+        final List<UserEntity> userEntities;
+
+        if (!idsUser.isEmpty()) {
+            userEntities = userDAOService.findByListIdCours(idsUser);
+        } else {
+            userEntities = new ArrayList<>();
+        }
 
         return historyEntities.stream().map(h -> {
             final HistoryResponse response = new HistoryResponse();

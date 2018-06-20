@@ -13,6 +13,7 @@ import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.service.dao.*;
+import fr.nantes.eni.alterplanning.util.HistoryUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -29,6 +30,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/calendar")
 public class CalendarController {
+
+    @Resource
+    private HistoryUtil historyUtil;
 
     @Resource
     private CalendarDAOService calendarDAOService;
@@ -192,6 +196,8 @@ public class CalendarController {
             calendarConstraintDAOService.createAll(constraints);
         }
 
+        historyUtil.addLine("Ajout du calendrier n°" + createdCalendar.getId());
+
         return getCalendarDetailsById(createdCalendar.getId());
     }
 
@@ -215,6 +221,8 @@ public class CalendarController {
         // TODO : delete contraintes associés
         // Delete Calendar
         calendarDAOService.delete(id);
+
+        historyUtil.addLine("Suppression du calendrier n°" + id);
 
         return new StringResponse("Calendar successfully deleted");
     }
