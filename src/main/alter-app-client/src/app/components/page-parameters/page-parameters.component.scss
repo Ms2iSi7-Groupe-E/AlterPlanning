@@ -1,0 +1,23 @@
+input{
+  border: none;
+  width: 100px;
+  //padding: 5px;
+  //margin: 10px;
+}
+
+input[type=number]{
+  width: 50px;
+  margin-right: 20px;
+  border: 1px solid grey;
+  text-align: center;
+}
+
+#start-value{
+  margin-right: 20px;
+}
+
+.switch-color{
+  margin-right: 20px;
+}
+
+

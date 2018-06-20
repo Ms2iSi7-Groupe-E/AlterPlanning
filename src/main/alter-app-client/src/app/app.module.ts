@@ -35,6 +35,7 @@ import {DatepickerI18n} from "./components/custom/datepicker-i18n";
 import { PageCalendarProcessingComponent } from './components/page-calendar-processing/page-calendar-processing.component';
 import { PageCalendarDetailsComponent } from './components/page-calendar-details/page-calendar-details.component';
 import {CalendarService} from "./services/calendar.service";
+import {ColorPickerModule} from "ngx-color-picker";
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {CalendarService} from "./services/calendar.service";
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ColorPickerModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },
