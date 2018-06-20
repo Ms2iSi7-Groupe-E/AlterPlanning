@@ -3,9 +3,8 @@
     <h2>Gestion des paramètres</h2>
   </div>
 
-  <div>
-    <h3>Ergonomie</h3><br>
 
+  <div class="panel">
     <h5><u>Couleur des formations</u></h5>
     <div class="d-flex flex-nowrap align-items-center">
       <div *ngFor="let formation_color of formation_colors" class="flex-fill">
@@ -15,20 +14,24 @@
                [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                [cpSaveClickOutside]="false"/>
       </div>
-    </div><br>
+    </div>
+  </div>
 
-
+  <div class="panel">
     <h5><u>Couleur des lieux</u></h5>
     <div class="d-flex flex-nowrap align-items-center">
       <div *ngFor="let cours_colors of course_colors" class="flex-fill">
         <input [(colorPicker)]="cours_colors.value" [style.background]="cours_colors.value"
-             (colorPickerChange)="colorPickerChanged(cours_colors.key, $event)" [cpDisableInput]="true"
-             [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
-             [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
-             [cpSaveClickOutside]="false"/>
+               (colorPickerChange)="colorPickerChanged(cours_colors.key, $event)" [cpDisableInput]="true"
+               [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+               [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
+               [cpSaveClickOutside]="false"/>
       </div>
-    </div><br>
+    </div>
+  </div>
 
+
+  <div class="panel">
     <h5><u>Valeurs de basculement</u></h5>
     <div class="row col-12">
 
@@ -37,13 +40,13 @@
           <td colspan="2"><span id="start-value">0</span></td>
           <td align="center" colspan="1">
             <input class="switch-color"  *ngIf="switch_colors && switch_colors[0]" [(colorPicker)]="switch_colors[0].value" [style.background]="switch_colors[0].value"
-                                 (colorPickerChange)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
-                                 [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
-                                 [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
-                                 [cpSaveClickOutside]="false"/>
+                   (colorPickerChange)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
+                   [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                   [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
+                   [cpSaveClickOutside]="false"/>
           </td>
           <td colspan="3">
-            <input type="number" min="0" *ngIf="switch_values && switch_values[0]" [ngModel]="switch_values[0].value"
+            <input type="number" min="0" *ngIf="switch_values && switch_values[0]" [(ngModel)]="switch_values[0].value"
                    (change)="switchValueChanged(switch_values[0].key, $event)">
           </td>
           <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[1]" [(colorPicker)]="switch_colors[1].value" [style.background]="switch_colors[1].value"
@@ -62,7 +65,7 @@
                                  [cpSaveClickOutside]="false"/>
           </td>
           <td colspan="2">
-            <span *ngIf="switch_values && switch_values[1]">plus de {{switch_values[1].value}}</span>
+            <span *ngIf="switch_values && switch_values[1]"> Plus de {{switch_values[1].value}}</span>
           </td>
         </tr>
 
@@ -86,58 +89,23 @@
         <tr class="trspace">
           <td></td>
           <td></td>
-          <td><span>De 0 à 20</span></td>
+          <td>De 0 à <span *ngIf="switch_values && switch_values[0]">{{switch_values[0].value}}</span></td>
           <td></td>
+          <td class="tdsmall"></td>
           <td></td>
+          <td>De <span *ngIf="switch_values && switch_values[0]">{{switch_values[0].value}}</span> à <span *ngIf="switch_values && switch_values[1]">{{switch_values[1].value}}</span></td>
           <td></td>
-          <td><span>De 20 à 30</span></td>
+          <td class="tdsmall"></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td><span>Plus de 30</span></td>
+          <td> Plus de <span *ngIf="switch_values && switch_values[1]">{{switch_values[1].value}}</span></td>
           <td></td>
           <td></td>
         </tr>
       </table>
+  </div>
 
-     <!-- <span id="start-value">0</span>
 
-      <input class="switch-color"  *ngIf="switch_colors && switch_colors[0]" [(colorPicker)]="switch_colors[0].value" [style.background]="switch_colors[0].value"
-             (colorPickerChange)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
-             [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
-             [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
-             [cpSaveClickOutside]="false"/>
-
-      <input type="number" min="0" *ngIf="switch_values && switch_values[0]" [ngModel]="switch_values[0].value"
-             (change)="switchValueChanged(switch_values[0].key, $event)">
-
-      <input class="switch-color" *ngIf="switch_colors && switch_colors[1]" [(colorPicker)]="switch_colors[1].value" [style.background]="switch_colors[1].value"
-             (colorPickerChange)="colorPickerChanged(switch_colors[1].key, $event)" [cpDisableInput]="true"
-             [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
-             [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
-             [cpSaveClickOutside]="false"/>
-
-      <input type="number" min="0" *ngIf="switch_values && switch_values[1]" [(ngModel)]="switch_values[1].value"
-             (change)="switchValueChanged(switch_values[1].key, $event)">
-
-      <input class="switch-color" *ngIf="switch_colors && switch_colors[2]" [(colorPicker)]="switch_colors[2].value" [style.background]="switch_colors[2].value"
-             (colorPickerChange)="colorPickerChanged(switch_colors[2].key, $event)" [cpDisableInput]="true"
-             [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
-             [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
-             [cpSaveClickOutside]="false"/>
-
-      <span *ngIf="switch_values && switch_values[1]">plus de {{switch_values[1].value}}</span>
-    </div>-->
-   <!-- <div class="row col-12">
-      <hr><hr><hr>
-    </div>
-    <div class="row col-12">
-      <span>De 0 à 20</span>
-      <span>De 20 à 30</span>
-      <span>PLus de 30</span>
-    </div>-->
-
-    <h3 *ngIf="parameters.length === 0">Aucun paramètre</h3>
+  <h3 *ngIf="parameters.length === 0">Aucun paramètre</h3>
 
   </div>
 </div>

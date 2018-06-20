@@ -7,6 +7,10 @@ input{
   }
 }
 
+h5{
+  margin-bottom: 15px;
+}
+
 input[type=number]{
   width: 50px;
   margin-right: 10px;
@@ -39,6 +43,7 @@ td{
 
 table{
   text-align: center;
+  width: 100%;
 }
 
 .bleft{
@@ -57,4 +62,16 @@ table{
 
 .trspace{
   height: 10px;
+}
+
+.panel{
+  border:1px solid #ccc;
+  background-color:#e8e8e8;
+  border-radius:3px;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.tdsmall{
+  width: 15px;
 }
