@@ -37,6 +37,7 @@ import { PageCalendarDetailsComponent } from './components/page-calendar-details
 import {CalendarService} from "./services/calendar.service";
 import {ColorPickerModule} from "ngx-color-picker";
 import {DataTablesModule} from "angular-datatables";
+import {HistoryService} from "./services/history.service";
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import {DataTablesModule} from "angular-datatables";
     FormationService,
     LieuService,
     StagiaireService,
-    EntrepriseService
+    EntrepriseService,
+    HistoryService
   ],
   entryComponents: [
     AddElementComponent,

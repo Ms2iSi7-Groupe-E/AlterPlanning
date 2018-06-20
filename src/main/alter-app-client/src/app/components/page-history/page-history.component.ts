@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DatatableFrench} from "../../helper/datatable-french";
+import {HistoryService} from "../../services/history.service";
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-page-history',
@@ -8,9 +10,11 @@ import {DatatableFrench} from "../../helper/datatable-french";
 })
 export class PageHistoryComponent implements OnInit {
 
+  histories = [];
   dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject = new Subject();
 
-  constructor() { }
+  constructor(private historyService: HistoryService) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -18,6 +22,11 @@ export class PageHistoryComponent implements OnInit {
       columnDefs: [{targets: 'no-sort', orderable: false}],
       language: DatatableFrench.getLanguages(),
     };
+
+    this.historyService.getAllHistory().subscribe(res => {
+      this.histories = res;
+      this.dtTrigger.next();
+    }, console.error);
   }
 
 }
