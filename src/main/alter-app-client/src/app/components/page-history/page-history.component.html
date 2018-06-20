@@ -3,10 +3,10 @@
     <h2>Historique</h2>
   </div>
   <div class="row">
-    <table class="table table-hover table-striped">
+    <table datatable [dtOptions]="dtOptions" class="table table-hover table-striped">
       <thead>
       <tr>
-        <th scope="col">#</th>
+        <th class="no-sort" scope="col">#</th>
         <th scope="col">Acteur</th>
         <th scope="col">Description</th>
         <th scope="col">Date</th>

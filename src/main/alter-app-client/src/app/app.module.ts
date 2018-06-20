@@ -36,6 +36,7 @@ import { PageCalendarProcessingComponent } from './components/page-calendar-proc
 import { PageCalendarDetailsComponent } from './components/page-calendar-details/page-calendar-details.component';
 import {CalendarService} from "./services/calendar.service";
 import {ColorPickerModule} from "ngx-color-picker";
+import {DataTablesModule} from "angular-datatables";
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {ColorPickerModule} from "ngx-color-picker";
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    ColorPickerModule
+    ColorPickerModule,
+    DataTablesModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr' },
