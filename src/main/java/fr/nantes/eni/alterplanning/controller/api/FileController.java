@@ -54,7 +54,7 @@ public class FileController {
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
         final String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());

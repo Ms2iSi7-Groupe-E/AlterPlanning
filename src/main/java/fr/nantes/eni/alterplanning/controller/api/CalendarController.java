@@ -93,7 +93,7 @@ public class CalendarController {
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
         final CalendarDetailResponse calendarDetailResponse = new CalendarDetailResponse();
@@ -141,19 +141,19 @@ public class CalendarController {
     public CalendarDetailResponse addCalendar(@Valid @RequestBody AddCalendarForm form, BindingResult result) throws RestResponseException {
 
         if (form.getEndDate() != null && form.getStartDate() != null && form.getEndDate().before(form.getStartDate())) {
-            result.addError(new FieldError("startDate",  "startDate", "should be before endDate"));
-            result.addError(new FieldError("endDate",  "endDate", "should be after startDate"));
+            result.addError(new FieldError("startDate",  "startDate", "doit être avant la date de fin"));
+            result.addError(new FieldError("endDate",  "endDate", "doit être après la date de début"));
         }
 
         boolean stagaireOrEntrepriseError = false;
 
         if (form.getStagiaireId() != null && !stagiaireDAOService.existsById(form.getStagiaireId())) {
-            result.addError(new FieldError("stagiaireId",  "stagiaireId", "not exist"));
+            result.addError(new FieldError("stagiaireId",  "stagiaireId", "n'existe pas en base"));
             stagaireOrEntrepriseError = true;
         }
 
         if (form.getEntrepriseId() != null && !entrepriseDAOService.existsById(form.getEntrepriseId())) {
-            result.addError(new FieldError("entrepriseId",  "entrepriseId", "not exist"));
+            result.addError(new FieldError("entrepriseId",  "entrepriseId", "n'existe pas en base"));
             stagaireOrEntrepriseError = true;
         }
 
@@ -164,14 +164,14 @@ public class CalendarController {
                     .collect(Collectors.toList());
 
             if (stagiaireEntreprises.isEmpty() || !entrepriseIds.contains(form.getEntrepriseId())) {
-                result.addError(new FieldError("entrepriseId",  "entrepriseId", "not the stagiaire entreprise"));
+                result.addError(new FieldError("entrepriseId",  "entrepriseId", "l'entreprise ne correspond pas à celle du stagiaire selectionné"));
             }
         }
 
         // TODO : Vérifier contraintes d'un calendrier
 
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         // Define new Calendar
@@ -215,7 +215,7 @@ public class CalendarController {
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
         // TODO: impossible de supprimer le calendrier si modèle
@@ -228,7 +228,7 @@ public class CalendarController {
 
         historyUtil.addLine("Suppression du calendrier n°" + id);
 
-        return new StringResponse("Calendar successfully deleted");
+        return new StringResponse("Calendrier supprimé avec succès");
     }
 
     @PostMapping("/{idCalendar}/cours")

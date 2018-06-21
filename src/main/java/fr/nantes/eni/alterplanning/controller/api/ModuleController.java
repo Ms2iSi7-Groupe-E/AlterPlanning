@@ -50,7 +50,7 @@ public class ModuleController {
         final ModuleEntity m = moduleDAOService.findById(idModule);
 
         if (m == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module non trouvé");
         }
 
         return m;
@@ -61,7 +61,7 @@ public class ModuleController {
         final ModuleEntity m = moduleDAOService.findById(idModule);
 
         if (m == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module non trouvé");
         }
 
         return coursDAOService.findByModule(idModule);
@@ -105,7 +105,7 @@ public class ModuleController {
         final ModuleEntity m = moduleDAOService.findById(idModule);
 
         if (m == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module non trouvé");
         }
 
         final List<ModuleRequirementEntity> moduleRequirementEntities = moduleRequirementDAOService.findByModule(idModule);
@@ -130,7 +130,7 @@ public class ModuleController {
         final ModuleEntity m = moduleDAOService.findById(idModule);
 
         if (m == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Module non trouvé");
         }
 
         ModuleEntity requiredModule = null;
@@ -139,21 +139,21 @@ public class ModuleController {
             requiredModule = moduleDAOService.findById(form.getRequiredModuleId());
 
             if (requiredModule == null) {
-                result.addError(new FieldError("requiredModuleId",  "requiredModuleId", "not exist"));
+                result.addError(new FieldError("requiredModuleId",  "requiredModuleId", "innexistant en base"));
             }
 
             if (requiredModule != null && form.getRequiredModuleId().equals(idModule)) {
-                result.addError(new FieldError("requiredModuleId",  "requiredModuleId", "cannot be the same as idModule"));
+                result.addError(new FieldError("requiredModuleId",  "requiredModuleId", "ne peut pas être identique au module"));
             }
         }
 
-        // If no error yet, check if onstraint 'module_requirements_uq' is OK
+        // If no error yet, check if constraint 'module_requirements_uq' is OK
         if (!result.hasErrors() && moduleRequirementDAOService.alreadyExist(idModule, form.getRequiredModuleId(), form.getOr())) {
-            throw new RestResponseException(HttpStatus.CONFLICT, "Entity already exist in database");
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le prérequis existe déjà en base");
         }
 
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         ModuleRequirementEntity entity = new ModuleRequirementEntity();
@@ -168,7 +168,7 @@ public class ModuleController {
                 + "\" au module \"" 
                 + m.getLibelle() + "\"");
 
-        return new StringResponse("Requirement successfully added for Module " + idModule);
+        return new StringResponse("Prérequis ajouté avec succès pour le module " + idModule);
     }
 
     @DeleteMapping("/{idModule}/requirement")
@@ -176,7 +176,7 @@ public class ModuleController {
                                                     BindingResult result,
                                                     @PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         ModuleRequirementEntity entity = new ModuleRequirementEntity();
@@ -187,7 +187,7 @@ public class ModuleController {
         final Integer moduleRequirementId = moduleRequirementDAOService.findIdByUniqueConstraint(entity);
 
         if (moduleRequirementId == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Constraint not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Prérequis non trouvée");
         }
 
         moduleRequirementDAOService.delete(moduleRequirementId);
@@ -200,6 +200,6 @@ public class ModuleController {
                 + "\" pour le module \""
                 + module.getLibelle() + "\"");
 
-        return new StringResponse("Module constraint succesfully deleted");
+        return new StringResponse("Le prérequis à été supprimé avec succès");
     }
 }

@@ -35,7 +35,7 @@ public class StagiaireController {
         final StagiaireEntity s = stagiaireDAOService.findById(codeStagiaire);
 
         if (s == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Stagiaire not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Stagiaire non trouvé");
         }
 
         return s;
@@ -47,7 +47,7 @@ public class StagiaireController {
         final StagiaireEntity s = stagiaireDAOService.findById(codeStagiaire);
 
         if (s == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Stagiaire not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Stagiaire non trouvé");
         }
 
         return entrepriseDAOService.findByStagiaire(codeStagiaire);

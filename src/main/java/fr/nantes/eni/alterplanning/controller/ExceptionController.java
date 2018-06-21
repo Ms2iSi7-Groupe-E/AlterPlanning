@@ -20,7 +20,7 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        error.setError("Internal Error, Please contact your administrator");
+        error.setError("Erreur interne, Merci de contacter votre administrateur");
         error.setMessage("Exception: " + ex.getClass().getSimpleName() + ", error: " + ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -29,7 +29,7 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> badCredentialsExceptionHandler(BadCredentialsException ex) {
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.UNAUTHORIZED.value());
-        error.setError("Bad Credentials");
+        error.setError("Identifiants incorrects");
         error.setMessage(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
@@ -38,7 +38,7 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> accessDeniedExceptionHandler(AccessDeniedException ex) {
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.FORBIDDEN.value());
-        error.setError("Forbidden");
+        error.setError("Accès interdit");
         error.setMessage(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
@@ -53,7 +53,7 @@ public class ExceptionController {
         error.setMessage(ex.getMessage());
 
         if (StringUtils.isEmpty(ex.getMessage())) {
-            error.setMessage("An error occurred");
+            error.setMessage("Une erreur c'est produite");
         }
 
         if (ex.getResult() != null) {

@@ -34,7 +34,7 @@ public class TitreController {
         final TitreEntity t = titreDAOService.findById(codeTitre);
 
         if (t == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Titre not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Titre non trouvé");
         }
 
         return t;
@@ -45,7 +45,7 @@ public class TitreController {
         final TitreEntity t = titreDAOService.findById(codeTitre);
 
         if (t == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Titre not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Titre non trouvé");
         }
 
         return formationDAOService.findByTitre(codeTitre);

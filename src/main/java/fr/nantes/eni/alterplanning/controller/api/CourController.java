@@ -29,7 +29,7 @@ public class CourController {
         final CoursEntity c = coursDAOService.findById(id);
 
         if (c == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Cours not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Cours non trouvé");
         }
 
         return c;

@@ -51,7 +51,7 @@ public class UserController {
         final UserEntity u = userDAOService.findById(id);
 
         if (u == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "User not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
 
         return u;
@@ -62,7 +62,7 @@ public class UserController {
         final UserEntity userFromToken = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (userFromToken == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "User not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
 
         return userFromToken;
@@ -75,7 +75,7 @@ public class UserController {
         new UserValidator(userDAOService).validate(form, result);
 
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         // Define new User
@@ -104,14 +104,14 @@ public class UserController {
                 .validate(form, result);
 
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         // Find user to update
         final UserEntity userToUpdate = userDAOService.findById(id);
 
         if (userToUpdate == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "User not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
 
         // Set properties to update
@@ -128,7 +128,7 @@ public class UserController {
 
         historyUtil.addLine("Modification de l'utilisateur n°" + userToUpdate.getId());
 
-        return new StringResponse("User successfully updated");
+        return new StringResponse("Utilisateur modifié avec succès");
     }
 
     @PutMapping("/{id}/change-password")
@@ -140,21 +140,21 @@ public class UserController {
         final UserEntity userFromToken = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (userFromToken.getId() != id) {
-            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "You can't update someone else password");
+            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "Vous ne pouvez pas mettre à jour le mot de passe de quelqu'un d'autre");
         }
 
         new ChangePasswordValidator(id, userDAOService, passwordEncoder)
                 .validate(form, result);
 
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         // Find user to update
         final UserEntity userToUpdate = userDAOService.findById(id);
 
         if (userToUpdate == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "User not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
 
         // Change password
@@ -169,7 +169,7 @@ public class UserController {
         historyUtil.addLine("Réinitialisation du mot de passe de l'utilisateur n°"
                 + userToUpdate.getId() + " (" + userToUpdate.getName() + " - " + userToUpdate.getEmail() + ")");
 
-        return new StringResponse("Password successfully updated");
+        return new StringResponse("Mot de passe mis à jour avec succès");
     }
 
     @DeleteMapping("/{id}")
@@ -179,14 +179,14 @@ public class UserController {
         final UserEntity userFromToken = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (userFromToken.getId() != id) {
-            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "You can't deactivate yourself");
+            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "Vous ne pouvez pas vous désactiver vous même");
         }
 
         // Find user to delete
         final UserEntity u = userDAOService.findById(id);
 
         if (u == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "User not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé");
         }
 
         // Delete User
@@ -200,6 +200,6 @@ public class UserController {
         historyUtil.addLine("Désactivation de l'utilisateur n°" + id +
                 " (" + u.getName() + " - " + u.getEmail() + ")");
 
-        return new StringResponse("User successfully deactivate");
+        return new StringResponse("Utilisateur désactivé avec succès");
     }
 }

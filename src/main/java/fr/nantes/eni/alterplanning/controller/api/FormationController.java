@@ -34,7 +34,7 @@ public class FormationController {
         final FormationEntity f = formationDAOService.findById(codeFormation);
 
         if (f == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Formation not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Formation non trouvée");
         }
 
         return f;
@@ -45,7 +45,7 @@ public class FormationController {
         final FormationEntity f = formationDAOService.findById(codeFormation);
 
         if (f == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Formation not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Formation non trouvée");
         }
 
         return moduleDAOService.findByFormation(codeFormation);

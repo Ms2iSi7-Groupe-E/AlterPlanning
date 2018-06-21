@@ -36,7 +36,7 @@ public class ParameterController {
         final ParameterEntity t = parameterDAOService.findById(key);
 
         if (t == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Parameter not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Paramètre non trouvé");
         }
 
         return t;
@@ -47,7 +47,7 @@ public class ParameterController {
     public ParameterEntity addParameter(@Valid @RequestBody AddParameterForm form, BindingResult result) throws RestResponseException{
 
         if(result.hasErrors()){
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad Request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         //Construct new Parameter
@@ -69,13 +69,13 @@ public class ParameterController {
                                           @PathVariable(name = "key") String key) throws RestResponseException {
 
         if(result.hasErrors()){
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad Request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         final ParameterEntity parameterToUpdate = parameterDAOService.findById(key);
 
         if (parameterToUpdate == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Parameter not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Paramètre non trouvé");
         }
 
         final String oldValue = parameterToUpdate.getValue();
@@ -88,6 +88,6 @@ public class ParameterController {
                 + key + "\" de la valeur \""
                 + oldValue + "\" à la valeur \"" + form.getValue() + "\"");
 
-        return new StringResponse("Parameter successfully updated");
+        return new StringResponse("Paramètre modifié avec succès");
     }
 }

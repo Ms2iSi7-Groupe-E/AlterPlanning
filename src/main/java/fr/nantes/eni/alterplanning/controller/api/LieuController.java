@@ -35,7 +35,7 @@ public class LieuController {
         final LieuEntity l = lieuDAOService.findById(codeLieu);
 
         if (l == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Lieu not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Lieu non trouvé");
         }
 
         return l;
@@ -46,7 +46,7 @@ public class LieuController {
         final LieuEntity l = lieuDAOService.findById(codeLieu);
 
         if (l == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Lieu not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Lieu non trouvé");
         }
 
         return coursDAOService.findByLieu(codeLieu);

@@ -34,7 +34,7 @@ public class PromotionController {
         final PromotionEntity p = promotionDAOService.findById(codePromotion);
 
         if (p == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Promotion not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Promotion non trouvée");
         }
 
         return p;
@@ -45,7 +45,7 @@ public class PromotionController {
         final PromotionEntity p = promotionDAOService.findById(codePromotion);
 
         if (p == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Promotion not found");
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Promotion non trouvée");
         }
 
         return coursDAOService.findByPromotion(codePromotion);
