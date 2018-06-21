@@ -205,6 +205,8 @@ public class CalendarController {
     public StringResponse updateCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // TODO : modif de calendar
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+
+        //historyUtil.addLine("Modification du calendrier n°" + id);
     }
 
     @DeleteMapping("/{idCalendar}")
@@ -215,6 +217,8 @@ public class CalendarController {
         if (c == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendar not found");
         }
+
+        // TODO: impossible de supprimer le calendrier si modèle
 
         // Before delete calendar
         // TODO : delete cours associés
@@ -230,7 +234,7 @@ public class CalendarController {
     @PostMapping("/{idCalendar}/cours")
     @ResponseStatus(HttpStatus.CREATED)
     public StringResponse addCoursToCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
-        // TODO : ajout d'un cour
+        // TODO : ajout des cours
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 

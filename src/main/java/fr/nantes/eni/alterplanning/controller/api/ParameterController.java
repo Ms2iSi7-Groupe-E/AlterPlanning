@@ -85,7 +85,7 @@ public class ParameterController {
         parameterDAOService.update(parameterToUpdate);
 
         historyUtil.addLine("Modification du paramètre \""
-                + key + "\". De la valeur \""
+                + key + "\" de la valeur \""
                 + oldValue + "\" à la valeur \"" + form.getValue() + "\"");
 
         return new StringResponse("Parameter successfully updated");

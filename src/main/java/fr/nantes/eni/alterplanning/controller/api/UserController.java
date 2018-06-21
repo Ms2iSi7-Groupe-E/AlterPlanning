@@ -90,7 +90,8 @@ public class UserController {
         // Sen mail to New User
         mailer.notifyNewUser(userAdded, form.getPassword());
 
-        historyUtil.addLine("Ajout de l'utilisateur n°" + userAdded.getId());
+        historyUtil.addLine("Ajout de l'utilisateur n°" + userAdded.getId() +
+                " (" + userAdded.getName() + " - " + userAdded.getEmail() + ")");
 
         return userAdded;
     }
@@ -165,19 +166,20 @@ public class UserController {
         // Send Mail to notify password change
         mailer.notifyChangePassword(userToUpdate, form.getNew_password());
 
-        historyUtil.addLine("Réinitialisation du mot de passe de l'utilisateur n°" + userToUpdate.getId());
+        historyUtil.addLine("Réinitialisation du mot de passe de l'utilisateur n°"
+                + userToUpdate.getId() + " (" + userToUpdate.getName() + " - " + userToUpdate.getEmail() + ")");
 
         return new StringResponse("Password successfully updated");
     }
 
     @DeleteMapping("/{id}")
-    public StringResponse deleteUser(@PathVariable(name = "id") int id) throws RestResponseException {
+    public StringResponse deactivateUser(@PathVariable(name = "id") int id) throws RestResponseException {
 
         // User from Token
         final UserEntity userFromToken = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (userFromToken.getId() != id) {
-            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "You can't delete yourself");
+            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "You can't deactivate yourself");
         }
 
         // Find user to delete
@@ -188,10 +190,16 @@ public class UserController {
         }
 
         // Delete User
-        userDAOService.delete(id);
+        // userDAOService.delete(id);
 
-        historyUtil.addLine("Suppression de l'utilisateur n°" + id);
+        u.setActive(false);
 
-        return new StringResponse("User successfully deleted");
+        // Update User
+        userDAOService.update(u);
+
+        historyUtil.addLine("Désactivation de l'utilisateur n°" + id +
+                " (" + u.getName() + " - " + u.getEmail() + ")");
+
+        return new StringResponse("User successfully deactivate");
     }
 }
