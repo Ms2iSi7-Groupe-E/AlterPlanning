@@ -6,15 +6,17 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class CourService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getCours(): Observable<any> {
     return this.http
-      .get('/api/cours', {headers: AuthService.getHeaders()});
+      .get('/api/cours', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
   }
 
   getCour(idCours: string): Observable<any> {
     return this.http
-      .get('/api/cours/' + idCours, {headers: AuthService.getHeaders()});
+      .get('/api/cours/' + idCours, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
   }
 }

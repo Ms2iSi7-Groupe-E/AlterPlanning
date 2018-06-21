@@ -4,8 +4,9 @@ import {Observable} from "rxjs/Observable";
 import {AuthModel} from "../models/auth.model";
 import {JwtModel} from "../models/jwt.model";
 import {Router} from "@angular/router";
-import 'rxjs/add/operator/map';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AuthService {
@@ -26,10 +27,18 @@ export class AuthService {
       });
   }
 
-  logout() {
+  logout(logoutInfo?: string) {
     AuthService.loggedIn.next(false);
     AuthService.removeToken();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], {queryParams: {info: logoutInfo}});
+  }
+
+  handleError(error) {
+    if (error && error["status"] && error["status"] === 401) {
+      this.logout("Votre utilisateur doit ce reconnecter");
+      return;
+    }
+    return Observable.throw(error);
   }
 
   static isAuthenticated() {

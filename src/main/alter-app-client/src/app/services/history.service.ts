@@ -6,10 +6,11 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class HistoryService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getAllHistory(): Observable<any> {
     return this.http
-      .get('/api/history', {headers: AuthService.getHeaders()});
+      .get('/api/history', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
   }
 }

@@ -25,6 +25,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout("Vous avez été déconnecté avec succès");
   }
 }

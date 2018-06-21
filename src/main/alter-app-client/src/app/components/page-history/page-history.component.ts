@@ -12,7 +12,7 @@ export class PageHistoryComponent implements OnInit {
 
   histories = [];
   dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject = new Subject();
+  dtTrigger: Subject<void> = new Subject();
 
   constructor(private historyService: HistoryService) { }
 

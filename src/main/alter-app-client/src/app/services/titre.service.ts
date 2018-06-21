@@ -6,16 +6,17 @@ import {AuthService} from './auth.service';
 @Injectable()
 export class TitreService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getTitres(): Observable<any> {
     return this.http
-      .get('/api/titre', {headers: AuthService.getHeaders()});
+      .get('/api/titre', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
   }
 
   getFormations(codeTitre: string): Observable<any> {
     return this.http
-      .get('/api/titre/' + codeTitre + '/formations', {headers: AuthService.getHeaders()});
+      .get('/api/titre/' + codeTitre + '/formations', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
   }
 }
