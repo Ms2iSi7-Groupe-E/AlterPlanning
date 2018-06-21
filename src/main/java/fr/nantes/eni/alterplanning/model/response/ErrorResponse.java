@@ -8,7 +8,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
 
-    private Date timestamp = new Date();
+    private long timestamp = (new Date()).getTime();
 
     private int status;
 
@@ -50,11 +50,7 @@ public class ErrorResponse {
         this.errorList = errorList;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
     }
 }
