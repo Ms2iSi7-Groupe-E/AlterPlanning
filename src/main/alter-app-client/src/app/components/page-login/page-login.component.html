@@ -1,4 +1,10 @@
 <div class="container">
+  <ngb-alert type="danger" *ngIf="errorMessage" (close)="errorMessage = ''">
+    {{ errorMessage }}
+  </ngb-alert>
+  <ngb-alert type="info" *ngIf="infoMessage" (close)="infoMessage = ''">
+    {{ infoMessage }}
+  </ngb-alert>
   <form #authForm="ngForm" (ngSubmit)="onSubmit()" class="form-signin text-center">
     <img class="mb-4" src="assets/images/logo_ap.png" alt="">
     <h1 class="h3 mb-3 font-weight-normal">ALTER PLANING</h1>
@@ -26,7 +32,4 @@
     <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!authForm.form.valid || submitted">Valider</button>
     <p class="mt-5 mb-3 text-muted">&copy; GROUPE-E 2017-2018</p>
   </form>
-  <div class="alert alert-danger" *ngIf="errorMessage">
-    {{errorMessage}}
-  </div>
 </div>
