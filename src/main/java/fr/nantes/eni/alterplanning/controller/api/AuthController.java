@@ -37,7 +37,7 @@ public class AuthController {
             throws RestResponseException {
 
         if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Bad request", result);
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
         // Perform the security
@@ -50,7 +50,7 @@ public class AuthController {
                     )
             );
         } catch (Exception e) {
-            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "Bad credentials");
+            throw new RestResponseException(HttpStatus.UNAUTHORIZED, "Identifiants incorrects");
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

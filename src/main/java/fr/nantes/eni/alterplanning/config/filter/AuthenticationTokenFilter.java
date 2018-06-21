@@ -66,7 +66,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             final UserEntity user = userService.findById(id);
 
             if (user != null && !user.isActive()) {
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Bad credentials");
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Identifiants incorrects");
                 return;
             }
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
