@@ -65,9 +65,13 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             // in the token and read it from it. It's up to you ;)
             final UserEntity user = userService.findById(id);
 
+            if (user != null && !user.isActive()) {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Bad credentials");
+                return;
+            }
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
             // the database compellingly. Again it's up to you ;)
-            if (jwtTokenUtil.validateToken(token, user)) {
+            if (user != null && jwtTokenUtil.validateToken(token, user)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
