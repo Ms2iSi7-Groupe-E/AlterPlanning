@@ -9,7 +9,7 @@
     <div class="d-flex flex-nowrap align-items-center">
       <div *ngFor="let formation_color of formation_colors" class="flex-fill">
         <input [(colorPicker)]="formation_color.value" [style.background]="formation_color.value"
-               (colorPickerChange)="colorPickerChanged(formation_color.key, $event)" [cpDisableInput]="true"
+               (colorPickerSelect)="colorPickerChanged(formation_color.key, $event)" [cpDisableInput]="true"
                [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
                [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                [cpSaveClickOutside]="false"/>
@@ -22,7 +22,7 @@
     <div class="d-flex flex-nowrap align-items-center">
       <div *ngFor="let cours_colors of course_colors" class="flex-fill">
         <input [(colorPicker)]="cours_colors.value" [style.background]="cours_colors.value"
-               (colorPickerChange)="colorPickerChanged(cours_colors.key, $event)" [cpDisableInput]="true"
+               (colorPickerSelect)="colorPickerChanged(cours_colors.key, $event)" [cpDisableInput]="true"
                [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
                [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                [cpSaveClickOutside]="false"/>
@@ -40,7 +40,7 @@
           <td colspan="2"><span id="start-value">0</span></td>
           <td align="center" colspan="1">
             <input class="switch-color"  *ngIf="switch_colors && switch_colors[0]" [(colorPicker)]="switch_colors[0].value" [style.background]="switch_colors[0].value"
-                   (colorPickerChange)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
+                   (colorPickerSelect)="colorPickerChanged(switch_colors[0].key, $event)" [cpDisableInput]="true"
                    [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
                    [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                    [cpSaveClickOutside]="false"/>
@@ -50,7 +50,7 @@
                    (change)="switchValueChanged(switch_values[0].key, $event)">
           </td>
           <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[1]" [(colorPicker)]="switch_colors[1].value" [style.background]="switch_colors[1].value"
-                                 (colorPickerChange)="colorPickerChanged(switch_colors[1].key, $event)" [cpDisableInput]="true"
+                                 (colorPickerSelect)="colorPickerChanged(switch_colors[1].key, $event)" [cpDisableInput]="true"
                                  [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
                                  [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                                  [cpSaveClickOutside]="false"/>
@@ -59,7 +59,7 @@
                                  (change)="switchValueChanged(switch_values[1].key, $event)">
           </td>
           <td colspan="1"><input class="switch-color" *ngIf="switch_colors && switch_colors[2]" [(colorPicker)]="switch_colors[2].value" [style.background]="switch_colors[2].value"
-                                 (colorPickerChange)="colorPickerChanged(switch_colors[2].key, $event)" [cpDisableInput]="true"
+                                 (colorPickerSelect)="colorPickerChanged(switch_colors[2].key, $event)" [cpDisableInput]="true"
                                  [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
                                  [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-danger btn-xs'"
                                  [cpSaveClickOutside]="false"/>
