@@ -16,6 +16,7 @@ Ce projet a pour vocation de générer des calendriers pour les alternants de l'
 - Angular CLI
 - Mysql (ou MariaDB)
 - SQLServer (Microsoft SQL Server 2017)
+- Docker *(mac ou linux)*
 
 ## Description de l'application
 
