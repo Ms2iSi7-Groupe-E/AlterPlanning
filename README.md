@@ -6,7 +6,7 @@ Ce projet est effectué dans le cadre du MS2I effectué à l'ENI.
 
 Réalisé par le Groupe E durant l'année scolaire 2017 - 2018.
 
-Ce projet à pour vocation de générer des calendrier pour les alternants de l'école ENI Informatique.
+Ce projet a pour vocation de générer des calendriers pour les alternants de l'école ENI Informatique.
 
 ## Prérequis du projet
 
@@ -43,7 +43,7 @@ src/main/alter-app-client
 
 - **ATTENTION !!** Pour démarrer l'application les bases SQLServer et MySQL doivent être lancées auquel cas l'application sera en erreur et ne démarrera pas.
 
-- Pour modifier des paramètres de l'application il faut modifier le fichier suivant et rédémarrer l'application pour ques les changement soient pris en compte :
+- Pour modifier des paramètres de l'application il faut modifier le fichier suivant et rédémarrer l'application pour que les changement soient pris en compte :
 
 ```shell
 src/main/resources/application.properties
@@ -75,9 +75,9 @@ npm start
 
 ## Doc API (Swagger)
 
-La documentation de chaque webservice est automatique généré à l'aide de l'outil swagger.
+La documentation de chaque webservice est automatique générée à l'aide de l'outil swagger.
 
-La description des webservices est présente en suivante l'url suivante : [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+La description des webservices est présente en suivant l'url : [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ## Mise en place SQLServer avec Docker
 
@@ -85,9 +85,9 @@ La description des webservices est présente en suivante l'url suivante : [http:
 
 ## Builder l'application
 
-Pour packager l'application Maven est utilisé.
+Pour packager l'application Maven est utilisée.
 
-Cette action à pour conséquence de builder l'application cliente, de l'intégrer au resources du projet Java et de générer le war du projet.
+Cette action a pour conséquence de builder l'application cliente, de l'intégrer aux resources du projet Java et de générer le war du projet.
 
 - La commande pour générer le build est la suivante : 
 
