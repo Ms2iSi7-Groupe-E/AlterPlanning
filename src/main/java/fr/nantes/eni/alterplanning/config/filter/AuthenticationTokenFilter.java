@@ -4,6 +4,7 @@ import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.service.dao.UserDAOService;
 import fr.nantes.eni.alterplanning.util.JwtTokenUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ import java.io.IOException;
  * Created by ughostephan on 24/06/2017.
  */
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
+
+    private final static Logger LOGGER = Logger.getLogger(AuthenticationTokenFilter.class);
 
     @Value("${jwt.header}")
     private String tokenHeader;
@@ -50,11 +53,13 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         final Integer id = jwtTokenUtil.getIdFromToken(token);
 
         if (authorizationToken != null && id == null) {
+            LOGGER.warn("Fail to connect with token : " + authorizationToken);
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token is not valid");
             return;
         }
 
         if (authorizationToken != null && !"Bearer".equals(tokenType)) {
+            LOGGER.warn("Fail to connect with token : " + authorizationToken);
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token format is not valid. " +
                     "Authorization header should have a token formatted like: Bearer <token>");
             return;
@@ -66,6 +71,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             final UserEntity user = userService.findById(id);
 
             if (user != null && !user.isActive()) {
+                LOGGER.warn("Fail to connect for user : " + user.getId() + " - inactive in database");
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Identifiants incorrects");
                 return;
             }
@@ -76,6 +82,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
+                LOGGER.warn("Token has expired or as not match to a registered user : " + authorizationToken);
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token has expired or as not match to a registered user");
                 return;
             }

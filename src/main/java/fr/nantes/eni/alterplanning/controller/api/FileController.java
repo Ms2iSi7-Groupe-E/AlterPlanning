@@ -32,7 +32,7 @@ import java.io.*;
 @RequestMapping("/api/file")
 public class FileController {
 
-    private static Logger logger = Logger.getLogger(FileController.class);
+    private final static Logger LOGGER = Logger.getLogger(FileController.class);
 
     @Resource
     private ServletContext servletContext;
@@ -75,7 +75,7 @@ public class FileController {
         try {
             // Create html template in temp folder
             File htmlFile = File.createTempFile("template_calendar_", ".html");
-            logger.info("create file " + htmlFile.getAbsolutePath());
+            LOGGER.info("create file " + htmlFile.getAbsolutePath());
 
             // Fill html file with velocity
             final VelocityContext context = new VelocityContext();
@@ -90,7 +90,7 @@ public class FileController {
 
             // Create a temp file for output
             outputFile = File.createTempFile(fileTitle + "_", "." + format.toString());
-            logger.info("create file " + outputFile.getAbsolutePath());
+            LOGGER.info("create file " + outputFile.getAbsolutePath());
 
             // Convert HTML to PDF
             ConverterProperties converterProperties = new ConverterProperties();
@@ -101,9 +101,9 @@ public class FileController {
 
             // Remove Html File
             if (htmlFile.delete()) {
-                logger.info(htmlFile.getAbsolutePath() + " is deleted!");
+                LOGGER.info("delete file " + htmlFile.getAbsolutePath());
             } else {
-                logger.error("Delete operation is failed for file " + htmlFile.getAbsolutePath());
+                LOGGER.error("Delete operation is failed for file " + htmlFile.getAbsolutePath());
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -116,9 +116,9 @@ public class FileController {
 
         // Remove Html File
         if (outputFile.delete()) {
-            logger.info(outputFile.getAbsolutePath() + " is deleted!");
+            LOGGER.info("delete file " + outputFile.getAbsolutePath());
         } else {
-            logger.error("Delete operation is failed for file " + outputFile.getAbsolutePath());
+            LOGGER.error("Delete operation is failed for file " + outputFile.getAbsolutePath());
         }
 
         return ResponseEntity.ok()

@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.controller;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.response.ErrorResponse;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,8 +17,11 @@ import java.util.Map;
 @ControllerAdvice
 public class ExceptionController {
 
+    private final static Logger LOGGER = Logger.getLogger(ExceptionController.class);
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> exceptionHandler(Exception ex) {
+        LOGGER.error("Internal Error", ex);
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         error.setError("Erreur interne, Merci de contacter votre administrateur");
