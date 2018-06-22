@@ -1,21 +1,98 @@
 # AlterPlanning
 
-## Description 
+## Description du projet
 
-Projet MS2I
+Ce projet est effectué dans le cadre du MS2I effectué à l'ENI.
 
-## Prérequis
+Réalisé par le Groupe E durant l'année scolaire 2017 - 2018.
+
+Ce projet à pour vocation de générer des calendrier pour les alternants de l'école ENI Informatique.
+
+## Prérequis du projet
 
 - Java JDK 1.8
-- Apache Tomcat 8.5
-- NodeJS
+- Maven 3.5.*
+- NodeJS 9 ou +
+- [Angular CLI](https://cli.angular.io/)
+- Mysql (ou MariaDB)
+- SQLServer (Microsoft SQL Server 2017)
 
-## Techno
+## Description de l'application
 
-- Java Spring
-- Angular 5
-- MySql
+### Structure de l'application
 
-## Doc API
+- [SpringBoot](https://spring.io/projects/spring-boot) : 
 
-La description des webservices est présente à l'url : `http://localhost:8080/swagger-ui.html`
+```shell
+# Path to Spring App
+src/main/java/fr/nantes/eni/alterplanning
+```
+
+- [Angular 5](https://v5.angular.io/docs) : 
+
+```shell
+# Path to Angular App
+src/main/alter-app-client
+```
+
+### Application Serveur (Java)
+
+- Démarrer l'application
+
+![](docs/intellij.png "")
+
+- **ATTENTION !!** Pour démarrer l'application les bases SQLServer et MySQL doivent être lancées auquel cas l'application sera en erreur et ne démarrera pas.
+
+- Pour modifier des paramètres de l'application il faut modifier le fichier suivant et rédémarrer l'application pour ques les changement soient pris en compte :
+
+```shell
+src/main/resources/application.properties
+```
+
+### Application client (Angular)
+
+La documentation de l'application cliente est présente à cette endroit : [Doc App CLient](src/main/alter-app-client/README.md)
+
+Afin de démarrer l'application client il est nécéssaire d'installer les dépendances NPM en premier.
+
+- Ce rendre dans le dossier de l'application client
+
+```shell
+cd src/main/alter-app-client
+```
+
+- Installer les dépendances
+
+```shell
+npm install
+```
+
+- Lancer l'application
+
+```shell
+npm start
+```
+
+## Doc API (Swagger)
+
+La documentation de chaque webservice est automatique généré à l'aide de l'outil swagger.
+
+La description des webservices est présente en suivante l'url suivante : [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+## Mise en place SQLServer avec Docker
+
+[Documentation mise en place SQLServer avec docker](docker/README.md)
+
+## Builder l'application
+
+Pour packager l'application Maven est utilisé.
+
+Cette action à pour conséquence de builder l'application cliente, de l'intégrer au resources du projet Java et de générer le war du projet.
+
+- La commande pour générer le build est la suivante : 
+
+```shell
+mvn clean package
+```
+
+- Le war est alors disponible dans le dossier `target/` sous le nom `alter-planning-[VERSION].war` ou `[VERSION]` représente la version déclarée dans le fichier `pom.xml`.

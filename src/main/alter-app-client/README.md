@@ -2,9 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
 
-## Requierement
+## Requirement
 
-!!!! TSLint is used for this project so a plugin for your favorite IDE is required to show you your errors. !!!!
+**ATTENTION** TSLint is used for this project so a plugin for your favorite IDE is required to show you your errors. !!!!
 
 ## Development server
 

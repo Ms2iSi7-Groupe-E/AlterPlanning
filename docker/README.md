@@ -1,10 +1,10 @@
 # Docker
 
-Documentation pour récupérer un SQL Server avec docker.
+[Documentation pour récupérer un SQL Server avec docker.](https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-linux-2017)
 
 ## Prérequis
 
-- Docker Engine 1.8+ 
+- Docker 18 ou +
 - Minimum of 2 GB of RAM
 - Docker Compose installed
 
