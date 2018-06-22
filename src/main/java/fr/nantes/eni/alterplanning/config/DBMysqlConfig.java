@@ -61,7 +61,7 @@ public class DBMysqlConfig {
         entityManagerFactoryBean.setDataSource(mysqlDataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setPackagesToScan("fr.nantes.eni.alterplanning.dao.mysql.entity");
-
+        entityManagerFactoryBean.setPersistenceUnitName("mysqlPersistenceUnit");
         entityManagerFactoryBean.setJpaProperties(properties);
 
         return entityManagerFactoryBean;

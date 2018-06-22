@@ -61,7 +61,7 @@ public class DBSqlServerConfig {
         entityManagerFactoryBean.setDataSource(sqlserverDataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setPackagesToScan("fr.nantes.eni.alterplanning.dao.sqlserver.entity");
-
+        entityManagerFactoryBean.setPersistenceUnitName("sqlserverPersistenceUnit");
         entityManagerFactoryBean.setJpaProperties(properties);
 
         return entityManagerFactoryBean;
