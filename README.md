@@ -46,6 +46,7 @@ src/main/alter-app-client
 - Pour modifier des paramètres de l'application il faut modifier le fichier suivant et rédémarrer l'application pour que les changement soient pris en compte :
 
 ```shell
+# Path to application properties
 src/main/resources/application.properties
 ```
 
@@ -58,18 +59,21 @@ Afin de démarrer l'application client il est nécéssaire d'installer les dépe
 - Ce rendre dans le dossier de l'application client
 
 ```shell
+# Path to Angular App
 cd src/main/alter-app-client
 ```
 
 - Installer les dépendances
 
 ```shell
+# Install App dependencies
 npm install
 ```
 
 - Lancer l'application
 
 ```shell
+# Start application
 npm start
 ```
 
@@ -92,6 +96,7 @@ Cette action a pour conséquence de builder l'application cliente, de l'intégre
 - La commande pour générer le build est la suivante : 
 
 ```shell
+# Remove old target folder and generate war
 mvn clean package
 ```
 
