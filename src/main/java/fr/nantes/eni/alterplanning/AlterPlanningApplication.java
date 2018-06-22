@@ -20,12 +20,4 @@ public class AlterPlanningApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(AlterPlanningApplication.class);
 	}
-
-	@PostConstruct
-	public void initTimezone(){
-		final String timezone = "Europe/Paris";
-		TimeZone.setDefault(TimeZone.getTimeZone(timezone));
-		System.out.println("Spring boot application running in (" + timezone + ") timezone :"
-				+ new Date());
-	}
 }

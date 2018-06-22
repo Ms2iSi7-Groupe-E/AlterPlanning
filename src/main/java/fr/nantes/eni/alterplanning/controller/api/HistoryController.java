@@ -26,9 +26,9 @@ public class HistoryController {
 
     @GetMapping("")
     public List<HistoryResponse> getHistories() {
-        final List<HistoryEntity> historyEntities = historyDAOService.findAll();
+        final List<HistoryEntity> historyEntities = historyDAOService.findAllOrderByDate();
         final List<Integer> idsUser = historyEntities
-                .stream()
+                .parallelStream()
                 .map(HistoryEntity::getUserId)
                 .distinct()
                 .collect(Collectors.toList());

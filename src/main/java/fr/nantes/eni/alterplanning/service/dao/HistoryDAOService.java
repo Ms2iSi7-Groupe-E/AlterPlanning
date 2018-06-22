@@ -23,6 +23,10 @@ public class HistoryDAOService {
                 .collect(Collectors.toList());
     }
 
+    public List<HistoryEntity> findAllOrderByDate() {
+        return repository.findAllOrderByDate();
+    }
+
     public HistoryEntity create(final HistoryEntity historyEntity) {
         return repository.save(historyEntity);
     }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
+import fr.nantes.eni.alterplanning.util.AlterDateUtil;
 
 import java.util.Date;
 
@@ -12,13 +13,13 @@ public class CalendarResponse {
 
     private int id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Europe/Paris")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMdd, timezone=AlterDateUtil.timezone)
     private Date startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Europe/Paris")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMdd, timezone=AlterDateUtil.timezone)
     private Date endDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="Europe/Paris")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMddHHmmss, timezone=AlterDateUtil.timezone)
     private Date createdAt;
 
     private CalendarState state;

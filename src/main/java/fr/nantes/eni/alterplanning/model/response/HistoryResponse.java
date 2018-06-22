@@ -2,6 +2,7 @@ package fr.nantes.eni.alterplanning.model.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
+import fr.nantes.eni.alterplanning.util.AlterDateUtil;
 
 import java.util.Date;
 
@@ -16,7 +17,7 @@ public class HistoryResponse {
 
     private String description;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="Europe/Paris")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMddHHmmss, timezone=AlterDateUtil.timezone)
     private Date createdAt;
 
     public int getId() {
