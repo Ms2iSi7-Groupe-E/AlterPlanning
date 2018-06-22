@@ -1,6 +1,6 @@
 # AlterPlanning
 
-Ce projet à été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
+Ce projet à été généré avec [Angular CLI](https://cli.angular.io/) version 1.5.4.
 
 ## Prérequis
 

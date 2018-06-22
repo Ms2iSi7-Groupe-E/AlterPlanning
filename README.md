@@ -13,7 +13,7 @@ Ce projet a pour vocation de générer des calendriers pour les alternants de l'
 - Java JDK 1.8
 - Maven 3.5.*
 - NodeJS 9 ou +
-- [Angular CLI](https://cli.angular.io/)
+- Angular CLI
 - Mysql (ou MariaDB)
 - SQLServer (Microsoft SQL Server 2017)
 
