@@ -39,7 +39,7 @@ src/main/alter-app-client
 
 - Démarrer l'application
 
-<img src="docs/intellij.png" width="48">
+<img src="docs/intellij.png" width="350">
 
 - **ATTENTION !!** Pour démarrer l'application les bases SQLServer et MySQL doivent être lancées auquel cas l'application sera en erreur et ne démarrera pas.
 
