@@ -37,7 +37,6 @@ export class AuthService {
   handleError(error) {
     if (error && error["status"] && error["status"] === 401) {
       this.logout("Votre utilisateur doit se reconnecter");
-      return;
     }
     return Observable.throw(error);
   }
