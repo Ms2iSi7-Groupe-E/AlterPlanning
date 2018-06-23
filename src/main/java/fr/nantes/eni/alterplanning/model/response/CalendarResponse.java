@@ -19,7 +19,7 @@ public class CalendarResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMdd, timezone=AlterDateUtil.timezone)
     private Date endDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMddHHmmss, timezone=AlterDateUtil.timezone)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.ddMMyyyyHHmmss, timezone=AlterDateUtil.timezone)
     private Date createdAt;
 
     private CalendarState state;

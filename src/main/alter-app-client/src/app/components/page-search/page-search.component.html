@@ -124,7 +124,7 @@
     </div>
   </div>
   <div class="row mt-5" *ngIf="calendars.length > 0">
-    <table class="col-12 table table-hover tbl_search">
+    <table class="col-12 table table-hover tbl_search" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
       <thead>
         <tr>
           <th>Etat</th>
@@ -132,6 +132,7 @@
           <th>Prénom</th>
           <th>Entreprise</th>
           <th>Dates</th>
+          <th>Créé le</th>
           <th>&nbsp;</th>
         </tr>
       </thead>
@@ -145,6 +146,7 @@
           <td>{{ getCalendarStagiaireNom(calendar) }}</td>
           <td>{{ getCalendarEntrepriseName(calendar) }}</td>
           <td>{{ getCalendarPeriode(calendar) }}</td>
+          <td>{{ calendar.createdAt }}</td>
           <td>
             <button class="btn btn-outline-danger" (click)="deleteCalendar(calendar)"><i class="far fa-trash-alt"></i></button>
           </td>

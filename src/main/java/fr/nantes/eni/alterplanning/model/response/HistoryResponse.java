@@ -17,7 +17,7 @@ public class HistoryResponse {
 
     private String description;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.yyyyMMddHHmmss, timezone=AlterDateUtil.timezone)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AlterDateUtil.ddMMyyyyHHmmss, timezone=AlterDateUtil.timezone)
     private Date createdAt;
 
     public int getId() {

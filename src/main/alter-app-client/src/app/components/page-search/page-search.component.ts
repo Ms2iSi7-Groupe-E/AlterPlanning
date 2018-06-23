@@ -8,6 +8,8 @@ import {ModuleService} from "../../services/module.service";
 import {PromotionService} from "../../services/promotion.service";
 import {FormationService} from "../../services/formation.service";
 import {SearchKeys} from "../../models/enums/search-keys";
+import {Subject} from "rxjs/Subject";
+import {DatatableFrench} from "../../helper/datatable-french";
 
 @Component({
   selector: 'app-page-search',
@@ -15,6 +17,9 @@ import {SearchKeys} from "../../models/enums/search-keys";
   styleUrls: ['./page-search.component.scss']
 })
 export class PageSearchComponent implements OnInit {
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<void> = new Subject();
 
   QUERY_KEYS = SearchKeys;
   CALENDAR_STATE = CalendarStates;
@@ -49,6 +54,12 @@ export class PageSearchComponent implements OnInit {
               private formationService: FormationService) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      order: [],
+      columnDefs: [{targets: 'no-sort', orderable: false}],
+      language: DatatableFrench.getLanguages(),
+    };
+
     this.stagiaireService.getStagiaires().subscribe(res => this.stagiaires = res, console.error);
     this.entrepriseService.getEntreprises().subscribe(res => this.entreprises = res, console.error);
     this.moduleService.getModules().subscribe(res => this.modules = res, console.error);
@@ -67,6 +78,7 @@ export class PageSearchComponent implements OnInit {
     if (this.allFieldsAreClear) {
       this.calendarService.getCalendars().subscribe(res => {
         this.calendars = res;
+        this.dtTrigger.next();
         this.searching = false;
       }, err => {
         console.error(err);
