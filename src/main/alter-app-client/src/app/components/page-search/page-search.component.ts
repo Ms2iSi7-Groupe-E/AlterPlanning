@@ -8,8 +8,6 @@ import {ModuleService} from "../../services/module.service";
 import {PromotionService} from "../../services/promotion.service";
 import {FormationService} from "../../services/formation.service";
 import {SearchKeys} from "../../models/enums/search-keys";
-import {Subject} from "rxjs/Subject";
-import {DatatableFrench} from "../../helper/datatable-french";
 
 @Component({
   selector: 'app-page-search',

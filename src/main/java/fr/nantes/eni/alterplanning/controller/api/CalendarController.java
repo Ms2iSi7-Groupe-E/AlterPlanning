@@ -57,7 +57,7 @@ public class CalendarController {
         final List<StagiaireEntity> allStagiaires = stagiaireDAOService.findAll();
         final List<EntrepriseEntity> allEntreprises = entrepriseDAOService.findAll();
 
-        return calendarDAOService.findAll().stream().map(c -> {
+        return calendarDAOService.findAllOrderByDate().stream().map(c -> {
             final CalendarResponse calendar = new CalendarResponse();
             calendar.setId(c.getId());
             calendar.setStartDate(c.getStartDate());

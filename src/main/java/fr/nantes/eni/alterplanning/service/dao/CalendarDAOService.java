@@ -1,12 +1,7 @@
 package fr.nantes.eni.alterplanning.service.dao;
 
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
-import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.repository.ICalendarRepository;
-import fr.nantes.eni.alterplanning.dao.mysql.repository.IUserRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +23,11 @@ public class CalendarDAOService {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
+    public List<CalendarEntity> findAllOrderByDate() {
+        return repository.findAllOrderByDate();
+    }
+
 
     public CalendarEntity findById(final Integer id) {
         return repository.findById(id).orElse(null);
