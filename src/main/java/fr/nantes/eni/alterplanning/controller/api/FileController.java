@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.controller.api;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.enums.DownloadFormat;
@@ -55,6 +56,11 @@ public class FileController {
 
         if (c == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        }
+
+        if (c.getState() == CalendarState.DRAFT) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier est encore à l'état de brouillon, " +
+                    "les cours n'ont pas encore été positionnés");
         }
 
         final String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());

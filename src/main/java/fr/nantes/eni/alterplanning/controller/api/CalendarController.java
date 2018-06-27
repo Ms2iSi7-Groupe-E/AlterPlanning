@@ -8,6 +8,7 @@ import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
+import fr.nantes.eni.alterplanning.model.form.AddCalendarCoursForm;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
@@ -218,12 +219,15 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
-        // TODO: impossible de supprimer le calendrier si modèle
+        if (c.getModel()) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Impossible de supprimer ce calendrier, car celui ci est utilisé en tant que modèle");
+        }
 
         // Before delete calendar
         // TODO : delete cours associés
         // TODO : delete contraintes associés
         // Delete Calendar
+
         calendarDAOService.delete(id);
 
         historyUtil.addLine("Suppression du calendrier n°" + id);
@@ -231,10 +235,48 @@ public class CalendarController {
         return new StringResponse("Calendrier supprimé avec succès");
     }
 
+    @GetMapping("/{idCalendar}/cours-for-generate-calendar")
+    public List<CoursEntity> getCoursForCalendarInGeneration(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        // Find Calendar
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        }
+
+        if (c.getState() != CalendarState.DRAFT) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier doit être à l'état de brouillon");
+        }
+
+        // TODO
+
+        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    }
+
     @PostMapping("/{idCalendar}/cours")
     @ResponseStatus(HttpStatus.CREATED)
-    public StringResponse addCoursToCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
-        // TODO : ajout des cours
+    public StringResponse addCoursToCalendar(@Valid @RequestBody AddCalendarCoursForm form, BindingResult result,
+                                             @PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        // Find Calendar
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        }
+
+        if (c.getState() != CalendarState.DRAFT) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier doit être à l'état de brouillon");
+        }
+
+        // TODO : Vérifier que les cours existent bien
+        // TODO : Vérifier que le calendrier n'a pas de doublon en base
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        // TODO : Ajouter les cours
+
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
