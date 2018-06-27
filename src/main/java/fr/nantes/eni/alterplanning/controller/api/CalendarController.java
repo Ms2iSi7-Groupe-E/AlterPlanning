@@ -225,12 +225,7 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.CONFLICT, "Impossible de supprimer ce calendrier, car celui ci est utilisé en tant que modèle");
         }
 
-        // Before delete calendar
-        // TODO : delete cours associés
-        // TODO : delete contraintes associés
-        // Delete Calendar
-
-        calendarDAOService.delete(id);
+        calendarDAOService.deleteCalendarAndCoursAndConstraints(id);
 
         historyUtil.addLine("Suppression du calendrier n°" + id);
 

@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.dao.mysql.repository;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.UserEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.composite_keys.CalendarCoursPK;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,10 @@ public interface ICalendarCoursRepository extends CrudRepository<CalendarCoursEn
     @Query("SELECT c FROM CalendarCoursEntity c " +
             "WHERE c.calendarId = :calendarId ")
     List<CalendarCoursEntity> findAllByCalendar(@Param("calendarId") int calendarId);
+
+    @SuppressWarnings("JpaQlInspection")
+    @Modifying
+    @Query("DELETE FROM CalendarCoursEntity c " +
+            "WHERE c.calendarId = :calendarId ")
+    void deleteByCalendar(@Param("calendarId") int calendarId);
 }

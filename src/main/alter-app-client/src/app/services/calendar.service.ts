@@ -26,4 +26,10 @@ export class CalendarService {
       .post('/api/calendar', body, {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
+
+  deleteCalendar(idCalendar: number): Observable<any> {
+    return this.http
+      .delete('/api/calendar/' + idCalendar, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
 }

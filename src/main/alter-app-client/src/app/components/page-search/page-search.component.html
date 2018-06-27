@@ -132,6 +132,7 @@
           <th>Prénom</th>
           <th>Entreprise</th>
           <th>Dates</th>
+          <th>Modèle ?</th>
           <th>Créé le</th>
           <th>&nbsp;</th>
         </tr>
@@ -146,9 +147,12 @@
           <td>{{ getCalendarStagiaireNom(calendar) }}</td>
           <td>{{ getCalendarEntrepriseName(calendar) }}</td>
           <td>{{ getCalendarPeriode(calendar) }}</td>
+          <td>{{ calendar.isModel ? 'Oui' : 'Non' }}</td>
           <td>{{ calendar.createdAt }}</td>
           <td>
-            <button class="btn btn-outline-danger" (click)="deleteCalendar(calendar)"><i class="far fa-trash-alt"></i></button>
+            <button class="btn btn-outline-danger"
+                    (click)="deleteCalendar(calendar)"
+                    [disabled]="calendar.isModel"><i class="far fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>

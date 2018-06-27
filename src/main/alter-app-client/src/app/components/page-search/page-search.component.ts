@@ -226,6 +226,11 @@ export class PageSearchComponent implements OnInit {
   }
 
   deleteCalendar(calendar) {
-    alert('Not yet implemented');
+    const answer = confirm("Voulez-vous vraiment supprimer ce calendrier ?");
+    if (answer) {
+      this.calendarService.deleteCalendar(calendar.id).subscribe(() => {
+        this.calendars = this.calendars.filter(c => c.id !== calendar.id);
+      }, console.error);
+    }
   }
 }
