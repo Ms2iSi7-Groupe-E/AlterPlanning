@@ -37,13 +37,11 @@
         <div class="form-group row">
           <label class="col-lg-4 col-form-label">Module :</label>
           <div class="col-lg-8">
-            <ng-select
-              [items]="sourcesModules"
-              bindLabel="libelle"
-              bindValue="idModule"
-              placeholder="Saisir le module"
-              notFoundText="Aucun module trouvé"
-              (change)="clickSource($event)">
+            <ng-select placeholder="Saisir le module"
+                       notFoundText="Aucun module trouvé"
+                       (change)="clickSource($event)">
+              <ng-option *ngFor="let module of sourcesModules"
+                         [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
             </ng-select>
           </div>
         </div>
@@ -53,7 +51,7 @@
       <div class="requirement-panel">
         <h4>Ajouter un Pré requis à</h4>
         <div *ngIf="sourceSelected" class="col item_module">
-          <i class="fas fa-cube"></i> {{ sourceSelected.libelle }}
+          <i class="fas fa-cube"></i> {{ sourceSelected.libelleCourt }} - {{ sourceSelected.libelle }}
         </div>
         <div *ngIf="!sourceSelected" class="col item_module item_none">
           <i class="fas fa-exclamation"></i> Sélectionnez le module concerné
@@ -89,13 +87,11 @@
         <div class="form-group row">
           <label class="col-lg-4 col-form-label">Module :</label>
           <div class="col-lg-8">
-            <ng-select
-              [items]="filterTargetModules"
-              bindLabel="libelle"
-              bindValue="idModule"
-              placeholder="Saisir le module"
-              notFoundText="Aucun module trouvé"
-              (change)="addRequirement($event)">
+            <ng-select placeholder="Saisir le module"
+                       notFoundText="Aucun module trouvé"
+                       (change)="addRequirement($event)">
+              <ng-option *ngFor="let module of filterTargetModules"
+                         [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
             </ng-select>
           </div>
         </div>
@@ -128,7 +124,7 @@
               </div>
             </div>
             <div class="col item_module item_select" (click)="clickDelete(r)">
-              <i class="fas fa-crosshairs"></i> {{ getModuleById(r.moduleId).libelle }}
+              <i class="fas fa-crosshairs"></i> {{ getModuleById(r.moduleId).libelleCourt }} - {{ getModuleById(r.moduleId).libelle }}
               <i class="fas fa-times-circle ico_delete"></i>
             </div>
           </div>
@@ -159,7 +155,7 @@
           <tr *ngFor="let m of moduleWithRequirementFiltre">
             <td class="first-col">
               <div *ngIf="getModuleById(m.moduleId) != null" class="item_module over_green item_module_liste" (click)="clickSource(getModuleById(m.moduleId))">
-                <i class="fas fa-cube"></i> {{ getModuleById(m.moduleId).libelle }}
+                <i class="fas fa-cube"></i> {{ getModuleById(m.moduleId).libelleCourt }} - {{ getModuleById(m.moduleId).libelle }}
               </div>
             </td>
             <td>
@@ -177,7 +173,7 @@
                     </div>
                   </div>
                 <div class="item_module item_show_liste" *ngIf="getModuleById(r.moduleId) != null">
-                  <i class="fas fa-crosshairs"></i> {{ getModuleById(r.moduleId).libelle }}
+                  <i class="fas fa-crosshairs"></i> {{ getModuleById(r.moduleId).libelleCourt }} - {{ getModuleById(r.moduleId).libelle }}
                 </div>
               </div>
             </td>

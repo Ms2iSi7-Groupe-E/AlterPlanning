@@ -11,7 +11,7 @@ import java.util.Properties;
  * Created by ughostephan on 25/06/2017.
  */
 @Configuration
-public class EmailTemplateConfig {
+public class TemplateConfig {
 
     @Bean
     public VelocityEngine velocityEngine() {

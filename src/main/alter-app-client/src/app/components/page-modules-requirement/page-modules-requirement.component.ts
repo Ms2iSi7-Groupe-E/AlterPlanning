@@ -272,6 +272,10 @@ export class PageModulesRequirementComponent implements OnInit {
   // click sur la selection d'un module source
   clickSource(module) {
 
+    if (typeof module === 'number') {
+      module = this.dataModules.find(m => m.idModule === module);
+    }
+
     this.sourceSelected = module;
     this.sourceRequirementSelected = [];
 
@@ -374,6 +378,9 @@ export class PageModulesRequirementComponent implements OnInit {
   addRequirement (module) {
     if (!module) {
       return;
+    }
+    if (typeof module === 'number') {
+      module = this.dataModules.find(m => m.idModule === module);
     }
     const body = new RequirementModel();
     body.or = this.requirementOrOperator;
