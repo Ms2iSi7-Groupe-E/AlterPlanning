@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -258,26 +260,52 @@ public class CalendarController {
     public StringResponse addCoursToCalendar(@Valid @RequestBody AddCalendarCoursForm form, BindingResult result,
                                              @PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // Find Calendar
-        final CalendarEntity c = calendarDAOService.findById(id);
+        final CalendarEntity cal = calendarDAOService.findById(id);
 
-        if (c == null) {
+        if (cal == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
-        if (c.getState() != CalendarState.DRAFT) {
+        if (cal.getState() != CalendarState.DRAFT) {
             throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier doit être à l'état de brouillon");
         }
-
-        // TODO : Vérifier que les cours existent bien
-        // TODO : Vérifier que le calendrier n'a pas de doublon en base
 
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
-        // TODO : Ajouter les cours
+        // Enlever les ids en doublon
+        final List<String> coursIds = form.getCoursIds().stream().distinct().collect(Collectors.toList());
 
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+        // Vérifier que les ids correspondent en base
+        final StringJoiner errorIds = new StringJoiner(", ");
+        coursIds.forEach(c -> {
+            if (!coursDAOService.existsById(c)) {
+                errorIds.add(c);
+            }
+        });
+
+        if (errorIds.length() != 0) {
+            result.addError(new FieldError("coursIds", "coursIds",
+                    "Les cours suivant <" + errorIds.toString() + "> n'existent pas."));
+        }
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        final List<CalendarCoursEntity> calendarCoursEntities = coursIds.stream().map(c -> {
+            final CalendarCoursEntity calendarCoursEntity = new CalendarCoursEntity();
+            calendarCoursEntity.setCalendarId(cal.getId());
+            calendarCoursEntity.setCoursId(c);
+            return calendarCoursEntity;
+        }).collect(Collectors.toList());
+
+        calendarCoursDAOService.createAll(calendarCoursEntities);
+        cal.setState(CalendarState.PROPOSAL);
+        calendarDAOService.update(cal);
+
+        return new StringResponse("Les cours ont bien été ajoutés pour ce calendrier");
     }
 
     @DeleteMapping("/{idCalendar}/cours/{idCours}")

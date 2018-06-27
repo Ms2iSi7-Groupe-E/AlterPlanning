@@ -31,6 +31,10 @@ public class CoursDAOService {
         return repository.findAllByPromotion(codePromotion);
     }
 
+    public boolean existsById(final String id) {
+        return repository.existsById(id);
+    }
+
     public List<CoursEntity> findByLieu(final Integer codeLieu) {
         return repository.findAllByLieu(codeLieu);
     }

@@ -1,5 +1,7 @@
 package fr.nantes.eni.alterplanning.dao.sqlserver.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,9 @@ import java.util.Date;
 public class CoursEntity {
 
     @Id
-    @Column(name = "IdCours")
+    @GenericGenerator(name = "generator", strategy = "guid", parameters = {})
+    @GeneratedValue(generator = "generator")
+    @Column(name = "IdCours", columnDefinition="uniqueidentifier")
     private String idCours;
 
     @Column(name = "LibelleCours")

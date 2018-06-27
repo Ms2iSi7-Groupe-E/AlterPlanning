@@ -28,6 +28,12 @@ public class CalendarCoursDAOService {
         return repository.save(calendarCours);
     }
 
+    public List<CalendarCoursEntity> createAll(final List<CalendarCoursEntity> entities) {
+        return StreamSupport.stream(repository.saveAll(entities).spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
+
     public void delete(final CalendarCoursPK pk) {
         repository.deleteById(pk);
     }
