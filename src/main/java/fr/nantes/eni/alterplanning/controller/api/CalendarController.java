@@ -261,8 +261,8 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
-        if (cal.getState() != CalendarState.DRAFT) {
-            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier doit être à l'état de brouillon");
+        if (cal.getState() == CalendarState.VALIDATED) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état de validé");
         }
 
         if (result.hasErrors()) {
