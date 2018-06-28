@@ -67,9 +67,16 @@ public class ModuleController {
         return coursDAOService.findByModule(idModule);
     }
 
+    @Deprecated
     @GetMapping("/with-requirement")
-    @ApiOperation(value = "", notes = "Permet de retourner tous les modules ayant des pré-requis (avec leurs pré-requis).")
+    @ApiOperation(value = "", notes = "DEPRECATED: will be remove soon")
     public List<ModuleRequirementResponse> getModulesWithRequirement() {
+        return getModulesWithCorrespondingRequirements();
+    }
+
+    @GetMapping("/requirement")
+    @ApiOperation(value = "", notes = "Permet de retourner tous les modules ayant des pré-requis (avec leurs pré-requis).")
+    public List<ModuleRequirementResponse> getModulesWithCorrespondingRequirements() {
         final List<ModuleRequirementEntity> moduleRequirementEntities = moduleRequirementDAOService.findAll();
         final HashMap<Integer, List<RequirementResponse>> hm = new HashMap<>();
 
@@ -81,6 +88,7 @@ public class ModuleController {
             }
 
             RequirementResponse requirement = new RequirementResponse();
+            requirement.setIdModuleRequirement(mre.getId());
             requirement.setModuleId(mre.getRequiredModuleId());
             requirement.setOr(mre.isOr());
             requirementResponses.add(requirement);
@@ -114,6 +122,7 @@ public class ModuleController {
 
         moduleRequirementEntities.forEach(mre -> {
             RequirementResponse requirement = new RequirementResponse();
+            requirement.setIdModuleRequirement(mre.getId());
             requirement.setModuleId(mre.getRequiredModuleId());
             requirement.setOr(mre.isOr());
             response.addRequirement(requirement);
@@ -124,7 +133,7 @@ public class ModuleController {
 
     @PostMapping("/{idModule}/requirement")
     @ApiOperation(value = "", notes = "Service permettant d'ajouter un pré-requis à un module")
-    public StringResponse addRequirementForModule(@Valid @RequestBody ModuleRequirementForm form,
+    public ModuleRequirementEntity addRequirementForModule(@Valid @RequestBody ModuleRequirementForm form,
                                                   BindingResult result,
                                                   @PathVariable(name = "idModule") int idModule) throws RestResponseException {
         final ModuleEntity m = moduleDAOService.findById(idModule);
@@ -168,10 +177,12 @@ public class ModuleController {
                 + "\" au module \"" 
                 + m.getLibelle() + "\"");
 
-        return new StringResponse("Prérequis ajouté avec succès pour le module " + idModule);
+        return entity;
     }
 
+    @Deprecated
     @DeleteMapping("/{idModule}/requirement")
+    @ApiOperation(value = "", notes = "DEPRECATED: will be remove soon")
     public StringResponse deleteRequirementByModule(@Valid @RequestBody ModuleRequirementForm form,
                                                     BindingResult result,
                                                     @PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
@@ -194,6 +205,27 @@ public class ModuleController {
 
         final ModuleEntity module = moduleDAOService.findById(idModule);
         final ModuleEntity requiredModule = moduleDAOService.findById(form.getRequiredModuleId());
+
+        historyUtil.addLine("Suppression du prérequis \""
+                + requiredModule.getLibelle()
+                + "\" pour le module \""
+                + module.getLibelle() + "\"");
+
+        return new StringResponse("Le prérequis à été supprimé avec succès");
+    }
+
+    @DeleteMapping("/requirement/{idModuleRequirement}")
+    public StringResponse deleteRequirementByModule(@PathVariable(name = "idModuleRequirement") Integer idModuleRequirement) throws RestResponseException {
+        final ModuleRequirementEntity mre = moduleRequirementDAOService.findById(idModuleRequirement);
+
+        if (mre == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Prérequis non trouvé");
+        }
+
+        moduleRequirementDAOService.delete(mre.getId());
+
+        final ModuleEntity module = moduleDAOService.findById(mre.getModuleId());
+        final ModuleEntity requiredModule = moduleDAOService.findById(mre.getRequiredModuleId());
 
         historyUtil.addLine("Suppression du prérequis \""
                 + requiredModule.getLibelle()

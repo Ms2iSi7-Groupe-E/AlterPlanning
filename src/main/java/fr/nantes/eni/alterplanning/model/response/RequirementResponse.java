@@ -2,6 +2,8 @@ package fr.nantes.eni.alterplanning.model.response;
 
 public class RequirementResponse {
 
+    private int idModuleRequirement;
+
     private int moduleId;
 
     private boolean or;
@@ -20,5 +22,13 @@ public class RequirementResponse {
 
     public void setOr(boolean or) {
         this.or = or;
+    }
+
+    public int getIdModuleRequirement() {
+        return idModuleRequirement;
+    }
+
+    public void setIdModuleRequirement(int idModuleRequirement) {
+        this.idModuleRequirement = idModuleRequirement;
     }
 }
