@@ -215,7 +215,7 @@ public class ModuleController {
     }
 
     @DeleteMapping("/requirement/{idModuleRequirement}")
-    public StringResponse deleteRequirementByModule(@PathVariable(name = "idModuleRequirement") Integer idModuleRequirement) throws RestResponseException {
+    public StringResponse deleteRequirementById(@PathVariable(name = "idModuleRequirement") Integer idModuleRequirement) throws RestResponseException {
         final ModuleRequirementEntity mre = moduleRequirementDAOService.findById(idModuleRequirement);
 
         if (mre == null) {
