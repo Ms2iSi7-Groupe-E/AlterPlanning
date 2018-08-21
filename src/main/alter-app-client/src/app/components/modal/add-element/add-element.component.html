@@ -60,10 +60,14 @@
           <div class="col-9">
             <ng-select [(ngModel)]="selectedStagiaire"
                        placeholder="Stagiaire"
+                       disabled="disabled"
                        notFoundText="Aucun stagiaire trouvé">
               <ng-option *ngFor="let stagiaire of stagiaires"
                          [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})</ng-option>
             </ng-select>
+            <div class="row text-center text-danger">
+              Pas encore pris en compte pour le moment
+            </div>
           </div>
         </div>
         <div class="row text-center">
