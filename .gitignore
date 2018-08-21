@@ -4,6 +4,7 @@ target/
 # Sonar
 .sonar_lock
 report-task.txt
+.scannerwork/
 
 # IDEs and editors
 /.idea
