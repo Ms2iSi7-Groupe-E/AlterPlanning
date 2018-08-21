@@ -31,6 +31,9 @@ export class PageModulesRequirementComponent implements OnInit {
   filterTargetModules = [];
   targetIdsModulesTitreFiltre = [];
   targetIdsModulesFomationFiltre = [];
+  targetShowOperator = false;
+  targetShowBtnAdd = false;
+  targetModuleSelected;
   // concernant la liste des modules ayants des pre-requis
   moduleWithRequirement = [];
   moduleWithRequirementFiltre = [];
@@ -374,16 +377,38 @@ export class PageModulesRequirementComponent implements OnInit {
     return null;
   }
 
-  // ajout d'un element de pre-requis a un module
-  addRequirement (module) {
+  // selection du module cible pour ajout
+  selectAddRequirement (module) {
     if (!module) {
       return;
     }
-    if (typeof module === 'number') {
+
+    // determine si l'operateur doit etre affiche
+    this.targetShowOperator = this.sourceRequirementSelected.length > 0;
+
+    // affiche le bouton d'ajout
+    this.targetShowBtnAdd = true;
+
+    // recupere le module
+    /*if (typeof module === 'number') {
       module = this.dataModules.find(m => m.idModule === module);
     }
+    this.targetModuleSelected = module;*/
+
+    console.log(this.targetModuleSelected );
+  }
+
+  // ajout d'un element de pre-requis a un module
+  addRequirement () {
+
+    // recupere le module
+    let module;
+    if (typeof this.targetModuleSelected === 'number') {
+      module = this.dataModules.find(m => m.idModule === this.targetModuleSelected);
+    }
+
     const body = new RequirementModel();
-    body.or = this.requirementOrOperator;
+    body.or = (this.sourceRequirementSelected.length > 0) ? this.requirementOrOperator : false;
     body.requiredModuleId = module.idModule;
     this.moduleService.addRequirementForModule(this.sourceSelected.idModule, body).subscribe(
       res => {
@@ -394,6 +419,11 @@ export class PageModulesRequirementComponent implements OnInit {
         console.error(err);
       }
     );
+
+    // raz des valeurs de selection
+    this.targetModuleSelected = '';
+    this.targetShowOperator = false;
+    this.targetShowBtnAdd = false;
   }
 
   findModuleListe() {

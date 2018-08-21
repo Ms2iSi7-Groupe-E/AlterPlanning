@@ -89,18 +89,25 @@
           <div class="col-lg-8">
             <ng-select placeholder="Saisir le module"
                        notFoundText="Aucun module trouvé"
-                       (change)="addRequirement($event)">
+                       (change)="selectAddRequirement($event)"
+                       [(ngModel)]="targetModuleSelected">
               <ng-option *ngFor="let module of filterTargetModules"
                          [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
             </ng-select>
           </div>
         </div>
-        <div class="form-group row">
+        <div *ngIf="targetShowOperator" class="form-group row">
           <label class="col-lg-4 col-form-label">Constrainte :</label>
           <div class="col-lg-8 text-right">
             <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="true"/> Et</label>
             <label><input type="radio" name="requirementOrOperator" [(ngModel)]="requirementOrOperator" [value]="false"/> Ou</label>
           </div>
+        </div>
+        <div *ngIf="targetShowBtnAdd" class="form-group row">
+          <button class="btn btn-success btn-add-requirement" (click)="addRequirement()">
+            <i class="fas fa-plus-circle"></i>
+            Ajouter le pré requis
+          </button>
         </div>
       </div>
     </div>
