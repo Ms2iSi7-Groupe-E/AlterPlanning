@@ -1,6 +1,9 @@
 # Maven
 target/
 
+# Sonar
+.sonar_lock
+report-task.txt
 
 # IDEs and editors
 /.idea
