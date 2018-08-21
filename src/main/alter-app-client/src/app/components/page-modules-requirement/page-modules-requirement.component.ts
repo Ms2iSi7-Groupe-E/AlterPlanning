@@ -41,7 +41,9 @@ export class PageModulesRequirementComponent implements OnInit {
   listeModule = '';
   listePrerequis = '';
 
-  constructor(private moduleService: ModuleService, private titreService: TitreService, private formationService: FormationService) { }
+  constructor(private moduleService: ModuleService,
+              private titreService: TitreService,
+              private formationService: FormationService) { }
 
   ngOnInit() {
 
@@ -300,15 +302,9 @@ export class PageModulesRequirementComponent implements OnInit {
   }
 
   // click sur la suppression d'un pre-requis
-  clickDelete(r) {
-
-    const body = new RequirementModel();
-    body.or = r.or;
-    body.requiredModuleId = r.moduleId;
-
-    // supprime le pre-requis
-    this.moduleService.deleteRequirementByModule(this.sourceSelected.idModule, body).subscribe(
-      res => {
+  clickDelete(requirement) {
+    this.moduleService.deleteRequirementById(requirement.idModuleRequirement).subscribe(
+      () => {
         this.updateModuleWithRequirement();
         this.clickSource(this.sourceSelected);
       },
@@ -388,14 +384,6 @@ export class PageModulesRequirementComponent implements OnInit {
 
     // affiche le bouton d'ajout
     this.targetShowBtnAdd = true;
-
-    // recupere le module
-    /*if (typeof module === 'number') {
-      module = this.dataModules.find(m => m.idModule === module);
-    }
-    this.targetModuleSelected = module;*/
-
-    console.log(this.targetModuleSelected );
   }
 
   // ajout d'un element de pre-requis a un module

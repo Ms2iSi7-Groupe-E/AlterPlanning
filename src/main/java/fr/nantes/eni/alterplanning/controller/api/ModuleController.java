@@ -67,13 +67,6 @@ public class ModuleController {
         return coursDAOService.findByModule(idModule);
     }
 
-    @Deprecated
-    @GetMapping("/with-requirement")
-    @ApiOperation(value = "", notes = "DEPRECATED: will be remove soon")
-    public List<ModuleRequirementResponse> getModulesWithRequirement() {
-        return getModulesWithCorrespondingRequirements();
-    }
-
     @GetMapping("/requirement")
     @ApiOperation(value = "", notes = "Permet de retourner tous les modules ayant des pré-requis (avec leurs pré-requis).")
     public List<ModuleRequirementResponse> getModulesWithCorrespondingRequirements() {
@@ -178,40 +171,6 @@ public class ModuleController {
                 + m.getLibelle() + "\"");
 
         return entity;
-    }
-
-    @Deprecated
-    @DeleteMapping("/{idModule}/requirement")
-    @ApiOperation(value = "", notes = "DEPRECATED: will be remove soon")
-    public StringResponse deleteRequirementByModule(@Valid @RequestBody ModuleRequirementForm form,
-                                                    BindingResult result,
-                                                    @PathVariable(name = "idModule") Integer idModule) throws RestResponseException {
-        if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
-        }
-
-        ModuleRequirementEntity entity = new ModuleRequirementEntity();
-        entity.setModuleId(idModule);
-        entity.setRequiredModuleId(form.getRequiredModuleId());
-        entity.setOr(form.getOr());
-
-        final Integer moduleRequirementId = moduleRequirementDAOService.findIdByUniqueConstraint(entity);
-
-        if (moduleRequirementId == null) {
-            throw new RestResponseException(HttpStatus.NOT_FOUND, "Prérequis non trouvée");
-        }
-
-        moduleRequirementDAOService.delete(moduleRequirementId);
-
-        final ModuleEntity module = moduleDAOService.findById(idModule);
-        final ModuleEntity requiredModule = moduleDAOService.findById(form.getRequiredModuleId());
-
-        historyUtil.addLine("Suppression du prérequis \""
-                + requiredModule.getLibelle()
-                + "\" pour le module \""
-                + module.getLibelle() + "\"");
-
-        return new StringResponse("Le prérequis à été supprimé avec succès");
     }
 
     @DeleteMapping("/requirement/{idModuleRequirement}")

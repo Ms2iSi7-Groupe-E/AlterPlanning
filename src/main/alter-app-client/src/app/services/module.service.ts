@@ -28,23 +28,15 @@ export class ModuleService {
       .catch((err) => this.authService.handleError(err));
   }
 
-  deleteRequirementByModule(idModule: string, body: RequirementModel): Observable<any> {
-    const token = localStorage.getItem(AuthService.LOCAL_STORAGE_KEY_TOKEN);
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }),
-      body,
-    };
+  getModulesWithRequirement(): Observable<any> {
     return this.http
-      .delete('/api/module/' + idModule + '/requirement', options)
+      .get('/api/module/requirement', {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
 
-  getModulesWithRequirement(): Observable<any> {
+  deleteRequirementById(idModuleRequirement: number): Observable<any> {
     return this.http
-      .get('/api/module/with-requirement', {headers: AuthService.getHeaders()})
+      .delete('/api/module/requirement/' + idModuleRequirement, {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
 }
