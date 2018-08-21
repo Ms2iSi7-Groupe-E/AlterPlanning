@@ -4,6 +4,7 @@ import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarConstraintEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.ConstraintType;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
@@ -13,8 +14,11 @@ import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
+import fr.nantes.eni.alterplanning.model.simplebean.ExcludeConstraint;
 import fr.nantes.eni.alterplanning.service.dao.*;
+import fr.nantes.eni.alterplanning.util.AlterDateUtil;
 import fr.nantes.eni.alterplanning.util.HistoryUtil;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,9 +26,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringJoiner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,6 +58,8 @@ public class CalendarController {
 
     @Resource
     private EntrepriseDAOService entrepriseDAOService;
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(AlterDateUtil.ddMMyyyyWithSlash);
 
     @GetMapping("")
     public List<CalendarResponse> getCalendars() {
@@ -234,20 +240,120 @@ public class CalendarController {
 
     @GetMapping("/{idCalendar}/cours-for-generate-calendar")
     public List<CoursEntity> getCoursForCalendarInGeneration(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
-        // Find Calendar
-        final CalendarEntity c = calendarDAOService.findById(id);
+        // Récupération du Calendrier
+        final CalendarEntity calendar = calendarDAOService.findById(id);
 
-        if (c == null) {
+        if (calendar == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
-        }
-
-        if (c.getState() != CalendarState.DRAFT) {
+        } else if (calendar.getState() != CalendarState.DRAFT) {
             throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier doit être à l'état de brouillon");
         }
 
-        // TODO
+        // Récupération des contraintes du calendrier
+        final List<CalendarConstraintEntity> constraints = calendarConstraintDAOService.findByCalendarId(id);
+        List<CoursEntity> cours;
 
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+        // Récupérer les codes des lieux
+        final List<Integer> lieux = constraints.stream()
+                .filter(c -> c.getConstraintType().equals(ConstraintType.LIEUX))
+                .map(c -> Integer.parseInt(c.getConstraintValue()))
+                .distinct().collect(Collectors.toList());
+
+        // Récupérer les cours par lieux ou bien tout les cours le cas échéant
+        cours = lieux.size() == 0 ? coursDAOService.findAll() : coursDAOService.findByLieux(lieux);
+
+        // Exclure les cours hors date de début ou date de fin
+        if (calendar.getStartDate() != null || calendar.getEndDate() != null) {
+            cours = cours
+                    .stream().filter(c -> AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getDebut())
+                    || AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getFin()))
+                    .collect(Collectors.toList());
+        }
+
+        // Si période d'exclusion, retirer les cours étant dans cette période
+        final List<ExcludeConstraint> contraintesExclusion = constraints
+                .stream().filter(c -> c.getConstraintType().equals(ConstraintType.DISPENSE_PERIODE))
+                .map(c -> {
+                    final String startString = c.getConstraintValue().split(" - ")[0];
+                    final String endString = c.getConstraintValue().split(" - ")[1];
+                    try {
+                        return new ExcludeConstraint(dateFormat.parse(startString), dateFormat.parse(endString));
+                    } catch (ParseException e) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull).collect(Collectors.toList());
+
+        if (!contraintesExclusion.isEmpty()) {
+            // Vérification qu'un cours ne ce passe pas durant une période d'exclusion
+            // Si oui on le retire de la liste
+            cours = cours.stream().filter(c -> {
+                boolean notInsideExcludePeriode = true;
+                for (ExcludeConstraint ce : contraintesExclusion) {
+                    if (AlterDateUtil.isIncludeInPeriode(ce.getStart(), ce.getEnd(), c.getDebut())
+                            || AlterDateUtil.isIncludeInPeriode(ce.getStart(), ce.getEnd(), c.getFin())) {
+                        notInsideExcludePeriode = false;
+                    }
+                }
+                return notInsideExcludePeriode;
+            }).collect(Collectors.toList());
+        }
+
+        // Liste des cours des formations et des modules
+        List<CoursEntity> coursFormationModule = new ArrayList<>();
+
+        // Récupérer les contraintes d'ajout de formation
+        final List<String> codesFormation = constraints.stream()
+                .filter(c -> c.getConstraintType().equals(ConstraintType.AJOUT_FORMATION))
+                .map(CalendarConstraintEntity::getConstraintValue)
+                .distinct().collect(Collectors.toList());
+
+        // Si formations, récupérer tout les cours correspondants
+        if (!codesFormation.isEmpty()) {
+            coursFormationModule.addAll(coursDAOService.findByFormations(codesFormation));
+        }
+
+        // Récupérer les contraintes d'ajout de module
+        final List<Integer> idsModules = constraints.stream()
+                .filter(c -> c.getConstraintType().equals(ConstraintType.AJOUT_MODULE))
+                .map(c -> Integer.parseInt(c.getConstraintValue()))
+                .distinct().collect(Collectors.toList());
+
+        // Si modules, récupérer tout les cours correspondants
+        if (!idsModules.isEmpty()) {
+            coursFormationModule.addAll(coursDAOService.findByModules(idsModules));
+        }
+
+        if (!coursFormationModule.isEmpty()) {
+            cours = cours.stream()
+                    .filter(c -> coursFormationModule
+                            .stream()
+                            .filter(cfm -> cfm.getIdCours().equals(c.getIdCours()))
+                            .findAny()
+                            .orElse(null) != null)
+                    .collect(Collectors.toList());
+        }
+
+        // Récupérer les contraintes d'exclusion de module
+        final List<Integer> idsModulesExclusion = constraints.stream()
+                .filter(c -> c.getConstraintType().equals(ConstraintType.DISPENSE_MODULE))
+                .map(c -> Integer.parseInt(c.getConstraintValue()))
+                .distinct().collect(Collectors.toList());
+
+        // Si modules, récupérer tout les cours correspondants
+        if (!idsModulesExclusion.isEmpty()) {
+            final List<CoursEntity> coursToExclude = new ArrayList<>(coursDAOService.findByModules(idsModulesExclusion));
+
+            cours = cours.stream()
+                    .filter(c -> coursToExclude
+                            .stream()
+                            .filter(cte -> cte.getIdCours().equals(c.getIdCours()))
+                            .findAny()
+                            .orElse(null) == null)
+                    .collect(Collectors.toList());
+        }
+
+        return cours;
     }
 
     @PostMapping("/{idCalendar}/cours")

@@ -39,11 +39,23 @@ public class CoursDAOService {
         return repository.findAllByLieu(codeLieu);
     }
 
+    public List<CoursEntity> findByLieux(final List<Integer> codesLieu) {
+        return repository.findAllByLieux(codesLieu);
+    }
+
     public List<CoursEntity> findByModule(final Integer idModule) {
         return repository.findAllByModule(idModule);
     }
 
+    public List<CoursEntity> findByModules(final List<Integer> idModule) {
+        return repository.findAllByModules(idModule);
+    }
+
     public List<CoursEntity> findByListIdCours(final List<String> idsCours) {
         return repository.findAllByFromListIdCours(idsCours);
+    }
+
+    public List<CoursEntity> findByFormations(final List<String> codesFormation) {
+        return repository.findByFormations(codesFormation);
     }
 }
