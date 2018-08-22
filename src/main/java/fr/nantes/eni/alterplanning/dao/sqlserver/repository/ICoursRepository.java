@@ -16,7 +16,8 @@ import java.util.List;
 public interface ICoursRepository extends CrudRepository<CoursEntity, String> {
 
     @SuppressWarnings("JpaQlInspection")
-    @Query("SELECT c.idCours, m.idModule, form.libelleCourt, form.libelleLong, c.libelleCours ,m.libelle, c.codeLieu, c.debut, c.fin " +
+    @Query("SELECT c.idCours, m.idModule, form.libelleCourt, form.libelleLong, c.libelleCours ,m.libelle, " +
+            "c.codeLieu, c.debut, c.fin, c.dureeReelleEnHeures, form.codeFormation " +
             "FROM CoursEntity c " +
             "LEFT OUTER JOIN ModuleEntity m on c.idModule = m.idModule " +
             "LEFT OUTER JOIN ModuleParUniteEntity mpu on m.idModule = mpu.idModule " +
@@ -26,7 +27,8 @@ public interface ICoursRepository extends CrudRepository<CoursEntity, String> {
     List<Object[]> findAllCoursComplets();
 
     @SuppressWarnings("JpaQlInspection")
-    @Query("SELECT c.idCours, m.idModule, form.libelleCourt, form.libelleLong, c.libelleCours ,m.libelle, c.codeLieu, c.debut, c.fin " +
+    @Query("SELECT c.idCours, m.idModule, form.libelleCourt, form.libelleLong, c.libelleCours ,m.libelle, " +
+            "c.codeLieu, c.debut, c.fin, c.dureeReelleEnHeures, form.codeFormation " +
             "FROM CoursEntity c " +
             "LEFT OUTER JOIN ModuleEntity m on c.idModule = m.idModule " +
             "LEFT OUTER JOIN ModuleParUniteEntity mpu on m.idModule = mpu.idModule " +
@@ -35,6 +37,18 @@ public interface ICoursRepository extends CrudRepository<CoursEntity, String> {
             "LEFT OUTER JOIN FormationEntity form on upf.codeFormation = form.codeFormation " +
             "WHERE c.codeLieu IN (:codes)")
     List<Object[]> findAllCoursCompletsByLieux(@Param("codes") List<Integer> codesLieu);
+
+    @SuppressWarnings("JpaQlInspection")
+    @Query("SELECT c.idCours, m.idModule, form.libelleCourt, form.libelleLong, c.libelleCours ,m.libelle, " +
+            "c.codeLieu, c.debut, c.fin, c.dureeReelleEnHeures, form.codeFormation " +
+            "FROM CoursEntity c " +
+            "LEFT OUTER JOIN ModuleEntity m on c.idModule = m.idModule " +
+            "LEFT OUTER JOIN ModuleParUniteEntity mpu on m.idModule = mpu.idModule " +
+            "LEFT OUTER JOIN UniteParFormationEntity upf on mpu.idUnite = upf.id " +
+            "LEFT OUTER JOIN UniteFormationEntity uf on upf.idUniteFormation = uf.idUniteFormation " +
+            "LEFT OUTER JOIN FormationEntity form on upf.codeFormation = form.codeFormation " +
+            "WHERE c.idCours IN (:ids)")
+    List<Object[]> findAllCoursCompletsByIds(@Param("ids") List<String> ids);
 
     @SuppressWarnings("JpaQlInspection")
     @Query("SELECT c FROM CoursEntity c " +

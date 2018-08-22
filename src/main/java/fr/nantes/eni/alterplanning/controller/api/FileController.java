@@ -2,13 +2,17 @@ package fr.nantes.eni.alterplanning.controller.api;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.enums.DownloadFormat;
+import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
 import fr.nantes.eni.alterplanning.service.TemplateService;
+import fr.nantes.eni.alterplanning.service.dao.CalendarCoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.CalendarDAOService;
+import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.StagiaireDAOService;
 import fr.nantes.eni.alterplanning.util.MediaTypeUtil;
 import org.apache.log4j.Logger;
@@ -28,6 +32,8 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/file")
@@ -45,6 +51,12 @@ public class FileController {
     private CalendarDAOService calendarDAOService;
 
     @Resource
+    private CalendarCoursDAOService calendarCoursDAOService;
+
+    @Resource
+    private CoursDAOService coursDAOService;
+
+    @Resource
     private StagiaireDAOService stagiaireDAOService;
 
     @GetMapping(value = "/calendar/{idCalendar}/{format}", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
@@ -56,12 +68,16 @@ public class FileController {
 
         if (c == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
-        }
-
-        if (c.getState() == CalendarState.DRAFT) {
+        } else if (c.getState() == CalendarState.DRAFT) {
             throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier est encore à l'état de brouillon, " +
                     "les cours n'ont pas encore été positionnés");
         }
+
+        final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
+                .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
+        final List<CoursComplet> coursComplets = coursDAOService.findAllCoursCompletsByIds(idsCours);
+
+        // TODO
 
         final String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());
 

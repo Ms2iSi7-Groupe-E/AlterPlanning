@@ -31,6 +31,11 @@ public class CoursDAOService {
         return convertRawListToCoursComplet(listObj);
     }
 
+    public List<CoursComplet> findAllCoursCompletsByIds(final List<String> ids) {
+        final List<Object[]> listObj = repository.findAllCoursCompletsByIds(ids);
+        return convertRawListToCoursComplet(listObj);
+    }
+
     public CoursEntity findById(final String id) {
         return repository.findById(id).orElse(null);
     }
@@ -85,6 +90,8 @@ public class CoursDAOService {
             complet.setCodeLieu((Integer) raw[6]);
             complet.setDebut((Date) raw[7]);
             complet.setFin((Date) raw[8]);
+            complet.setDureeReelleEnHeures((Integer) raw[9]);
+            complet.setCodeFormation((String) raw[10]);
             coursComplets.add(complet);
         });
         return coursComplets;

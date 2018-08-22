@@ -4,85 +4,103 @@ import java.util.Date;
 
 public class CoursComplet {
 
-    private String IdCours;
-    private Integer IdModule;
-    private String LibelleCours;
-    private String LibelleModule;
-    private String LibelleFormation;
-    private String LibelleFormationLong;
-    private Integer CodeLieu;
-    private Date Debut;
-    private Date Fin;
+    private String idCours;
+    private Integer idModule;
+    private String libelleCours;
+    private String libelleModule;
+    private String libelleFormation;
+    private String libelleFormationLong;
+    private Integer codeLieu;
+    private Date debut;
+    private Date fin;
+    private Integer dureeReelleEnHeures;
+    private String codeFormation;
 
     public String getIdCours() {
-        return IdCours;
+        return idCours;
     }
 
     public void setIdCours(String idCours) {
-        IdCours = idCours;
+        this.idCours = idCours;
     }
 
     public Integer getIdModule() {
-        return IdModule;
+        return idModule;
     }
 
     public void setIdModule(Integer idModule) {
-        IdModule = idModule;
+        this.idModule = idModule;
     }
 
     public String getLibelleCours() {
-        return LibelleCours;
+        return libelleCours;
     }
 
     public void setLibelleCours(String libelleCours) {
-        LibelleCours = libelleCours;
+        this.libelleCours = libelleCours;
     }
 
     public String getLibelleModule() {
-        return LibelleModule;
+        return libelleModule;
     }
 
     public void setLibelleModule(String libelleModule) {
-        LibelleModule = libelleModule;
+        this.libelleModule = libelleModule;
     }
 
     public String getLibelleFormation() {
-        return LibelleFormation;
+        return libelleFormation;
     }
 
     public void setLibelleFormation(String libelleFormation) {
-        LibelleFormation = libelleFormation;
+        this.libelleFormation = libelleFormation;
     }
 
     public String getLibelleFormationLong() {
-        return LibelleFormationLong;
+        return libelleFormationLong;
     }
 
     public void setLibelleFormationLong(String libelleFormationLong) {
-        LibelleFormationLong = libelleFormationLong;
+        this.libelleFormationLong = libelleFormationLong;
     }
 
     public Integer getCodeLieu() {
-        return CodeLieu;
+        return codeLieu;
     }
 
     public void setCodeLieu(Integer codeLieu) {
-        CodeLieu = codeLieu;
+        this.codeLieu = codeLieu;
     }
 
     public Date getDebut() {
-        return Debut;
+        return debut;
     }
 
     public void setDebut(Date debut) {
-        Debut = debut;
+        this.debut = debut;
     }
 
     public Date getFin() {
-        return Fin;
+        return fin;
     }
 
     public void setFin(Date fin) {
-        Fin = fin;
+        this.fin = fin;
+    }
+
+    public Integer getDureeReelleEnHeures() {
+        return dureeReelleEnHeures;
+    }
+
+    public void setDureeReelleEnHeures(Integer dureeReelleEnHeures) {
+        this.dureeReelleEnHeures = dureeReelleEnHeures;
+    }
+
+    public String getCodeFormation() {
+        return codeFormation;
+    }
+
+    public void setCodeFormation(String codeFormation) {
+        this.codeFormation = codeFormation;
     }
 }
