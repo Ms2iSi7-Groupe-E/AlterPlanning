@@ -2,18 +2,21 @@ package fr.nantes.eni.alterplanning.controller.api;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarConstraintEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.ConstraintType;
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.FormationEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.TitreEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.enums.DownloadFormat;
 import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
 import fr.nantes.eni.alterplanning.service.TemplateService;
-import fr.nantes.eni.alterplanning.service.dao.CalendarCoursDAOService;
-import fr.nantes.eni.alterplanning.service.dao.CalendarDAOService;
-import fr.nantes.eni.alterplanning.service.dao.CoursDAOService;
-import fr.nantes.eni.alterplanning.service.dao.StagiaireDAOService;
+import fr.nantes.eni.alterplanning.service.dao.*;
+import fr.nantes.eni.alterplanning.util.AlterDateUtil;
 import fr.nantes.eni.alterplanning.util.MediaTypeUtil;
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
@@ -32,6 +35,9 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +57,9 @@ public class FileController {
     private CalendarDAOService calendarDAOService;
 
     @Resource
+    private CalendarConstraintDAOService calendarConstraintDAOService;
+
+    @Resource
     private CalendarCoursDAOService calendarCoursDAOService;
 
     @Resource
@@ -58,6 +67,17 @@ public class FileController {
 
     @Resource
     private StagiaireDAOService stagiaireDAOService;
+
+    @Resource
+    private FormationDAOService formationDAOService;
+
+    @Resource
+    private TitreDAOService titreDAOService;
+
+    @Resource
+    private EntrepriseDAOService entrepriseDAOService;
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(AlterDateUtil.ddMMyyyyWithSlash);
 
     @GetMapping(value = "/calendar/{idCalendar}/{format}", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
     public ResponseEntity<InputStreamResource> downloadCalendar(@PathVariable(name = "idCalendar") int id,
@@ -73,21 +93,53 @@ public class FileController {
                     "les cours n'ont pas encore été positionnés");
         }
 
+        final List<CalendarConstraintEntity> constraintEntities = calendarConstraintDAOService.findByCalendarId(id);
         final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
                 .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
         final List<CoursComplet> coursComplets = coursDAOService.findAllCoursCompletsByIds(idsCours);
-
-        // TODO
-
+        coursComplets.sort(Comparator.comparing(CoursComplet::getDebut));
         final String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());
+        final Date startDateFirstCourse = coursComplets.get(0).getDebut();
+        final Date endDateLastCourse = coursComplets.get(coursComplets.size() - 1).getFin();
+        final String codeFormation = constraintEntities.stream().filter(co -> co.getConstraintType().equals(ConstraintType.AJOUT_FORMATION))
+                .map(CalendarConstraintEntity::getConstraintValue)
+                .findFirst().orElse(null);
 
+        String titreLong = "";
+        String titreCourt = "";
+        String niveau = "";
         String fileTitle = "calendrier";
+        String stagiaireName = "à définir";
+        String entrepriseName = "à définir";
+        Date startDate = c.getStartDate();
+        Date endDate = c.getEndDate();
+        int dureeEnHeureFormation = coursComplets.stream().mapToInt(CoursComplet::getDureeReelleEnHeures).sum();
 
-        String stagiaireName = "";
         if (c.getStagiaireId() != null) {
             final StagiaireEntity stagiaire = stagiaireDAOService.findById(c.getStagiaireId());
-            stagiaireName = stagiaire.getPrenom() + " " + stagiaire.getPrenom();
+            stagiaireName = stagiaire.getPrenom() + " " + stagiaire.getNom().toUpperCase();
             fileTitle += "_" + stagiaire.getNom().toLowerCase();
+        }
+
+        if (c.getEntrepriseId() != null) {
+            final EntrepriseEntity entreprise = entrepriseDAOService.findById(c.getEntrepriseId());
+            entrepriseName = entreprise.getRaisonSociale();
+        }
+
+        if (startDate == null || startDateFirstCourse.before(startDate)) {
+            startDate = startDateFirstCourse;
+        }
+
+        if (endDate == null ||endDateLastCourse.after(endDate)) {
+            endDate = endDateLastCourse;
+        }
+
+        if (codeFormation != null) {
+            final FormationEntity formationEntity = formationDAOService.findById(codeFormation);
+            final TitreEntity titreEntity = titreDAOService.findByFormation(codeFormation);
+            titreLong = formationEntity.getLibelleLong();
+            titreCourt = titreEntity.getLibelleLong();
+            niveau = titreEntity.getNiveau();
         }
 
         BufferedWriter writer;
@@ -101,8 +153,16 @@ public class FileController {
 
             // Fill html file with velocity
             final VelocityContext context = new VelocityContext();
-            context.put("name", stagiaireName);
             context.put("logoUrl", baseUrl + "/assets/images/logo-eni.jpg");
+            context.put("titreLong", titreLong.toUpperCase());
+            context.put("titreCourt", titreCourt);
+            context.put("niveau", niveau);
+            context.put("name", stagiaireName);
+            context.put("entrepriseName", entrepriseName);
+            context.put("startDate", dateFormat.format(startDate));
+            context.put("endDate", dateFormat.format(endDate));
+            context.put("dureeEnHeureFormation", dureeEnHeureFormation);
+
             final String htmlContent = templateService.resolveTemplate("template-calendrier.vm", context);
 
             // Insert html content in html file

@@ -26,4 +26,8 @@ public class TitreDAOService {
     public TitreEntity findById(final String id) {
         return repository.findById(id).orElse(null);
     }
+
+    public TitreEntity findByFormation(String codeFormation) {
+        return repository.findByFormation(codeFormation);
+    }
 }

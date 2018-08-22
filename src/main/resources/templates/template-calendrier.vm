@@ -60,19 +60,19 @@
 <body>
 <img class="logo" src="$logoUrl" alt="Logo Ecole ENI">
 <br>
-<p class="title bold text-center">MANAGER DES SYSTÈMES D'INFORMATION ET D'INFRASTRUCTURE - OPTION SYSTÈMES D'INFORMATION</p>
-<p class="subtitle text-center">Préparation au titre «Manager des Systèmes d'Information et d'Infrastructure» Niveau I</p>
+<p class="title bold text-center">$titreLong</p>
+<p class="subtitle text-center">Préparation au titre « $titreCourt » Niveau $niveau</p>
 <br>
 <table style="width: 100%;" class="bold">
     <tr>
-        <td>Date de début (formation) : 24/10/2016</td>
-        <td class="text-right">Date de fin (formation) : 14/09/2018</td>
+        <td>Date de début (formation) : $startDate</td>
+        <td class="text-right">Date de fin (formation) : $endDate</td>
     </tr>
 </table>
-<p class="text-center bold">Formation en centre : 903 Heures</p>
+<p class="text-center bold">Formation en centre : $dureeEnHeureFormation Heures</p>
 <table style="width: 100%;" class="bold">
     <tr>
-        <td>Entreprise : CONSERTO</td>
+        <td>Entreprise : $entrepriseName</td>
         <td class="text-right">Salarié : $name</td>
     </tr>
 </table>

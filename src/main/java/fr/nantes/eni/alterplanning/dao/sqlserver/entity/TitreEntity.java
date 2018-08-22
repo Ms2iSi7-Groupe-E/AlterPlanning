@@ -17,6 +17,9 @@ public class TitreEntity {
     @Column(name = "LibelleLong")
     private String libelleLong;
 
+    @Column(name = "Niveau")
+    private String niveau;
+
     public String getCodeTitre() {
         return codeTitre;
     }
@@ -39,5 +42,13 @@ public class TitreEntity {
 
     public void setLibelleLong(String libelleLong) {
         this.libelleLong = libelleLong;
+    }
+
+    public String getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(String niveau) {
+        this.niveau = niveau;
     }
 }
