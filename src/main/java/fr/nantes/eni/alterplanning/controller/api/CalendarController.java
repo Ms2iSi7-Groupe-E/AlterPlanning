@@ -14,6 +14,7 @@ import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
+import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
 import fr.nantes.eni.alterplanning.model.simplebean.ExcludeConstraint;
 import fr.nantes.eni.alterplanning.service.dao.*;
 import fr.nantes.eni.alterplanning.util.AlterDateUtil;
@@ -239,7 +240,7 @@ public class CalendarController {
     }
 
     @GetMapping("/{idCalendar}/cours-for-generate-calendar")
-    public List<CoursEntity> getCoursForCalendarInGeneration(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
+    public List<CoursComplet> getCoursForCalendarInGeneration(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // Récupération du Calendrier
         final CalendarEntity calendar = calendarDAOService.findById(id);
 
@@ -251,7 +252,7 @@ public class CalendarController {
 
         // Récupération des contraintes du calendrier
         final List<CalendarConstraintEntity> constraints = calendarConstraintDAOService.findByCalendarId(id);
-        List<CoursEntity> cours;
+        List<CoursComplet> cours;
 
         // Récupérer les codes des lieux
         final List<Integer> lieux = constraints.stream()
@@ -260,7 +261,8 @@ public class CalendarController {
                 .distinct().collect(Collectors.toList());
 
         // Récupérer les cours par lieux ou bien tout les cours le cas échéant
-        cours = lieux.size() == 0 ? coursDAOService.findAll() : coursDAOService.findByLieux(lieux);
+        cours = lieux.size() == 0 ? coursDAOService.findAllCoursComplets()
+                : coursDAOService.findAllCoursCompletsByLieux(lieux);
 
         // Exclure les cours hors date de début ou date de fin
         if (calendar.getStartDate() != null || calendar.getEndDate() != null) {
@@ -300,7 +302,7 @@ public class CalendarController {
         }
 
         // Liste des cours des formations et des modules
-        List<CoursEntity> coursFormationModule = new ArrayList<>();
+        final List<CoursEntity> coursFormationModule = new ArrayList<>();
 
         // Récupérer les contraintes d'ajout de formation
         final List<String> codesFormation = constraints.stream()
