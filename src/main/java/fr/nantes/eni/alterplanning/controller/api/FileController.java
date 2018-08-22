@@ -7,13 +7,11 @@ import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.ConstraintType;
-import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
-import fr.nantes.eni.alterplanning.dao.sqlserver.entity.FormationEntity;
-import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
-import fr.nantes.eni.alterplanning.dao.sqlserver.entity.TitreEntity;
+import fr.nantes.eni.alterplanning.dao.sqlserver.entity.*;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.enums.DownloadFormat;
 import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
+import fr.nantes.eni.alterplanning.model.simplebean.LineCalendarGeneration;
 import fr.nantes.eni.alterplanning.service.TemplateService;
 import fr.nantes.eni.alterplanning.service.dao.*;
 import fr.nantes.eni.alterplanning.util.AlterDateUtil;
@@ -36,6 +34,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -75,6 +74,9 @@ public class FileController {
     private TitreDAOService titreDAOService;
 
     @Resource
+    private LieuDAOService lieuDAOService;
+
+    @Resource
     private EntrepriseDAOService entrepriseDAOService;
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat(AlterDateUtil.ddMMyyyyWithSlash);
@@ -93,6 +95,7 @@ public class FileController {
                     "les cours n'ont pas encore été positionnés");
         }
 
+        final List<LieuEntity> lieux = lieuDAOService.findAll();
         final List<CalendarConstraintEntity> constraintEntities = calendarConstraintDAOService.findByCalendarId(id);
         final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
                 .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
@@ -105,6 +108,7 @@ public class FileController {
                 .map(CalendarConstraintEntity::getConstraintValue)
                 .findFirst().orElse(null);
 
+        // Déclaration des variables pour le template
         String titreLong = "";
         String titreCourt = "";
         String niveau = "";
@@ -114,7 +118,9 @@ public class FileController {
         Date startDate = c.getStartDate();
         Date endDate = c.getEndDate();
         int dureeEnHeureFormation = coursComplets.stream().mapToInt(CoursComplet::getDureeReelleEnHeures).sum();
+        final List<LineCalendarGeneration> lines = new ArrayList<>();
 
+        // Remplissage des variables pour le template
         if (c.getStagiaireId() != null) {
             final StagiaireEntity stagiaire = stagiaireDAOService.findById(c.getStagiaireId());
             stagiaireName = stagiaire.getPrenom() + " " + stagiaire.getNom().toUpperCase();
@@ -141,6 +147,27 @@ public class FileController {
             titreCourt = titreEntity.getLibelleLong();
             niveau = titreEntity.getNiveau();
         }
+        // TODO: remove
+        LineCalendarGeneration li0 = new LineCalendarGeneration();
+        li0.setEntreprisePeriode(true);
+        lines.add(li0);
+
+        coursComplets.forEach(co -> {
+            LineCalendarGeneration li = new LineCalendarGeneration();
+            li.setLibelle(co.getLibelleModule());
+            li.setLieu(lieux.stream().filter(l -> l.getCodeLieu().equals(co.getCodeLieu()))
+                    .findFirst().orElse(null));
+            li.setDureeReelleEnHeures(co.getDureeReelleEnHeures());
+            li.setDebut(dateFormat.format(co.getDebut()));
+            li.setFin(dateFormat.format(co.getFin()));
+            lines.add(li);
+        });
+
+        // TODO: remove
+        LineCalendarGeneration li1 = new LineCalendarGeneration();
+        li1.setEntreprisePeriode(true);
+        lines.add(li1);
+
 
         BufferedWriter writer;
         File outputFile;
@@ -162,6 +189,7 @@ public class FileController {
             context.put("startDate", dateFormat.format(startDate));
             context.put("endDate", dateFormat.format(endDate));
             context.put("dureeEnHeureFormation", dureeEnHeureFormation);
+            context.put("lines", lines);
 
             final String htmlContent = templateService.resolveTemplate("template-calendrier.vm", context);
 
