@@ -72,7 +72,7 @@ export class PageCalendarProcessingComponent implements OnInit {
           }
 
           // recpere les informations du lieux
-          this.lieuService.getLieuById( c.id ).subscribe(
+          this.lieuService.getLieuById( c.constraintValue ).subscribe(
             resL => {
               this.lieux.push( {"libelle": resL.libelle, "color": colorsLieux[ this.lieux.length ] } );
             },
@@ -81,9 +81,6 @@ export class PageCalendarProcessingComponent implements OnInit {
             }
           );
         });
-
-        console.log( this.lieux );
-
 
         /*
         angular.forEach(values, function(value, key) {
