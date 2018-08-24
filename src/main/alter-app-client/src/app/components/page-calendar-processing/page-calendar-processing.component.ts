@@ -109,7 +109,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       // determine si le jour du mois existe
       if ( !(sKeyDay in this.mois[ sKeyMonth ][ "jours" ]) ) {
         this.mois[ sKeyMonth ][ "jours" ][ sKeyDay ] = { "lettre": oDay.format( "ddd" ).substring(0, 1), "jour": sKeyDay,
-        "cours": [] };
+        "cours": [], "cplace": null };
       } else {
 
         // ce jour est deja pris en compte
@@ -130,14 +130,9 @@ export class PageCalendarProcessingComponent implements OnInit {
       this.mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
     }
 
-    console.log( iJourMin );
+    /*console.log( iJourMin );
     console.log( iJourMax );
-    console.log( this.mois );
-
-    /*for ( let i = 0; i < this.mois.length; i++ ) {
-
-      console.log( this.mois[ i ] );
-    }*/
+    console.log( this.mois );*/
 
     // initialisation des styles
     this.parameterService.getParamters().subscribe(
@@ -165,7 +160,8 @@ export class PageCalendarProcessingComponent implements OnInit {
           this.lieuService.getLieuById( c.constraintValue ).subscribe(
             resL => {
               this.lieux.push( {"libelle": resL.libelle, "color": colorsLieux[ this.lieux.length ],
-                "libelleLieuLong": resL.libelle + ", " + resL.adresse + ", " + resL.cp + " " + resL.ville } );
+                "libelleLieuLong": resL.libelle + ", " + resL.adresse + ", " + resL.cp + " " + resL.ville,
+                "codeLieu": c.constraintValue } );
             },
             errL => {
               console.error(errL);
@@ -184,6 +180,56 @@ export class PageCalendarProcessingComponent implements OnInit {
     );
   }
 
+  // placement d'un cours
+  placementCours(c) {
+
+    // pour tous les mois
+    Object.keys(this.mois).forEach( km => {
+
+      // pour tous les jours du mois
+      Object.keys(this.mois[km].jours).forEach( kj => {
+
+        // pour tous les cours du jour
+        this.mois[km].jours[kj].cours.forEach( cj => {
+
+          // si c'est le cours concerne pas le deplacement
+          if ( cj.idCours === c.idCours ) {
+
+            // si il y a un cours deja place
+            if ( this.mois[km].jours[kj].cplace != null ) {
+              this.deplacementCours( this.mois[km].jours[kj].cplace );
+            }
+
+            // placement du cours
+            this.mois[km].jours[kj].cplace = c;
+
+            // supprime le cours de la colonne de droite
+            // TODO : des doutes ici, faire autrement
+            this.mois[km].jours[kj].cours.splice(this.mois[km].jours[kj].cours.indexOf(cj), 1);
+          }
+        });
+      });
+    });
+  }
+
+  // deplacement d'un cours
+  deplacementCours(c) {
+
+    // pour tous les mois
+    Object.keys(this.mois).forEach( km => {
+
+      // pour tous les jours du mois
+      Object.keys(this.mois[km].jours).forEach( kj => {
+
+        // determine si le jour contient le cours a deplacer
+        if ( this.mois[km].jours[kj].cplace != null && this.mois[km].jours[kj].cplace.idCours === c.idCours ) {
+          this.mois[km].jours[kj].cours.push( c );
+          this.mois[km].jours[kj].cplace = null;
+        }
+      });
+    });
+  }
+
   // retourne les cles d'un tableau
   objectKeys(obj) {
       return Object.keys(obj);
@@ -191,6 +237,17 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // recupere la couleur d'un lieu de formation
   getColorLieuFormation( codeLieu ) {
-    return 'FFFFFF';
+    const lieu = this.lieux.find( l => {
+       return l.codeLieu.toString() === codeLieu.toString();
+     } );
+    return lieu ? lieu.color : '';
+  }
+
+  // recupere la couleur d'une formation
+  getColorFormation( codeFormation ) {
+    const formation = this.formations.find( f => {
+      return f.codeFormation.toString() === codeFormation.toString();
+    } );
+   return formation ? formation.color : '';
   }
 }

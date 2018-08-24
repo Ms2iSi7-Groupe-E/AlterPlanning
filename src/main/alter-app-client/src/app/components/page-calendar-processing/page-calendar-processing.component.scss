@@ -39,9 +39,6 @@
     background-color:#84e2ff;
 }
 .badge{ border:1px solid #ccc; }
-.badge-col1{ background-color: #7fef77; }
-.badge-col2{ background-color: #efec88; }
-.badge-col3{ background-color: #e5b53b; }
 .cours_pos:hover{
     opacity: 0.5;
     cursor: pointer;
@@ -49,7 +46,7 @@
 .col_right{
     padding-left:5px;
 }
-.round1,.round2,.round3{
+.round{
     border: 1px solid #000;
     height: 10px;
     width: 10px;
@@ -57,9 +54,6 @@
     display: inline-block;
     margin-right: 5px;
 }
-.round1{ background-color: #7fef77; }
-.round2{ background-color: #efec88; }
-.round3{ background-color: #e5b53b; }
 .badge-colnbr{
     border: 1px solid #000;
     float: right;
