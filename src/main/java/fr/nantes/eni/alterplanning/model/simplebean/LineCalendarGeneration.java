@@ -5,9 +5,9 @@ import fr.nantes.eni.alterplanning.dao.sqlserver.entity.LieuEntity;
 public class LineCalendarGeneration {
 
     private LieuEntity lieu;
-    private String libelle;
-    private String debut;
-    private String fin;
+    private String libelle = "";
+    private String debut = "../../..";
+    private String fin = "../../..";
     private Integer dureeReelleEnHeures;
     private boolean entreprisePeriode = false;
 

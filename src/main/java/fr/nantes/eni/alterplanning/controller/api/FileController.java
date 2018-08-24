@@ -34,10 +34,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -147,12 +145,9 @@ public class FileController {
             titreCourt = titreEntity.getLibelleLong();
             niveau = titreEntity.getNiveau();
         }
-        // TODO: remove
-        LineCalendarGeneration li0 = new LineCalendarGeneration();
-        li0.setEntreprisePeriode(true);
-        lines.add(li0);
 
-        coursComplets.forEach(co -> {
+        for (int i = 0; i < coursComplets.size(); i++) {
+            final CoursComplet co = coursComplets.get(i);
             LineCalendarGeneration li = new LineCalendarGeneration();
             li.setLibelle(co.getLibelleModule());
             li.setLieu(lieux.stream().filter(l -> l.getCodeLieu().equals(co.getCodeLieu()))
@@ -161,13 +156,21 @@ public class FileController {
             li.setDebut(dateFormat.format(co.getDebut()));
             li.setFin(dateFormat.format(co.getFin()));
             lines.add(li);
-        });
 
-        // TODO: remove
-        LineCalendarGeneration li1 = new LineCalendarGeneration();
-        li1.setEntreprisePeriode(true);
-        lines.add(li1);
+            if (i < coursComplets.size() - 1) {
+                final CoursComplet nextCours = coursComplets.get(i + 1);
+                final Date nextMonday = AlterDateUtil.nextMonday(co.getFin());
 
+                if (!AlterDateUtil.inSameWeek(nextCours.getDebut(), nextMonday)) {
+                    final Date prevFriday = AlterDateUtil.prevFriday(nextCours.getDebut());
+                    final LineCalendarGeneration entreprisePeriode = new LineCalendarGeneration();
+                    entreprisePeriode.setDebut(dateFormat.format(nextMonday));
+                    entreprisePeriode.setFin(dateFormat.format(prevFriday));
+                    entreprisePeriode.setEntreprisePeriode(true);
+                    lines.add(entreprisePeriode);
+                }
+            }
+        }
 
         BufferedWriter writer;
         File outputFile;
