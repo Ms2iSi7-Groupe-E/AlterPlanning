@@ -13,16 +13,8 @@
 		<div class="row" style="margin:5px;">
 			<div class="col-1" style="text-align:center;">
 				<div class="select_all_week">
-					<div class="select_empty"></div>
-					<div class="select_week"></div>
-					<div class="select_week"></div>
-					<div class="select_empty"></div>
-					<div class="select_week"></div>
-					<div class="select_empty"></div>
-					<div class="select_empty"></div>
-					<div class="select_week"></div>
-					<div class="select_empty"></div>
-					<div class="select_week"></div>
+					<div *ngFor="let s of semaines" [class]="s.class" (click)="clickSemaine(s)"></div>
+					<!--<div class="select_week"></div>
 					<div class="select_week"></div>
 					<div class="select_empty"></div>
 					<div class="select_week"></div>
@@ -38,6 +30,13 @@
 					<div class="select_empty"></div>
 					<div class="select_week"></div>
 					<div class="select_empty"></div>
+					<div class="select_week"></div>
+					<div class="select_week"></div>
+					<div class="select_empty"></div>
+					<div class="select_week"></div>
+					<div class="select_empty"></div>
+					<div class="select_empty"></div>
+					<div class="select_week"></div>
 					<div class="select_empty"></div>
 					<div class="select_empty"></div>
 					<div class="select_empty"></div>
@@ -50,33 +49,37 @@
 					<div class="select_empty"></div>
 					<div class="select_empty"></div>
 					<div class="select_empty"></div>
+					<div class="select_empty"></div>-->
 				</div>
 			</div>
 			<div class="col" style="padding-bottom: 50px;">
 				<table class="tbl_detail" width="100%" border="1" style="border:1px #ccc;border-radius:3px;">
-					<tbody *ngFor="let km of objectKeys(mois)">
+					<tbody *ngFor="let km of objectKeys(mois); let firstM = first;">
 						<tr>
 							<td class="col_title" colspan="3">{{mois[km].libelle}}</td>
 							<td class="col_right">
 								<div>
 									Lieux :
-									<span *ngFor="let l of lieux" class="badge" [style.background-color]="l.color" placement="top" [ngbTooltip]="l.libelleLieuLong">{{l.libelle}}</span>
+									<span *ngFor="let l of lieux" class="badge" [style.background-color]="getColorLieuFormation(l.codeLieu)" placement="top" [ngbTooltip]="l.libelleLieuLong">{{l.libelle}}</span>
 								</div>
 								<div>
 									Formations :
-									<span *ngFor="let f of formations" class="badge" [style.background-color]="f.color" placement="top" [ngbTooltip]="f.libelleFormationLong">{{f.libelleFormation}}</span>
+									<span *ngFor="let f of formations" class="badge" [style.background-color]="getColorFormation(f.codeFormation)" placement="top" [ngbTooltip]="f.libelleFormationLong">{{f.libelleFormation}}</span>
 								</div>
 							</td>
 						</tr>
-						<ng-container *ngFor="let kj of objectKeys(mois[km].jours); let last = last">
+						<ng-container *ngFor="let kj of objectKeys(mois[km].jours); let firstD = first; let last = last">
 							<tr>
-								<td class="col_day">{{mois[km].jours[kj].lettre}}</td>
+								<td class="col_day">
+									<a *ngIf="(firstM && firstD) || mois[km].jours[kj].lettre == 'l'" [name]="km + '-' + kj"></a>
+									{{mois[km].jours[kj].lettre}}
+								</td>
 								<td class="col_num">{{mois[km].jours[kj].jour}}</td>
 								<td class="col_plann" width="50%">
-									<span *ngIf="mois[km].jours[kj].cplace != null" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
+									<span *ngIf="mois[km].jours[kj].cplace != null" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="mois[km].jours[kj].cplace.libelleModule" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
 								</td>
 								<td class="col_cours">
-									<span *ngFor="let c of mois[km].jours[kj].cours" (dblclick)="placementCours(c)" [style.background-color]="getColorLieuFormation(c.codeLieu)" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
+									<span *ngFor="let c of mois[km].jours[kj].cours" (dblclick)="placementCours(c)" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="c.libelleModule" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
 								</td>
 							</tr>
 							<tr *ngIf="!last && mois[km].jours[kj].lettre == 'v'"><td colspan="4" class="row_separator"></td></tr>
