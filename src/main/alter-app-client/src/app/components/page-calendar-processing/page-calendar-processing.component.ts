@@ -200,8 +200,6 @@ export class PageCalendarProcessingComponent implements OnInit {
       // ajout des cours
       this.mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
     }
-
-    console.log( this.semaines );
   }
 
   // placement d'un cours
