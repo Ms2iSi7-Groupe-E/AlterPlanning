@@ -88,26 +88,42 @@ export class PageCalendarProcessingComponent implements OnInit {
 
         // recupere les couleurs des lieux et des formations
         this.parameters.filter(p => p.key.startsWith("COURSE")).forEach((param) => {
-          this.colorsLieux.push( param );
+          this.colorsLieux.push( { "key" : param.key, "value" : param.value, "codeLieu" : "" } );
         });
         this.parameters.filter(p => p.key.startsWith("FORMATION")).forEach((param) => {
-          this.colorsFormations.push( param );
+          this.colorsFormations.push( { "key" : param.key, "value" : param.value, "codeFormation" : "" } );
         });
 
         // recupere le code de foramtion
         this.formations.forEach((f, index) => {
-          this.colorsFormations[ index ].codeFormation = f.codeFormation;
+          if ( index < 6 ) {
+            this.colorsFormations[ index ].codeFormation = f.codeFormation;
+          } else {
+
+            // generation tournante d'une couleur
+            this.colorsFormations.push( { "key" : "FORMATION_COLOR_" + ( index + 1 ),
+              "value" : this.colorsFormations[ index % 6 ].value, "codeFormation" : f.codeFormation } );
+          }
         });
 
         // pour tous les lieux
         let iIndexColorLieu = 0;
+        let iCountLieux = 0;
         this.calendar.constraints.forEach((c) => {
           if ( c.constraintType !== "LIEUX" ) {
             return;
           }
+          iCountLieux++;
 
           // recupere le code du lieu
-          this.colorsLieux[ iIndexColorLieu ].codeLieu = c.constraintValue;
+          if ( iIndexColorLieu < 6 ) {
+            this.colorsLieux[ iIndexColorLieu ].codeLieu = c.constraintValue;
+          } else {
+
+            // generation tournante d'une couleur
+            this.colorsLieux.push( { "key" : "COURSE_COLOR_" + ( iIndexColorLieu + 1 ),
+              "value" : this.colorsLieux[ iIndexColorLieu % 6 ].value, "codeLieu" : c.constraintValue } );
+          }
           iIndexColorLieu++;
 
           // recupere les informations du lieux
@@ -119,12 +135,19 @@ export class PageCalendarProcessingComponent implements OnInit {
             },
             errL => {
               console.error(errL);
+            },
+            () => {
+              iCountLieux--;
+
+              // si c'est le dernier lieu
+              if ( iCountLieux === 0 ) {
+
+                // generation des cours
+                this.generationCours();
+              }
             }
           );
         });
-
-        // generation des cours
-        this.generationCours();
       },
       err => {
         console.error(err);
@@ -153,6 +176,8 @@ export class PageCalendarProcessingComponent implements OnInit {
     });
 
     // pour tous les jours de la periode du calendrier
+    const mois = [];
+    const semaines = [];
     for ( let iDay = iJourMin; iDay < iJourMax; iDay += 86400 ) {
       const oDay = moment.unix( iDay );
       const sKeyMonth = oDay.format( "YYYY-MM" );
@@ -165,21 +190,21 @@ export class PageCalendarProcessingComponent implements OnInit {
       }
 
       // determine si c'est une nouvelle semaine
-      if ( this.semaines.length === 0 || iNumDay === 0 ) {
-        this.semaines.push( { "jours": [], "class" : "select_empty", "anchor" : sKeyMonth + '-' + sKeyDay } );
+      if ( semaines.length === 0 || iNumDay === 0 ) {
+        semaines.push( { "jours": [], "class" : "select_empty", "anchor" : sKeyMonth + '-' + sKeyDay } );
       }
 
       // positionne le jour dans la semaine
-      this.semaines[ this.semaines.length - 1 ].jours.push( sKeyMonth + '-' + sKeyDay );
+      semaines[ semaines.length - 1 ].jours.push( sKeyMonth + '-' + sKeyDay );
 
       // determine le mois existe
-      if ( !(sKeyMonth in this.mois) ) {
-        this.mois[ sKeyMonth ] = { "libelle": oDay.format( "MMMM" ), "jours": [] };
+      if ( !(sKeyMonth in mois) ) {
+        mois[ sKeyMonth ] = { "libelle": oDay.format( "MMMM" ), "jours": [], "lieux": [], "formations": [] };
       }
 
       // determine si le jour du mois existe
-      if ( !(sKeyDay in this.mois[ sKeyMonth ][ "jours" ]) ) {
-        this.mois[ sKeyMonth ][ "jours" ][ sKeyDay ] = { "lettre": oDay.format( "ddd" ).substring(0, 1), "jour": sKeyDay,
+      if ( !(sKeyDay in mois[ sKeyMonth ][ "jours" ]) ) {
+        mois[ sKeyMonth ][ "jours" ][ sKeyDay ] = { "lettre": oDay.format( "ddd" ).substring(0, 1), "jour": sKeyDay,
         "cours": [], "cplace": null };
       } else {
 
@@ -193,13 +218,42 @@ export class PageCalendarProcessingComponent implements OnInit {
         const iDateDebut = parseInt( moment(c.debut).format("X"), 10 );
         const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
         if ( iDay >= iDateDebut && iDay <= ( iDateFin - 86400 ) ) {
-          cours.push( c );
+
+          // determine si un cours similaire existe sur le meme lieu
+          const cj = cours.find( fcj => {
+            return fcj.codeLieu.toString() === c.codeLieu.toString() && fcj.idCours === c.idCours;
+          });
+          if ( !cj ) {
+            cours.push( c );
+          }
         }
       });
 
       // ajout des cours
-      this.mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
+      mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
+
+      // pour tous les cours du mois
+      cours.forEach((c) => {
+
+        // determine la formation existe dans ce mois
+        const isFormationMois = mois[ sKeyMonth ][ "formations" ].find( f => {
+          return c.codeFormation === f.codeFormation;
+        } );
+        if ( !isFormationMois ) {
+          mois[ sKeyMonth ][ "formations" ].push( this.formations.filter( f => f.codeFormation === c.codeFormation )[ 0 ] );
+        }
+
+        // determine les lieux du mois
+        const isLieuMois = mois[ sKeyMonth ][ "lieux" ].find( l => {
+          return c.codeLieu.toString() === l.codeLieu.toString();
+        } );
+        if ( !isLieuMois ) {
+          mois[ sKeyMonth ][ "lieux" ].push( this.lieux.filter( l => l.codeLieu.toString() === c.codeLieu.toString() )[ 0 ] );
+        }
+      });
     }
+    this.mois = mois;
+    this.semaines = semaines;
   }
 
   // placement d'un cours
@@ -311,5 +365,16 @@ export class PageCalendarProcessingComponent implements OnInit {
   clickSemaine( s ) {
     document.getElementsByName( s.anchor )[ 0 ].scrollIntoView();
     window.scrollTo( 0, window.scrollY - 60 );
+  }
+
+  // traitement des redimentionnements
+  onResizeWindow(e) {
+
+    // determine la taille d'un element
+    const iSizeOneWeek = ( window.innerHeight - 250 ) / this.semaines.length;
+    const divs = document.querySelectorAll("div.select_empty, div.select_week");
+    for ( let i = 0; i < divs.length; i++ ) {
+      divs[ i ][ "style" ].height = iSizeOneWeek + "px";
+    }
   }
 }
