@@ -4,13 +4,13 @@
     position: sticky;
     top: 70px;
 }
-.select_empty, .select_week{
+.select_empty, .select_week, .select_week_empty{
     cursor: pointer;
 }
-.select_empty:hover, .select_week:hover{
+.select_empty:hover, .select_week:hover, .select_week_empty:hover{
     background-color:#8eefff;
 }
-.select_empty:not(:last-child),.select_week:not(:last-child){
+.select_empty:not(:last-child),.select_week:not(:last-child),.select_week_empty:not(:last-child){
     border-bottom:1px solid #ccc;
 }
 .select_empty{
@@ -18,6 +18,10 @@
 }
 .select_week{
     background-color:#afff96;
+    height:10px;
+}
+.select_week_empty{
+    background-color:#e8e8e8;
     height:10px;
 }
 .col_title{

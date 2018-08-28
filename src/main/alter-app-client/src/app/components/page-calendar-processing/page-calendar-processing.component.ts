@@ -196,7 +196,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       }
 
       // positionne le jour dans la semaine
-      semaines[ semaines.length - 1 ].jours.push( sKeyMonth + '-' + sKeyDay );
+      semaines[ semaines.length - 1 ].jours.push( { "anneeMois": sKeyMonth, "jour": sKeyDay } );
 
       // determine le mois existe
       if ( !(sKeyMonth in mois) ) {
@@ -256,6 +256,19 @@ export class PageCalendarProcessingComponent implements OnInit {
         }
       });
     }
+
+    // pour toutes les semaines, determine si il y a des semaines sans jour
+    semaines.forEach( s => {
+      let iNbrCours = 0;
+      s.jours.forEach( sj => {
+        iNbrCours += mois[ sj.anneeMois ][ "jours" ][ sj.jour ][ "cours" ].length;
+      });
+
+      // si il n'y a pas de cours cette semaine
+      if ( iNbrCours === 0 ) {
+        s.class = "select_week_empty";
+      }
+    });
     this.mois = mois;
     this.semaines = semaines;
     this.afficher = true;
@@ -283,7 +296,8 @@ export class PageCalendarProcessingComponent implements OnInit {
         mois[km].jours[kj].cours.forEach( cj => {
 
           // si c'est le cours concerne pas le deplacement
-          if ( cj.idCours === c.idCours && cj.codeLieu.toString() === c.codeLieu.toString() ) {
+          if ( cj.idCours === c.idCours && cj.codeLieu.toString() === c.codeLieu.toString()
+              && cj.codeFormation === c.codeFormation ) {
             bUpdateCours = true;
 
             // placement du cours
@@ -293,8 +307,8 @@ export class PageCalendarProcessingComponent implements OnInit {
             this.semaines.forEach( s => {
 
               // determine si le jour et contenu dans cette semaine
-              const sj = s.jours.find( j => {
-                return j === (km + '-' + kj);
+              const sj = s.jours.find( ji => {
+                return ji.anneeMois === km && ji.jour === kj;
               });
               if ( sj ) {
                 s.class = 'select_week';
@@ -322,6 +336,8 @@ export class PageCalendarProcessingComponent implements OnInit {
   deplacementCours(c) {
     c = Object.assign( {}, c );
 
+    console.log( c );
+
     // pour tous les mois
     const mois = Object.assign( {}, this.mois );
     Object.keys(mois).forEach( km => {
@@ -331,7 +347,8 @@ export class PageCalendarProcessingComponent implements OnInit {
 
         // determine si le jour contient le cours a deplacer
         if ( mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.idCours === c.idCours
-            && mois[km].jours[kj].cplace.codeLieu.toString() === c.codeLieu.toString()) {
+            && mois[km].jours[kj].cplace.codeLieu.toString() === c.codeLieu.toString()
+            && mois[km].jours[kj].cplace.codeFormation === c.codeFormation ) {
 
           mois[km].jours[kj].cours.push( c );
           mois[km].jours[kj].cplace = null;
@@ -340,8 +357,8 @@ export class PageCalendarProcessingComponent implements OnInit {
           this.semaines.forEach( s => {
 
             // determine si le jour et contenu dans cette semaine
-            const sj = s.jours.find( j => {
-              return j === (km + '-' + kj);
+            const sj = s.jours.find( ji => {
+              return ji.anneeMois === km && ji.jour === kj;
             });
             if ( sj ) {
               s.class = 'select_empty';
@@ -374,10 +391,23 @@ export class PageCalendarProcessingComponent implements OnInit {
    return color ? color.value : '';
   }
 
+  // recupere la description d'un cours pour le tootip
+  getDescCours( c ) {
+    const lieu = this.lieux.find( l => l.codeLieu.toString() === c.codeLieu.toString() );
+    const formation = this.formations.find( f => f.codeFormation === c.codeFormation );
+    return c.libelleModule + ', ' + formation.libelleFormation + ', ' + lieu.libelle;
+  }
+
   // click sur une semaine
   clickSemaine( s ) {
     document.getElementsByName( s.anchor )[ 0 ].scrollIntoView();
     window.scrollTo( 0, window.scrollY - 60 );
+  }
+
+  // evenement d'information, sur le click d'un cours
+  onClick(e) {
+
+    console.log( e );
   }
 
   // traitement des redimentionnements
@@ -385,7 +415,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
     // determine la taille d'un element
     const iSizeOneWeek = ( window.innerHeight - 250 ) / this.semaines.length;
-    const divs = document.querySelectorAll("div.select_empty, div.select_week");
+    const divs = document.querySelectorAll("div.select_empty, div.select_week, div.select_week_empty");
     for ( let i = 0; i < divs.length; i++ ) {
       divs[ i ][ "style" ].height = iSizeOneWeek + "px";
     }

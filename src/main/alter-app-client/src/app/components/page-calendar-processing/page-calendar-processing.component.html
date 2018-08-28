@@ -1,4 +1,4 @@
-<div class="container" (window:resize)="onResizeWindow($e)">
+<div class="container" (window:resize)="onResizeWindow($e)" (click)="onClick(null)">
 	<div *ngIf="error" class="alert alert-danger">
 		{{ error }}
 	</div>
@@ -20,30 +20,30 @@
 				<table class="tbl_detail" width="100%" border="1" style="border:1px #ccc;border-radius:3px;">
 					<tbody *ngFor="let km of objectKeys(mois); let firstM = first;">
 						<tr>
-							<td class="col_title" colspan="3">{{mois[km].libelle}}</td>
-							<td class="col_right">
-								<div>
+							<td class="col_title" [attr.colspan]="(mois[km].lieux.length + mois[km].formations.length == 0) ? 4 : 3">{{mois[km].libelle}}</td>
+							<td class="col_right" *ngIf="(mois[km].lieux.length + mois[km].formations.length) > 0">
+								<div *ngIf="mois[km].lieux.length > 0">
 									Lieux :
 									<span *ngFor="let l of mois[km].lieux" class="badge" [style.background-color]="getColorLieuFormation(l.codeLieu)" placement="top" [ngbTooltip]="l.libelleLieuLong">{{l.libelle}}</span>
 								</div>
-								<div>
+								<div *ngIf="mois[km].formations.length > 0">
 									Formations :
 									<span *ngFor="let f of mois[km].formations" class="badge" [style.background-color]="getColorFormation(f.codeFormation)" placement="top" [ngbTooltip]="f.libelleFormationLong">{{f.libelleFormation}}</span>
 								</div>
 							</td>
 						</tr>
 						<ng-container *ngFor="let kj of objectKeys(mois[km].jours); let firstD = first; let last = last">
-							<tr>
+							<tr [style.background-color]="( mois[km].jours[kj].cours.length == 0 && mois[km].jours[kj].cplace == null ) ? '#e8e8e8' : '#ffffff'">
 								<td class="col_day" width="20px">
 									<a *ngIf="(firstM && firstD) || mois[km].jours[kj].lettre == 'l'" [name]="km + '-' + kj"></a>
 									{{mois[km].jours[kj].lettre}}
 								</td>
 								<td class="col_num" width="20px">{{mois[km].jours[kj].jour}}</td>
 								<td class="col_plann" width="300px" align="center">
-									<span *ngIf="mois[km].jours[kj].cplace != null" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="mois[km].jours[kj].cplace.libelleModule" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
+									<span *ngIf="mois[km].jours[kj].cplace != null" (click)="onClick(mois[km].jours[kj].cplace)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
 								</td>
 								<td class="col_cours">
-									<span *ngFor="let c of mois[km].jours[kj].cours" (dblclick)="placementCours(c)" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="c.libelleModule + ' - ' + c.codeFormation + ' - ' + c.codeLieu" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
+									<span *ngFor="let c of mois[km].jours[kj].cours" (click)="onClick(c)" (dblclick)="placementCours(c)" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
 								</td>
 							</tr>
 							<tr *ngIf="!last && mois[km].jours[kj].lettre == 'v'"><td colspan="4" class="row_separator"></td></tr>
