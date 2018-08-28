@@ -24,6 +24,7 @@ export class PageCalendarProcessingComponent implements OnInit {
   cours = [];
   mois = [];
   semaines = [];
+  afficher = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -219,11 +220,14 @@ export class PageCalendarProcessingComponent implements OnInit {
         const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
         if ( iDay >= iDateDebut && iDay <= ( iDateFin - 86400 ) ) {
 
-          // determine si un cours similaire existe sur le meme lieu
+          // determine si un cours similaire existe sur le meme lieu pour le meme jour
           const cj = cours.find( fcj => {
-            return fcj.codeLieu.toString() === c.codeLieu.toString() && fcj.idCours === c.idCours;
+            return fcj.codeLieu.toString() === c.codeLieu.toString() && fcj.idCours === c.idCours
+              && fcj.anneeMois === c.anneeMois && fcj.jour === c.jour;
           });
           if ( !cj ) {
+            c.anneeMois = sKeyMonth;
+            c.jour = sKeyDay;
             cours.push( c );
           }
         }
@@ -254,33 +258,36 @@ export class PageCalendarProcessingComponent implements OnInit {
     }
     this.mois = mois;
     this.semaines = semaines;
+    this.afficher = true;
   }
 
   // placement d'un cours
   placementCours(c) {
+    c = Object.assign( {}, c );
+
+    // si il y a un cours deja place sur ce jour
+    if ( this.mois[ c.anneeMois ].jours[ c.jour ].cplace != null ) {
+      this.deplacementCours( this.mois[ c.anneeMois ].jours[ c.jour ].cplace );
+    }
 
     // pour tous les mois
-    Object.keys(this.mois).forEach( km => {
+    const mois = Object.assign( {}, this.mois );
+    Object.keys(mois).forEach( km => {
 
       // pour tous les jours du mois
-      Object.keys(this.mois[km].jours).forEach( kj => {
+      Object.keys(mois[km].jours).forEach( kj => {
 
         // pour tous les cours du jour
         let bUpdateCours = false;
         const newCours = [];
-        this.mois[km].jours[kj].cours.forEach( cj => {
+        mois[km].jours[kj].cours.forEach( cj => {
 
           // si c'est le cours concerne pas le deplacement
-          if ( cj.idCours === c.idCours ) {
+          if ( cj.idCours === c.idCours && cj.codeLieu.toString() === c.codeLieu.toString() ) {
             bUpdateCours = true;
 
-            // si il y a un cours deja place
-            if ( this.mois[km].jours[kj].cplace != null ) {
-              this.deplacementCours( this.mois[km].jours[kj].cplace );
-            }
-
             // placement du cours
-            this.mois[km].jours[kj].cplace = c;
+            mois[km].jours[kj].cplace = cj;
 
             // recherche la semaine concernee
             this.semaines.forEach( s => {
@@ -303,26 +310,31 @@ export class PageCalendarProcessingComponent implements OnInit {
 
         // si les cours de ce jour doivent etre mise a jour
         if ( bUpdateCours ) {
-          this.mois[km].jours[kj].cours = newCours;
+          mois[km].jours[kj].cours = newCours;
           bUpdateCours = false;
         }
       });
     });
+    this.mois = mois;
   }
 
   // deplacement d'un cours
   deplacementCours(c) {
+    c = Object.assign( {}, c );
 
     // pour tous les mois
-    Object.keys(this.mois).forEach( km => {
+    const mois = Object.assign( {}, this.mois );
+    Object.keys(mois).forEach( km => {
 
       // pour tous les jours du mois
-      Object.keys(this.mois[km].jours).forEach( kj => {
+      Object.keys(mois[km].jours).forEach( kj => {
 
         // determine si le jour contient le cours a deplacer
-        if ( this.mois[km].jours[kj].cplace != null && this.mois[km].jours[kj].cplace.idCours === c.idCours ) {
-          this.mois[km].jours[kj].cours.push( c );
-          this.mois[km].jours[kj].cplace = null;
+        if ( mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.idCours === c.idCours
+            && mois[km].jours[kj].cplace.codeLieu.toString() === c.codeLieu.toString()) {
+
+          mois[km].jours[kj].cours.push( c );
+          mois[km].jours[kj].cplace = null;
 
           // recherche la semaine concernee
           this.semaines.forEach( s => {
@@ -338,6 +350,7 @@ export class PageCalendarProcessingComponent implements OnInit {
         }
       });
     });
+    this.mois = mois;
   }
 
   // retourne les cles d'un tableau

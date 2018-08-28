@@ -3,7 +3,7 @@
 		{{ error }}
 	</div>
 
-	<div *ngIf="!error">
+	<div *ngIf="!error && afficher">
 		<div class="row">
 			<button type="button" class="btn btn-outline-success" style="vertical-align: baseline;margin-right: 20px;" onclick="">
 				<i class="fas fa-chevron-left"></i> Retour</button>
@@ -53,7 +53,10 @@
 			</div>
 		</div>
 	</div>
-	<nav class="navbar fixed-bottom navbar-light bg-light">
+	<nav *ngIf="afficher" class="navbar fixed-bottom navbar-light bg-light">
 		Notifications de bas de page
 	</nav>
+	<div *ngIf="!afficher">
+		Chargement du calendrier
+	</div>
 </div>
