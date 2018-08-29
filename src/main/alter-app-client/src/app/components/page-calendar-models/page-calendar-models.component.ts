@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs/Subject";
 import {DatatableFrench} from "../../helper/datatable-french";
 import {CalendarModelService} from "../../services/calendar-model.service";
+import {CalendarModelNameComponent} from "../modal/calendar-model-name/calendar-model-name.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CalendarModelModel} from "../../models/calendar-model.model";
+import {DataTableDirective} from "angular-datatables";
 
 @Component({
   selector: 'app-page-calendar-models',
@@ -10,11 +14,15 @@ import {CalendarModelService} from "../../services/calendar-model.service";
 })
 export class PageCalendarModelsComponent implements OnInit {
 
-  models = [];
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<void> = new Subject();
 
-  constructor(private calendarModelService: CalendarModelService) {
+  models = [];
+
+  constructor(private modalService: NgbModal,
+              private calendarModelService: CalendarModelService) {
     this.dtOptions = {
       order: [],
       columnDefs: [{targets: 'no-sort', orderable: false}],
@@ -34,7 +42,29 @@ export class PageCalendarModelsComponent implements OnInit {
     if (answer) {
       this.calendarModelService.deleteModel(model.id).subscribe(() => {
         this.models = this.models.filter(m => m.id !== model.id);
+        this.updateDatatable();
       }, console.error);
     }
+  }
+
+  duplicateModel(model) {
+    const modalRef = this.modalService.open(CalendarModelNameComponent, { size: 'lg' });
+    modalRef.componentInstance.validate.subscribe(res => {
+      const body = new CalendarModelModel();
+      body.name = res.name;
+      this.calendarModelService.duplicateCalendarModel(model.id, body).subscribe(newModel => {
+        this.models.push(newModel);
+        this.updateDatatable();
+      }, console.error);
+    });
+  }
+
+  updateDatatable() {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 }
