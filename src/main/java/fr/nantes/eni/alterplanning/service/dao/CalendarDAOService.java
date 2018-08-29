@@ -59,6 +59,10 @@ public class CalendarDAOService {
         calendarRepository.deleteById(id);
     }
 
+    public boolean existById(final Integer id) {
+        return calendarRepository.existsById(id);
+    }
+
     @Transactional("mysqlTransactionManager")
     public void deleteCalendarAndCoursAndConstraints(final Integer id) {
         calendarCoursRepository.deleteByCalendar(id);

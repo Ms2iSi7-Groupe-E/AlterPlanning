@@ -9,6 +9,7 @@ import {UserService} from "../../services/user.service";
 })
 export class NavbarComponent implements OnInit {
 
+  isCollapsed = true;
   user;
 
   constructor(private authService: AuthService, private userService: UserService) { }

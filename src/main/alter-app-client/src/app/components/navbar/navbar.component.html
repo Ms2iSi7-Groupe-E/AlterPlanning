@@ -1,8 +1,13 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
   <a class="navbar-brand">
     <i class="fa fa-home"></i> AlterPlanning
   </a>
-  <div class="collapse navbar-collapse">
+
+  <div class="navbar-collapse" [ngbCollapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/propose-calendar" routerLinkActive="active">

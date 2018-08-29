@@ -39,6 +39,7 @@ import {ColorPickerModule} from "ngx-color-picker";
 import {DataTablesModule} from "angular-datatables";
 import {HistoryService} from "./services/history.service";
 import {CalendarModelService} from "./services/calendar-model.service";
+import { CalendarModelNameComponent } from './components/modal/calendar-model-name/calendar-model-name.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {CalendarModelService} from "./services/calendar-model.service";
     DispenseElementComponent,
     PageCalendarProcessingComponent,
     PageCalendarDetailsComponent,
+    CalendarModelNameComponent,
   ],
   imports: [
     NgSelectModule,
@@ -91,6 +93,7 @@ import {CalendarModelService} from "./services/calendar-model.service";
   entryComponents: [
     AddElementComponent,
     DispenseElementComponent,
+    CalendarModelNameComponent
   ],
   bootstrap: [AppComponent]
 })

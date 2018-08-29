@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarStates} from "../../models/enums/calendar-states";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CalendarModelNameComponent} from "../modal/calendar-model-name/calendar-model-name.component";
+import {CalendarModelService} from "../../services/calendar-model.service";
+import {CalendarModelModel} from "../../models/calendar-model.model";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -15,7 +19,9 @@ export class PageCalendarDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private calendarService: CalendarService) { }
+              private modalService: NgbModal,
+              private calendarService: CalendarService,
+              private calendarModelService: CalendarModelService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(p => {
@@ -42,4 +48,15 @@ export class PageCalendarDetailsComponent implements OnInit {
     });
   }
 
+  registerAsModel() {
+    const modalRef = this.modalService.open(CalendarModelNameComponent, { size: 'lg' });
+    modalRef.componentInstance.validate.subscribe(res => {
+      const body = new CalendarModelModel();
+      body.idCalendar = this.calendar.id;
+      body.name = res.name;
+      this.calendarModelService.addCalendarModel(body).subscribe(() => {
+        this.calendar.isModel = true;
+      }, console.error);
+    });
+  }
 }

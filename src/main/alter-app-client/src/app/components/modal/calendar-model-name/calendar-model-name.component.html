@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title">Donner un nom au modèle de calendrier</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group row">
+    <label class="col-12 col-form-label">Nom du modèle :</label>
+    <div class="col-12">
+      <input type="text" class="form-control" [(ngModel)]="name" placeholder="nom du modèle">
+      <small class="font-italic text-danger" *ngIf="name.length > 0 && name.length < 5">Le nom doit contenir 5 caractères minimum</small>
+      <small class="font-italic text-danger" *ngIf="name.length > 50">Le nom doit contenir 50 caractères maximum</small>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-12">
+      <button class="btn btn-outline-primary"
+              [disabled]="name === '' || name.length > 50 || name.length < 5" (click)="clickOnValid()">Valider</button>
+    </div>
+  </div>
+</div>

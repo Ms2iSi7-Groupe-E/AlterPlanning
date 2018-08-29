@@ -9,10 +9,14 @@
            *ngIf="calendar"
            [href]="'/api/file/calendar/' + calendar.id + '/pdf'"
            target="_blank"><i class="far fa-file-pdf"></i> PDF</a>
+
         <a class="btn btn-outline-info"
            *ngIf="calendar"
            [href]="'/api/file/calendar/' + calendar.id + '/rtf'"
            target="_blank"><i class="far fa-file"></i> RTF</a>
+
+        <button class="btn btn-outline-secondary"
+           *ngIf="calendar && !calendar.isModel" (click)="registerAsModel()"><i class="far fa-bookmark"></i> Enregistrer comme modèle</button>
       </div>
       <div class="col-12 mt-3">
         <pre>{{ calendar | json }}</pre>
