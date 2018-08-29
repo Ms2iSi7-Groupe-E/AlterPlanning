@@ -8,5 +8,62 @@
 </div>
 <div class="modal-body">
   <div class="form-group row">
+    <label class="col-3 col-form-label">Libellé court :</label>
+    <div class="col-6">
+      <input type="text" class="form-control" placeholder="Libellé court">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-3 col-form-label">Libellé long :</label>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Libellé long">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-3 col-form-label">Début :</label>
+    <div class="col-4">
+      <input type="text" class="form-control" [(ngModel)]="selectedDateDebut" name="dateDebut" placeholder="yyyy-mm-dd"
+             ngbDatepicker #dpDebut="ngbDatepicker" (click)="dpDebut.toggle(); dpFin.close()" [maxDate]="selectedDateFin" navigation="arrows"/>
+    </div>
+    <button type="button" class="btn btn-outline-info" (click)="dpDebut.toggle(); dpFin.close()"><i class="fas fa-table"></i></button>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-3 col-form-label">Fin :</label>
+    <div class="col-4">
+      <input type="text" class="form-control" [(ngModel)]="selectedDateFin" name="dateFin" placeholder="yyyy-mm-dd"
+             ngbDatepicker #dpFin="ngbDatepicker" (click)="dpFin.toggle(); dpDebut.close()" [minDate]="selectedDateDebut" navigation="arrows"/>
+    </div>
+    <button type="button" class="btn btn-outline-info" (click)="dpFin.toggle(); dpDebut.close()"><i class="fas fa-table"></i></button>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-3 col-form-label">Volume Horaire :</label>
+    <div class="col-3">
+      <input type="text" class="form-control" placeholder="Volume Horaire">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-3 col-form-label">Lieu :</label>
+    <ng-select [items]="lieux"
+               [(ngModel)]="selectedLieux"
+               class="col-9"
+               bindLabel="libelle"
+               bindValue="codeLieu"
+               placeholder="Lieux"
+               notFoundText="Aucun lieu trouvé">
+    </ng-select>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-12">
+      <button class="btn"
+              [class.btn-outline-success]="action === ACTION_TYPE.CREATE"
+              [class.btn-outline-primary]="action === ACTION_TYPE.UPDATE"
+              (click)="clickOnSave()">{{button_title}}</button>
+    </div>
   </div>
 </div>

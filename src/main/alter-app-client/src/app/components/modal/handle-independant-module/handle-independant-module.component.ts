@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActionTypes} from "../../../models/enums/action-types";
+import {LieuService} from "../../../services/lieu.service";
 
 @Component({
   selector: 'app-handle-independant-module',
@@ -15,15 +16,27 @@ export class HandleIndependantModuleComponent implements OnInit {
   @Input() action: ActionTypes = ActionTypes.CREATE;
   @Input() independantModule = null;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  lieux = [];
+
+  selectedDateDebut = null;
+  selectedDateFin = null;
+  selectedLieux = [];
+
+  constructor(public activeModal: NgbActiveModal,
+              private lieuService: LieuService) {}
 
   ngOnInit() {
-    console.log('action', this.action);
-    console.log('independantModule', this.independantModule);
+    this.lieuService.getLieuxTeachningCourses().subscribe(res => {
+      this.lieux = res;
+    }, console.error);
   }
 
   get title(): string {
     return this.action === ActionTypes.UPDATE ? 'Modification' : 'Création';
+  }
+
+  get button_title() {
+    return this.action === ActionTypes.UPDATE ? 'Modifier le cours' : 'Creer le cours';
   }
 
   clickOnSave() {
