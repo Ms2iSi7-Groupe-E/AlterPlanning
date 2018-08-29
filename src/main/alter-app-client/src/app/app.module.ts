@@ -40,6 +40,7 @@ import {DataTablesModule} from "angular-datatables";
 import {HistoryService} from "./services/history.service";
 import {CalendarModelService} from "./services/calendar-model.service";
 import { CalendarModelNameComponent } from './components/modal/calendar-model-name/calendar-model-name.component';
+import { HandleIndependantModuleComponent } from './components/modal/handle-independant-module/handle-independant-module.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CalendarModelNameComponent } from './components/modal/calendar-model-na
     PageCalendarProcessingComponent,
     PageCalendarDetailsComponent,
     CalendarModelNameComponent,
+    HandleIndependantModuleComponent,
   ],
   imports: [
     NgSelectModule,
@@ -93,7 +95,8 @@ import { CalendarModelNameComponent } from './components/modal/calendar-model-na
   entryComponents: [
     AddElementComponent,
     DispenseElementComponent,
-    CalendarModelNameComponent
+    CalendarModelNameComponent,
+    HandleIndependantModuleComponent,
   ],
   bootstrap: [AppComponent]
 })

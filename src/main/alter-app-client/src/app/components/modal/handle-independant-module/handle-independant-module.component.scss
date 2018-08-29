@@ -1,0 +1,19 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.modal-header {
+  color: white;
+  border-radius: unset;
+
+  &.create {
+    background: $success;
+  }
+
+  &.update {
+    background: $primary;
+  }
+}
+
+.modal-footer {
+  justify-content: center;
+}
