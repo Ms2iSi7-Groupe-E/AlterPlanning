@@ -29,4 +29,12 @@ export class PageCalendarModelsComponent implements OnInit {
     }, console.error);
   }
 
+  deleteModel(model) {
+    const answer = confirm("Voulez-vous vraiment supprimer ce modèle de calendrier ?");
+    if (answer) {
+      this.calendarModelService.deleteModel(model.id).subscribe(() => {
+        this.models = this.models.filter(m => m.id !== model.id);
+      }, console.error);
+    }
+  }
 }

@@ -11,7 +11,13 @@ export class CalendarModelService {
 
   getModels(): Observable<any> {
     return this.http
-      .get('/api/calendar/models', {headers: AuthService.getHeaders()})
+      .get('/api/calendar/model', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
+  deleteModel(idCalendarModel: number): Observable<any> {
+    return this.http
+      .delete('/api/calendar/model/' + idCalendarModel, {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
 }

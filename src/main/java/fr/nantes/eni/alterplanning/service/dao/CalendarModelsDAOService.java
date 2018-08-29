@@ -23,11 +23,19 @@ public class CalendarModelsDAOService {
                 .collect(Collectors.toList());
     }
 
+    public CalendarModelEntity findById(int id) {
+        return repository.findById(id).orElse(null);
+    }
+
     public CalendarModelEntity create(final CalendarModelEntity entity) {
         return repository.save(entity);
     }
 
     public void delete(final int id) {
         repository.deleteById(id);
+    }
+
+    public List<CalendarModelEntity> findAllByIdCalendar(final int idCalendar) {
+        return repository.findAllByIdCalendar(idCalendar);
     }
 }
