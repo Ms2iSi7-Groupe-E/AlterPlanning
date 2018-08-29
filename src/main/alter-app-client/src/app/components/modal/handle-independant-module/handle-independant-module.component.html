@@ -10,14 +10,14 @@
   <div class="form-group row">
     <label class="col-3 col-form-label">Libellé court :</label>
     <div class="col-6">
-      <input type="text" class="form-control" placeholder="Libellé court">
+      <input type="text" class="form-control" placeholder="Libellé court" maxlength="20" [(ngModel)]="selectedLibCourt">
     </div>
   </div>
 
   <div class="form-group row">
     <label class="col-3 col-form-label">Libellé long :</label>
     <div class="col-9">
-      <input type="text" class="form-control" placeholder="Libellé long">
+      <input type="text" class="form-control" placeholder="Libellé long" maxlength="200" [(ngModel)]="selectedLibLong">
     </div>
   </div>
 
@@ -42,14 +42,14 @@
   <div class="form-group row">
     <label class="col-3 col-form-label">Volume Horaire :</label>
     <div class="col-3">
-      <input type="text" class="form-control" placeholder="Volume Horaire">
+      <input type="number" min="0" class="form-control" placeholder="Volume Horaire" [(ngModel)]="selectedVolumeHor">
     </div>
   </div>
 
   <div class="form-group row">
     <label class="col-3 col-form-label">Lieu :</label>
     <ng-select [items]="lieux"
-               [(ngModel)]="selectedLieux"
+               [(ngModel)]="selectedLieu"
                class="col-9"
                bindLabel="libelle"
                bindValue="codeLieu"
@@ -61,9 +61,10 @@
   <div class="row text-center">
     <div class="col-12">
       <button class="btn"
+              [disabled]="!formValid"
               [class.btn-outline-success]="action === ACTION_TYPE.CREATE"
               [class.btn-outline-primary]="action === ACTION_TYPE.UPDATE"
-              (click)="clickOnSave()">{{button_title}}</button>
+              (click)="clickOnSave()">{{buttonTitle}}</button>
     </div>
   </div>
 </div>

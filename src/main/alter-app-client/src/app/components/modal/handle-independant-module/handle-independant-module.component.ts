@@ -18,9 +18,12 @@ export class HandleIndependantModuleComponent implements OnInit {
 
   lieux = [];
 
+  selectedLibCourt = '';
+  selectedLibLong = '';
   selectedDateDebut = null;
   selectedDateFin = null;
-  selectedLieux = [];
+  selectedVolumeHor = 0;
+  selectedLieu = null;
 
   constructor(public activeModal: NgbActiveModal,
               private lieuService: LieuService) {}
@@ -35,12 +38,24 @@ export class HandleIndependantModuleComponent implements OnInit {
     return this.action === ActionTypes.UPDATE ? 'Modification' : 'Création';
   }
 
-  get button_title() {
+  get buttonTitle() {
     return this.action === ActionTypes.UPDATE ? 'Modifier le cours' : 'Creer le cours';
   }
 
+  get formValid() {
+    return this.selectedLibCourt !== '' && this.selectedLibLong !== ''
+      && this.selectedDateDebut != null && this.selectedDateFin != null
+      && this.selectedVolumeHor !== null && this.selectedLieu !== null;
+  }
+
   clickOnSave() {
-    // this.save.emit({name: this.name}); // TODO
+    this.save.emit({
+      libelleCourt: this.selectedLibCourt,
+      libelleLong: this.selectedLibLong,
+      dateDebut: new Date(this.selectedDateDebut.year, this.selectedDateDebut.month - 1, this.selectedDateDebut.day),
+      dateFin: new Date(this.selectedDateFin.year, this.selectedDateFin.month - 1, this.selectedDateFin.day),
+      lieu: this.selectedLieu,
+    });
     this.activeModal.dismiss('Cross click');
   }
 }
