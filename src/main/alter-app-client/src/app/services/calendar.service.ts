@@ -9,6 +9,12 @@ export class CalendarService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  getCoursForCalendarInGeneration(idCalendar: number): Observable<any> {
+    return this.http
+      .get('/api/calendar/' + idCalendar + '/cours-for-generate-calendar', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
   getCalendars(): Observable<any> {
     return this.http
       .get('/api/calendar', {headers: AuthService.getHeaders()})
