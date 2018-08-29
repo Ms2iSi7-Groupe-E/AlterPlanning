@@ -4,13 +4,13 @@
     position: sticky;
     top: 70px;
 }
-.select_empty, .select_week, .select_week_empty{
+.select_empty, .select_week, .select_week_empty, .select_week_info{
     cursor: pointer;
 }
-.select_empty:hover, .select_week:hover, .select_week_empty:hover{
+.select_empty:hover, .select_week:hover, .select_week_empty:hover, .select_week_info:hover{
     background-color:#8eefff;
 }
-.select_empty:not(:last-child),.select_week:not(:last-child),.select_week_empty:not(:last-child){
+.select_empty:not(:last-child),.select_week:not(:last-child),.select_week_empty:not(:last-child),.select_week_info:not(:last-child){
     border-bottom:1px solid #ccc;
 }
 .select_empty{
@@ -22,6 +22,10 @@
 }
 .select_week_empty{
     background-color:#e8e8e8;
+    height:10px;
+}
+.select_week_info{
+    background-color:#f4ac41;
     height:10px;
 }
 .col_title{

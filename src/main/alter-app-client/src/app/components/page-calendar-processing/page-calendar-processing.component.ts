@@ -25,6 +25,7 @@ export class PageCalendarProcessingComponent implements OnInit {
   mois = [];
   semaines = [];
   afficher = false;
+  messageNotification = '';
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -192,7 +193,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // determine si c'est une nouvelle semaine
       if ( semaines.length === 0 || iNumDay === 0 ) {
-        semaines.push( { "jours": [], "class" : "select_empty", "anchor" : sKeyMonth + '-' + sKeyDay } );
+        semaines.push( { "jours": [], "class" : "select_empty",  "hiddenClass": "", "anchor" : sKeyMonth + '-' + sKeyDay } );
       }
 
       // positionne le jour dans la semaine
@@ -200,13 +201,14 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // determine le mois existe
       if ( !(sKeyMonth in mois) ) {
-        mois[ sKeyMonth ] = { "libelle": oDay.format( "MMMM" ), "jours": [], "lieux": [], "formations": [] };
+        mois[ sKeyMonth ] = { "libelle": oDay.format( "MMMM" ), "annee": oDay.format( "YYYY" ),
+          "jours": [], "lieux": [], "formations": [] };
       }
 
       // determine si le jour du mois existe
       if ( !(sKeyDay in mois[ sKeyMonth ][ "jours" ]) ) {
         mois[ sKeyMonth ][ "jours" ][ sKeyDay ] = { "lettre": oDay.format( "ddd" ).substring(0, 1), "jour": sKeyDay,
-        "cours": [], "cplace": null };
+        "cours": [], "cplace": null, "color": "#ffffff" };
       } else {
 
         // ce jour est deja pris en compte
@@ -235,6 +237,9 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // ajout des cours
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
+      if ( cours.length === 0 ) {
+        mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "color" ] = "#e8e8e8";
+      }
 
       // pour tous les cours du mois
       cours.forEach((c) => {
@@ -330,13 +335,12 @@ export class PageCalendarProcessingComponent implements OnInit {
       });
     });
     this.mois = mois;
+    this.unselectCours();
   }
 
   // deplacement d'un cours
   deplacementCours(c) {
     c = Object.assign( {}, c );
-
-    console.log( c );
 
     // pour tous les mois
     const mois = Object.assign( {}, this.mois );
@@ -368,6 +372,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       });
     });
     this.mois = mois;
+    this.unselectCours();
   }
 
   // retourne les cles d'un tableau
@@ -405,9 +410,88 @@ export class PageCalendarProcessingComponent implements OnInit {
   }
 
   // evenement d'information, sur le click d'un cours
-  onClick(e) {
+  onClick( e ) {
 
-    console.log( e );
+    // si c'est un click sur un element pris en charge
+    if ( [ 'badge cours_pos', 'select_empty', 'select_week', 'select_week_empty' ].indexOf( e.target.className ) !== -1 ) {
+      return;
+    }
+
+    // deselection des cours
+    this.unselectCours();
+
+    // desactive la propagation de l'evenement
+    e.stopPropagation();
+  }
+
+  // selection d'un cours
+  selectCours( c ) {
+    if ( this.messageNotification !== '' ) {
+      this.unselectCours();
+    }
+    this.messageNotification = c.libelleModule + ', ' + c.libelleFormationLong;
+
+    // pour tous les cours similaires
+    const mois = Object.assign( {}, this.mois );
+    Object.keys(mois).forEach( km => {
+
+      // pour tous les jours du mois
+      Object.keys(mois[km].jours).forEach( kj => {
+
+        // ce jour contient il des cours similaires ?
+        const coursPresent = mois[km].jours[kj].cours.find( ji => {
+          return ji.idCours === c.idCours;
+        });
+
+        // determine si le jour contient le cours a deplacer
+        if ( coursPresent || ( mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.idCours === c.idCours ) ) {
+          mois[km].jours[kj].color = "#f4ac41";
+
+          // recherche la semaine concernee
+          this.semaines.forEach( s => {
+
+            // determine si le jour et contenu dans cette semaine
+            const sj = s.jours.find( ji => {
+              return ji.anneeMois === km && ji.jour === kj;
+            });
+            if ( sj && s.class !== 'select_week_info' ) {
+              s.hiddenClass = s.class;
+              s.class = 'select_week_info';
+            }
+          });
+        }
+      });
+    });
+    this.mois = mois;
+  }
+
+  // deselection d'un cours
+  unselectCours() {
+    if ( this.messageNotification === '' ) {
+      return;
+    }
+    this.messageNotification = '';
+
+    // pour tous les cours similaires
+    const mois = Object.assign( {}, this.mois );
+    Object.keys(mois).forEach( km => {
+
+      // pour tous les jours du mois
+      Object.keys(mois[km].jours).forEach( kj => {
+
+        // determine la couleur de fond
+        mois[km].jours[kj].color = mois[km].jours[kj].cours.length > 0 || mois[km].jours[kj].cplace != null ? "#ffffff" : "#e8e8e8";
+      });
+    });
+    this.mois = mois;
+
+    // pour toutes les semaines;
+    this.semaines.forEach( s => {
+      if ( s.hiddenClass !== '' ) {
+        s.class = s.hiddenClass;
+        s.hiddenClass = '';
+      }
+    });
   }
 
   // traitement des redimentionnements
@@ -415,7 +499,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
     // determine la taille d'un element
     const iSizeOneWeek = ( window.innerHeight - 250 ) / this.semaines.length;
-    const divs = document.querySelectorAll("div.select_empty, div.select_week, div.select_week_empty");
+    const divs = document.querySelectorAll("div.select_empty, div.select_week, div.select_week_empty, div.select_week_info");
     for ( let i = 0; i < divs.length; i++ ) {
       divs[ i ][ "style" ].height = iSizeOneWeek + "px";
     }
