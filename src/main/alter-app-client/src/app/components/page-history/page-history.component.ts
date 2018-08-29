@@ -14,19 +14,18 @@ export class PageHistoryComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<void> = new Subject();
 
-  constructor(private historyService: HistoryService) { }
-
-  ngOnInit() {
+  constructor(private historyService: HistoryService) {
     this.dtOptions = {
       order: [],
       columnDefs: [{targets: 'no-sort', orderable: false}],
       language: DatatableFrench.getLanguages(),
     };
+  }
 
+  ngOnInit() {
     this.historyService.getAllHistory().subscribe(res => {
       this.histories = res;
       this.dtTrigger.next();
     }, console.error);
   }
-
 }
