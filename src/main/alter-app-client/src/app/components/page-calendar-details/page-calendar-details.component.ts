@@ -92,7 +92,7 @@ export class PageCalendarDetailsComponent implements OnInit {
   }
 
   changeStateToValidate() {
-    const answer = confirm("Voulez-vous vraiment valider ce calendrier ?");
+    const answer = confirm("Voulez-vous valider ce calendrier ?");
     // TODO
   }
 
