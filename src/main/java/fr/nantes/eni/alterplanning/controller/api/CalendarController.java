@@ -16,8 +16,10 @@ import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
 import fr.nantes.eni.alterplanning.model.simplebean.ExcludeConstraint;
+import fr.nantes.eni.alterplanning.model.simplebean.LineCalendarGeneration;
 import fr.nantes.eni.alterplanning.service.dao.*;
 import fr.nantes.eni.alterplanning.util.AlterDateUtil;
+import fr.nantes.eni.alterplanning.util.CalendarExportUtil;
 import fr.nantes.eni.alterplanning.util.HistoryUtil;
 import org.apache.commons.collections.ListUtils;
 import org.springframework.http.HttpStatus;
@@ -53,6 +55,9 @@ public class CalendarController {
 
     @Resource
     private CoursDAOService coursDAOService;
+
+    @Resource
+    private CalendarExportUtil calendarExportUtil;
 
     @Resource
     private StagiaireDAOService stagiaireDAOService;
@@ -145,6 +150,25 @@ public class CalendarController {
 
         return calendarDetailResponse;
     }
+
+    @GetMapping("/{idCalendar}/lines")
+    public List<LineCalendarGeneration> getCalendarLinesById(@PathVariable(name = "idCalendar") int id)
+            throws RestResponseException {
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        } else if (c.getState() == CalendarState.DRAFT) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état de brouillon");
+        }
+
+        final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
+                .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
+        final List<CoursComplet> coursComplets = coursDAOService.findAllCoursCompletsByIds(idsCours);
+
+        return calendarExportUtil.getCalendarLines(coursComplets);
+    }
+
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)

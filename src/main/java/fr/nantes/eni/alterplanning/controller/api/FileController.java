@@ -15,6 +15,7 @@ import fr.nantes.eni.alterplanning.model.simplebean.LineCalendarGeneration;
 import fr.nantes.eni.alterplanning.service.TemplateService;
 import fr.nantes.eni.alterplanning.service.dao.*;
 import fr.nantes.eni.alterplanning.util.AlterDateUtil;
+import fr.nantes.eni.alterplanning.util.CalendarExportUtil;
 import fr.nantes.eni.alterplanning.util.MediaTypeUtil;
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
@@ -72,7 +73,7 @@ public class FileController {
     private TitreDAOService titreDAOService;
 
     @Resource
-    private LieuDAOService lieuDAOService;
+    private CalendarExportUtil calendarExportUtil;
 
     @Resource
     private EntrepriseDAOService entrepriseDAOService;
@@ -93,7 +94,6 @@ public class FileController {
                     "les cours n'ont pas encore été positionnés");
         }
 
-        final List<LieuEntity> lieux = lieuDAOService.findAll();
         final List<CalendarConstraintEntity> constraintEntities = calendarConstraintDAOService.findByCalendarId(id);
         final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
                 .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
@@ -116,7 +116,7 @@ public class FileController {
         Date startDate = c.getStartDate();
         Date endDate = c.getEndDate();
         int dureeEnHeureFormation = coursComplets.stream().mapToInt(CoursComplet::getDureeReelleEnHeures).sum();
-        final List<LineCalendarGeneration> lines = new ArrayList<>();
+        final List<LineCalendarGeneration> lines = calendarExportUtil.getCalendarLines(coursComplets);
 
         // Remplissage des variables pour le template
         if (c.getStagiaireId() != null) {
@@ -144,32 +144,6 @@ public class FileController {
             titreLong = formationEntity.getLibelleLong();
             titreCourt = titreEntity.getLibelleLong();
             niveau = titreEntity.getNiveau();
-        }
-
-        for (int i = 0; i < coursComplets.size(); i++) {
-            final CoursComplet co = coursComplets.get(i);
-            LineCalendarGeneration li = new LineCalendarGeneration();
-            li.setLibelle(co.getLibelleModule());
-            li.setLieu(lieux.stream().filter(l -> l.getCodeLieu().equals(co.getCodeLieu()))
-                    .findFirst().orElse(null));
-            li.setDureeReelleEnHeures(co.getDureeReelleEnHeures());
-            li.setDebut(dateFormat.format(co.getDebut()));
-            li.setFin(dateFormat.format(co.getFin()));
-            lines.add(li);
-
-            if (i < coursComplets.size() - 1) {
-                final CoursComplet nextCours = coursComplets.get(i + 1);
-                final Date nextMonday = AlterDateUtil.nextMonday(co.getFin());
-
-                if (!AlterDateUtil.inSameWeek(nextCours.getDebut(), nextMonday)) {
-                    final Date prevFriday = AlterDateUtil.prevFriday(nextCours.getDebut());
-                    final LineCalendarGeneration entreprisePeriode = new LineCalendarGeneration();
-                    entreprisePeriode.setDebut(dateFormat.format(nextMonday));
-                    entreprisePeriode.setFin(dateFormat.format(prevFriday));
-                    entreprisePeriode.setEntreprisePeriode(true);
-                    lines.add(entreprisePeriode);
-                }
-            }
         }
 
         BufferedWriter writer;
@@ -224,7 +198,7 @@ public class FileController {
         }
 
         final String filename = outputFile.getName();
-        final Long filesize = outputFile.length();
+        final long filesize = outputFile.length();
         final MediaType mediaType = MediaTypeUtil.getMediaTypeForFileName(servletContext, filename);
 
         // Remove Html File
