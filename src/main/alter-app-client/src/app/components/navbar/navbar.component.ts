@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  itemToolbarClicked() {
+    this.isCollapsed = true;
+  }
+
   logout() {
     this.authService.logout("Vous avez été déconnecté avec succès");
   }

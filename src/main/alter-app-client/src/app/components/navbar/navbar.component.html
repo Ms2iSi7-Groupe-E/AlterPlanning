@@ -10,12 +10,12 @@
   <div class="navbar-collapse" [ngbCollapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/propose-calendar" routerLinkActive="active">
+        <a class="nav-link" routerLink="/propose-calendar" (click)="itemToolbarClicked()" routerLinkActive="active">
           <i class="fa fa-calendar-alt"></i> Proposer un planning
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/search" routerLinkActive="active">
+        <a class="nav-link" routerLink="/search" (click)="itemToolbarClicked()" routerLinkActive="active">
           <i class="fa fa-search"></i> Recherche
         </a>
       </li>
@@ -24,11 +24,11 @@
           <i class="fa fa-cog"></i> Organisation
         </a>
         <div class="dropdown-menu" ngbDropdownMenu>
-          <a class="dropdown-item" routerLink="/modules-requirement" routerLinkActive="active"><i class="fas fa-plus-square"></i> Gestion des pré requis</a>
-          <a class="dropdown-item" routerLink="/independant-modules" routerLinkActive="active"><i class="fas fa-stream"></i> Module indépendants</a>
-          <a class="dropdown-item" routerLink="/calendar-models" routerLinkActive="active"><i class="far fa-calendar-plus"></i> Modèles de planning</a>
+          <a class="dropdown-item" routerLink="/modules-requirement" (click)="itemToolbarClicked()" routerLinkActive="active"><i class="fas fa-plus-square"></i> Gestion des pré requis</a>
+          <a class="dropdown-item" routerLink="/independant-modules" (click)="itemToolbarClicked()" routerLinkActive="active"><i class="fas fa-stream"></i> Module indépendants</a>
+          <a class="dropdown-item" routerLink="/calendar-models" (click)="itemToolbarClicked()" routerLinkActive="active"><i class="far fa-calendar-plus"></i> Modèles de planning</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/parameters" routerLinkActive="active"><i class="fas fa-code-branch"></i> Paramètrage</a>
+          <a class="dropdown-item" routerLink="/parameters" (click)="itemToolbarClicked()" routerLinkActive="active"><i class="fas fa-code-branch"></i> Paramètrage</a>
         </div>
       </li>
     </ul>
@@ -40,7 +40,7 @@
           <i class="fa fa-user"></i> {{ user.email }}
         </a>
         <div class="dropdown-menu" ngbDropdownMenu>
-          <a class="dropdown-item" routerLink="/history" routerLinkActive="active"><i class="fa fa-history"></i> Historique</a>
+          <a class="dropdown-item" routerLink="/history" (click)="itemToolbarClicked()" routerLinkActive="active"><i class="fa fa-history"></i> Historique</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> Déconnexion</a>
         </div>
