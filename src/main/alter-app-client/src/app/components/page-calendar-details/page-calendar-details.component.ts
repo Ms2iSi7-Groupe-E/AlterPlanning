@@ -19,6 +19,8 @@ export class PageCalendarDetailsComponent implements OnInit {
   error;
   calendar;
   lines = [];
+  startDate;
+  endDate;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -33,9 +35,11 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.calendarService.getCalendar(id).subscribe(
           res => {
             this.calendar = res;
+            console.log(res);
             if (this.calendar.state === CalendarStates.DRAFT) {
               this.router.navigate(['/calendar/' + res.id + '/processing']);
             }
+            this.calcDates();
             this.getLines();
           },
           err => {
@@ -56,6 +60,24 @@ export class PageCalendarDetailsComponent implements OnInit {
     this.calendarService.getLinesForCalendar(this.calendar.id).subscribe(res => {
       this.lines = res;
     }, console.error);
+  }
+
+  calcDates() {
+    this.calendar.cours.sort(function(a, b){
+      return new Date(a.debut).getTime() - new Date(b.debut).getTime();
+    });
+    const startDateFirstCourse = new Date(this.calendar.cours[0].debut);
+    const endDateLastCourse = new Date(this.calendar.cours[this.calendar.cours.length - 1].fin);
+    this.startDate = new Date(this.calendar.startDate);
+    this.endDate = new Date(this.calendar.endDate);
+
+    if (this.startDate == null || startDateFirstCourse < this.startDate) {
+      this.startDate = startDateFirstCourse;
+    }
+
+    if (this.endDate == null || endDateLastCourse > this.endDate) {
+      this.endDate = endDateLastCourse;
+    }
   }
 
   registerAsModel() {
