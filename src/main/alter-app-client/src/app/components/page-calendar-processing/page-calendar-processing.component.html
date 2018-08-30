@@ -5,9 +5,13 @@
 
 	<div *ngIf="!error && afficher">
 		<div class="row">
-			<button type="button" class="btn btn-outline-success" style="vertical-align: baseline;margin-right: 20px;" onclick="">
-				<i class="fas fa-chevron-left"></i> Retour</button>
-			<h2>Gestion des cours du calendrier</h2>
+			<div class="col-12">
+				<button type="button" class="btn btn-outline-success" style="vertical-align: baseline;margin-right: 20px;" onclick="">
+					<i class="fas fa-chevron-left"></i> Retour</button>
+				<h2 style="display: contents;">Gestion des cours du calendrier</h2>
+				<button type="button" class="btn btn-outline-success float-right" style="vertical-align: baseline;margin-right: 20px;margin-top: 5px;" (click)="demandeEnregistrer()">
+					<i class="fas fa-save"></i> Enregistrer</button>
+			</div>
 		</div>
 
 		<div class="row" style="margin:5px;">

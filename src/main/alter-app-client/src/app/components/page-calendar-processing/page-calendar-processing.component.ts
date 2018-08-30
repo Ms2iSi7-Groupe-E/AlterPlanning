@@ -281,6 +281,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // placement d'un cours
   placementCours(c) {
+    this.unselectCours();
     c = Object.assign( {}, c );
 
     // si il y a un cours deja place sur ce jour
@@ -335,11 +336,11 @@ export class PageCalendarProcessingComponent implements OnInit {
       });
     });
     this.mois = mois;
-    this.unselectCours();
   }
 
   // deplacement d'un cours
   deplacementCours(c) {
+    this.unselectCours();
     c = Object.assign( {}, c );
 
     // pour tous les mois
@@ -372,7 +373,6 @@ export class PageCalendarProcessingComponent implements OnInit {
       });
     });
     this.mois = mois;
-    this.unselectCours();
   }
 
   // retourne les cles d'un tableau
@@ -413,7 +413,8 @@ export class PageCalendarProcessingComponent implements OnInit {
   onClick( e ) {
 
     // si c'est un click sur un element pris en charge
-    if ( [ 'badge cours_pos', 'select_empty', 'select_week', 'select_week_empty' ].indexOf( e.target.className ) !== -1 ) {
+    if ( [ 'badge cours_pos', 'select_empty', 'select_week', 'select_week_empty',
+      'select_week_info' ].indexOf( e.target.className ) !== -1 ) {
       return;
     }
 
@@ -440,11 +441,11 @@ export class PageCalendarProcessingComponent implements OnInit {
 
         // ce jour contient il des cours similaires ?
         const coursPresent = mois[km].jours[kj].cours.find( ji => {
-          return ji.idCours === c.idCours;
+          return ji.idModule === c.idModule;
         });
 
         // determine si le jour contient le cours a deplacer
-        if ( coursPresent || ( mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.idCours === c.idCours ) ) {
+        if ( coursPresent || ( mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.idModule === c.idModule ) ) {
           mois[km].jours[kj].color = "#f4ac41";
 
           // recherche la semaine concernee
@@ -492,6 +493,20 @@ export class PageCalendarProcessingComponent implements OnInit {
         s.hiddenClass = '';
       }
     });
+  }
+
+  // demande d'enregistrement du calendrier
+  demandeEnregistrer() {
+
+    // determine si il y a au mois un cours de positionne
+
+    // determine si il y a des pre-requis
+
+    // si il y a des messages d'avertissement
+
+    // enregistrement du calendrier
+
+    console.log('rrrrrrrrrrrrrrr');
   }
 
   // traitement des redimentionnements
