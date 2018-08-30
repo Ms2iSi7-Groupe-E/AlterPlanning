@@ -41,6 +41,7 @@ import {HistoryService} from "./services/history.service";
 import {CalendarModelService} from "./services/calendar-model.service";
 import { CalendarModelNameComponent } from './components/modal/calendar-model-name/calendar-model-name.component';
 import { HandleIndependantModuleComponent } from './components/modal/handle-independant-module/handle-independant-module.component';
+import {IndependantModuleService} from "./services/independant-module.service";
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { HandleIndependantModuleComponent } from './components/modal/handle-inde
     EntrepriseService,
     HistoryService,
     CalendarModelService,
+    IndependantModuleService,
   ],
   entryComponents: [
     AddElementComponent,

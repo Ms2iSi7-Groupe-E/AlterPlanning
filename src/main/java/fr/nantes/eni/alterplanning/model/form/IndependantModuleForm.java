@@ -22,12 +22,10 @@ public class IndependantModuleForm implements Serializable {
     private String longName;
 
     @NotNull
-    @NotEmpty
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date startDate;
 
     @NotNull
-    @NotEmpty
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endDate;
 

@@ -32,6 +32,28 @@ export class HandleIndependantModuleComponent implements OnInit {
     this.lieuService.getLieuxTeachningCourses().subscribe(res => {
       this.lieux = res;
     }, console.error);
+
+    if (this.independantModule !== null) {
+      this.selectedLibCourt = this.independantModule.shortName;
+      this.selectedLibLong = this.independantModule.longName;
+      this.selectedVolumeHor = this.independantModule.hours;
+      this.selectedLieu = this.independantModule.codeLieu;
+
+      const dateDeb = new Date(this.independantModule.startDate);
+      const dateFin = new Date(this.independantModule.endDate);
+
+      this.selectedDateDebut = {
+        year: dateDeb.getFullYear(),
+        month: dateDeb.getMonth() + 1,
+        day: dateDeb.getDate()
+      };
+
+      this.selectedDateFin = {
+        year: dateFin.getFullYear(),
+        month: dateFin.getMonth() + 1,
+        day: dateFin.getDate()
+      };
+    }
   }
 
   get title(): string {
@@ -42,8 +64,16 @@ export class HandleIndependantModuleComponent implements OnInit {
     return this.action === ActionTypes.UPDATE ? 'Modifier le cours' : 'Creer le cours';
   }
 
+  get libCoursValid() {
+    return this.selectedLibCourt !== '' && this.selectedLibCourt.length > 5 && this.selectedLibCourt.length <= 20;
+  }
+
+  get libLongValid() {
+    return this.selectedLibLong !== '' && this.selectedLibLong.length > 5 && this.selectedLibLong.length <= 200;
+  }
+
   get formValid() {
-    return this.selectedLibCourt !== '' && this.selectedLibLong !== ''
+    return this.libCoursValid && this.libLongValid
       && this.selectedDateDebut != null && this.selectedDateFin != null
       && this.selectedVolumeHor !== null && this.selectedLieu !== null;
   }
@@ -55,6 +85,7 @@ export class HandleIndependantModuleComponent implements OnInit {
       dateDebut: new Date(this.selectedDateDebut.year, this.selectedDateDebut.month - 1, this.selectedDateDebut.day),
       dateFin: new Date(this.selectedDateFin.year, this.selectedDateFin.month - 1, this.selectedDateFin.day),
       lieu: this.selectedLieu,
+      volumeHoraire: this.selectedVolumeHor,
     });
     this.activeModal.dismiss('Cross click');
   }

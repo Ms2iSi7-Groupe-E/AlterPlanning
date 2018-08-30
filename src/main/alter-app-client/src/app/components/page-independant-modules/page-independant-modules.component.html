@@ -4,7 +4,7 @@
   </div>
   <div class="row mb-3">
     <div class="col-12 text-left">
-      <button class="btn btn-outline-primary" (click)="openCreateModal()"><i class="fa fa-plus"></i> Ajouter un cours</button>
+      <button class="btn btn-outline-success" (click)="createCours()"><i class="fa fa-plus"></i> Ajouter un cours</button>
     </div>
   </div>
   <div class="row">
@@ -21,36 +21,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>eval-ms2ii-2017</td>
-          <td>Evaluation intermédiaire des MS2II</td>
-          <td>01/02/2017</td>
-          <td>03/02/2017</td>
-          <td class="text-center">21h</td>
+        <tr *ngFor="let cour of cours">
+          <td>{{cour.shortName}}</td>
+          <td>{{cour.longName}}</td>
+          <td>{{cour.startDate | date:'dd/MM/yyyy'}}</td>
+          <td>{{cour.endDate | date:'dd/MM/yyyy'}}</td>
+          <td class="text-center">{{cour.hours}}h</td>
           <td class="text-right">
-            <button class="btn btn-outline-info" placement="top" ngbTooltip="Editer le cours"><i class="fa fa-pencil"></i></button>
-            <button class="btn btn-outline-danger" placement="top" ngbTooltip="Supprimer le cours"><i class="far fa-trash-alt"></i></button>
+            <button class="btn btn-outline-info"
+                    (click)="updateCours(cour)"
+                    placement="top" ngbTooltip="Editer le cours"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-outline-danger"
+                    (click)="deleteCours(cour)"
+                    placement="top" ngbTooltip="Supprimer le cours"><i class="far fa-trash-alt"></i></button>
           </td>
         </tr>
-        <tr>
-          <td>Projet CDI-2018-2</td>
-          <td>Projet de fin d'étude des CDI</td>
-          <td>21/06/2018</td>
-          <td>26/02/2017</td>
-          <td class="text-center">35h</td>
-          <td class="text-right">
-            <button class="btn btn-outline-info" placement="top" ngbTooltip="Editer le cours"><i class="fa fa-pencil"></i></button>
-            <button class="btn btn-outline-danger" placement="top" ngbTooltip="Supprimer le cours"><i class="far fa-trash-alt"></i></button>
-          </td>
-        </tr>
-        <!--<tr *ngFor="let model of models">-->
-          <!--<td>{{model.name}}</td>-->
-          <!--<td>{{model.createdAt | date:'dd/MM/yyyy'}}</td>-->
-          <!--<td>-->
-            <!--<button class="btn btn-outline-success" (click)="duplicateModel(model)"><i class="far fa-copy"></i> Dupliquer</button>-->
-            <!--<button class="btn btn-outline-danger" (click)="deleteModel(model)"><i class="far fa-trash-alt"></i></button>-->
-          <!--</td>-->
-        <!--</tr>-->
         </tbody>
       </table>
     </div>
