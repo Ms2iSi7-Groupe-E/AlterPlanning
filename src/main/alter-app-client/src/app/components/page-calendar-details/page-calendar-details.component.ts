@@ -36,7 +36,7 @@ export class PageCalendarDetailsComponent implements OnInit {
           res => {
             this.calendar = res;
             if (this.calendar.state === CalendarStates.DRAFT) {
-              this.router.navigate(['/calendar/' + res.id + '/processing']);
+              return this.router.navigate(['/calendar/' + res.id + '/processing']);
             }
             this.calcDates();
             this.getLines();
@@ -89,6 +89,20 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.calendar.isModel = true;
       }, console.error);
     });
+  }
+
+  changeStateToValidate() {
+    const answer = confirm("Voulez-vous vraiment valider ce calendrier ?");
+    // TODO
+  }
+
+  deleteCalendar() {
+    const answer = confirm("Voulez-vous vraiment supprimer ce calendrier ?");
+    if (answer) {
+      this.calendarService.deleteCalendar(this.calendar.id).subscribe(() => {
+        return this.router.navigate(['/']);
+      }, console.error);
+    }
   }
 
   get cursus() {
