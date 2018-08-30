@@ -18,6 +18,7 @@ export class PageCalendarDetailsComponent implements OnInit {
   CALENDAR_STATES = CalendarStates;
   error;
   calendar;
+  lines = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -32,10 +33,10 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.calendarService.getCalendar(id).subscribe(
           res => {
             this.calendar = res;
-            console.log(this.calendar);
             if (this.calendar.state === CalendarStates.DRAFT) {
               this.router.navigate(['/calendar/' + res.id + '/processing']);
             }
+            this.getLines();
           },
           err => {
             if (err['status'] === 404) {
@@ -49,6 +50,12 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.error = "L'identifiant du calendrier est mal renseigné dans l'URL. Merci de contacter votre administrateur.";
       }
     });
+  }
+
+  getLines() {
+    this.calendarService.getLinesForCalendar(this.calendar.id).subscribe(res => {
+      this.lines = res;
+    }, console.error);
   }
 
   registerAsModel() {

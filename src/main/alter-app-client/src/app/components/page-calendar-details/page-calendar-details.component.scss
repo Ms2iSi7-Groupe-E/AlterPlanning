@@ -18,7 +18,20 @@
 }
 
 .calendar-table {
+  thead {
+    background-color: #ffff00;
+    text-align: center;
+  }
+
+  tbody > tr > td {
+    text-align: center;
+  }
+
   .turquoise {
     background-color: #48f9fb;
+  }
+
+  .entreprise {
+    font-weight: bold;
   }
 }

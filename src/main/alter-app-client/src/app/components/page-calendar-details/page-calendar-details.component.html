@@ -97,6 +97,15 @@
           <th>Programme</th>
         </tr>
         </thead>
+        <tbody>
+        <tr *ngFor="let line of lines">
+          <td>{{line.debut}}</td>
+          <td>{{line.fin}}</td>
+          <td *ngIf="line.entreprisePeriode" colspan="2" class="entreprise">ENTREPRISE</td>
+          <td *ngIf="!line.entreprisePeriode" class="turquoise">{{line.lieu.libelle}} ({{line.dureeReelleEnHeures}} heures)</td>
+          <td *ngIf="!line.entreprisePeriode">{{line.libelle}}</td>
+        </tr>
+        </tbody>
       </table>
     </div>
   </div>

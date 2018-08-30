@@ -15,6 +15,12 @@ export class CalendarService {
       .catch((err) => this.authService.handleError(err));
   }
 
+  getLinesForCalendar(idCalendar: number): Observable<any> {
+    return this.http
+      .get('/api/calendar/' + idCalendar + '/lines', {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
   getCalendars(): Observable<any> {
     return this.http
       .get('/api/calendar', {headers: AuthService.getHeaders()})
