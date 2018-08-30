@@ -11,6 +11,7 @@ import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarCoursForm;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
+import fr.nantes.eni.alterplanning.model.form.StateForm;
 import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
@@ -235,12 +236,30 @@ public class CalendarController {
         return getCalendarDetailsById(createdCalendar.getId());
     }
 
-    @PutMapping("/{idCalendar}")
-    public StringResponse updateCalendar(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
-        // TODO : modif de calendar
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
+    @PutMapping("/{idCalendar}/change-state")
+    public StringResponse changeStateCalendar(@Valid @RequestBody StateForm form, BindingResult result,
+                                              @PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        final CalendarEntity c = calendarDAOService.findById(id);
 
-        //historyUtil.addLine("Modification du calendrier n°" + id);
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        } else if (c.getState() == CalendarState.DRAFT) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état de brouillon");
+        }
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        final CalendarState oldState = c.getState();
+
+        c.setState(form.getState());
+        calendarDAOService.update(c);
+
+        historyUtil.addLine("Modification du calendrier n°" + id + " - passage de l'état "
+                + oldState + " à l'état " + form.getState());
+
+        return new StringResponse("Etat du calendrier mis à jour avec succès");
     }
 
     @DeleteMapping("/{idCalendar}")
