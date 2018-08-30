@@ -1,0 +1,24 @@
+.state {
+  margin-left: 14px;
+  border: 1px solid #9b9b9b;
+
+  &.proposal {
+    background-color: #f58f8f;
+  }
+
+  &.validated {
+    background-color: #58af58;
+  }
+}
+
+.line-detail {
+  height: 35px;
+  margin-bottom: 5px;
+  line-height: 35px;
+}
+
+.calendar-table {
+  .turquoise {
+    background-color: #48f9fb;
+  }
+}

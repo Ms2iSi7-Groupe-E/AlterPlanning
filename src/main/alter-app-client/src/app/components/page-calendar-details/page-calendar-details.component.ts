@@ -6,6 +6,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CalendarModelNameComponent} from "../modal/calendar-model-name/calendar-model-name.component";
 import {CalendarModelService} from "../../services/calendar-model.service";
 import {CalendarModelModel} from "../../models/calendar-model.model";
+import {ConstraintTypes} from "../../models/enums/constraint-types";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -14,6 +15,7 @@ import {CalendarModelModel} from "../../models/calendar-model.model";
 })
 export class PageCalendarDetailsComponent implements OnInit {
 
+  CALENDAR_STATES = CalendarStates;
   error;
   calendar;
 
@@ -30,6 +32,7 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.calendarService.getCalendar(id).subscribe(
           res => {
             this.calendar = res;
+            console.log(this.calendar);
             if (this.calendar.state === CalendarStates.DRAFT) {
               this.router.navigate(['/calendar/' + res.id + '/processing']);
             }
@@ -58,5 +61,23 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.calendar.isModel = true;
       }, console.error);
     });
+  }
+
+  get cursus() {
+    if (this.calendar === null) {
+      return '';
+    }
+
+    const constraints = this.calendar.constraints;
+    const formations = constraints.filter(c => c.constraintType === ConstraintTypes.AJOUT_FORMATION);
+    if (formations.length === 0) {
+      return '';
+    }
+
+    return formations[0].constraintValue;
+  }
+
+  get state() {
+    return this.calendar.state === CalendarStates.PROPOSAL ? 'Proposition' : 'Validé';
   }
 }

@@ -1,26 +1,103 @@
 <div class="container">
-  <div *ngIf="!error">
+  <div *ngIf="!error && calendar">
     <div class="row mb-3">
-      <h2>Détail du calendrier</h2>
+      <h2>Détail du planning</h2>
     </div>
+
+    <div class="row line-detail">
+      <div class="col-sm-2">
+        <strong>Période :</strong>
+      </div>
+      <div class="col-sm-10">
+        <span>Du .... au ....</span>
+      </div>
+    </div>
+
+    <div class="row line-detail">
+      <div class="col-sm-2">
+        <strong>Stagiaire :</strong>
+      </div>
+      <div class="col-sm-10">
+        <span *ngIf="calendar.stagiaire">
+          {{ calendar.stagiaire.prenom }} {{ calendar.stagiaire.nom | uppercase }}
+        </span>
+        <span *ngIf="!calendar.stagiaire">
+          à définir
+        </span>
+      </div>
+    </div>
+
+    <div class="row line-detail">
+      <div class="col-sm-2">
+        <strong>Entreprise :</strong>
+      </div>
+      <div class="col-sm-10">
+        <span *ngIf="calendar.entreprise">
+          {{ calendar.entreprise.raisonSociale }}
+        </span>
+        <span *ngIf="!calendar.entreprise">
+          à définir
+        </span>
+      </div>
+    </div>
+
+    <div class="row line-detail">
+      <div class="col-sm-2">
+        <strong>Cursus :</strong>
+      </div>
+      <div class="col-sm-10">
+        {{ cursus }}
+      </div>
+    </div>
+
+    <div class="row line-detail">
+      <div class="col-sm-2">
+        <strong>Etat :</strong>
+      </div>
+      <div class="col-sm-3 state"
+           [class.proposal]="calendar.state === CALENDAR_STATES.PROPOSAL"
+           [class.validated]="calendar.state === CALENDAR_STATES.VALIDATED">
+        {{state}}
+      </div>
+      <div class="col-sm-1">
+        <button class="btn btn-sm btn-outline-dark"><i class="fa fa-pencil"></i></button>
+      </div>
+    </div>
+
+    <hr>
+
     <div class="row">
       <div class="col-12">
+        <button class="btn btn-outline-primary"><i class="fa fa-pencil"></i> Modifier</button>
+
+        <button class="btn btn-outline-secondary"><i class="far fa-clone"></i> Proposer une variante</button>
+
         <a class="btn btn-outline-danger"
-           *ngIf="calendar"
            [href]="'/api/file/calendar/' + calendar.id + '/pdf'"
-           target="_blank"><i class="far fa-file-pdf"></i> PDF</a>
+           target="_blank"><i class="far fa-file-pdf"></i> Export PDF</a>
 
         <a class="btn btn-outline-info"
-           *ngIf="calendar"
            [href]="'/api/file/calendar/' + calendar.id + '/rtf'"
-           target="_blank"><i class="far fa-file"></i> RTF</a>
+           target="_blank"><i class="far fa-file"></i> Export RTF</a>
 
-        <button class="btn btn-outline-secondary"
-           *ngIf="calendar && !calendar.isModel" (click)="registerAsModel()"><i class="far fa-bookmark"></i> Enregistrer comme modèle</button>
+        <button class="btn btn-outline-success"
+           *ngIf="!calendar.isModel" (click)="registerAsModel()"><i class="far fa-bookmark"></i> Enregistrer comme modèle</button>
       </div>
-      <div class="col-12 mt-3">
-        <pre>{{ calendar | json }}</pre>
-      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <table class="table table-bordered calendar-table">
+        <thead>
+        <tr>
+          <th>Début</th>
+          <th>Fin</th>
+          <th>Lieu</th>
+          <th>Programme</th>
+        </tr>
+        </thead>
+      </table>
     </div>
   </div>
 </div>
