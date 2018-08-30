@@ -9,14 +9,14 @@
         <tr>
           <th scope="col">Nom</th>
           <th scope="col">Date de création</th>
-          <th class="no-sort" scope="col">Actions</th>
+          <th class="no-sort" scope="col">&nbsp;</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let model of models">
           <td>{{model.name}}</td>
           <td>{{model.createdAt | date:'dd/MM/yyyy'}}</td>
-          <td>
+          <td class="text-right">
             <button class="btn btn-outline-success" (click)="duplicateModel(model)"><i class="far fa-copy"></i> Dupliquer</button>
             <button class="btn btn-outline-danger" (click)="deleteModel(model)"><i class="far fa-trash-alt"></i></button>
           </td>

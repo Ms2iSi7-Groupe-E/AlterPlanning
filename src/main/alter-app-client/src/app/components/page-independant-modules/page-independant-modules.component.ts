@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HandleIndependantModuleComponent} from "../modal/handle-independant-module/handle-independant-module.component";
 import {ActionTypes} from "../../models/enums/action-types";
+import {DataTableDirective} from "angular-datatables";
+import {Subject} from "../../../../node_modules/rxjs/Subject";
+import {DatatableFrench} from "../../helper/datatable-french";
 
 @Component({
   selector: 'app-page-independant-modules',
@@ -10,7 +13,18 @@ import {ActionTypes} from "../../models/enums/action-types";
 })
 export class PageIndependantModulesComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<void> = new Subject();
+
+  constructor(private modalService: NgbModal) {
+    this.dtOptions = {
+      order: [],
+      columnDefs: [{targets: 'no-sort', orderable: false}],
+      language: DatatableFrench.getLanguages(),
+    };
+  }
 
   ngOnInit() {
   }
@@ -23,4 +37,12 @@ export class PageIndependantModulesComponent implements OnInit {
     });
   }
 
+  updateDatatable() {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
 }

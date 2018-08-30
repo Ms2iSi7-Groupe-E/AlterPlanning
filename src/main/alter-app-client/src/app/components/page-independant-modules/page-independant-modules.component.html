@@ -1,4 +1,58 @@
 <div class="container">
-  <h1>Gestion des cours du module indépendants</h1>
-  <button class="btn btn-primary" (click)="openCreateModal()">Ajouter un cours</button>
+  <div class="row mb-3">
+    <h2>Gestion des cours du module indépendants</h2>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12 text-left">
+      <button class="btn btn-outline-primary" (click)="openCreateModal()"><i class="fa fa-plus"></i> Ajouter un cours</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="table table-hover table-striped table-sm">
+        <thead>
+        <tr>
+          <th scope="col">Libellé court</th>
+          <th scope="col">Libellé long</th>
+          <th scope="col">Date de début</th>
+          <th scope="col">Date de fin</th>
+          <th scope="col">Volume horaire</th>
+          <th class="no-sort" scope="col">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>eval-ms2ii-2017</td>
+          <td>Evaluation intermédiaire des MS2II</td>
+          <td>01/02/2017</td>
+          <td>03/02/2017</td>
+          <td class="text-center">21h</td>
+          <td class="text-right">
+            <button class="btn btn-outline-info"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td>Projet CDI-2018-2</td>
+          <td>Projet de fin d'étude des CDI</td>
+          <td>21/06/2018</td>
+          <td>26/02/2017</td>
+          <td class="text-center">35h</td>
+          <td class="text-right">
+            <button class="btn btn-outline-info"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-outline-danger"><i class="fa fa-trash-o"></i></button>
+          </td>
+        </tr>
+        <!--<tr *ngFor="let model of models">-->
+          <!--<td>{{model.name}}</td>-->
+          <!--<td>{{model.createdAt | date:'dd/MM/yyyy'}}</td>-->
+          <!--<td>-->
+            <!--<button class="btn btn-outline-success" (click)="duplicateModel(model)"><i class="far fa-copy"></i> Dupliquer</button>-->
+            <!--<button class="btn btn-outline-danger" (click)="deleteModel(model)"><i class="far fa-trash-alt"></i></button>-->
+          <!--</td>-->
+        <!--</tr>-->
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
