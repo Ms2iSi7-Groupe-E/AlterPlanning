@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * Created by ughostephan on 23/06/2017.
  */
 @RestController
-@RequestMapping("/api/calendar/model")
+@RequestMapping("/api/calendar-model")
 public class CalendarModelController {
 
     @Resource
