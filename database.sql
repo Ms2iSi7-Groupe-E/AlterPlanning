@@ -125,13 +125,15 @@ CREATE TABLE IF NOT EXISTS `history` (
 
 DROP TABLE IF EXISTS `independant_modules`;
 CREATE TABLE IF NOT EXISTS `independant_modules` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `shortName` varchar(20) NOT NULL,
   `longName` varchar(200) NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
   `hours` int(11) NOT NULL,
-  `codeLieu` int(11) NOT NULL
+  `codeLieu` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shortName_uq` (`shortName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
