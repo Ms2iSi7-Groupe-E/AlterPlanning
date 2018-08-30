@@ -35,7 +35,6 @@ export class PageCalendarDetailsComponent implements OnInit {
         this.calendarService.getCalendar(id).subscribe(
           res => {
             this.calendar = res;
-            console.log(res);
             if (this.calendar.state === CalendarStates.DRAFT) {
               this.router.navigate(['/calendar/' + res.id + '/processing']);
             }

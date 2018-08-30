@@ -116,7 +116,7 @@ public class FileController {
         Date startDate = c.getStartDate();
         Date endDate = c.getEndDate();
         int dureeEnHeureFormation = coursComplets.stream().mapToInt(CoursComplet::getDureeReelleEnHeures).sum();
-        final List<LineCalendarGeneration> lines = calendarExportUtil.getCalendarLines(coursComplets);
+        final List<LineCalendarGeneration> lines = calendarExportUtil.getCalendarLines(c, coursComplets);
 
         // Remplissage des variables pour le template
         if (c.getStagiaireId() != null) {

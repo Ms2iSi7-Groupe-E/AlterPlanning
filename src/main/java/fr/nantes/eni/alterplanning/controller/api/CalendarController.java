@@ -167,7 +167,7 @@ public class CalendarController {
                 .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
         final List<CoursComplet> coursComplets = coursDAOService.findAllCoursCompletsByIds(idsCours);
 
-        return calendarExportUtil.getCalendarLines(coursComplets);
+        return calendarExportUtil.getCalendarLines(c, coursComplets);
     }
 
 
