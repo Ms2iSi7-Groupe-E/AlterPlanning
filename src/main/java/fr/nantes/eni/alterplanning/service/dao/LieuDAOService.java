@@ -30,4 +30,8 @@ public class LieuDAOService {
     public List<LieuEntity> findAllTeachingCours() {
         return repository.findAllTeachingCours();
     }
+
+    public boolean existById(final Integer codeLieu) {
+        return repository.existsById(codeLieu);
+    }
 }
