@@ -42,6 +42,7 @@ import {CalendarModelService} from "./services/calendar-model.service";
 import { CalendarModelNameComponent } from './components/modal/calendar-model-name/calendar-model-name.component';
 import { HandleIndependantModuleComponent } from './components/modal/handle-independant-module/handle-independant-module.component';
 import {IndependantModuleService} from "./services/independant-module.service";
+import { ConfirmComponent } from './components/modal/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {IndependantModuleService} from "./services/independant-module.service";
     PageCalendarDetailsComponent,
     CalendarModelNameComponent,
     HandleIndependantModuleComponent,
+    ConfirmComponent,
   ],
   imports: [
     NgSelectModule,
@@ -99,6 +101,7 @@ import {IndependantModuleService} from "./services/independant-module.service";
     DispenseElementComponent,
     CalendarModelNameComponent,
     HandleIndependantModuleComponent,
+    ConfirmComponent,
   ],
   bootstrap: [AppComponent]
 })

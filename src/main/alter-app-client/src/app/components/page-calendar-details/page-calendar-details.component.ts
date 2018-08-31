@@ -8,6 +8,7 @@ import {CalendarModelService} from "../../services/calendar-model.service";
 import {CalendarModelModel} from "../../models/calendar-model.model";
 import {ConstraintTypes} from "../../models/enums/constraint-types";
 import {CalendarStateModel} from "../../models/calendar-state.model";
+import {ConfirmComponent} from "../modal/confirm/confirm.component";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -93,23 +94,25 @@ export class PageCalendarDetailsComponent implements OnInit {
   }
 
   changeStateToValidate() {
-    const answer = confirm("Voulez-vous valider ce calendrier ?");
-    if (answer) {
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'sm' });
+    modalRef.componentInstance.text = "Voulez-vous valider ce calendrier ?";
+    modalRef.componentInstance.validate.subscribe(() => {
       const body = new CalendarStateModel();
       body.state = CalendarStates.VALIDATED;
       this.calendarService.changeStateCalendar(this.calendar.id, body).subscribe(() => {
         this.calendar.state = CalendarStates.VALIDATED;
       }, console.error);
-    }
+    });
   }
 
   deleteCalendar() {
-    const answer = confirm("Voulez-vous vraiment supprimer ce calendrier ?");
-    if (answer) {
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'sm' });
+    modalRef.componentInstance.text = "Voulez-vous vraiment supprimer ce calendrier ?";
+    modalRef.componentInstance.validate.subscribe(() => {
       this.calendarService.deleteCalendar(this.calendar.id).subscribe(() => {
         return this.router.navigate(['/']);
       }, console.error);
-    }
+    });
   }
 
   get cursus() {

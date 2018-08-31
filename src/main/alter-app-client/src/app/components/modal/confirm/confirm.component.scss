@@ -1,0 +1,12 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.modal-header {
+  background: $dark;
+  color: white;
+  border-radius: unset;
+}
+
+.modal-footer {
+  justify-content: center;
+}
