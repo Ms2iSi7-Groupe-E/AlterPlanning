@@ -6,6 +6,7 @@ import {CalendarModelNameComponent} from "../modal/calendar-model-name/calendar-
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CalendarModelModel} from "../../models/calendar-model.model";
 import {DataTableDirective} from "angular-datatables";
+import {ConfirmComponent} from "../modal/confirm/confirm.component";
 
 @Component({
   selector: 'app-page-calendar-models',
@@ -38,13 +39,14 @@ export class PageCalendarModelsComponent implements OnInit {
   }
 
   deleteModel(model) {
-    const answer = confirm("Voulez-vous vraiment supprimer ce modèle de calendrier ?");
-    if (answer) {
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'sm' });
+    modalRef.componentInstance.text = "Voulez-vous vraiment supprimer ce modèle de calendrier ?";
+    modalRef.componentInstance.validate.subscribe(() => {
       this.calendarModelService.deleteModel(model.id).subscribe(() => {
         this.models = this.models.filter(m => m.id !== model.id);
         this.updateDatatable();
       }, console.error);
-    }
+    });
   }
 
   duplicateModel(model) {

@@ -8,6 +8,8 @@ import {ModuleService} from "../../services/module.service";
 import {PromotionService} from "../../services/promotion.service";
 import {FormationService} from "../../services/formation.service";
 import {SearchKeys} from "../../models/enums/search-keys";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConfirmComponent} from "../modal/confirm/confirm.component";
 
 @Component({
   selector: 'app-page-search',
@@ -41,6 +43,7 @@ export class PageSearchComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
+              private modalService: NgbModal,
               private calendarService: CalendarService,
               private stagiaireService: StagiaireService,
               private entrepriseService: EntrepriseService,
@@ -226,11 +229,12 @@ export class PageSearchComponent implements OnInit {
   }
 
   deleteCalendar(calendar) {
-    const answer = confirm("Voulez-vous vraiment supprimer ce calendrier ?");
-    if (answer) {
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'sm' });
+    modalRef.componentInstance.text = "Voulez-vous vraiment supprimer ce calendrier ?";
+    modalRef.componentInstance.validate.subscribe(() => {
       this.calendarService.deleteCalendar(calendar.id).subscribe(() => {
         this.calendars = this.calendars.filter(c => c.id !== calendar.id);
       }, console.error);
-    }
+    });
   }
 }

@@ -7,6 +7,7 @@ import {Subject} from "rxjs/Subject";
 import {DatatableFrench} from "../../helper/datatable-french";
 import {IndependantModuleService} from "../../services/independant-module.service";
 import {IndependantModuleModel} from "../../models/independant-module.model";
+import {ConfirmComponent} from "../modal/confirm/confirm.component";
 
 @Component({
   selector: 'app-page-independant-modules',
@@ -83,13 +84,14 @@ export class PageIndependantModulesComponent implements OnInit {
   }
 
   deleteCours(cour) {
-    const answer = confirm("Voulez-vous vraiment supprimer ce cours du module indépendant ?");
-    if (answer) {
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'sm' });
+    modalRef.componentInstance.text = "Voulez-vous vraiment supprimer ce cours du module indépendant ?";
+    modalRef.componentInstance.validate.subscribe(() => {
       this.independantModuleService.deleteCoursById(cour.id).subscribe(() => {
         this.cours = this.cours.filter(c => c.id !== cour.id);
         this.updateDatatable();
       }, console.error);
-    }
+    });
   }
 
   updateDatatable() {
