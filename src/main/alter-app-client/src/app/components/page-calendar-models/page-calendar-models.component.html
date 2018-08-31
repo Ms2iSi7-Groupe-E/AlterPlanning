@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="table table-hover table-striped table-sm">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="table table-hover table-striped">
         <thead>
         <tr>
           <th scope="col">Nom</th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let model of models">
-          <td>{{model.name}}</td>
+          <td><a routerLink="/calendar/{{model.calendarId}}/details">{{model.name}}</a></td>
           <td>{{model.createdAt | date:'dd/MM/yyyy'}}</td>
           <td class="text-right">
             <button class="btn btn-outline-success"

@@ -152,7 +152,7 @@
           <td>
             <button class="btn btn-outline-danger"
                     (click)="deleteCalendar(calendar)"
-                    [disabled]="calendar.isModel"><i class="far fa-trash-alt"></i></button>
+                    [disabled]="calendar.isModel || calendar.state === CALENDAR_STATE.VALIDATED"><i class="far fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>
