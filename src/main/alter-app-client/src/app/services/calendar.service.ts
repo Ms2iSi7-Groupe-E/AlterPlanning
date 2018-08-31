@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {AuthService} from "./auth.service";
 import {CalendarModel} from "../models/calendar.model";
 import {HttpClient} from "@angular/common/http";
+import {CalendarStateModel} from "../models/calendar-state.model";
 
 @Injectable()
 export class CalendarService {
@@ -36,6 +37,12 @@ export class CalendarService {
   addCalendar(body: CalendarModel): Observable<any> {
     return this.http
       .post('/api/calendar', body, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
+  changeStateCalendar(idCalendar: number, body: CalendarStateModel) {
+    return this.http
+      .put('/api/calendar/' + idCalendar + '/change-state', body, {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
 

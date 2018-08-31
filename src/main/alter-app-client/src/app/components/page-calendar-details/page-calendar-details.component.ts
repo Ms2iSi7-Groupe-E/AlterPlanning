@@ -7,6 +7,7 @@ import {CalendarModelNameComponent} from "../modal/calendar-model-name/calendar-
 import {CalendarModelService} from "../../services/calendar-model.service";
 import {CalendarModelModel} from "../../models/calendar-model.model";
 import {ConstraintTypes} from "../../models/enums/constraint-types";
+import {CalendarStateModel} from "../../models/calendar-state.model";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -93,7 +94,13 @@ export class PageCalendarDetailsComponent implements OnInit {
 
   changeStateToValidate() {
     const answer = confirm("Voulez-vous valider ce calendrier ?");
-    // TODO
+    if (answer) {
+      const body = new CalendarStateModel();
+      body.state = CalendarStates.VALIDATED;
+      this.calendarService.changeStateCalendar(this.calendar.id, body).subscribe(() => {
+        this.calendar.state = CalendarStates.VALIDATED;
+      }, console.error);
+    }
   }
 
   deleteCalendar() {
