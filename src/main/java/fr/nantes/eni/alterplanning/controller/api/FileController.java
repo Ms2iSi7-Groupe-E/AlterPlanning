@@ -76,6 +76,9 @@ public class FileController {
     private CalendarExportUtil calendarExportUtil;
 
     @Resource
+    private IndependantModuleDAOService independantModuleDAOService;
+
+    @Resource
     private EntrepriseDAOService entrepriseDAOService;
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat(AlterDateUtil.ddMMyyyyWithSlash);
@@ -95,9 +98,27 @@ public class FileController {
         }
 
         final List<CalendarConstraintEntity> constraintEntities = calendarConstraintDAOService.findByCalendarId(id);
-        final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
-                .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
+        final List<CalendarCoursEntity> calendarCoursEntities = calendarCoursDAOService.findByCalendarId(id);
+        final List<String> idsCours = calendarCoursEntities.stream()
+                .filter(cc -> !cc.isIndependantModule())
+                .map(CalendarCoursEntity::getCoursId)
+                .collect(Collectors.toList());
+        final List<Integer> idsCoursIndependant = calendarCoursEntities
+                .stream()
+                .filter(CalendarCoursEntity::isIndependantModule)
+                .map(cc -> Integer.parseInt(cc.getCoursId()))
+                .collect(Collectors.toList());
         final List<CoursComplet> coursComplets = coursDAOService.findAllCoursCompletsByIds(idsCours);
+        independantModuleDAOService.findByListId(idsCoursIndependant).forEach(im -> {
+            CoursComplet coursComplet = new CoursComplet();
+            coursComplet.setIdModule(im.getId());
+            coursComplet.setLibelleModule(im.getLongName());
+            coursComplet.setDureeReelleEnHeures(im.getHours());
+            coursComplet.setDebut(im.getStartDate());
+            coursComplet.setFin(im.getEndDate());
+            coursComplet.setCodeLieu(im.getCodeLieu());
+            coursComplets.add(coursComplet);
+        });
         coursComplets.sort(Comparator.comparing(CoursComplet::getDebut));
         final String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());
         final Date startDateFirstCourse = coursComplets.get(0).getDebut();

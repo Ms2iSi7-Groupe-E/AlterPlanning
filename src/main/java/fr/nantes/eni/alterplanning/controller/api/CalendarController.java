@@ -142,12 +142,20 @@ public class CalendarController {
         if (!calendarCoursEntities.isEmpty()) {
             final List<String> idsCours = calendarCoursEntities
                     .stream()
+                    .filter(cc -> !cc.isIndependantModule())
                     .map(CalendarCoursEntity::getCoursId)
                     .distinct()
                     .collect(Collectors.toList());
+            final List<Integer> idsCoursIndependant = calendarCoursEntities
+                    .stream()
+                    .filter(CalendarCoursEntity::isIndependantModule)
+                    .map(cc -> Integer.parseInt(cc.getCoursId()))
+                    .distinct()
+                    .collect(Collectors.toList());
             final List<CoursEntity> coursEntities = coursDAOService.findByListIdCours(idsCours);
-
+            final List<IndependantModuleEntity> independantModuleEntities = independantModuleDAOService.findByListId(idsCoursIndependant);
             calendarDetailResponse.setCours(coursEntities);
+            calendarDetailResponse.setIndependantModules(independantModuleEntities);
         }
 
         final List<CalendarConstraintEntity> constraints = calendarConstraintDAOService.findByCalendarId(id);
@@ -170,9 +178,28 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état de brouillon");
         }
 
-        final List<String> idsCours = calendarCoursDAOService.findByCalendarId(id).stream()
-                .map(CalendarCoursEntity::getCoursId).collect(Collectors.toList());
+        final List<CalendarCoursEntity> calendarCoursEntities = calendarCoursDAOService.findByCalendarId(id);
+
+        final List<String> idsCours = calendarCoursEntities.stream()
+                .filter(cc -> !cc.isIndependantModule())
+                .map(CalendarCoursEntity::getCoursId)
+                .collect(Collectors.toList());
+        final List<Integer> idsCoursIndependant = calendarCoursEntities
+                .stream()
+                .filter(CalendarCoursEntity::isIndependantModule)
+                .map(cc -> Integer.parseInt(cc.getCoursId()))
+                .collect(Collectors.toList());
         final List<CoursComplet> coursComplets = coursDAOService.findAllCoursCompletsByIds(idsCours);
+        independantModuleDAOService.findByListId(idsCoursIndependant).forEach(im -> {
+            CoursComplet coursComplet = new CoursComplet();
+            coursComplet.setIdModule(im.getId());
+            coursComplet.setLibelleModule(im.getLongName());
+            coursComplet.setDureeReelleEnHeures(im.getHours());
+            coursComplet.setDebut(im.getStartDate());
+            coursComplet.setFin(im.getEndDate());
+            coursComplet.setCodeLieu(im.getCodeLieu());
+            coursComplets.add(coursComplet);
+        });
 
         return calendarExportUtil.getCalendarLines(c, coursComplets);
     }
@@ -457,6 +484,7 @@ public class CalendarController {
 
         // Enlever les ids en doublon
         final List<String> coursIds = form.getCoursIds().stream().distinct().collect(Collectors.toList());
+        final List<Integer> independantModuleIds = form.getCoursIndependantIds().stream().distinct().collect(Collectors.toList());
 
         // Vérifier que les ids correspondent en base
         final StringJoiner errorIds = new StringJoiner(", ");
@@ -471,18 +499,41 @@ public class CalendarController {
                     "Les cours suivant <" + errorIds.toString() + "> n'existent pas."));
         }
 
+        // Vérifier que les ids correspondent en base
+        final StringJoiner errorIndependantIds = new StringJoiner(", ");
+        independantModuleIds.forEach(im -> {
+            if (!independantModuleDAOService.existsById(im)) {
+                errorIndependantIds.add(im.toString());
+            }
+        });
+
+        if (errorIds.length() != 0) {
+            result.addError(new FieldError("coursIndependantIds", "coursIndependantIds",
+                    "Les modules indépendants suivant <" + errorIndependantIds.toString() + "> n'existent pas."));
+        }
+
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
-        final List<CalendarCoursEntity> calendarCoursEntities = coursIds.stream().map(c -> {
+        final List<CalendarCoursEntity> calendarCours = coursIds.stream().map(c -> {
             final CalendarCoursEntity calendarCoursEntity = new CalendarCoursEntity();
             calendarCoursEntity.setCalendarId(cal.getId());
             calendarCoursEntity.setCoursId(c);
+            calendarCoursEntity.setIndependantModule(false);
             return calendarCoursEntity;
         }).collect(Collectors.toList());
 
-        calendarCoursDAOService.createAll(calendarCoursEntities);
+        final List<CalendarCoursEntity> calendarCoursIndependant = independantModuleIds.stream().map(im -> {
+            final CalendarCoursEntity calendarCoursEntity = new CalendarCoursEntity();
+            calendarCoursEntity.setCalendarId(cal.getId());
+            calendarCoursEntity.setCoursId(Integer.toString(im));
+            calendarCoursEntity.setIndependantModule(true);
+            return calendarCoursEntity;
+        }).collect(Collectors.toList());
+
+        calendarCoursDAOService.createAll(calendarCours);
+        calendarCoursDAOService.createAll(calendarCoursIndependant);
         cal.setState(CalendarState.PROPOSAL);
         calendarDAOService.update(cal);
 

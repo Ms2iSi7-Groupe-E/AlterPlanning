@@ -15,6 +15,7 @@ public class CoursComplet {
     private Date fin;
     private Integer dureeReelleEnHeures;
     private String codeFormation;
+    private boolean isIndependantModule = false;
 
     public String getIdCours() {
         return idCours;
@@ -102,5 +103,13 @@ public class CoursComplet {
 
     public void setCodeFormation(String codeFormation) {
         this.codeFormation = codeFormation;
+    }
+
+    public boolean isIndependantModule() {
+        return isIndependantModule;
+    }
+
+    public void setIndependantModule(boolean independantModule) {
+        isIndependantModule = independantModule;
     }
 }

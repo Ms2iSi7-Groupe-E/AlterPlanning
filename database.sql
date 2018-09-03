@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `calendar_cours` (
   `calendarId` int(11) NOT NULL,
   `coursId` varchar(100) NOT NULL,
   `isIndependantModule` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`calendarId`,`coursId`)
+  PRIMARY KEY (`calendarId`,`coursId`,`isIndependantModule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

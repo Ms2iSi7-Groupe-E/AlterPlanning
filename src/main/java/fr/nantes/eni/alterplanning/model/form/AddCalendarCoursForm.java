@@ -15,11 +15,22 @@ public class AddCalendarCoursForm implements Serializable {
     @NotEmpty
     private List<String> coursIds = new ArrayList<>();
 
+    @NotNull
+    private List<Integer> coursIndependantIds = new ArrayList<>();
+
     public List<String> getCoursIds() {
         return coursIds;
     }
 
     public void setCoursIds(List<String> coursIds) {
         this.coursIds = coursIds;
+    }
+
+    public List<Integer> getCoursIndependantIds() {
+        return coursIndependantIds;
+    }
+
+    public void setCoursIndependantIds(List<Integer> coursIndependantIds) {
+        this.coursIndependantIds = coursIndependantIds;
     }
 }

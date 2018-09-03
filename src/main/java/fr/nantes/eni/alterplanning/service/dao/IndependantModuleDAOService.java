@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -29,7 +30,10 @@ public class IndependantModuleDAOService {
     }
 
     public List<IndependantModuleEntity> findByListId(List<Integer> ids) {
-        return repository.findByListId(ids);
+        if (ids != null && ids.size() > 0) {
+            return repository.findByListId(ids);
+        }
+        return new ArrayList<>();
     }
 
     public IndependantModuleEntity create(final IndependantModuleEntity entity) {
@@ -47,5 +51,9 @@ public class IndependantModuleDAOService {
 
     public void delete(final int id) {
         repository.deleteById(id);
+    }
+
+    public boolean existsById(Integer id) {
+        return repository.existsById(id);
     }
 }
