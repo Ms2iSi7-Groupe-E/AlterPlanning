@@ -35,11 +35,11 @@
         <div class="form-group row mt-4">
           <label class="col-3 col-form-label">Modules :</label>
           <div class="col-9">
-            <ng-select [(ngModel)]="selectedModule"
-                       placeholder="Module"
+            <ng-select placeholder="Module"
+                       (change)="changeModule($event)"
                        notFoundText="Aucun module trouvé">
-              <ng-option *ngFor="let module of modules"
-                         [value]="module.idModule">{{module.libelleCourt}} - {{module.libelle}}</ng-option>
+              <ng-option *ngFor="let module of allModules"
+                         [value]="module">{{module.shortName}} - {{module.longName}}</ng-option>
             </ng-select>
           </div>
         </div>

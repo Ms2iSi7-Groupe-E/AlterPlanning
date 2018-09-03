@@ -41,13 +41,6 @@ CREATE TABLE IF NOT EXISTS `calendars` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
---
--- Déchargement des données de la table `calendars`
---
-
-INSERT INTO `calendars` (`id`, `stagiaireId`, `entrepriseId`, `startDate`, `endDate`, `state`, `isModel`, `createdAt`) VALUES
-(1, 212, 57, '2018-06-18', '2019-08-01', 'DRAFT', 0, '2018-06-19 09:53:26');
-
 -- --------------------------------------------------------
 
 --
@@ -58,19 +51,11 @@ DROP TABLE IF EXISTS `calendar_constraints`;
 CREATE TABLE IF NOT EXISTS `calendar_constraints` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `calendarId` int(11) NOT NULL,
-  `constraintType` enum('AJOUT_FORMATION','AJOUT_MODULE','AJOUT_PERIODE','EN_MEME_TEMPS_QUE','PAS_EN_MEME_TEMPS_QUE','DISPENSE_PERIODE','DISPENSE_MODULE','A_PARTIR_DE_MODELE','LIEUX','HEURES_MIN','HEURES_MAX') NOT NULL,
+  `constraintType` enum('AJOUT_FORMATION','AJOUT_MODULE', 'AJOUT_MODULE_INDEPENDANT','AJOUT_PERIODE','EN_MEME_TEMPS_QUE','PAS_EN_MEME_TEMPS_QUE','DISPENSE_PERIODE','DISPENSE_MODULE','A_PARTIR_DE_MODELE','LIEUX','HEURES_MIN','HEURES_MAX') NOT NULL,
   `constraintValue` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `calendarId` (`calendarId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `calendar_constraints`
---
-
-INSERT INTO `calendar_constraints` (`id`, `calendarId`, `constraintType`, `constraintValue`) VALUES
-(1, 1, 'LIEUX', '1'),
-(2, 1, 'AJOUT_FORMATION', '17CDI');
 
 -- --------------------------------------------------------
 
@@ -82,6 +67,7 @@ DROP TABLE IF EXISTS `calendar_cours`;
 CREATE TABLE IF NOT EXISTS `calendar_cours` (
   `calendarId` int(11) NOT NULL,
   `coursId` varchar(100) NOT NULL,
+  `isIndependantModule` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`calendarId`,`coursId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
