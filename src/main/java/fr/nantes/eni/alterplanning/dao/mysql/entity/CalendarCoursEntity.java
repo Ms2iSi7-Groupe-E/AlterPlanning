@@ -19,6 +19,9 @@ public class CalendarCoursEntity {
     @Column(name = "coursId")
     private String coursId;
 
+    @Column(name = "isIndependantModule")
+    private boolean isIndependantModule = false;
+
     public int getCalendarId() {
         return calendarId;
     }
@@ -33,6 +36,14 @@ public class CalendarCoursEntity {
 
     public void setCoursId(String coursId) {
         this.coursId = coursId;
+    }
+
+    public boolean isIndependantModule() {
+        return isIndependantModule;
+    }
+
+    public void setIndependantModule(boolean independantModule) {
+        isIndependantModule = independantModule;
     }
 }
 

@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.controller.api;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarConstraintEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.IndependantModuleEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.ConstraintType;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
@@ -14,6 +15,7 @@ import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.form.StateForm;
 import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
+import fr.nantes.eni.alterplanning.model.response.CoursGenerationResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
 import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
 import fr.nantes.eni.alterplanning.model.simplebean.ExcludeConstraint;
@@ -22,7 +24,6 @@ import fr.nantes.eni.alterplanning.service.dao.*;
 import fr.nantes.eni.alterplanning.util.AlterDateUtil;
 import fr.nantes.eni.alterplanning.util.CalendarExportUtil;
 import fr.nantes.eni.alterplanning.util.HistoryUtil;
-import org.apache.commons.collections.ListUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -32,7 +33,10 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -65,6 +69,9 @@ public class CalendarController {
 
     @Resource
     private EntrepriseDAOService entrepriseDAOService;
+
+    @Resource
+    private IndependantModuleDAOService independantModuleDAOService;
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat(AlterDateUtil.ddMMyyyyWithSlash);
 
@@ -283,7 +290,7 @@ public class CalendarController {
     }
 
     @GetMapping("/{idCalendar}/cours-for-generate-calendar")
-    public List<CoursComplet> getCoursForCalendarInGeneration(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
+    public CoursGenerationResponse getCoursForCalendarInGeneration(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         // Récupération du Calendrier
         final CalendarEntity calendar = calendarDAOService.findById(id);
 
@@ -295,7 +302,15 @@ public class CalendarController {
 
         // Récupération des contraintes du calendrier
         final List<CalendarConstraintEntity> constraints = calendarConstraintDAOService.findByCalendarId(id);
+        final CoursGenerationResponse coursGenerationResponse = new CoursGenerationResponse();
         List<CoursComplet> cours;
+
+        final List<Integer> independantModuleIds = constraints.stream()
+                .filter(c -> c.getConstraintType().equals(ConstraintType.AJOUT_MODULE_INDEPENDANT))
+                .map(c -> Integer.parseInt(c.getConstraintValue()))
+                .distinct().collect(Collectors.toList());
+
+        List<IndependantModuleEntity> independantModuleEntities = independantModuleDAOService.findByListId(independantModuleIds);
 
         // Récupérer les codes des lieux
         final List<Integer> lieux = constraints.stream()
@@ -311,11 +326,16 @@ public class CalendarController {
         if (calendar.getStartDate() != null || calendar.getEndDate() != null) {
             cours = cours
                     .stream().filter(c -> AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getDebut())
-                    || AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getFin()))
+                            || AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getFin()))
+                    .collect(Collectors.toList());
+
+            independantModuleEntities = independantModuleEntities
+                    .stream().filter(c -> AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getStartDate())
+                            || AlterDateUtil.isIncludeInPeriode(calendar.getStartDate(), calendar.getEndDate(), c.getEndDate()))
                     .collect(Collectors.toList());
         }
 
-        // Si période d'exclusion, retirer les cours étant dans cette période
+        // Récupérer les périodes d'exclusion
         final List<ExcludeConstraint> contraintesExclusion = constraints
                 .stream().filter(c -> c.getConstraintType().equals(ConstraintType.DISPENSE_PERIODE))
                 .map(c -> {
@@ -329,6 +349,7 @@ public class CalendarController {
                 })
                 .filter(Objects::nonNull).collect(Collectors.toList());
 
+        // Si période d'exclusion, retirer les cours étant dans cette période
         if (!contraintesExclusion.isEmpty()) {
             // Vérification qu'un cours ne ce passe pas durant une période d'exclusion
             // Si oui on le retire de la liste
@@ -337,6 +358,17 @@ public class CalendarController {
                 for (ExcludeConstraint ce : contraintesExclusion) {
                     if (AlterDateUtil.isIncludeInPeriode(ce.getStart(), ce.getEnd(), c.getDebut())
                             || AlterDateUtil.isIncludeInPeriode(ce.getStart(), ce.getEnd(), c.getFin())) {
+                        notInsideExcludePeriode = false;
+                    }
+                }
+                return notInsideExcludePeriode;
+            }).collect(Collectors.toList());
+
+            independantModuleEntities = independantModuleEntities.stream().filter(c -> {
+                boolean notInsideExcludePeriode = true;
+                for (ExcludeConstraint ce : contraintesExclusion) {
+                    if (AlterDateUtil.isIncludeInPeriode(ce.getStart(), ce.getEnd(), c.getStartDate())
+                            || AlterDateUtil.isIncludeInPeriode(ce.getStart(), ce.getEnd(), c.getEndDate())) {
                         notInsideExcludePeriode = false;
                     }
                 }
@@ -398,7 +430,10 @@ public class CalendarController {
                     .collect(Collectors.toList());
         }
 
-        return cours;
+        coursGenerationResponse.setCours(cours);
+        coursGenerationResponse.setIndependantModules(independantModuleEntities);
+
+        return coursGenerationResponse;
     }
 
     @PostMapping("/{idCalendar}/cours")

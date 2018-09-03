@@ -28,6 +28,10 @@ public class IndependantModuleDAOService {
         return repository.findById(id).orElse(null);
     }
 
+    public List<IndependantModuleEntity> findByListId(List<Integer> ids) {
+        return repository.findByListId(ids);
+    }
+
     public IndependantModuleEntity create(final IndependantModuleEntity entity) {
         return repository.save(entity);
     }
