@@ -15,7 +15,6 @@ import {NgbDatepickerI18n, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {CourService} from "./services/cour.service";
 import {PromotionService} from "./services/promotion.service";
-import {ModelsService} from "./services/models.service";
 import {PageSearchComponent} from './components/page-search/page-search.component';
 import {PageHistoryComponent} from './components/page-history/page-history.component';
 import {PageParametersComponent} from './components/page-parameters/page-parameters.component';
@@ -84,7 +83,6 @@ import { ConfirmComponent } from './components/modal/confirm/confirm.component';
     CourService,
     CalendarService,
     PromotionService,
-    ModelsService,
     ModuleService,
     TitreService,
     ParameterService,

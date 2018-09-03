@@ -77,10 +77,15 @@
 
   <div class="form-group row">
     <label class="col-4 col-form-label">Alimenter à partir du modèle :</label>
-    <select class="form-control col-4" [(ngModel)]="selectedModels" (change)="changeModels()">
-      <option selected [ngValue]="null">Choisir un modèle...</option>
-      <option *ngFor="let m of models" [ngValue]="m">{{ m.name }}</option>
-    </select>
+    <ng-select
+      [items]="models"
+      bindLabel="name"
+      bindValue="id"
+      placeholder="Choisir un modèle..."
+      notFoundText="Aucun modèle trouvée"
+      (change)="changeModels()"
+      [(ngModel)]="selectedModel">
+    </ng-select>
   </div>
 
   <div class="row mb-3">

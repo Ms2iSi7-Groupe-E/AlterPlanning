@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ModelsService} from '../../services/models.service';
 import {LieuService} from "../../services/lieu.service";
 import {EntrepriseService} from "../../services/entreprise.service";
 import {StagiaireService} from "../../services/stagiaire.service";
@@ -10,6 +9,7 @@ import {Router} from "@angular/router";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarModel} from "../../models/calendar.model";
 import {ConstraintTypes} from "../../models/enums/constraint-types";
+import {CalendarModelService} from "../../services/calendar-model.service";
 
 @Component({
   selector: 'app-propose-calendar',
@@ -25,7 +25,7 @@ export class PageCalendarProposalComponent implements OnInit {
   stagiaires = [];
   entreprises = [];
   constraints = [];
-  selectedModels = null;
+  selectedModel = null;
   selectedDateDebut = null;
   selectedDateFin = null;
   selectedHeureMin = null;
@@ -39,42 +39,29 @@ export class PageCalendarProposalComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private router: Router,
               private calendarService: CalendarService,
-              private modelsService: ModelsService,
               private lieuService: LieuService,
               private entrepriseService: EntrepriseService,
+              private calendarModelService: CalendarModelService,
               private stagiaireService: StagiaireService) { }
 
   ngOnInit() {
-    this.models = this.modelsService.getModels();
+    this.lieuService.getLieuxTeachningCourses().subscribe(res => {
+      this.lieux = res;
+    }, console.error);
 
-    this.lieuService.getLieuxTeachningCourses().subscribe(
-      res => {
-        this.lieux = res;
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.entrepriseService.getEntreprises().subscribe(res => {
+      this.allEntreprises = res;
+      this.entreprises = res;
+    }, console.error);
 
-    this.entrepriseService.getEntreprises().subscribe(
-      res => {
-        this.allEntreprises = res;
-        this.entreprises = res;
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.stagiaireService.getStagiaires().subscribe(res => {
+      this.allStagiaires = res;
+      this.stagiaires = res;
+    }, console.error);
 
-    this.stagiaireService.getStagiaires().subscribe(
-      res => {
-        this.allStagiaires = res;
-        this.stagiaires = res;
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.calendarModelService.getModels().subscribe(res => {
+      this.models = res;
+    }, console.error);
   }
 
   get formIsValid() {
@@ -82,7 +69,8 @@ export class PageCalendarProposalComponent implements OnInit {
   }
 
   changeModels() {
-    // console.log(this.selectedModels);
+    console.log(this.selectedModel);
+    // TODO
   }
 
   changeEntreprise() {
@@ -90,14 +78,9 @@ export class PageCalendarProposalComponent implements OnInit {
       this.stagiaires = this.allStagiaires;
     } else {
       this.stagiaires = [];
-      this.entrepriseService.getStagiairesForEntreprise(this.selectedEntreprise).subscribe(
-        res => {
-          this.stagiaires = res;
-        },
-        err => {
-          console.error(err);
-        }
-      );
+      this.entrepriseService.getStagiairesForEntreprise(this.selectedEntreprise).subscribe(res => {
+        this.stagiaires = res;
+      }, console.error);
     }
   }
 
@@ -107,14 +90,9 @@ export class PageCalendarProposalComponent implements OnInit {
     } else {
       this.entreprises = [];
 
-      this.stagiaireService.getEntreprisesForStagiaire(this.selectedStagiaire).subscribe(
-        res => {
-          this.entreprises = res;
-        },
-        err => {
-          console.error(err);
-        }
-      );
+      this.stagiaireService.getEntreprisesForStagiaire(this.selectedStagiaire).subscribe(res => {
+        this.entreprises = res;
+      }, console.error);
     }
   }
 
@@ -140,8 +118,12 @@ export class PageCalendarProposalComponent implements OnInit {
       });
     });
 
-    if (this.selectedModels) {
-      // TODO: add constraint for model
+    if (this.selectedModel) {
+      // TODO
+      calendarModel.constraints.push({
+        type: ConstraintTypes.A_PARTIR_DE_MODELE,
+        value: this.selectedModel
+      });
     }
 
     if (this.selectedHeureMin) {
