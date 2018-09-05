@@ -13,7 +13,6 @@ import fr.nantes.eni.alterplanning.exception.RestResponseException;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarCoursForm;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
 import fr.nantes.eni.alterplanning.model.form.StateForm;
-import fr.nantes.eni.alterplanning.model.response.CalendarDetailResponse;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.CoursGenerationResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
@@ -24,6 +23,7 @@ import fr.nantes.eni.alterplanning.service.dao.*;
 import fr.nantes.eni.alterplanning.util.AlterDateUtil;
 import fr.nantes.eni.alterplanning.util.CalendarExportUtil;
 import fr.nantes.eni.alterplanning.util.HistoryUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -33,10 +33,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -107,19 +104,64 @@ public class CalendarController {
                 calendar.setStagiaire(stagiaireEntity);
             }
 
+            calendar.setConstraints(calendarConstraintDAOService.findByCalendarId(c.getId()));
+
+            final List<CalendarCoursEntity> calendarCoursEntities = calendarCoursDAOService.findByCalendarId(c.getId());
+            if (!calendarCoursEntities.isEmpty()) {
+                final List<String> idsCours = calendarCoursEntities
+                        .stream()
+                        .filter(cc -> !cc.isIndependantModule())
+                        .map(CalendarCoursEntity::getCoursId)
+                        .distinct()
+                        .collect(Collectors.toList());
+                final List<Integer> idsCoursIndependant = calendarCoursEntities
+                        .stream()
+                        .filter(CalendarCoursEntity::isIndependantModule)
+                        .map(cc -> Integer.parseInt(cc.getCoursId()))
+                        .distinct()
+                        .collect(Collectors.toList());
+                final List<CoursEntity> coursEntities = coursDAOService.findByListIdCours(idsCours);
+                final List<IndependantModuleEntity> independantModuleEntities = independantModuleDAOService.findByListId(idsCoursIndependant);
+                final List<CoursComplet> coursComplets = new ArrayList<>();
+                coursEntities.forEach(ce -> {
+                    CoursComplet coursComplet = new CoursComplet();
+                    coursComplet.setDebut(ce.getDebut());
+                    coursComplet.setFin(ce.getFin());
+                    coursComplets.add(coursComplet);
+                });
+                independantModuleEntities.forEach(ce -> {
+                    CoursComplet coursComplet = new CoursComplet();
+                    coursComplet.setDebut(ce.getStartDate());
+                    coursComplet.setFin(ce.getEndDate());
+                    coursComplets.add(coursComplet);
+                });
+
+                coursComplets.sort(Comparator.comparing(CoursComplet::getDebut));
+                final Date startDateFirstCourse = coursComplets.get(0).getDebut();
+                final Date endDateLastCourse = coursComplets.get(coursComplets.size() - 1).getFin();
+
+                if (calendar.getStartDate() == null || startDateFirstCourse.before(calendar.getStartDate())) {
+                    calendar.setStartDate(startDateFirstCourse);
+                }
+
+                if (calendar.getEndDate() == null ||endDateLastCourse.after(calendar.getEndDate())) {
+                    calendar.setEndDate(endDateLastCourse);
+                }
+            }
+
             return calendar;
         }).collect(Collectors.toList());
     }
 
     @GetMapping("/{idCalendar}")
-    public CalendarDetailResponse getCalendarDetailsById(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
+    public CalendarResponse getCalendarDetailsById(@PathVariable(name = "idCalendar") int id) throws RestResponseException {
         final CalendarEntity c = calendarDAOService.findById(id);
 
         if (c == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
         }
 
-        final CalendarDetailResponse calendarDetailResponse = new CalendarDetailResponse();
+        final CalendarResponse calendarDetailResponse = new CalendarResponse();
         calendarDetailResponse.setId(c.getId());
         calendarDetailResponse.setStartDate(c.getStartDate());
         calendarDetailResponse.setEndDate(c.getEndDate());
@@ -207,7 +249,7 @@ public class CalendarController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public CalendarDetailResponse addCalendar(@Valid @RequestBody AddCalendarForm form, BindingResult result) throws RestResponseException {
+    public CalendarResponse addCalendar(@Valid @RequestBody AddCalendarForm form, BindingResult result) throws RestResponseException {
 
         if (form.getEndDate() != null && form.getStartDate() != null && form.getEndDate().before(form.getStartDate())) {
             result.addError(new FieldError("startDate",  "startDate", "doit être avant la date de fin"));
@@ -547,4 +589,105 @@ public class CalendarController {
         throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
+    @GetMapping("/search")
+    public List<CalendarResponse> getCalendarsByCriteria(@RequestParam(value = "codeEntreprise", required = false) Integer codeEntreprise,
+                                                         @RequestParam(value = "codeStagiaire", required = false) Integer codeStagiaire,
+                                                         @RequestParam(value = "codePromotion", required = false) String codePromotion,
+                                                         @RequestParam(value = "codeFormation", required = false) String codeFormation,
+                                                         @RequestParam(value = "idModule", required = false) Integer idModule,
+                                                         @RequestParam(value = "startDate", required = false) Long startDate,
+                                                         @RequestParam(value = "endDate", required = false) Long endDate,
+                                                         @RequestParam(value = "state", required = false) CalendarState state) {
+        List<CalendarResponse> calendars = getCalendars();
+
+        // Filter by entreprise
+        if (codeEntreprise != null) {
+            calendars = calendars
+                    .stream()
+                    .filter(c -> {
+                        if (c.getEntreprise() == null) {
+                            return false;
+                        }
+
+                        return !c.getEntreprise().getCodeEntreprise().equals(codeEntreprise);
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        // Filter by stagiaire
+        if (codeStagiaire != null) {
+            calendars = calendars
+                    .stream()
+                    .filter(c -> {
+                        if (c.getStagiaire() == null) {
+                            return false;
+                        }
+
+                        return !c.getStagiaire().getCodeStagiaire().equals(codeStagiaire);
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        // Filter by startDate
+        if (startDate != null) {
+            final Date start = new Date(startDate);
+            calendars = calendars
+                    .stream()
+                    .filter(c -> c.getStartDate() != null && (start.before(c.getStartDate()) || start.equals(c.getStartDate())))
+                    .collect(Collectors.toList());
+        }
+
+        // Filter by endDate
+        if (endDate != null) {
+            final Date end = new Date(endDate);
+            calendars = calendars
+                    .stream()
+                    .filter(c -> c.getEndDate() != null && (end.after(c.getEndDate()) || end.equals(c.getEndDate())))
+                    .collect(Collectors.toList());
+        }
+
+        // Filter by state
+        if (state != null) {
+            calendars = calendars
+                    .stream()
+                    .filter(c -> c.getState().equals(state))
+                    .collect(Collectors.toList());
+        }
+
+        if (idModule != null) {
+            calendars = calendars
+                    .stream()
+                    .filter(c -> {
+                        final List<Integer> idsModule = c.getConstraints()
+                                .stream()
+                                .filter(co -> co.getConstraintType().equals(ConstraintType.AJOUT_MODULE))
+                                .map(co -> Integer.parseInt(co.getConstraintValue()))
+                                .collect(Collectors.toList());
+
+                        return idsModule.contains(idModule);
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        if (StringUtils.isNotEmpty(codeFormation)) {
+            calendars = calendars
+                    .stream()
+                    .filter(c -> {
+                        final List<String> codesFormations = c.getConstraints()
+                                .stream()
+                                .filter(co -> co.getConstraintType().equals(ConstraintType.AJOUT_FORMATION))
+                                .map(CalendarConstraintEntity::getConstraintValue)
+                                .collect(Collectors.toList());
+
+                        return codesFormations.contains(codeFormation);
+                    })
+                    .collect(Collectors.toList());
+        }
+
+//        if (StringUtils.isNotEmpty(codePromotion)) {
+//            // TODO
+//        }
+
+        return calendars;
+    }
 }
