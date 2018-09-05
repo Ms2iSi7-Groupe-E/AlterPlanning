@@ -23,6 +23,7 @@ export class PageCalendarProcessingComponent implements OnInit {
   colorsLieux = [];
   colorsFormations = [];
   cours = [];
+  coursIndependants = [];
   mois = [];
   semaines = [];
   afficher = false;
@@ -51,6 +52,8 @@ export class PageCalendarProcessingComponent implements OnInit {
             this.calendarService.getCoursForCalendarInGeneration(id).subscribe(
               resC => {
                 this.cours = resC.cours;
+                this.coursIndependants = resC.independantModules;
+console.log(resC);
                 this.loadElements();
               },
               errC => {
@@ -214,15 +217,27 @@ export class PageCalendarProcessingComponent implements OnInit {
   // generation des cours
   generationCours() {
 
-    // pour tous les cours
+    // pour tous les cours et les modules independants
     // determine le premier et le dernier jour
     let iJourMin = 0;
     let iJourMax = 0;
-    this.cours.forEach((c) => {
+    this.cours.forEach( c => {
 
       // mise a jour du jour min et max
       const iDateDebut = parseInt( moment(c.debut).format("X"), 10 );
       const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
+      if ( iDateDebut < iJourMin || iJourMin === 0 ) {
+        iJourMin = iDateDebut;
+      }
+      if ( iDateFin > iJourMax || iJourMax === 0 ) {
+        iJourMax = iDateFin;
+      }
+    });
+    this.coursIndependants.forEach( ci => {
+
+      // mise a jour du jour min et max
+      const iDateDebut = parseInt( moment(ci.startDate).format("X"), 10 );
+      const iDateFin = parseInt( moment(ci.endDate).format("X"), 10 ) + ( parseInt( ci.hours, 10 ) * 3600 );
       if ( iDateDebut < iJourMin || iJourMin === 0 ) {
         iJourMin = iDateDebut;
       }
@@ -262,7 +277,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       // determine si le jour du mois existe
       if ( !(sKeyDay in mois[ sKeyMonth ][ "jours" ]) ) {
         mois[ sKeyMonth ][ "jours" ][ sKeyDay ] = { "lettre": oDay.format( "ddd" ).substring(0, 1), "jour": sKeyDay,
-        "cours": [], "cplace": null, "color": "#ffffff" };
+        "cours": [], "coursIndependants": [], "cplace": null, "color": "#ffffff" };
       } else {
 
         // ce jour est deja pris en compte
@@ -271,10 +286,11 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // recupere les cours concernes par ce jour
       const cours = [];
-      this.cours.forEach((c) => {
+      this.cours.forEach( c => {
         const iDateDebut = parseInt( moment(c.debut).format("X"), 10 );
         const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
-        if ( iDay >= iDateDebut && iDay <= ( iDateFin - 86400 ) ) {
+        if ( iDay >= iDateDebut && iDay <= iDateFin ) {
+        //if ( iDay >= iDateDebut && iDay <= ( iDateFin - 86400 ) ) {
 
           // determine si un cours similaire existe sur le meme lieu pour le meme jour
           const cj = cours.find( fcj => {
@@ -288,15 +304,30 @@ export class PageCalendarProcessingComponent implements OnInit {
           }
         }
       });
-
-      // ajout des cours
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
-      if ( cours.length === 0 ) {
+
+      // recupere les cours independants concernes par ce jour
+      const coursIndependants = [];
+      this.coursIndependants.forEach( ci => {
+        const iDateDebut = parseInt( moment(ci.startDate).format("X"), 10 );
+        const iDateFin = parseInt( moment(ci.endDate).format("X"), 10 ) + ( parseInt( ci.hours, 10 ) * 3600 );
+        if ( iDay >= iDateDebut && iDay <= iDateFin ) {
+
+          // recupere le cours independant
+          ci.anneeMois = sKeyMonth;
+          ci.jour = sKeyDay;
+          coursIndependants.push( ci );
+        }
+      });
+      mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "coursIndependants" ] = coursIndependants;
+
+      // determine la couleur de fond du jour
+      if ( cours.length === 0 && coursIndependants.length === 0 ) {
         mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "color" ] = "#e8e8e8";
       }
 
       // pour tous les cours du mois
-      cours.forEach((c) => {
+      cours.forEach( c => {
 
         // determine la formation existe dans ce mois
         const isFormationMois = mois[ sKeyMonth ][ "formations" ].find( f => {
@@ -314,13 +345,26 @@ export class PageCalendarProcessingComponent implements OnInit {
           mois[ sKeyMonth ][ "lieux" ].push( this.lieux.filter( l => l.codeLieu.toString() === c.codeLieu.toString() )[ 0 ] );
         }
       });
+
+      // pour tous les cours independants
+      coursIndependants.forEach( ci => {
+
+        // determine les lieux du mois
+        const isLieuMois = mois[ sKeyMonth ][ "lieux" ].find( l => {
+          return ci.codeLieu.toString() === l.codeLieu.toString();
+        } );
+        if ( !isLieuMois ) {
+          mois[ sKeyMonth ][ "lieux" ].push( this.lieux.filter( l => l.codeLieu.toString() === ci.codeLieu.toString() )[ 0 ] );
+        }
+      });
     }
 
     // pour toutes les semaines, determine si il y a des semaines sans jour
     semaines.forEach( s => {
       let iNbrCours = 0;
       s.jours.forEach( sj => {
-        iNbrCours += mois[ sj.anneeMois ][ "jours" ][ sj.jour ][ "cours" ].length;
+        iNbrCours += mois[ sj.anneeMois ][ "jours" ][ sj.jour ][ "cours" ].length +
+          mois[ sj.anneeMois ][ "jours" ][ sj.jour ][ "coursIndependants" ].length;
       });
 
       // si il n'y a pas de cours cette semaine
@@ -334,7 +378,7 @@ export class PageCalendarProcessingComponent implements OnInit {
   }
 
   // placement d'un cours
-  placementCours(c) {
+  placementCours(c, bIndep) {
     this.unselectCours();
     c = Object.assign( {}, c );
 
@@ -350,42 +394,88 @@ export class PageCalendarProcessingComponent implements OnInit {
       // pour tous les jours du mois
       Object.keys(mois[km].jours).forEach( kj => {
 
-        // pour tous les cours du jour
-        let bUpdateCours = false;
-        const newCours = [];
-        mois[km].jours[kj].cours.forEach( cj => {
+        // si c'est un cours
+        if ( !bIndep ) {
 
-          // si c'est le cours concerne pas le deplacement
-          if ( cj.idCours === c.idCours && cj.codeLieu.toString() === c.codeLieu.toString()
-              && cj.codeFormation === c.codeFormation ) {
-            bUpdateCours = true;
+          // pour tous les cours du jour
+          let bUpdateCours = false;
+          const newCours = [];
+          mois[km].jours[kj].cours.forEach( cj => {
 
-            // placement du cours
-            mois[km].jours[kj].cplace = cj;
+            // si c'est le cours concerne pas le deplacement
+            if ( cj.idCours === c.idCours && cj.codeLieu.toString() === c.codeLieu.toString()
+                && cj.codeFormation === c.codeFormation ) {
+              bUpdateCours = true;
 
-            // recherche la semaine concernee
-            this.semaines.forEach( s => {
+              // placement du cours
+              mois[km].jours[kj].cplace = cj;
+              mois[km].jours[kj].cplace.indep = bIndep;
 
-              // determine si le jour et contenu dans cette semaine
-              const sj = s.jours.find( ji => {
-                return ji.anneeMois === km && ji.jour === kj;
+              // recherche la semaine concernee
+              this.semaines.forEach( s => {
+
+                // determine si le jour et contenu dans cette semaine
+                const sj = s.jours.find( ji => {
+                  return ji.anneeMois === km && ji.jour === kj;
+                });
+                if ( sj ) {
+                  s.class = 'select_week';
+                }
               });
-              if ( sj ) {
-                s.class = 'select_week';
-              }
-            });
 
-          } else {
+            } else {
 
-            // ne prendre en compte le cours que s'il ne fait pas partie du cours recherche
-            newCours.push( cj );
+              // ne prendre en compte le cours que s'il ne fait pas partie du cours recherche
+              newCours.push( cj );
+            }
+          });
+
+          // si les cours de ce jour doivent etre mise a jour
+          if ( bUpdateCours ) {
+            mois[km].jours[kj].cours = newCours;
+            bUpdateCours = false;
           }
-        });
 
-        // si les cours de ce jour doivent etre mise a jour
-        if ( bUpdateCours ) {
-          mois[km].jours[kj].cours = newCours;
-          bUpdateCours = false;
+        // si c'est un cours independant
+        } else {
+
+          // pour tous les cours independants du jour
+          let bUpdateCoursIndependants = false;
+          const newCoursIndependants = [];
+          mois[km].jours[kj].coursIndependants.forEach( cij => {
+
+            // si c'est le cours concerne pas le deplacement
+            if ( cij.id === c.id ) {
+              bUpdateCoursIndependants = true;
+
+              // placement du cours
+              mois[km].jours[kj].cplace = cij;
+              mois[km].jours[kj].cplace.indep = bIndep;
+
+              // recherche la semaine concernee
+              this.semaines.forEach( s => {
+
+                // determine si le jour et contenu dans cette semaine
+                const sj = s.jours.find( ji => {
+                  return ji.anneeMois === km && ji.jour === kj;
+                });
+                if ( sj ) {
+                  s.class = 'select_week';
+                }
+              });
+
+            } else {
+
+              // ne prendre en compte le cours que s'il ne fait pas partie du cours recherche
+              newCoursIndependants.push( cij );
+            }
+          });
+
+          // si les cours de ce jour doivent etre mise a jour
+          if ( bUpdateCoursIndependants ) {
+            mois[km].jours[kj].coursIndependants = newCoursIndependants;
+            bUpdateCoursIndependants = false;
+          }
         }
       });
     });
@@ -405,11 +495,22 @@ export class PageCalendarProcessingComponent implements OnInit {
       Object.keys(mois[km].jours).forEach( kj => {
 
         // determine si le jour contient le cours a deplacer
-        if ( mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.idCours === c.idCours
-            && mois[km].jours[kj].cplace.codeLieu.toString() === c.codeLieu.toString()
-            && mois[km].jours[kj].cplace.codeFormation === c.codeFormation ) {
+        if ( mois[km].jours[kj].cplace != null &&
+            mois[km].jours[kj].cplace.codeLieu.toString() === c.codeLieu.toString() &&
+            (
+              ( c.indep && mois[km].jours[kj].cplace.id === c.id )
+              ||
+              ( !c.indep &&
+              mois[km].jours[kj].cplace.idCours === c.idCours &&
+              mois[km].jours[kj].cplace.codeFormation === c.codeFormation )
+            ) ) {
 
-          mois[km].jours[kj].cours.push( c );
+          // repositionnement du cours sur la colonne de droite
+          if ( c.indep ) {
+            mois[km].jours[kj].coursIndependants.push( c );
+          } else {
+            mois[km].jours[kj].cours.push( c );
+          }
           mois[km].jours[kj].cplace = null;
 
           // recherche la semaine concernee
@@ -451,10 +552,13 @@ export class PageCalendarProcessingComponent implements OnInit {
   }
 
   // recupere la description d'un cours pour le tootip
-  getDescCours( c ) {
+  getDescCours( c, bIndep ) {
+    let sDesc = ( bIndep ? c.longName : c.libelleModule ) + ', ';
     const lieu = this.lieux.find( l => l.codeLieu.toString() === c.codeLieu.toString() );
-    const formation = this.formations.find( f => f.codeFormation === c.codeFormation );
-    return c.libelleModule + ', ' + formation.libelleFormation + ', ' + lieu.libelle;
+    if ( !bIndep ) {
+      sDesc += this.formations.find( f => f.codeFormation === c.codeFormation ).libelleFormation + ', ';
+    }
+    return sDesc + lieu.libelle;
   }
 
   // click sur une semaine
@@ -480,9 +584,15 @@ export class PageCalendarProcessingComponent implements OnInit {
   }
 
   // selection d'un cours
-  selectCours( c ) {
+  selectCours( c, bIndep ) {
     if ( this.messageNotification !== '' ) {
       this.unselectCours();
+    }
+
+    // si c'est un cours independant
+    if ( bIndep ) {
+      this.messageNotification = this.getDescCours( c, true );
+      return;
     }
     this.messageNotification = c.libelleModule + ', ' + c.libelleFormationLong;
 
@@ -535,7 +645,8 @@ export class PageCalendarProcessingComponent implements OnInit {
       Object.keys(mois[km].jours).forEach( kj => {
 
         // determine la couleur de fond
-        mois[km].jours[kj].color = mois[km].jours[kj].cours.length > 0 || mois[km].jours[kj].cplace != null ? "#ffffff" : "#e8e8e8";
+        mois[km].jours[kj].color = ( mois[km].jours[kj].cours.length + mois[km].jours[kj].coursIndependants.length ) > 0
+          || mois[km].jours[kj].cplace != null ? "#ffffff" : "#e8e8e8";
       });
     });
     this.mois = mois;
