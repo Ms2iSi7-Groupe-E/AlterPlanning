@@ -53,7 +53,6 @@ export class PageCalendarProcessingComponent implements OnInit {
               resC => {
                 this.cours = resC.cours;
                 this.coursIndependants = resC.independantModules;
-console.log(resC);
                 this.loadElements();
               },
               errC => {
@@ -290,7 +289,6 @@ console.log(resC);
         const iDateDebut = parseInt( moment(c.debut).format("X"), 10 );
         const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
         if ( iDay >= iDateDebut && iDay <= iDateFin ) {
-        //if ( iDay >= iDateDebut && iDay <= ( iDateFin - 86400 ) ) {
 
           // determine si un cours similaire existe sur le meme lieu pour le meme jour
           const cj = cours.find( fcj => {
