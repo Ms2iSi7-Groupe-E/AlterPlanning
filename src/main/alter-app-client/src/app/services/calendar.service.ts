@@ -28,6 +28,12 @@ export class CalendarService {
       .catch((err) => this.authService.handleError(err));
   }
 
+  searchCalendars(params): Observable<any> {
+    return this.http
+      .get('/api/calendar/search', {headers: AuthService.getHeaders(), params: params})
+      .catch((err) => this.authService.handleError(err));
+  }
+
   getCalendar(idCalendar: number): Observable<any> {
     return this.http
       .get('/api/calendar/' + idCalendar, {headers: AuthService.getHeaders()})

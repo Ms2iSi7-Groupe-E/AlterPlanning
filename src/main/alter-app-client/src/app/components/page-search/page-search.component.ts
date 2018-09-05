@@ -10,6 +10,7 @@ import {FormationService} from "../../services/formation.service";
 import {SearchKeys} from "../../models/enums/search-keys";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmComponent} from "../modal/confirm/confirm.component";
+import {SearchQueryModel} from "../../models/search-query.model";
 
 @Component({
   selector: 'app-page-search',
@@ -67,8 +68,52 @@ export class PageSearchComponent implements OnInit {
     this.searching = true;
     this.addParamToRoute(this.QUERY_KEYS.validated, true);
 
+    let getCalendarObservable = null;
+
     if (this.allFieldsAreClear) {
-      this.calendarService.getCalendars().subscribe(res => {
+      getCalendarObservable = this.calendarService.getCalendars();
+    } else {
+      const queryParams = new SearchQueryModel();
+
+      if (this.selectedState !== 'ALL') {
+        queryParams.state = this.selectedState;
+      }
+
+      if (this.selectedStagiaire != null) {
+        queryParams.codeStagiaire = this.selectedStagiaire;
+      }
+
+      if (this.selectedEntreprise != null) {
+        queryParams.codeEntreprise = this.selectedEntreprise;
+      }
+
+      if (this.selectedModule != null) {
+        queryParams.idModule = this.selectedModule;
+      }
+
+      if (this.selectedFormation != null) {
+        queryParams.codeFormation = this.selectedFormation;
+      }
+
+      if (this.selectedPromotion != null) {
+        queryParams.codePromotion = this.selectedPromotion;
+      }
+
+      if (this.selectedDateDebut != null) {
+        const sd = new Date(this.selectedDateDebut.year, this.selectedDateDebut.month - 1, this.selectedDateDebut.day);
+        queryParams.startDate = sd.getTime().toString();
+      }
+
+      if (this.selectedDateFin != null) {
+        const ed = new Date(this.selectedDateFin.year, this.selectedDateFin.month - 1, this.selectedDateFin.day);
+        queryParams.endDate = ed.getTime().toString();
+      }
+
+      getCalendarObservable = this.calendarService.searchCalendars(queryParams);
+    }
+
+    if (getCalendarObservable !== null) {
+      getCalendarObservable.subscribe(res => {
         this.calendars = res;
         this.searching = false;
       }, err => {
@@ -76,8 +121,8 @@ export class PageSearchComponent implements OnInit {
         this.searching = false;
       });
     } else {
+      console.error('impossible de construire l\'observable de recherche');
       this.searching = false;
-      // TODO : apply filters
     }
   }
 
