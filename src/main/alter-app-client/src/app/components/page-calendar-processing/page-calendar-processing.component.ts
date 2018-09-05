@@ -6,6 +6,7 @@ import "moment/locale/fr";
 import {ParameterService} from "../../services/parameter.service";
 import {LieuService} from "../../services/lieu.service";
 import {ParameterModel} from "../../models/parameter.model";
+import { ModuleService } from '../../services/module.service';
 
 @Component({
   selector: 'app-page-calendar-processing',
@@ -26,12 +27,15 @@ export class PageCalendarProcessingComponent implements OnInit {
   semaines = [];
   afficher = false;
   messageNotification = '';
+  moduleWithRequirement = [];
+  moduleLibelle = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private calendarService: CalendarService,
               private parameterService: ParameterService,
-              private lieuService: LieuService) {
+              private lieuService: LieuService,
+              private moduleService: ModuleService) {
     moment.locale("fr");
   }
 
@@ -46,7 +50,7 @@ export class PageCalendarProcessingComponent implements OnInit {
             // chargement des cours
             this.calendarService.getCoursForCalendarInGeneration(id).subscribe(
               resC => {
-                this.cours = resC;
+                this.cours = resC.cours;
                 this.loadElements();
               },
               errC => {
@@ -68,8 +72,58 @@ export class PageCalendarProcessingComponent implements OnInit {
     });
   }
 
+  // retourne ou charge la description d'un module
+  getOrLoadDescModule( moduleId ) {
+    if ( (moduleId in this.moduleLibelle) ) {
+      return this.moduleLibelle[ moduleId ];
+    }
+
+    // determine si le libelle du module cible est present dans les cours
+    const c = this.cours.find( fc => {
+      return fc.idModule.toString() === moduleId;
+    });
+    if ( c ) {
+      this.moduleLibelle[ moduleId ] = c.libelleModule;
+      return;
+    }
+
+    // determine si le libelle du module cible doit etre charge
+    this.moduleService.getModuleById( moduleId ).subscribe(
+      res => {
+        this.moduleLibelle[ moduleId ] = res.libelle;
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
   // chargement des elements du calendriers
   loadElements() {
+
+    // recupere la liste des pre-requis
+    this.moduleService.getModulesWithRequirement().subscribe(
+      res => {
+        this.moduleWithRequirement = res;
+
+        // determine les lignes de validation
+        this.moduleWithRequirement.forEach( m => {
+          m.validation = [];
+          m.validation.push( { "modules": [] } );
+          m.requirements.forEach( (r, i) => {
+            m.validation[ m.validation.length - 1 ][ "modules" ].push( r );
+            if ( i < (m.requirements.length - 1) && !m.requirements[ i + 1 ].or ) {
+              m.validation.push( { "modules": [] } );
+            }
+            this.getOrLoadDescModule( r.moduleId.toString() );
+          });
+          this.getOrLoadDescModule( m.moduleId.toString() );
+        });
+      },
+      err => {
+        console.error(err);
+      }
+    );
 
     // pour tous les cours
     // determine la liste des formations
@@ -498,13 +552,93 @@ export class PageCalendarProcessingComponent implements OnInit {
   // demande d'enregistrement du calendrier
   demandeEnregistrer() {
 
-    // determine si il y a au mois un cours de positionne
+    // recupere l'ensemble des messages
+    const oMessages = [];
+    const oLstCoursPlaces = [];
+    let bError = false;
+
+    // pour tous les mois
+    Object.keys(this.mois).forEach( km => {
+
+      // pour tous les jours du mois
+      Object.keys(this.mois[km].jours).forEach( kj => {
+
+        // si le cours est place
+        if ( this.mois[km].jours[kj].cplace != null ) {
+          oLstCoursPlaces.push( this.mois[km].jours[kj].cplace );
+        }
+      });
+    });
+
+    // si il y a au mois un cours de positionne
+    if ( oLstCoursPlaces.length === 0 ) {
+      oMessages.push( {"type": "error", "text": "vous devez renseigner au moins 1 cours" } );
+      bError = true;
+    }
 
     // determine si il y a des pre-requis
+    this.moduleWithRequirement.forEach( m => {
+
+      // determine si un cours est lie au module pre-requis
+      const cp = oLstCoursPlaces.find( c => {
+        return m.moduleId.toString() === c.idModule.toString();
+      });
+
+      // determine si au mois une ligne de validation existe
+      if ( cp ) {
+        let bValidationLigne = true;
+        for ( let iV = 0; iV < m.validation.length; iV++ ) {
+          const v = m.validation[ iV ];
+          bValidationLigne = true;
+          for ( let iVM = 0; iVM < v.modules.length; iVM++ ) {
+            const vm = v.modules[ iVM ];
+
+              // determine si le module pre-requis est la selection des cours
+              const mInSelection = oLstCoursPlaces.find( c => {
+                return vm.moduleId.toString() === c.idModule.toString();
+              });
+              if ( !mInSelection ) {
+                bValidationLigne = false;
+                break;
+              }
+          }
+          if ( bValidationLigne ) {
+            break;
+          }
+        }
+        if ( !bValidationLigne ) {
+          oMessages.push( {"type": "info", "text": "pré-requis non valide pour : " + this.getOrLoadDescModule( cp.idModule.toString() ) } );
+        }
+      }
+    });
 
     // si il y a des messages d'avertissement
+    if ( oMessages.length > 0 ) {
+      let sMessageInfo = "";
+      let sMessageError = "";
+      oMessages.forEach( m => {
+        if (m["type"] === "error" ) {
+          sMessageError += "\t- " + m.text + "\n";
+        } else if (m["type"] === "info" ) {
+          sMessageInfo += "\t- " + m.text + "\n";
+        }
+      });
+
+      // message d'alerte ou de demande de confirmation
+      const fAfficheM = bError ? alert : confirm;
+      const bDialog = fAfficheM( ( sMessageInfo !== "" ? "Message d'information :\n" + sMessageInfo : "" ) +
+       ( sMessageError !== "" ? "Message d'erreur :\n" + sMessageError : "" ) +
+        ( !bError ? "\nVoulez vous continuer ?" : "" ) );
+      if ( bError || !bDialog ) {
+        return;
+      }
+    }
+
+    // recupere les cours positionnes
 
     // enregistrement du calendrier
+
+    console.log( this.moduleWithRequirement );
 
     console.log('rrrrrrrrrrrrrrr');
   }

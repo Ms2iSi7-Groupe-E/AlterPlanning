@@ -9,6 +9,12 @@ export class ModuleService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  getModuleById(idModule: string): Observable<any> {
+    return this.http
+      .get('/api/module/' + idModule, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
   getModules(): Observable<any> {
     return this.http
       .get('/api/module', {headers: AuthService.getHeaders()})
