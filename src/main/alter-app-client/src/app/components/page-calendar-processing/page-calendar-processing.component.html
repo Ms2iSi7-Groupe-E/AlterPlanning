@@ -44,10 +44,12 @@
 								</td>
 								<td class="col_num" width="20px">{{mois[km].jours[kj].jour}}</td>
 								<td class="col_plann" width="300px" align="center">
-									<span *ngIf="mois[km].jours[kj].cplace != null" (click)="selectCours(mois[km].jours[kj].cplace)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
+									<span *ngIf="mois[km].jours[kj].cplace != null && !mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, false)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
+									<span *ngIf="mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, true)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{mois[km].jours[kj].cplace.shortName}} &lsaquo;&lsaquo;</span>
 								</td>
 								<td class="col_cours">
-									<span *ngFor="let c of mois[km].jours[kj].cours" (click)="selectCours(c)" (dblclick)="placementCours(c)" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
+									<span *ngFor="let c of mois[km].jours[kj].cours" (click)="selectCours( c, false )" (dblclick)="placementCours( c, false )" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
+									<span *ngFor="let ci of mois[km].jours[kj].coursIndependants" (click)="selectCours( ci, true )" (dblclick)="placementCours( ci, true )" [style.background-color]="getColorLieuFormation(ci.codeLieu)" placement="top" [ngbTooltip]="getDescCours( ci, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{ci.shortName}} &lsaquo;&lsaquo;</span>
 								</td>
 							</tr>
 							<tr *ngIf="!last && mois[km].jours[kj].lettre == 'v'"><td colspan="4" class="row_separator"></td></tr>
