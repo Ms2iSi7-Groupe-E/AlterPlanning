@@ -248,8 +248,12 @@ export class PageCalendarProcessingComponent implements OnInit {
     // pour tous les jours de la periode du calendrier
     const mois = [];
     const semaines = [];
-    for ( let iDay = iJourMin; iDay < iJourMax; iDay += 86400 ) {
-      const oDay = moment.unix( iDay );
+    const oDay = moment.unix( iJourMin - 86400 );
+    while ( oDay.unix() < iJourMax ) {
+      oDay.add( 1, 'days' );
+      const iDay = oDay.unix();
+
+      // recupere les cles des dates
       const sKeyMonth = oDay.format( "YYYY-MM" );
       const sKeyDay = oDay.format( "D" );
       const iNumDay = parseInt( oDay.format( "e" ), 10 );
@@ -583,6 +587,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // selection d'un cours
   selectCours( c, bIndep ) {
+//console.log( c ); 
     if ( this.messageNotification !== '' ) {
       this.unselectCours();
     }
@@ -718,6 +723,46 @@ export class PageCalendarProcessingComponent implements OnInit {
         if ( !bValidationLigne ) {
           oMessages.push( {"type": "info", "text": "pré-requis non valide pour : " + this.getOrLoadDescModule( cp.idModule.toString() ) } );
         }
+      }
+    });
+
+    // determine si il y a des cours repartis et non lies qui ne sont pas places
+    const oCoursPlacesHeures = [];
+    oLstCoursPlaces.forEach( c => {
+      if ( !(c.libelleCours in oCoursPlacesHeures) ) {
+        oCoursPlacesHeures[ c.libelleCours ] = 0;
+      }
+      oCoursPlacesHeures[ c.libelleCours ] += 7;
+    });
+
+    // recherche si il existe des cours non places comprenant plus d'heures
+    this.objectKeys( oCoursPlacesHeures ).forEach( libelleCours => {
+
+      // pour tous les cours similaires
+      let bCoursPlusHeures = false;
+      Object.keys(this.mois).forEach( km => {
+        if ( bCoursPlusHeures ) {
+          return;
+        }
+
+        // pour tous les jours du mois
+        Object.keys(this.mois[km].jours).forEach( kj => {
+          if ( bCoursPlusHeures ) {
+            return;
+          }
+
+          // si c'est le meme cours avec plus d'heures
+          const coursPresent = this.mois[km].jours[kj].cours.find( ji => {
+            return ji.libelleCours === libelleCours && ji.dureeReelleEnHeures > oCoursPlacesHeures[ libelleCours ];
+          });
+          if ( coursPresent && !bCoursPlusHeures ) {
+            bCoursPlusHeures = true;
+          }
+        });
+      });
+      if ( bCoursPlusHeures ) {
+        oMessages.push( {"type": "info",
+          "text": "le cours suivant est-il complet ? " + libelleCours } );
       }
     });
 
