@@ -279,8 +279,6 @@ public class CalendarController {
             }
         }
 
-        // TODO : Vérifier contraintes d'un calendrier
-
         if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
@@ -365,8 +363,8 @@ public class CalendarController {
 
         if (calendar == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
-        } else if (calendar.getState() != CalendarState.DRAFT) {
-            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier doit être à l'état de brouillon");
+        } else if (calendar.getState() == CalendarState.VALIDATED) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Impossible de modifier un calendrier à l'état validé");
         }
 
         // Récupération des contraintes du calendrier
@@ -514,13 +512,9 @@ public class CalendarController {
 
         if (cal == null) {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
-        }
-
-        if (cal.getState() == CalendarState.VALIDATED) {
-            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état de validé");
-        }
-
-        if (result.hasErrors()) {
+        } else if (cal.getState() == CalendarState.VALIDATED) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Impossible de modifier un calendrier à l'état validé");
+        } else if (result.hasErrors()) {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
@@ -558,6 +552,9 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
+        // Supprimer tout les cours du calendrier
+        calendarCoursDAOService.deleteAllForCalendarId(id);
+
         final List<CalendarCoursEntity> calendarCours = coursIds.stream().map(c -> {
             final CalendarCoursEntity calendarCoursEntity = new CalendarCoursEntity();
             calendarCoursEntity.setCalendarId(cal.getId());
@@ -580,13 +577,6 @@ public class CalendarController {
         calendarDAOService.update(cal);
 
         return new StringResponse("Les cours ont bien été ajoutés pour ce calendrier");
-    }
-
-    @DeleteMapping("/{idCalendar}/cours/{idCours}")
-    public StringResponse deleteCoursForCalendar(@PathVariable(name = "idCalendar") int idCalendar,
-                                                 @PathVariable(name = "idCours") String idCours) throws RestResponseException {
-        // TODO : suppression d'un cours
-        throw new RestResponseException(HttpStatus.NOT_IMPLEMENTED, "Not yet implemented");
     }
 
     @GetMapping("/search")

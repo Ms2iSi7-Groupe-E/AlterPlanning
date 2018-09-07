@@ -37,4 +37,8 @@ public class CalendarCoursDAOService {
     public void delete(final CalendarCoursPK pk) {
         repository.deleteById(pk);
     }
+
+    public void deleteAllForCalendarId(int id) {
+        repository.deleteByCalendar(id);
+    }
 }
