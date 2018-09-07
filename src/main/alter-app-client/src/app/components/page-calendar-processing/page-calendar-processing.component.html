@@ -32,7 +32,7 @@
 								</div>
 								<div *ngIf="mois[km].formations.length > 0">
 									Formations :
-									<span *ngFor="let f of mois[km].formations" class="badge" [style.background-color]="getColorFormation(f.codeFormation)" placement="top" [ngbTooltip]="f.libelleFormationLong">{{f.libelleFormation}}</span>
+									<span *ngFor="let f of mois[km].formations" class="badge" placement="top" [ngbTooltip]="f.libelleFormationLong"><span class="round" [style.background-color]="getColorFormation(f.codeFormation)"></span>{{f.libelleFormation}}</span>
 								</div>
 							</td>
 						</tr>
@@ -48,8 +48,8 @@
 									<span *ngIf="mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, true)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{mois[km].jours[kj].cplace.shortName}} &lsaquo;&lsaquo;</span>
 								</td>
 								<td class="col_cours">
-									<span *ngFor="let c of mois[km].jours[kj].cours" (click)="selectCours( c, false )" (dblclick)="placementCours( c, false )" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{c.libelleCours}}</span>
-									<span *ngFor="let ci of mois[km].jours[kj].coursIndependants" (click)="selectCours( ci, true )" (dblclick)="placementCours( ci, true )" [style.background-color]="getColorLieuFormation(ci.codeLieu)" placement="top" [ngbTooltip]="getDescCours( ci, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{ci.shortName}} &lsaquo;&lsaquo;</span>
+									<span *ngFor="let c of mois[km].jours[kj].cours; let ic = index; let first = first" (click)="selectCours( c, false )" (dblclick)="placementCours( c, false )" [style.display]="( c.show ? 'inline-block': 'none' )" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{( first || mois[km].jours[kj].cours[ic - 1].libelleCours != c.libelleCours || ( !mois[km].jours[kj].cours[ic - 1].show && mois[km].jours[kj].cours[ic - 1].libelleCours == c.libelleCours ) && ( ic == 1 || ic > 1 && mois[km].jours[kj].cours[ic - 2].libelleCours != c.libelleCours ) ? c.libelleCours : '...' )}}</span>
+									<span *ngFor="let ci of mois[km].jours[kj].coursIndependants" (click)="selectCours( ci, true )" (dblclick)="placementCours( ci, true )" [style.display]="( ci.show ? 'inline-block': 'none' )" [style.background-color]="getColorLieuFormation(ci.codeLieu)" placement="top" [ngbTooltip]="getDescCours( ci, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{ci.shortName}} &lsaquo;&lsaquo;</span>
 								</td>
 							</tr>
 							<tr *ngIf="!last && mois[km].jours[kj].lettre == 'v'"><td colspan="4" class="row_separator"></td></tr>
@@ -60,7 +60,8 @@
 		</div>
 	</div>
 	<nav *ngIf="afficher" class="navbar fixed-bottom navbar-light bg-light">
-		{{messageNotification}}
+		{{messageNotification}}<br/>
+		{{infoNotification}}{{( totalHeureNotification !== '' ? ', ' + totalHeureNotification : '')}}
 	</nav>
 	<div class="row mt-5" *ngIf="!afficher">
 		<div class="col-12">
