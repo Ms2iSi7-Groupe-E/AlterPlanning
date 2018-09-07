@@ -6,6 +6,7 @@ import "moment/locale/fr";
 import {ParameterService} from "../../services/parameter.service";
 import {LieuService} from "../../services/lieu.service";
 import {ParameterModel} from "../../models/parameter.model";
+import {CalendatrCoursModel} from "../../models/calendar.cours.model";
 import { ModuleService } from '../../services/module.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { ModuleService } from '../../services/module.service';
 export class PageCalendarProcessingComponent implements OnInit {
 
   error;
+  id = 0;
   calendar;
   parameters = [];
   lieux = [];
@@ -43,13 +45,13 @@ export class PageCalendarProcessingComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(p => {
       if (p['params'] && p['params'].id) {
-        const id = p['params'].id;
-        this.calendarService.getCalendar(id).subscribe(
+        this.id = p['params'].id;
+        this.calendarService.getCalendar(this.id).subscribe(
           res => {
             this.calendar = res;
 
             // chargement des cours
-            this.calendarService.getCoursForCalendarInGeneration(id).subscribe(
+            this.calendarService.getCoursForCalendarInGeneration(this.id).subscribe(
               resC => {
                 this.cours = resC.cours;
                 this.coursIndependants = resC.independantModules;
@@ -587,7 +589,6 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // selection d'un cours
   selectCours( c, bIndep ) {
-//console.log( c ); 
     if ( this.messageNotification !== '' ) {
       this.unselectCours();
     }
@@ -695,7 +696,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // determine si un cours est lie au module pre-requis
       const cp = oLstCoursPlaces.find( c => {
-        return m.moduleId.toString() === c.idModule.toString();
+        return !c.indep && m.moduleId.toString() === c.idModule.toString();
       });
 
       // determine si au mois une ligne de validation existe
@@ -788,13 +789,30 @@ export class PageCalendarProcessingComponent implements OnInit {
       }
     }
 
-    // recupere les cours positionnes
+    // recupere les cours et les modules independants positionnes
+    const oLstCoursSave = [];
+    const oLstIndepSave = [];
+    oLstCoursPlaces.forEach( c => {
+      if ( !c.indep && !oLstCoursSave.find( idCours => idCours === c.idCours ) ) {
+        oLstCoursSave.push( c.idCours );
+      } else if ( c.indep && !oLstIndepSave.find( id => id === c.id ) ) {
+        oLstIndepSave.push( c.id );
+      }
+    });
 
     // enregistrement du calendrier
+    const body = new CalendatrCoursModel();
+    body.coursIds = oLstCoursSave;
+    body.coursIdependantsIds = oLstIndepSave;
+    this.calendarService.addCoursToCalendar( this.id, body ).subscribe(
+      res => {
 
-    console.log( this.moduleWithRequirement );
-
-    console.log('rrrrrrrrrrrrrrr');
+        // redirection vers le detail du calendrier
+        this.router.navigate(['/calendar/' + this.id + '/details']);
+      },
+      err => {
+        console.error(err);
+    });
   }
 
   // traitement des redimentionnements

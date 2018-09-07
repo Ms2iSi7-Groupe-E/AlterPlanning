@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {AuthService} from "./auth.service";
 import {CalendarModel} from "../models/calendar.model";
+import {CalendatrCoursModel} from "../models/calendar.cours.model";
 import {HttpClient} from "@angular/common/http";
 import {CalendarStateModel} from "../models/calendar-state.model";
 
@@ -9,6 +10,12 @@ import {CalendarStateModel} from "../models/calendar-state.model";
 export class CalendarService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
+
+  addCoursToCalendar(idCalendar: number, body: CalendatrCoursModel): Observable<any> {
+    return this.http
+      .post('/api/calendar/' + idCalendar + '/cours', body, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
 
   getCoursForCalendarInGeneration(idCalendar: number): Observable<any> {
     return this.http
