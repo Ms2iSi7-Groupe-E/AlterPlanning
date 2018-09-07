@@ -86,7 +86,8 @@
                 (click)="goToProcessingPage(calendar.id)"><i class="fa fa-pencil"></i> Modifier</button>
 
         <button class="btn btn-outline-secondary"
-                *ngIf="calendar.state === CALENDAR_STATES.PROPOSAL"><i class="far fa-clone"></i> Proposer une variante</button>
+                *ngIf="calendar.state === CALENDAR_STATES.PROPOSAL"
+                [disabled]="true"><i class="far fa-clone"></i> Proposer une variante</button>
 
         <a class="btn btn-outline-danger"
            [href]="'/api/file/calendar/' + calendar.id + '/pdf'"
