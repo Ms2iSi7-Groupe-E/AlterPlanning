@@ -55,7 +55,6 @@ export class PageCalendarProcessingComponent implements OnInit {
             // chargement des cours
             this.calendarService.getCoursForCalendarInGeneration(this.id).subscribe(
               resC => {
-console.log( resC ); 
                 this.cours = resC.cours;
                 this.coursIndependants = resC.independantModules;
                 this.loadElements();
@@ -618,7 +617,6 @@ console.log( resC );
 
   // selection d'un cours
   selectCours( c, bIndep ) {
-console.log(c); 
     if ( this.messageNotification !== '' ) {
       this.unselectCours();
     }
