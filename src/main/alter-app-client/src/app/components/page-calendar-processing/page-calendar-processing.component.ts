@@ -55,6 +55,7 @@ export class PageCalendarProcessingComponent implements OnInit {
             // chargement des cours
             this.calendarService.getCoursForCalendarInGeneration(this.id).subscribe(
               resC => {
+console.log( resC ); 
                 this.cours = resC.cours;
                 this.coursIndependants = resC.independantModules;
                 this.loadElements();
@@ -106,20 +107,6 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // chargement des elements du calendriers
   loadElements() {
-
-    // recuperation des infos de base du calendrier
-    this.calendarService.getCalendarDetailsById(this.id).subscribe(
-      res => {
-        if ( res.stagiaire ) {
-          this.infoNotification += "Statgiaire : " + res.stagiaire.nom + " " + res.stagiaire.prenom;
-        }
-        if ( res.entreprise ) {
-          this.infoNotification += ( this.infoNotification !== '' ? ', ' : '' ) + "Entreprise : " + res.entreprise.raisonSociale;
-        }
-      },
-      err => {
-        console.error(err);
-      });
 
     // recupere la liste des pre-requis
     this.moduleService.getModulesWithRequirement().subscribe(
@@ -396,6 +383,63 @@ export class PageCalendarProcessingComponent implements OnInit {
     this.mois = mois;
     this.semaines = semaines;
     this.afficher = true;
+    this.chargementCours();
+  }
+
+  // chargement des cours
+  chargementCours() {
+
+    // recuperation des infos de base du calendrier
+    this.calendarService.getCalendarDetailsById(this.id).subscribe(
+      res => {
+
+        // gestion de l'affichage de la zone de notification
+        if ( res.stagiaire ) {
+          this.infoNotification += "Statgiaire : " + res.stagiaire.nom + " " + res.stagiaire.prenom;
+        }
+        if ( res.entreprise ) {
+          this.infoNotification += ( this.infoNotification !== '' ? ', ' : '' ) + "Entreprise : " + res.entreprise.raisonSociale;
+        }
+
+        // placement des cours et des modules independants
+        if ( res.cours.length + res.independantModules.length > 0 ) {
+
+          // pour tous les mois
+          Object.keys(this.mois).forEach( km => {
+
+            // pour tous les jours du mois
+            Object.keys(this.mois[km].jours).forEach( kj => {
+
+              // si il y a des cours a positionner
+              if (res.cours.length > 0 ) {
+                this.mois[km].jours[kj].cours.filter( c => c.show ).forEach( cj => {
+
+                  // determine si le cours doit etre positionne
+                  const cs = res.cours.find( resC => resC.idCours === cj.idCours && resC.codeLieu.toString() === cj.codeLieu.toString() );
+                  if ( cs ) {
+                    this.placementCours( cj, false );
+                  }
+                });
+              }
+
+              // si il y a des modules independants a positionner
+              if ( res.independantModules.length > 0 ) {
+                this.mois[km].jours[kj].coursIndependants.filter( c => c.show ).forEach( cij => {
+
+                  // determine si le cours doit etre positionne
+                  const cs = res.cours.find( resC => resC.id === cij.id );
+                  if ( cs ) {
+                    this.placementCours( cij, true );
+                  }
+                });
+              }
+            });
+          });
+        }
+      },
+      err => {
+        console.error(err);
+      });
   }
 
   // placement d'un cours
@@ -574,17 +618,19 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // selection d'un cours
   selectCours( c, bIndep ) {
-    console.log(c); 
+console.log(c); 
     if ( this.messageNotification !== '' ) {
       this.unselectCours();
     }
 
     // si c'est un cours independant
     if ( bIndep ) {
-      this.messageNotification = this.getDescCours( c, true );
+      this.messageNotification = this.getDescCours( c, true ) + ' [' + c.promotions.map( p => p.libellePromotion ).join( ', ' ) + ']';
       return;
     }
-    this.messageNotification = c.libelleModule + ', ' + c.libelleFormationLong;
+    this.messageNotification = c.libelleModule + ', ' + c.libelleFormationLong +
+      ' [' + c.promotions.filter( p => p.libellePromotion !== null &&
+        p.libellePromotion.toString().trim() !== '' ).map( p => p.libellePromotion ).join( ', ' ) + ']';
 
     // pour tous les cours similaires
     const mois = Object.assign( {}, this.mois );
@@ -794,7 +840,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       res => {
 
         // redirection vers le detail du calendrier
-        //this.router.navigate(['/calendar/' + this.id + '/details']);
+        this.router.navigate(['/calendar/' + this.id + '/details']);
       },
       err => {
         console.error(err);
