@@ -3,6 +3,7 @@ package fr.nantes.eni.alterplanning.service.dao;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.repository.ICoursRepository;
 import fr.nantes.eni.alterplanning.model.simplebean.CoursComplet;
+import fr.nantes.eni.alterplanning.model.simplebean.PromotionBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -81,7 +82,8 @@ public class CoursDAOService {
         final List<CoursComplet> coursComplets = new ArrayList<>();
         listObj.forEach(raw -> {
             final CoursComplet complet = new CoursComplet();
-            complet.setIdCours((String) raw[0]);
+            final String idCours = (String) raw[0];
+            complet.setIdCours(idCours);
             complet.setIdModule((Integer) raw[1]);
             complet.setLibelleFormation((String) raw[2]);
             complet.setLibelleFormationLong((String) raw[3]);
@@ -92,7 +94,18 @@ public class CoursDAOService {
             complet.setFin((Date) raw[8]);
             complet.setDureeReelleEnHeures((Integer) raw[9]);
             complet.setCodeFormation((String) raw[10]);
-            coursComplets.add(complet);
+
+            final String codePromotion = (String) raw[11];
+            final String libellePromotion = (String) raw[12];
+            final PromotionBean promotionBean = new PromotionBean(codePromotion, libellePromotion);
+            final CoursComplet c = coursComplets.stream().filter(cc -> cc.getIdCours().equals(idCours))
+                    .findFirst().orElse(null);
+            if (c != null) {
+                c.addPromotion(promotionBean);
+            } else {
+                complet.addPromotion(promotionBean);
+                coursComplets.add(complet);
+            }
         });
         return coursComplets;
     }

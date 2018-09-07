@@ -1,6 +1,8 @@
 package fr.nantes.eni.alterplanning.model.simplebean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CoursComplet {
 
@@ -15,6 +17,7 @@ public class CoursComplet {
     private Date fin;
     private Integer dureeReelleEnHeures;
     private String codeFormation;
+    private List<PromotionBean> promotions = new ArrayList<>();
     private boolean isIndependantModule = false;
 
     public String getIdCours() {
@@ -111,5 +114,17 @@ public class CoursComplet {
 
     public void setIndependantModule(boolean independantModule) {
         isIndependantModule = independantModule;
+    }
+
+    public List<PromotionBean> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<PromotionBean> promotions) {
+        this.promotions = promotions;
+    }
+
+    public void addPromotion(PromotionBean promotion) {
+        this.promotions.add(promotion);
     }
 }
