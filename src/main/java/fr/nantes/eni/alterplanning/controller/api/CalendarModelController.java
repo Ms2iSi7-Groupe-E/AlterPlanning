@@ -1,13 +1,15 @@
 package fr.nantes.eni.alterplanning.controller.api;
 
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarConstraintEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarModelEntity;
-import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
+import fr.nantes.eni.alterplanning.dao.mysql.entity.enums.CalendarState;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
-import fr.nantes.eni.alterplanning.model.form.AddCalendarCoursForm;
 import fr.nantes.eni.alterplanning.model.form.AddCalendarModelForm;
-import fr.nantes.eni.alterplanning.model.form.DuplicateCalendarModelForm;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
+import fr.nantes.eni.alterplanning.service.dao.CalendarConstraintDAOService;
+import fr.nantes.eni.alterplanning.service.dao.CalendarCoursDAOService;
 import fr.nantes.eni.alterplanning.service.dao.CalendarDAOService;
 import fr.nantes.eni.alterplanning.service.dao.CalendarModelsDAOService;
 import fr.nantes.eni.alterplanning.util.HistoryUtil;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,12 @@ public class CalendarModelController {
 
     @Resource
     private CalendarDAOService calendarDAOService;
+
+    @Resource
+    private CalendarConstraintDAOService calendarConstraintDAOService;
+
+    @Resource
+    private CalendarCoursDAOService calendarCoursDAOService;
 
     @Resource
     private HistoryUtil historyUtil;
@@ -74,10 +81,8 @@ public class CalendarModelController {
         return createdModel;
     }
 
-    @PostMapping("/{idCalendarModel}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CalendarModelEntity duplicateCalendarModel(@Valid @RequestBody DuplicateCalendarModelForm form, BindingResult result,
-                                                      @PathVariable(name = "idCalendarModel") int id) throws RestResponseException {
+    @GetMapping("/{idCalendarModel}/duplicate")
+    public CalendarEntity duplicateCalendarModel(@PathVariable(name = "idCalendarModel") int id) throws RestResponseException {
         // Find Calendar to delete
         final CalendarModelEntity c = calendarModelsDAOService.findById(id);
 
@@ -85,21 +90,45 @@ public class CalendarModelController {
             throw new RestResponseException(HttpStatus.NOT_FOUND, "Modèle de calendrier non trouvé");
         }
 
-        if (result.hasErrors()) {
-            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
-        }
+        final CalendarEntity calendarToDuplicate = calendarDAOService.findById(c.getCalendarId());
+        final List<CalendarConstraintEntity> calendarConstraintsToDuplicate = calendarConstraintDAOService.findByCalendarId(c.getCalendarId());
+        final List<CalendarCoursEntity> calendarCoursToDuplicate = calendarCoursDAOService.findByCalendarId(c.getCalendarId());
 
-        final CalendarModelEntity calendarToCreate = new CalendarModelEntity();
-        calendarToCreate.setName(form.getName());
-        calendarToCreate.setCalendarId(c.getCalendarId());
-        calendarToCreate.setCreatedAt(new Date());
+        final CalendarEntity calendarToCreate = new CalendarEntity();
+        calendarToCreate.setState(CalendarState.PROPOSAL);
+        calendarToCreate.setStartDate(calendarToDuplicate.getStartDate());
+        calendarToCreate.setEndDate(calendarToDuplicate.getEndDate());
+        calendarToCreate.setEntrepriseId(calendarToDuplicate.getEntrepriseId());
+        calendarToCreate.setStagiaireId(calendarToDuplicate.getStagiaireId());
 
-        final CalendarModelEntity duplicatedModel = calendarModelsDAOService.create(calendarToCreate);
+        final CalendarEntity calendarCreated = calendarDAOService.create(calendarToCreate);
 
-        historyUtil.addLine("Ajout du modèle de calendrier n°" + duplicatedModel.getId() +
-                " (" +  duplicatedModel.getName() + ") par duplication du modèle n°" + c.getId());
+        final List<CalendarConstraintEntity> calendarConstraintsToCreate = calendarConstraintsToDuplicate
+                .stream().map(cc -> {
+                    final CalendarConstraintEntity ccToCreate = new CalendarConstraintEntity();
+                    ccToCreate.setCalendarId(calendarCreated.getId());
+                    ccToCreate.setConstraintType(cc.getConstraintType());
+                    ccToCreate.setConstraintValue(cc.getConstraintValue());
+                    return ccToCreate;
+                }).collect(Collectors.toList());
 
-        return duplicatedModel;
+        final List<CalendarCoursEntity> calendarCoursToCreate = calendarCoursToDuplicate
+                .stream().map(cc -> {
+                    final CalendarCoursEntity ccToCreate = new CalendarCoursEntity();
+                    ccToCreate.setCalendarId(calendarCreated.getId());
+                    ccToCreate.setCoursId(cc.getCoursId());
+                    ccToCreate.setIndependantModule(cc.isIndependantModule());
+                    return ccToCreate;
+                }).collect(Collectors.toList());
+
+        calendarConstraintDAOService.createAll(calendarConstraintsToCreate);
+        calendarCoursDAOService.createAll(calendarCoursToCreate);
+
+        // Ajout du calendrier n°41
+        historyUtil.addLine("Ajout du calendrier n°" + calendarCreated.getId() +
+                " (A partir d'un modèle)");
+
+        return calendarCreated;
     }
 
     @DeleteMapping("/{idCalendarModel}")

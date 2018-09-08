@@ -21,9 +21,9 @@ export class CalendarModelService {
       .catch((err) => this.authService.handleError(err));
   }
 
-  duplicateCalendarModel(idCalendarModel: number, body: CalendarModelModel): Observable<any> {
+  duplicateCalendarModel(idCalendarModel: number): Observable<any> {
     return this.http
-      .post('/api/calendar-model/' + idCalendarModel, body, {headers: AuthService.getHeaders()})
+      .get('/api/calendar-model/' + idCalendarModel + '/duplicate', {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
 
