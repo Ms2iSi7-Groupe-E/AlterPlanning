@@ -51,6 +51,13 @@
         <span *ngIf="!calendar.stagiaire">
           à définir
         </span>
+        <span>&nbsp;</span>
+        <span>
+          <button *ngIf="calendar.state === CALENDAR_STATES.PROPOSAL"
+                  (click)="updateStagiaire()"
+                  class="btn btn-sm btn-outline-dark"
+                  placement="right" ngbTooltip="Modifier le stagiaire"><i class="fa fa-pencil"></i></button>
+        </span>
       </div>
     </div>
 
@@ -64,6 +71,13 @@
         </span>
         <span *ngIf="!calendar.entreprise">
           à définir
+        </span>
+        <span>&nbsp;</span>
+        <span>
+          <button *ngIf="calendar.state === CALENDAR_STATES.PROPOSAL"
+                  (click)="updateEntreprise()"
+                  class="btn btn-sm btn-outline-dark"
+                  placement="right" ngbTooltip="Modifier l'entreprise"><i class="fa fa-pencil"></i></button>
         </span>
       </div>
     </div>
@@ -87,7 +101,7 @@
 
         <button class="btn btn-outline-secondary"
                 *ngIf="calendar.state === CALENDAR_STATES.PROPOSAL"
-                [disabled]="true"><i class="far fa-clone"></i> Proposer une variante</button>
+                (click)="proposeAlternative()"><i class="far fa-clone"></i> Proposer une variante</button>
 
         <a class="btn btn-outline-danger"
            [href]="'/api/file/calendar/' + calendar.id + '/pdf'"

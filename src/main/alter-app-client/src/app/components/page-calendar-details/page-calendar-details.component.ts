@@ -103,6 +103,16 @@ export class PageCalendarDetailsComponent implements OnInit {
     });
   }
 
+  proposeAlternative() {
+    this.router.navigate(['/propose-calendar'], { queryParams: { fromCalendar: this.calendar.id } });
+  }
+
+  updateStagiaire() {
+  }
+
+  updateEntreprise() {
+  }
+
   get cursus() {
     if (this.calendar === null) {
       return '';
