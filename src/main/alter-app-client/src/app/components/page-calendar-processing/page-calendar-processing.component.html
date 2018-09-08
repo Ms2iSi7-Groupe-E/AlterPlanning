@@ -22,7 +22,7 @@
 		<div class="row" style="margin:5px;">
 			<div class="col-1" style="text-align:center;">
 				<div *ngIf="semaines.length > 0" [id]="onResizeWindow(null) || 'semaines'" class="select_all_week">
-					<div *ngFor="let s of semaines" [class]="s.class" (click)="clickSemaine(s)"></div>
+					<div *ngFor="let s of semaines" [class]="s.class" (click)="clickSemaine(s)"><span *ngIf="semaineInPromotionFilter( s )" class="promo_selected">&diams;</span></div>
 				</div>
 			</div>
 			<div class="col" style="padding-bottom: 80px;">
@@ -49,12 +49,12 @@
 								</td>
 								<td class="col_num" width="20px">{{mois[km].jours[kj].jour}}</td>
 								<td class="col_plann" width="300px" align="center">
-									<span *ngIf="mois[km].jours[kj].cplace != null && !mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, false)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}</span>
-									<span *ngIf="mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, true)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{mois[km].jours[kj].cplace.shortName}} &lsaquo;&lsaquo;</span>
+									<span *ngIf="mois[km].jours[kj].cplace != null && !mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, false)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(mois[km].jours[kj].cplace.codeFormation)"></span>{{mois[km].jours[kj].cplace.libelleCours}}<span *ngIf="coursInPromotionFilter( mois[km].jours[kj].cplace )" class="promo_selected">&diams;</span></span>
+									<span *ngIf="mois[km].jours[kj].cplace != null && mois[km].jours[kj].cplace.indep" (click)="selectCours(mois[km].jours[kj].cplace, true)" (dblclick)="deplacementCours(mois[km].jours[kj].cplace)" [style.background-color]="getColorLieuFormation(mois[km].jours[kj].cplace.codeLieu)" placement="top" [ngbTooltip]="getDescCours( mois[km].jours[kj].cplace, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{mois[km].jours[kj].cplace.shortName}}<span *ngIf="coursInPromotionFilter( mois[km].jours[kj].cplace )" class="promo_selected">&diams;</span> &lsaquo;&lsaquo;</span>
 								</td>
 								<td class="col_cours">
-									<span *ngFor="let c of mois[km].jours[kj].cours; let ic = index; let first = first" (click)="selectCours( c, false )" (dblclick)="placementCours( c, false )" [style.display]="( c.show ? 'inline-block': 'none' )" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{( first || mois[km].jours[kj].cours[ic - 1].libelleCours != c.libelleCours || ( !mois[km].jours[kj].cours[ic - 1].show && mois[km].jours[kj].cours[ic - 1].libelleCours == c.libelleCours ) && ( ic == 1 || ic > 1 && mois[km].jours[kj].cours[ic - 2].libelleCours != c.libelleCours ) ? c.libelleCours : '...' )}}</span>
-									<span *ngFor="let ci of mois[km].jours[kj].coursIndependants" (click)="selectCours( ci, true )" (dblclick)="placementCours( ci, true )" [style.display]="( ci.show ? 'inline-block': 'none' )" [style.background-color]="getColorLieuFormation(ci.codeLieu)" placement="top" [ngbTooltip]="getDescCours( ci, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{ci.shortName}} &lsaquo;&lsaquo;</span>
+									<span *ngFor="let c of mois[km].jours[kj].cours; let ic = index; let first = first" (click)="selectCours( c, false )" (dblclick)="placementCours( c, false )" [style.display]="( c.show ? 'inline-block': 'none' )" [style.background-color]="getColorLieuFormation(c.codeLieu)" placement="top" [ngbTooltip]="getDescCours( c, false )" class="badge cours_pos"><span class="round" [style.background-color]="getColorFormation(c.codeFormation)"></span>{{( first || mois[km].jours[kj].cours[ic - 1].libelleCours != c.libelleCours || ( !mois[km].jours[kj].cours[ic - 1].show && mois[km].jours[kj].cours[ic - 1].libelleCours == c.libelleCours ) && ( ic == 1 || ic > 1 && mois[km].jours[kj].cours[ic - 2].libelleCours != c.libelleCours ) ? c.libelleCours : '...' )}}<span *ngIf="coursInPromotionFilter( c )" class="promo_selected">&diams;</span></span>
+									<span *ngFor="let ci of mois[km].jours[kj].coursIndependants" (click)="selectCours( ci, true )" (dblclick)="placementCours( ci, true )" [style.display]="( ci.show ? 'inline-block': 'none' )" [style.background-color]="getColorLieuFormation(ci.codeLieu)" placement="top" [ngbTooltip]="getDescCours( ci, true )" class="badge cours_pos">&rsaquo;&rsaquo; {{ci.shortName}}<span *ngIf="coursInPromotionFilter( ci )" class="promo_selected">&diams;</span> &lsaquo;&lsaquo;</span>
 								</td>
 							</tr>
 							<tr *ngIf="!last && mois[km].jours[kj].lettre == 'v'"><td colspan="4" class="row_separator"></td></tr>
@@ -65,11 +65,11 @@
 			<div *ngIf="navmodPromotionsFilter.length + navmodPromotions.length > 0" class="col-2" style="text-align: right;">
 				<div class="select_promotions">
 					<div *ngIf="navmodPromotionsFilter.length > 0" class="select_promotions_filter">
-						<span *ngFor="let p of navmodPromotionsFilter" (dblclick)="delPromotionFilter(p)" class="badge">{{p.libellePromotion}}</span>
+						<span *ngFor="let p of navmodPromotionsFilter" (click)="delPromotionFilter(p)" class="badge">{{p.libellePromotion}}</span>
 					</div>
 					<div *ngIf="navmodPromotions.length > 0" class="select_promotions_select">
 						<h6>Promotions :</h6>
-						<span *ngFor="let p of navmodPromotions" (dblclick)="addPromotionFilter(p)" class="badge">{{p.libellePromotion}}</span>
+						<span *ngFor="let p of navmodPromotions" (click)="addPromotionFilter(p)" class="badge">{{p.libellePromotion}}</span>
 					</div>
 				</div>
 			</div>

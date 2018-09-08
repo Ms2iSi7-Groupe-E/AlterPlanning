@@ -272,7 +272,8 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // determine si c'est une nouvelle semaine
       if ( semaines.length === 0 || iNumDay === 0 ) {
-        semaines.push( { "jours": [], "class" : "select_empty",  "hiddenClass": "", "anchor" : sKeyMonth + '-' + sKeyDay } );
+        semaines.push( { "jours": [], "promotions": [], "class" : "select_empty",
+          "hiddenClass": "", "anchor" : sKeyMonth + '-' + sKeyDay } );
       }
 
       // positionne le jour dans la semaine
@@ -296,6 +297,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // recupere les cours concernes par ce jour
       const cours = [];
+      const promotion = [];
       this.cours.forEach( c => {
         const iDateDebut = parseInt( moment(c.debut).format("X"), 10 );
         const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
@@ -311,10 +313,12 @@ export class PageCalendarProcessingComponent implements OnInit {
             c.jour = sKeyDay;
             c.show = true;
             cours.push( c );
+            promotion.concat( c.promotions );
           }
         }
       });
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
+      semaines[ semaines.length - 1 ].promotions.concat( promotion );
 
       // recupere les cours independants concernes par ce jour
       const coursIndependants = [];
@@ -625,17 +629,14 @@ export class PageCalendarProcessingComponent implements OnInit {
     }
 
     // recupere les promotions du cours
-    console.log( c ); 
     this.navmodPromotions = c.promotions;
 
     // si c'est un cours independant
     if ( bIndep ) {
-      this.messageNotification = this.getDescCours( c, true ) + ' [' + c.promotions.map( p => p.libellePromotion ).join( ', ' ) + ']';
+      this.messageNotification = this.getDescCours( c, true );
       return;
     }
-    this.messageNotification = c.libelleModule + ', ' + c.libelleFormationLong +
-      ' [' + c.promotions.filter( p => p.libellePromotion !== null &&
-        p.libellePromotion.toString().trim() !== '' ).map( p => p.libellePromotion ).join( ', ' ) + ']';
+    this.messageNotification = c.libelleModule + ', ' + c.libelleFormationLong;
 
     // pour tous les cours similaires
     const mois = Object.assign( {}, this.mois );
@@ -715,10 +716,29 @@ export class PageCalendarProcessingComponent implements OnInit {
     const navmodPromotionsFilter = [];
     this.navmodPromotionsFilter.forEach( pf => {
       if ( pf.codePromotion !== p.codePromotion ) {
-        navmodPromotionsFilter.push( p );
+        navmodPromotionsFilter.push( pf );
       }
     } );
     this.navmodPromotionsFilter = navmodPromotionsFilter;
+  }
+
+  // determine si un cours contient un element du filtre des promotions
+  coursInPromotionFilter( c ) {
+    let asPromotion = false;
+    c.promotions.forEach( cp => {
+      if ( this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === cp.codePromotion ) ) {
+        asPromotion = true;
+        return;
+      }
+    });
+    return asPromotion;
+  }
+
+  // determine si une semaine contient un cour
+  semaineInPromotionFilter( s ) {
+    // TODO : a faire
+    //console.log( s.promotions );
+    return false;
   }
 
   // demande d'enregistrement du calendrier
