@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title">Mettre à jour l'entreprise du calendrier</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group row">
+    <label class="col-12 col-form-label">Entreprise :</label>
+    <div class="col-12">
+      <ng-select
+        [items]="entreprises"
+        bindLabel="raisonSociale"
+        bindValue="codeEntreprise"
+        placeholder="Entreprise"
+        notFoundText="Aucune entreprise trouvée"
+        [(ngModel)]="selectedEntreprise">
+      </ng-select>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-12">
+      <button class="btn btn-outline-primary" (click)="clickOnValid()">Valider</button>
+    </div>
+  </div>
+</div>

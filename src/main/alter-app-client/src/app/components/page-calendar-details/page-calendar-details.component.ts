@@ -9,6 +9,8 @@ import {CalendarModelModel} from "../../models/calendar-model.model";
 import {ConstraintTypes} from "../../models/enums/constraint-types";
 import {CalendarStateModel} from "../../models/calendar-state.model";
 import {ConfirmComponent} from "../modal/confirm/confirm.component";
+import {UpdateStagiaireComponent} from "../modal/update-stagiaire/update-stagiaire.component";
+import {UpdateEntrepriseComponent} from "../modal/update-entreprise/update-entreprise.component";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -108,9 +110,29 @@ export class PageCalendarDetailsComponent implements OnInit {
   }
 
   updateStagiaire() {
+    const modalRef = this.modalService.open(UpdateStagiaireComponent, { size: 'lg' });
+    if (this.calendar.stagiaire) {
+      modalRef.componentInstance.codeStagiaire = this.calendar.stagiaire.codeStagiaire;
+    }
+    if (this.calendar.entreprise) {
+      modalRef.componentInstance.codeEntreprise = this.calendar.entreprise.codeEntreprise;
+    }
+    modalRef.componentInstance.validate.subscribe((res) => {
+      console.log(res);
+    });
   }
 
   updateEntreprise() {
+    const modalRef = this.modalService.open(UpdateEntrepriseComponent, { size: 'lg' });
+    if (this.calendar.stagiaire) {
+      modalRef.componentInstance.codeStagiaire = this.calendar.stagiaire.codeStagiaire;
+    }
+    if (this.calendar.entreprise) {
+      modalRef.componentInstance.codeEntreprise = this.calendar.entreprise.codeEntreprise;
+    }
+    modalRef.componentInstance.validate.subscribe((res) => {
+      console.log(res);
+    });
   }
 
   get cursus() {

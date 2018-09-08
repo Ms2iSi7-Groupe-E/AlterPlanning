@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title">Mettre à jour le stagaire du calendrier</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group row">
+    <label class="col-12 col-form-label">Stagiaire :</label>
+    <div class="col-12">
+      <ng-select [(ngModel)]="selectedStagiaire"
+                 placeholder="Stagiaire"
+                 notFoundText="Aucun stagiaire trouvé">
+        <ng-option *ngFor="let stagiaire of stagiaires"
+                   [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})</ng-option>
+      </ng-select>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-12">
+      <button class="btn btn-outline-primary" (click)="clickOnValid()">Valider</button>
+    </div>
+  </div>
+</div>

@@ -42,6 +42,8 @@ import { CalendarModelNameComponent } from './components/modal/calendar-model-na
 import { HandleIndependantModuleComponent } from './components/modal/handle-independant-module/handle-independant-module.component';
 import {IndependantModuleService} from "./services/independant-module.service";
 import { ConfirmComponent } from './components/modal/confirm/confirm.component';
+import { UpdateStagiaireComponent } from './components/modal/update-stagiaire/update-stagiaire.component';
+import { UpdateEntrepriseComponent } from './components/modal/update-entreprise/update-entreprise.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { ConfirmComponent } from './components/modal/confirm/confirm.component';
     CalendarModelNameComponent,
     HandleIndependantModuleComponent,
     ConfirmComponent,
+    UpdateStagiaireComponent,
+    UpdateEntrepriseComponent,
   ],
   imports: [
     NgSelectModule,
@@ -100,6 +104,8 @@ import { ConfirmComponent } from './components/modal/confirm/confirm.component';
     CalendarModelNameComponent,
     HandleIndependantModuleComponent,
     ConfirmComponent,
+    UpdateStagiaireComponent,
+    UpdateEntrepriseComponent,
   ],
   bootstrap: [AppComponent]
 })
