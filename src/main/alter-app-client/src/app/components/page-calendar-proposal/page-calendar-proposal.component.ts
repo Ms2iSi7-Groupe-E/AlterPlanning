@@ -286,11 +286,11 @@ export class PageCalendarProposalComponent implements OnInit {
     this.constraints.splice(index, 1);
   }
 
-  addConstraintAddElement(type, value, title,) {
+  addConstraintAddElement(type, value, title) {
     this.addConstraint(type, value, title, 'constraint-ajout');
   }
 
-  addConstraintDispenseElement(type, value, title,) {
+  addConstraintDispenseElement(type, value, title) {
     this.addConstraint(type, value, title, 'constraint-dispense');
   }
 
