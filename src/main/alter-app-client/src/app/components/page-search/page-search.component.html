@@ -87,27 +87,6 @@
       </button>
     </div>
   </div>
-  <!--
-  <hr/>
-  <div class="row mt-2">
-    <div class="col-12 text-center">
-      <nav>
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">&lt;&lt;</a></li>
-          <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">6</a></li>
-          <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-          <li class="page-item"><a class="page-link" href="#">&gt;&gt;</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  -->
   <div class="row mt-5" *ngIf="searching">
     <div class="col-12">
       <div class="loader">
@@ -150,9 +129,9 @@
           <td>{{ calendar.isModel ? 'Oui' : 'Non' }}</td>
           <td>{{ calendar.createdAt }}</td>
           <td>
-            <button class="btn btn-outline-danger"
-                    (click)="deleteCalendar(calendar)"
-                    [disabled]="calendar.isModel || calendar.state === CALENDAR_STATE.VALIDATED"><i class="far fa-trash-alt"></i></button>
+            <button *ngIf="!calendar.isModel || calendar.state !== CALENDAR_STATE.VALIDATED"
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteCalendar(calendar)"><i class="far fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>
