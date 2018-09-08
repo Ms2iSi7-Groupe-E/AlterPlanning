@@ -35,6 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by ughostephan on 23/06/2017.
@@ -552,9 +553,6 @@ public class CalendarController {
             throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
         }
 
-        // Supprimer tout les cours du calendrier
-        calendarCoursDAOService.deleteAllForCalendarId(id);
-
         final List<CalendarCoursEntity> calendarCours = coursIds.stream().map(c -> {
             final CalendarCoursEntity calendarCoursEntity = new CalendarCoursEntity();
             calendarCoursEntity.setCalendarId(cal.getId());
@@ -571,10 +569,11 @@ public class CalendarController {
             return calendarCoursEntity;
         }).collect(Collectors.toList());
 
-        calendarCoursDAOService.createAll(calendarCours);
-        calendarCoursDAOService.createAll(calendarCoursIndependant);
+        final List<CalendarCoursEntity> calendarCoursToAdd = Stream
+                .concat(calendarCours.stream(), calendarCoursIndependant.stream())
+                .collect(Collectors.toList());
         cal.setState(CalendarState.PROPOSAL);
-        calendarDAOService.update(cal);
+        calendarDAOService.addAndReplaceCoursWithUpdate(calendarCoursToAdd, cal);
 
         return new StringResponse("Les cours ont bien été ajoutés pour ce calendrier");
     }
