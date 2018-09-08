@@ -41,7 +41,6 @@ export class PageCalendarDetailsComponent implements OnInit {
               this.goToProcessingPage(res.id);
               return;
             }
-            this.calcDates();
             this.getLines();
           },
           err => {
@@ -65,25 +64,9 @@ export class PageCalendarDetailsComponent implements OnInit {
   getLines() {
     this.calendarService.getLinesForCalendar(this.calendar.id).subscribe(res => {
       this.lines = res;
+      this.startDate = this.lines[0].debut;
+      this.endDate = this.lines[this.lines.length - 1].fin;
     }, console.error);
-  }
-
-  calcDates() {
-    this.calendar.cours.sort(function(a, b){
-      return new Date(a.debut).getTime() - new Date(b.debut).getTime();
-    });
-    const startDateFirstCourse = new Date(this.calendar.cours[0].debut);
-    const endDateLastCourse = new Date(this.calendar.cours[this.calendar.cours.length - 1].fin);
-    this.startDate = new Date(this.calendar.startDate);
-    this.endDate = new Date(this.calendar.endDate);
-
-    if (this.startDate == null || startDateFirstCourse < this.startDate) {
-      this.startDate = startDateFirstCourse;
-    }
-
-    if (this.endDate == null || endDateLastCourse > this.endDate) {
-      this.endDate = endDateLastCourse;
-    }
   }
 
   registerAsModel() {
