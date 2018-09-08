@@ -100,7 +100,6 @@
                 (click)="goToProcessingPage(calendar.id)"><i class="fa fa-pencil"></i> Modifier les cours</button>
 
         <button class="btn btn-outline-secondary"
-                *ngIf="calendar.state === CALENDAR_STATES.PROPOSAL"
                 (click)="proposeAlternative()"><i class="far fa-clone"></i> Proposer une variante</button>
 
         <a class="btn btn-outline-danger"

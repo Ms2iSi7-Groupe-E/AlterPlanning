@@ -5,7 +5,7 @@ import {EntrepriseService} from "../../services/entreprise.service";
 import {StagiaireService} from "../../services/stagiaire.service";
 import {AddElementComponent} from "../modal/add-element/add-element.component";
 import {DispenseElementComponent} from "../modal/dispense-element/dispense-element.component";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {CalendarService} from "../../services/calendar.service";
 import {CalendarModel} from "../../models/calendar.model";
 import {ConstraintTypes} from "../../models/enums/constraint-types";
@@ -34,10 +34,13 @@ export class PageCalendarProposalComponent implements OnInit {
   selectedHeureMax = null;
   selectedLieux = [];
 
+  CONSTRAINT_TYPE = ConstraintTypes;
+
   searching = false;
 
   constructor(private modalService: NgbModal,
               private router: Router,
+              private route: ActivatedRoute,
               private calendarService: CalendarService,
               private lieuService: LieuService,
               private entrepriseService: EntrepriseService,
@@ -62,10 +65,68 @@ export class PageCalendarProposalComponent implements OnInit {
     this.calendarModelService.getModels().subscribe(res => {
       this.models = res;
     }, console.error);
+
+    const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+    const calendarId = queryParams.fromCalendar ? queryParams.fromCalendar : null;
+
+    if (calendarId !== null) {
+      this.calendarService.getCalendar(calendarId).subscribe(res => {
+        this.completeFormsFromCalendar(res);
+      }, console.error);
+    }
   }
 
   get formIsValid() {
     return this.selectedLieux.length > 0 && this.constraints.length > 0;
+  }
+
+  completeFormsFromCalendar(calendar) {
+    if (calendar.startDate) {
+      const dateDeb = new Date(calendar.startDate);
+      this.selectedDateDebut = !dateDeb ? null : {
+        year: dateDeb.getFullYear(),
+        month: dateDeb.getMonth() + 1,
+        day: dateDeb.getDate()
+      };
+    }
+
+    if (calendar.endDate) {
+      const dateFin = new Date(calendar.endDate);
+      this.selectedDateFin = !dateFin ? null : {
+        year: dateFin.getFullYear(),
+        month: dateFin.getMonth() + 1,
+        day: dateFin.getDate()
+      };
+    }
+
+    if (calendar.stagiaire) {
+      this.selectedStagiaire = calendar.stagiaire.codeStagiaire;
+      this.changeStagiaire();
+    }
+
+    if (calendar.entreprise) {
+      this.selectedEntreprise = calendar.entreprise.codeEntreprise;
+      this.changeEntreprise();
+    }
+
+    calendar.constraints.forEach(c => {
+      const type = c.constraintType;
+      const value = c.constraintValue;
+
+      if (type === this.CONSTRAINT_TYPE.LIEUX) {
+        this.selectedLieux = [...this.selectedLieux, parseInt(value, 10)];
+      }
+
+      if (type === this.CONSTRAINT_TYPE.HEURES_MIN) {
+        this.selectedHeureMin = parseInt(value, 10);
+      }
+
+      if (type === this.CONSTRAINT_TYPE.HEURES_MAX) {
+        this.selectedHeureMax = parseInt(value, 10);
+      }
+
+      // TODO : faire le reste des contraintes.
+    });
   }
 
   changeModels() {
