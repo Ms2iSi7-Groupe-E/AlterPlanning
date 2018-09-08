@@ -297,7 +297,7 @@ export class PageCalendarProcessingComponent implements OnInit {
 
       // recupere les cours concernes par ce jour
       const cours = [];
-      const promotion = [];
+      let promotions = [];
       this.cours.forEach( c => {
         const iDateDebut = parseInt( moment(c.debut).format("X"), 10 );
         const iDateFin = parseInt( moment(c.fin).format("X"), 10 );
@@ -313,12 +313,11 @@ export class PageCalendarProcessingComponent implements OnInit {
             c.jour = sKeyDay;
             c.show = true;
             cours.push( c );
-            promotion.concat( c.promotions );
+            promotions = promotions.concat( c.promotions );
           }
         }
       });
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "cours" ] = cours;
-      semaines[ semaines.length - 1 ].promotions.concat( promotion );
 
       // recupere les cours independants concernes par ce jour
       const coursIndependants = [];
@@ -331,9 +330,13 @@ export class PageCalendarProcessingComponent implements OnInit {
           ci.anneeMois = sKeyMonth;
           ci.jour = sKeyDay;
           coursIndependants.push( ci );
+          promotions = promotions.concat( ci.promotions );
         }
       });
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "coursIndependants" ] = coursIndependants;
+
+      // recuperation des promotions des jours de la semaines
+      semaines[ semaines.length - 1 ].promotions = semaines[ semaines.length - 1 ].promotions.concat( promotions );
 
       // determine la couleur de fond du jour
       if ( cours.length === 0 && coursIndependants.length === 0 ) {
@@ -736,9 +739,14 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // determine si une semaine contient un cour
   semaineInPromotionFilter( s ) {
-    // TODO : a faire
-    //console.log( s.promotions );
-    return false;
+    let asPromotion = false;
+    s.promotions.forEach( sp => {
+      if ( this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === sp.codePromotion ) ) {
+        asPromotion = true;
+        return;
+      }
+    });
+    return asPromotion;
   }
 
   // demande d'enregistrement du calendrier

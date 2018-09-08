@@ -22,7 +22,7 @@
 		<div class="row" style="margin:5px;">
 			<div class="col-1" style="text-align:center;">
 				<div *ngIf="semaines.length > 0" [id]="onResizeWindow(null) || 'semaines'" class="select_all_week">
-					<div *ngFor="let s of semaines" [class]="s.class" (click)="clickSemaine(s)"><span *ngIf="semaineInPromotionFilter( s )" class="promo_selected">&diams;</span></div>
+					<div *ngFor="let s of semaines" [class]="s.class" (click)="clickSemaine(s)"><div *ngIf="semaineInPromotionFilter( s )" class="promo_week_selected"></div></div>
 				</div>
 			</div>
 			<div class="col" style="padding-bottom: 80px;">
