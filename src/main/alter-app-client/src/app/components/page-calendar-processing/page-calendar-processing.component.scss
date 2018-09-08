@@ -1,3 +1,28 @@
+.select_promotions{
+    position: sticky;
+    top: 70px;
+}
+.select_promotions_filter{
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.select_promotions_filter span{
+    width: 100%;
+    background-color: #bce7c6;
+}
+.select_promotions_select{
+    cursor: pointer;
+}
+.select_promotions_select h6{
+    text-align: left;
+}
+.promo_selected{
+    border:1px solid #f4ee42;
+    background-color: #f7f25b;
+    border-radius:10px;
+    margin-left: 5px;
+    color: #cf8259;
+}
 .select_all_week{
     border:1px solid #ccc;
     border-radius:5px;
