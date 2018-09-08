@@ -10,6 +10,9 @@ import {CalendarService} from "../../services/calendar.service";
 import {CalendarModel} from "../../models/calendar.model";
 import {ConstraintTypes} from "../../models/enums/constraint-types";
 import {CalendarModelService} from "../../services/calendar-model.service";
+import {FormationService} from "../../services/formation.service";
+import {ModuleService} from "../../services/module.service";
+import {IndependantModuleService} from "../../services/independant-module.service";
 
 @Component({
   selector: 'app-propose-calendar',
@@ -45,6 +48,9 @@ export class PageCalendarProposalComponent implements OnInit {
               private lieuService: LieuService,
               private entrepriseService: EntrepriseService,
               private calendarModelService: CalendarModelService,
+              private formationService: FormationService,
+              private moduleService: ModuleService,
+              private independantModuleService: IndependantModuleService,
               private stagiaireService: StagiaireService) { }
 
   ngOnInit() {
@@ -125,7 +131,51 @@ export class PageCalendarProposalComponent implements OnInit {
         this.selectedHeureMax = parseInt(value, 10);
       }
 
-      // TODO : faire le reste des contraintes.
+      if (type === this.CONSTRAINT_TYPE.AJOUT_FORMATION) {
+        this.formationService.getFormation(value).subscribe(res => {
+          const title = 'Formation : ' + res.libelleLong + ' - ' + res.libelleCourt;
+          this.addConstraintAddElement(type, value, title);
+        }, console.error);
+      }
+
+      if (type === this.CONSTRAINT_TYPE.AJOUT_MODULE) {
+        this.moduleService.getModuleById(value).subscribe(res => {
+          const title = 'Module : ' + res.libelleCourt + ' - ' + res.libelle;
+          this.addConstraintAddElement(type, value, title);
+        }, console.error);
+      }
+
+      if (type === this.CONSTRAINT_TYPE.AJOUT_MODULE_INDEPENDANT) {
+        this.independantModuleService.getCoursById(value).subscribe(res => {
+          const title = 'Module : ' + res.shortName + ' - ' + res.longName;
+          this.addConstraintAddElement(type, value, title);
+        }, console.error);
+      }
+
+      if (type === this.CONSTRAINT_TYPE.AJOUT_PERIODE) {
+        const splitDate = value.split(' - ');
+        const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+        const startDate = new Date(splitDate[0].replace(pattern, '$3-$2-$1'));
+        const endDate = new Date(splitDate[1].replace(pattern, '$3-$2-$1'));
+        const title = 'Période du ' + startDate.toLocaleDateString() + ' au ' + endDate.toLocaleDateString();
+        this.addConstraintAddElement(type, value, title);
+      }
+
+      if (type === this.CONSTRAINT_TYPE.DISPENSE_PERIODE) {
+        const splitDate = value.split(' - ');
+        const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+        const startDate = new Date(splitDate[0].replace(pattern, '$3-$2-$1'));
+        const endDate = new Date(splitDate[1].replace(pattern, '$3-$2-$1'));
+        const title = 'Dispense de la période du ' + startDate.toLocaleDateString() + ' au ' + endDate.toLocaleDateString();
+        this.addConstraintDispenseElement(type, value, title);
+      }
+
+      if (type === this.CONSTRAINT_TYPE.DISPENSE_MODULE) {
+        this.moduleService.getModuleById(value).subscribe(res => {
+          const title = 'Dispense de module : ' + res.libelleCourt + ' - ' + res.libelle;
+          this.addConstraintDispenseElement(type, value, title);
+        }, console.error);
+      }
     });
   }
 
@@ -234,5 +284,22 @@ export class PageCalendarProposalComponent implements OnInit {
 
   removeConstraint(index) {
     this.constraints.splice(index, 1);
+  }
+
+  addConstraintAddElement(type, value, title,) {
+    this.addConstraint(type, value, title, 'constraint-ajout');
+  }
+
+  addConstraintDispenseElement(type, value, title,) {
+    this.addConstraint(type, value, title, 'constraint-dispense');
+  }
+
+  addConstraint(type, value, title, cssClass) {
+    this.constraints.push({
+      type,
+      value,
+      title,
+      cssClass
+    });
   }
 }
