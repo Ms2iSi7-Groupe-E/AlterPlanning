@@ -3,6 +3,11 @@
 		{{ error }}
 	</div>
 
+  <div *ngIf="registerError" class="alert alert-danger">
+    <strong>Erreur interne, impossible d'enregistrer les changements</strong><br>
+    {{ registerError.message }}
+  </div>
+
 	<div *ngIf="!error && afficher">
 		<div class="row">
 			<div class="col-12">

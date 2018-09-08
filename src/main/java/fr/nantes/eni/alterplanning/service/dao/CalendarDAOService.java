@@ -1,5 +1,6 @@
 package fr.nantes.eni.alterplanning.service.dao;
 
+import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarCoursEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.entity.CalendarEntity;
 import fr.nantes.eni.alterplanning.dao.mysql.repository.ICalendarConstraintRepository;
 import fr.nantes.eni.alterplanning.dao.mysql.repository.ICalendarCoursRepository;
@@ -68,5 +69,12 @@ public class CalendarDAOService {
         calendarCoursRepository.deleteByCalendar(id);
         calendarConstraintRepository.deleteByCalendar(id);
         calendarRepository.deleteById(id);
+    }
+
+    @Transactional("mysqlTransactionManager")
+    public void addAndReplaceCoursWithUpdate(final List<CalendarCoursEntity> calendarCoursToAdd, final CalendarEntity cal) {
+        calendarCoursRepository.deleteByCalendar(cal.getId());
+        calendarCoursRepository.saveAll(calendarCoursToAdd);
+        calendarRepository.save(cal);
     }
 }

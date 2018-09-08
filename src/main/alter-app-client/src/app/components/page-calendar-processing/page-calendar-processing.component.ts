@@ -16,6 +16,7 @@ import { ModuleService } from '../../services/module.service';
 })
 export class PageCalendarProcessingComponent implements OnInit {
 
+  registerError;
   error;
   id = 0;
   calendar;
@@ -856,19 +857,24 @@ export class PageCalendarProcessingComponent implements OnInit {
       }
     });
 
+    this.afficher = false;
+    this.registerError = null;
     // enregistrement du calendrier
     const body = new CalendatrCoursModel();
     body.coursIds = oLstCoursSave;
     body.coursIdependantsIds = oLstIndepSave;
     this.calendarService.addCoursToCalendar( this.id, body ).subscribe(
-      res => {
+      () => {
 
         // redirection vers le detail du calendrier
         this.router.navigate(['/calendar/' + this.id + '/details']);
+        return;
       },
       err => {
         console.error(err);
-    });
+        this.registerError = err.error;
+        this.afficher = true;
+      });
   }
 
   // traitement des redimentionnements
