@@ -34,6 +34,8 @@ export class PageCalendarProcessingComponent implements OnInit {
   totalHeureNotification = '';
   moduleWithRequirement = [];
   moduleLibelle = [];
+  navmodPromotions = [];
+  navmodPromotionsFilter = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -621,6 +623,10 @@ export class PageCalendarProcessingComponent implements OnInit {
       this.unselectCours();
     }
 
+    // recupere les promotions du cours
+    console.log( c ); 
+    this.navmodPromotions = c.promotions;
+
     // si c'est un cours independant
     if ( bIndep ) {
       this.messageNotification = this.getDescCours( c, true ) + ' [' + c.promotions.map( p => p.libellePromotion ).join( ', ' ) + ']';
@@ -670,6 +676,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       return;
     }
     this.messageNotification = '';
+    this.navmodPromotions = [];
 
     // pour tous les cours similaires
     const mois = Object.assign( {}, this.mois );
@@ -692,6 +699,25 @@ export class PageCalendarProcessingComponent implements OnInit {
         s.hiddenClass = '';
       }
     });
+  }
+
+  // ajout d'un promotion dans le filtre
+  addPromotionFilter( p ) {
+    const pf = this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === p.codePromotion );
+    if ( !pf ) {
+      this.navmodPromotionsFilter.push( p );
+    }
+  }
+
+  // supprime une promotion du filtre
+  delPromotionFilter( p ) {
+    const navmodPromotionsFilter = [];
+    this.navmodPromotionsFilter.forEach( pf => {
+      if ( pf.codePromotion !== p.codePromotion ) {
+        navmodPromotionsFilter.push( p );
+      }
+    } );
+    this.navmodPromotionsFilter = navmodPromotionsFilter;
   }
 
   // demande d'enregistrement du calendrier

@@ -57,6 +57,17 @@
 					</tbody>
 				</table>
 			</div>
+			<div *ngIf="navmodPromotionsFilter.length + navmodPromotions.length > 0" class="col-2" style="text-align: right;">
+				<div class="select_promotions">
+					<div *ngIf="navmodPromotionsFilter.length > 0" class="select_promotions_filter">
+						<span *ngFor="let p of navmodPromotionsFilter" (dblclick)="delPromotionFilter(p)" class="badge">{{p.libellePromotion}}</span>
+					</div>
+					<div *ngIf="navmodPromotions.length > 0" class="select_promotions_select">
+						<h6>Promotions :</h6>
+						<span *ngFor="let p of navmodPromotions" (dblclick)="addPromotionFilter(p)" class="badge">{{p.libellePromotion}}</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<nav *ngIf="afficher" class="navbar fixed-bottom navbar-light bg-light">

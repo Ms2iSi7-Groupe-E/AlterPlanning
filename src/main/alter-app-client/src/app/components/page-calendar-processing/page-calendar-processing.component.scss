@@ -1,3 +1,19 @@
+.select_promotions{
+    position: sticky;
+    top: 70px;
+}
+.select_promotions_filter{
+    border:1px solid #ccc;
+    border-radius:3px;
+    margin-bottom: 5px;
+}
+.select_promotions_select{
+   /* border:1px solid #ccc;
+    border-radius:3px;*/
+}
+.select_promotions_select h6{
+    text-align: left;
+}
 .select_all_week{
     border:1px solid #ccc;
     border-radius:5px;
