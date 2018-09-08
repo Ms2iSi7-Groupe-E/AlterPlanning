@@ -26,16 +26,25 @@ export class UpdateStagiaireComponent implements OnInit {
     if (this.codeEntreprise === null) {
       this.stagiaireService.getStagiaires().subscribe(res => {
         this.stagiaires = res;
+        this.stagiaires.unshift({
+          codeStagiaire: '',
+          prenom: 'A définir'
+        });
       }, console.error);
     } else {
       this.entrepriseService.getStagiairesForEntreprise(this.codeEntreprise).subscribe(res => {
         this.stagiaires = res;
+        this.stagiaires.unshift({
+          codeStagiaire: '',
+          prenom: 'A définir'
+        });
       }, console.error);
     }
   }
 
   clickOnValid() {
-    this.validate.emit({ selectedStagiaire: this.selectedStagiaire });
+    this.selectedStagiaire = this.selectedStagiaire === '' ? null : this.selectedStagiaire;
+    this.validate.emit({ stagiaire: this.selectedStagiaire });
     this.activeModal.dismiss('Cross click');
   }
 

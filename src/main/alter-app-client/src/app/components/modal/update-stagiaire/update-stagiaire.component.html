@@ -11,14 +11,22 @@
       <ng-select [(ngModel)]="selectedStagiaire"
                  placeholder="Stagiaire"
                  notFoundText="Aucun stagiaire trouvé">
-        <ng-option *ngFor="let stagiaire of stagiaires"
-                   [value]="stagiaire.codeStagiaire">{{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})</ng-option>
+        <ng-container *ngFor="let stagiaire of stagiaires">
+          <ng-option *ngIf="stagiaire.codeStagiaire !== ''" [value]="stagiaire.codeStagiaire">
+            {{stagiaire.prenom}} {{stagiaire.nom}} - ({{stagiaire.email}})
+          </ng-option>
+
+          <ng-option *ngIf="stagiaire.codeStagiaire === ''" [value]="stagiaire.codeStagiaire">
+            {{stagiaire.prenom}}
+          </ng-option>
+        </ng-container>
       </ng-select>
     </div>
   </div>
   <div class="row text-center">
     <div class="col-12">
-      <button class="btn btn-outline-primary" (click)="clickOnValid()">Valider</button>
+      <button class="btn btn-outline-dark" (click)="activeModal.dismiss('Cross click')">Annuler</button>
+      <button class="btn btn-outline-primary" (click)="clickOnValid()">Modifier</button>
     </div>
   </div>
 </div>

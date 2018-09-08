@@ -10,9 +10,7 @@ import fr.nantes.eni.alterplanning.dao.sqlserver.entity.CoursEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.EntrepriseEntity;
 import fr.nantes.eni.alterplanning.dao.sqlserver.entity.StagiaireEntity;
 import fr.nantes.eni.alterplanning.exception.RestResponseException;
-import fr.nantes.eni.alterplanning.model.form.AddCalendarCoursForm;
-import fr.nantes.eni.alterplanning.model.form.AddCalendarForm;
-import fr.nantes.eni.alterplanning.model.form.StateForm;
+import fr.nantes.eni.alterplanning.model.form.*;
 import fr.nantes.eni.alterplanning.model.response.CalendarResponse;
 import fr.nantes.eni.alterplanning.model.response.CoursGenerationResponse;
 import fr.nantes.eni.alterplanning.model.response.StringResponse;
@@ -335,6 +333,98 @@ public class CalendarController {
                 + oldState + " à l'état " + form.getState());
 
         return new StringResponse("Etat du calendrier mis à jour avec succès");
+    }
+
+    @PutMapping("/{idCalendar}/change-stagiaire")
+    public CalendarResponse changeStagiaireCalendar(@Valid @RequestBody UpdateStagiaireForm form, BindingResult result,
+                                                   @PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        } else if (c.getState() == CalendarState.VALIDATED) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état validé");
+        }
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        boolean stagaireOrEntrepriseError = false;
+
+        if (form.getStagiaireId() != null && !stagiaireDAOService.existsById(form.getStagiaireId())) {
+            result.addError(new FieldError("stagiaireId",  "stagiaireId", "n'existe pas en base"));
+            stagaireOrEntrepriseError = true;
+        }
+
+        if (form.getStagiaireId() != null && c.getEntrepriseId() != null && !stagaireOrEntrepriseError) {
+            final List<EntrepriseEntity> stagiaireEntreprises = entrepriseDAOService.findByStagiaire(form.getStagiaireId());
+            final List<Integer> entrepriseIds = stagiaireEntreprises.stream()
+                    .map(EntrepriseEntity::getCodeEntreprise)
+                    .collect(Collectors.toList());
+
+            if (stagiaireEntreprises.isEmpty() || !entrepriseIds.contains(c.getEntrepriseId())) {
+                result.addError(new FieldError("stagiaireId",  "stagiaireId", "le stagiaire ne correspond pas à l'entreprise du calendrier"));
+            }
+        }
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        c.setStagiaireId(form.getStagiaireId());
+        calendarDAOService.update(c);
+
+        final CalendarResponse calendarResponse = new CalendarResponse();
+        calendarResponse.setStagiaire(form.getStagiaireId() == null ? null : stagiaireDAOService.findById(form.getStagiaireId()));
+
+        return calendarResponse;
+    }
+
+    @PutMapping("/{idCalendar}/change-entreprise")
+    public CalendarResponse changeEntrepriseCalendar(@Valid @RequestBody UpdateEntrepriseForm form, BindingResult result,
+                                                     @PathVariable(name = "idCalendar") int id) throws RestResponseException {
+        final CalendarEntity c = calendarDAOService.findById(id);
+
+        if (c == null) {
+            throw new RestResponseException(HttpStatus.NOT_FOUND, "Calendrier non trouvé");
+        } else if (c.getState() == CalendarState.VALIDATED) {
+            throw new RestResponseException(HttpStatus.CONFLICT, "Le calendrier ne doit pas être à l'état validé");
+        }
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        boolean stagaireOrEntrepriseError = false;
+
+        if (form.getEntrepriseId() != null && !entrepriseDAOService.existsById(form.getEntrepriseId())) {
+            result.addError(new FieldError("entrepriseId",  "entrepriseId", "n'existe pas en base"));
+            stagaireOrEntrepriseError = true;
+        }
+
+        if (form.getEntrepriseId() != null && c.getStagiaireId() != null && !stagaireOrEntrepriseError) {
+            final List<EntrepriseEntity> stagiaireEntreprises = entrepriseDAOService.findByStagiaire(c.getStagiaireId());
+            final List<Integer> entrepriseIds = stagiaireEntreprises.stream()
+                    .map(EntrepriseEntity::getCodeEntreprise)
+                    .collect(Collectors.toList());
+
+            if (stagiaireEntreprises.isEmpty() || !entrepriseIds.contains(form.getEntrepriseId())) {
+                result.addError(new FieldError("entrepriseId",  "entrepriseId", "l'entreprise ne correspond pas à celle du stagiaire du calendrier"));
+            }
+        }
+
+        if (result.hasErrors()) {
+            throw new RestResponseException(HttpStatus.BAD_REQUEST, "Erreur au niveau des champs", result);
+        }
+
+        c.setEntrepriseId(form.getEntrepriseId());
+        calendarDAOService.update(c);
+
+        final CalendarResponse calendarResponse = new CalendarResponse();
+        calendarResponse.setEntreprise(form.getEntrepriseId() == null ? null : entrepriseDAOService.findById(form.getEntrepriseId()));
+
+        return calendarResponse;
     }
 
     @DeleteMapping("/{idCalendar}")

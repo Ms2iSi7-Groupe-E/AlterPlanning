@@ -5,6 +5,8 @@ import {CalendarModel} from "../models/calendar.model";
 import {CalendatrCoursModel} from "../models/calendar.cours.model";
 import {HttpClient} from "@angular/common/http";
 import {CalendarStateModel} from "../models/calendar-state.model";
+import {ChangeEntrepriseModel} from "../models/change-entreprise.model";
+import {ChangeStagiaireModel} from "../models/change-stagiaire.model";
 
 @Injectable()
 export class CalendarService {
@@ -62,6 +64,18 @@ export class CalendarService {
   changeStateCalendar(idCalendar: number, body: CalendarStateModel) {
     return this.http
       .put('/api/calendar/' + idCalendar + '/change-state', body, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
+  changeEntrepriseCalendar(idCalendar: number, body: ChangeEntrepriseModel) {
+    return this.http
+      .put('/api/calendar/' + idCalendar + '/change-entreprise', body, {headers: AuthService.getHeaders()})
+      .catch((err) => this.authService.handleError(err));
+  }
+
+  changeStagiaireCalendar(idCalendar: number, body: ChangeStagiaireModel) {
+    return this.http
+      .put('/api/calendar/' + idCalendar + '/change-stagiaire', body, {headers: AuthService.getHeaders()})
       .catch((err) => this.authService.handleError(err));
   }
 

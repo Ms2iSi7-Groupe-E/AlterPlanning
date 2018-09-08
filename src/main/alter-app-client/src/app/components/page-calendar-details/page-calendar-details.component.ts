@@ -11,6 +11,8 @@ import {CalendarStateModel} from "../../models/calendar-state.model";
 import {ConfirmComponent} from "../modal/confirm/confirm.component";
 import {UpdateStagiaireComponent} from "../modal/update-stagiaire/update-stagiaire.component";
 import {UpdateEntrepriseComponent} from "../modal/update-entreprise/update-entreprise.component";
+import {ChangeEntrepriseModel} from "../../models/change-entreprise.model";
+import {ChangeStagiaireModel} from "../../models/change-stagiaire.model";
 
 @Component({
   selector: 'app-page-calendar-details',
@@ -118,7 +120,11 @@ export class PageCalendarDetailsComponent implements OnInit {
       modalRef.componentInstance.codeEntreprise = this.calendar.entreprise.codeEntreprise;
     }
     modalRef.componentInstance.validate.subscribe((res) => {
-      console.log(res);
+      const body = new ChangeStagiaireModel();
+      body.stagiaireId = res.stagiaire;
+      this.calendarService.changeStagiaireCalendar(this.calendar.id, body).subscribe(cal => {
+        this.calendar.stagiaire = cal.stagiaire;
+      }, console.error);
     });
   }
 
@@ -131,7 +137,11 @@ export class PageCalendarDetailsComponent implements OnInit {
       modalRef.componentInstance.codeEntreprise = this.calendar.entreprise.codeEntreprise;
     }
     modalRef.componentInstance.validate.subscribe((res) => {
-      console.log(res);
+      const body = new ChangeEntrepriseModel();
+      body.entrepriseId = res.entreprise;
+      this.calendarService.changeEntrepriseCalendar(this.calendar.id, body).subscribe(cal => {
+        this.calendar.entreprise = cal.entreprise;
+      }, console.error);
     });
   }
 

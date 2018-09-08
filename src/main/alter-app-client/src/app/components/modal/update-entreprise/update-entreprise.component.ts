@@ -26,16 +26,24 @@ export class UpdateEntrepriseComponent implements OnInit {
     if (this.codeStagiaire === null) {
       this.entrepriseService.getEntreprises().subscribe(res => {
         this.entreprises = res;
+        this.entreprises.unshift({
+          codeEntreprise: null,
+          raisonSociale: 'A définir',
+        });
       }, console.error);
     } else {
       this.stagiaireService.getEntreprisesForStagiaire(this.codeStagiaire).subscribe(res => {
         this.entreprises = res;
+        this.entreprises.unshift({
+          codeEntreprise: null,
+          raisonSociale: 'A définir',
+        });
       }, console.error);
     }
   }
 
   clickOnValid() {
-    this.validate.emit({ selectedEntreprise: this.selectedEntreprise });
+    this.validate.emit({ entreprise: this.selectedEntreprise });
     this.activeModal.dismiss('Cross click');
   }
 
