@@ -312,6 +312,7 @@ export class PageCalendarProcessingComponent implements OnInit {
             c.anneeMois = sKeyMonth;
             c.jour = sKeyDay;
             c.show = true;
+            c.indep = false;
             cours.push( c );
             promotions = promotions.concat( c.promotions );
           }
@@ -329,6 +330,9 @@ export class PageCalendarProcessingComponent implements OnInit {
           // recupere le cours independant
           ci.anneeMois = sKeyMonth;
           ci.jour = sKeyDay;
+          ci.show = true;
+          ci.indep = true;
+          ci.promotions = [];
           coursIndependants.push( ci );
         }
       });
@@ -338,7 +342,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       semaines[ semaines.length - 1 ].promotions = semaines[ semaines.length - 1 ].promotions.concat( promotions );
 
       // determine la couleur de fond du jour
-      if ( cours.length === 0 && coursIndependants.length === 0 ) {
+      if ( cours.length + coursIndependants.length === 0 ) {
         mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "color" ] = "#e8e8e8";
       }
 
@@ -467,7 +471,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       Object.keys(this.mois[km].jours).forEach( kj => {
 
         // pour tous les cours du jour
-        if ( !c.indep ) {
+        if ( !bIndep ) {
           this.mois[km].jours[kj].cours.forEach( cj => {
 
             // determine si le jour contient le cours a deplacer

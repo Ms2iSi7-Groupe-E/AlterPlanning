@@ -77,7 +77,7 @@
 	</div>
 	<nav *ngIf="afficher" class="navbar fixed-bottom navbar-light bg-light">
 		{{messageNotification}}<br/>
-		{{infoNotification}}{{( totalHeureNotification !== '' ? ', ' + totalHeureNotification : '')}}
+		{{infoNotification}}{{( infoNotification !== '' ? ', ' : '')}}{{totalHeureNotification}}
 	</nav>
 	<div class="row mt-5" *ngIf="!afficher">
 		<div class="col-12">
