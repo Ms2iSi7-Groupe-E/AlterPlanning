@@ -439,7 +439,7 @@ export class PageCalendarProcessingComponent implements OnInit {
                 this.mois[km].jours[kj].coursIndependants.filter( c => c.show ).forEach( cij => {
 
                   // determine si le cours doit etre positionne
-                  const cs = res.cours.find( resC => resC.id === cij.id );
+                  const cs = res.independantModules.find( resC => resC.id === cij.id );
                   if ( cs ) {
                     this.placementCours( cij, true );
                   }
@@ -896,7 +896,7 @@ export class PageCalendarProcessingComponent implements OnInit {
     // enregistrement du calendrier
     const body = new CalendatrCoursModel();
     body.coursIds = oLstCoursSave;
-    body.coursIdependantsIds = oLstIndepSave;
+    body.coursIndependantIds = oLstIndepSave;
     this.calendarService.addCoursToCalendar( this.id, body ).subscribe(
       () => {
 
