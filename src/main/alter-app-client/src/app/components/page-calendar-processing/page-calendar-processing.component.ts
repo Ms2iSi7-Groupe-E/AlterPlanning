@@ -305,8 +305,9 @@ export class PageCalendarProcessingComponent implements OnInit {
 
           // determine si un cours similaire existe sur le meme lieu pour le meme jour
           const cj = cours.find( fcj => {
-            return fcj.codeLieu.toString() === c.codeLieu.toString() && fcj.idCours === c.idCours
-              && fcj.anneeMois === c.anneeMois && fcj.jour === c.jour;
+            return fcj.codeLieu.toString() === c.codeLieu.toString() && // fcj.idCours === c.idCours
+              fcj.anneeMois === sKeyMonth && fcj.jour === sKeyDay &&
+              fcj.idModule === c.idModule;
           });
           if ( !cj ) {
             c.anneeMois = sKeyMonth;
