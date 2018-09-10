@@ -330,7 +330,6 @@ export class PageCalendarProcessingComponent implements OnInit {
           ci.anneeMois = sKeyMonth;
           ci.jour = sKeyDay;
           coursIndependants.push( ci );
-          promotions = promotions.concat( ci.promotions );
         }
       });
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "coursIndependants" ] = coursIndependants;
@@ -727,6 +726,9 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // determine si un cours contient un element du filtre des promotions
   coursInPromotionFilter( c ) {
+    if ( !c.promotions ) {
+      return false;
+    }
     let asPromotion = false;
     c.promotions.forEach( cp => {
       if ( this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === cp.codePromotion ) ) {
@@ -741,7 +743,7 @@ export class PageCalendarProcessingComponent implements OnInit {
   semaineInPromotionFilter( s ) {
     let asPromotion = false;
     s.promotions.forEach( sp => {
-      if ( this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === sp.codePromotion ) ) {
+      if ( !asPromotion && this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === sp.codePromotion ) ) {
         asPromotion = true;
         return;
       }
