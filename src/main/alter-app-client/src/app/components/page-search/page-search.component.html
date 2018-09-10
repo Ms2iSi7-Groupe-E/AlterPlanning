@@ -129,7 +129,7 @@
           <td>{{ calendar.isModel ? 'Oui' : 'Non' }}</td>
           <td>{{ calendar.createdAt }}</td>
           <td>
-            <button *ngIf="!calendar.isModel || calendar.state !== CALENDAR_STATE.VALIDATED"
+            <button *ngIf="!calendar.isModel && calendar.state !== CALENDAR_STATE.VALIDATED"
                     class="btn btn-sm btn-outline-danger"
                     (click)="deleteCalendar(calendar)"><i class="far fa-trash-alt"></i></button>
           </td>
