@@ -1,6 +1,6 @@
 export class CalendatrCoursModel {
     public coursIds: string[] = [];
-    public coursIdependantsIds: number[] = [];
+    public coursIndependantIds: number[] = [];
 
     constructor() { }
 

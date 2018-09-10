@@ -305,13 +305,15 @@ export class PageCalendarProcessingComponent implements OnInit {
 
           // determine si un cours similaire existe sur le meme lieu pour le meme jour
           const cj = cours.find( fcj => {
-            return fcj.codeLieu.toString() === c.codeLieu.toString() && fcj.idCours === c.idCours
-              && fcj.anneeMois === c.anneeMois && fcj.jour === c.jour;
+            return fcj.codeLieu.toString() === c.codeLieu.toString() && // fcj.idCours === c.idCours
+              fcj.anneeMois === sKeyMonth && fcj.jour === sKeyDay &&
+              fcj.idModule === c.idModule;
           });
           if ( !cj ) {
             c.anneeMois = sKeyMonth;
             c.jour = sKeyDay;
             c.show = true;
+            c.indep = false;
             cours.push( c );
             promotions = promotions.concat( c.promotions );
           }
@@ -329,8 +331,10 @@ export class PageCalendarProcessingComponent implements OnInit {
           // recupere le cours independant
           ci.anneeMois = sKeyMonth;
           ci.jour = sKeyDay;
+          ci.show = true;
+          ci.indep = true;
+          ci.promotions = [];
           coursIndependants.push( ci );
-          promotions = promotions.concat( ci.promotions );
         }
       });
       mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "coursIndependants" ] = coursIndependants;
@@ -339,7 +343,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       semaines[ semaines.length - 1 ].promotions = semaines[ semaines.length - 1 ].promotions.concat( promotions );
 
       // determine la couleur de fond du jour
-      if ( cours.length === 0 && coursIndependants.length === 0 ) {
+      if ( cours.length + coursIndependants.length === 0 ) {
         mois[ sKeyMonth ][ "jours" ][ sKeyDay ][ "color" ] = "#e8e8e8";
       }
 
@@ -436,7 +440,7 @@ export class PageCalendarProcessingComponent implements OnInit {
                 this.mois[km].jours[kj].coursIndependants.filter( c => c.show ).forEach( cij => {
 
                   // determine si le cours doit etre positionne
-                  const cs = res.cours.find( resC => resC.id === cij.id );
+                  const cs = res.independantModules.find( resC => resC.id === cij.id );
                   if ( cs ) {
                     this.placementCours( cij, true );
                   }
@@ -468,7 +472,7 @@ export class PageCalendarProcessingComponent implements OnInit {
       Object.keys(this.mois[km].jours).forEach( kj => {
 
         // pour tous les cours du jour
-        if ( !c.indep ) {
+        if ( !bIndep ) {
           this.mois[km].jours[kj].cours.forEach( cj => {
 
             // determine si le jour contient le cours a deplacer
@@ -727,6 +731,9 @@ export class PageCalendarProcessingComponent implements OnInit {
 
   // determine si un cours contient un element du filtre des promotions
   coursInPromotionFilter( c ) {
+    if ( !c.promotions ) {
+      return false;
+    }
     let asPromotion = false;
     c.promotions.forEach( cp => {
       if ( this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === cp.codePromotion ) ) {
@@ -741,7 +748,7 @@ export class PageCalendarProcessingComponent implements OnInit {
   semaineInPromotionFilter( s ) {
     let asPromotion = false;
     s.promotions.forEach( sp => {
-      if ( this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === sp.codePromotion ) ) {
+      if ( !asPromotion && this.navmodPromotionsFilter.find( pfi => pfi.codePromotion === sp.codePromotion ) ) {
         asPromotion = true;
         return;
       }
@@ -890,7 +897,7 @@ export class PageCalendarProcessingComponent implements OnInit {
     // enregistrement du calendrier
     const body = new CalendatrCoursModel();
     body.coursIds = oLstCoursSave;
-    body.coursIdependantsIds = oLstIndepSave;
+    body.coursIndependantIds = oLstIndepSave;
     this.calendarService.addCoursToCalendar( this.id, body ).subscribe(
       () => {
 
